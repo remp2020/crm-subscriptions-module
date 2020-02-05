@@ -17,6 +17,7 @@ data:
 			note: Note
 			address_id: Address
 			payment: Payment
+			articles: Viewed Articles
 		required:
 			start_time: Start time is required
 			end_time: End time is required
@@ -25,6 +26,7 @@ data:
 			start_time: for example 13.2.2015
 			end_time: for example 13.2.2015
 			note: Your custom note to subscription
+			articles: "List of articles go here, one on each line"
 		errors:
 			end_time_before_start_time: End time must be after start time
 			no_subscription_type_id: No subscription type
