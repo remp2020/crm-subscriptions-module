@@ -9,7 +9,6 @@ use Crm\ApplicationModule\Graphs\GraphDataItem;
 use Crm\SubscriptionsModule\Forms\SubscriptionTypeItemsFormFactory;
 use Crm\SubscriptionsModule\Forms\SubscriptionTypesFormFactory;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemsRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesMetaRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 
 class SubscriptionTypesAdminPresenter extends AdminPresenter
@@ -22,21 +21,18 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
 
     private $subscriptionTypeItemsFormFactory;
 
-    private $subscriptionTypesMetaRepository;
 
     public function __construct(
         SubscriptionTypesRepository $subscriptionTypesRepository,
         SubscriptionTypesFormFactory $subscriptionTypeFactory,
         SubscriptionTypeItemsRepository $subscriptionTypeItemsRepository,
-        SubscriptionTypeItemsFormFactory $subscriptionTypeItemsFormFactory,
-        SubscriptionTypesMetaRepository $subscriptionTypesMetaRepository
+        SubscriptionTypeItemsFormFactory $subscriptionTypeItemsFormFactory
     ) {
         parent::__construct();
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
         $this->subscriptionTypeFactory = $subscriptionTypeFactory;
         $this->subscriptionTypeItemsRepository = $subscriptionTypeItemsRepository;
         $this->subscriptionTypeItemsFormFactory = $subscriptionTypeItemsFormFactory;
-        $this->subscriptionTypesMetaRepository = $subscriptionTypesMetaRepository;
     }
 
     public function renderDefault()
@@ -76,7 +72,6 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
         }
         $this->template->type = $subscriptionType;
         $this->template->subscriptionTypeItems = $this->subscriptionTypeItemsRepository->subscriptionTypeItems($subscriptionType);
-        $this->template->meta = $this->subscriptionTypesMetaRepository->subscriptionTypeMeta($subscriptionType);
     }
 
     protected function createComponentSubscriptionTypeItemsForm()

@@ -62,7 +62,6 @@ data:
 			length_method_id: Spôsob výpočtu dĺžky predplatného
 			recurrent_charge_before: "Realizácia nasledujúcej platby (počet hodín pred vypršaním)"
 			subscription_type_items: Položky predplatného
-			meta: Meta
 		required:
 			name: Názov je povinný
 			length: "Dĺžka (v dňoch) je povinný"
@@ -255,6 +254,25 @@ admin:
 	actual_subscribers_stat_widget:
 		title: Aktívni predplatitelia
 		help: "Unikátny predplatitelia, platiaci aj neplatiaci."
+
+	subscription_types_meta:
+		header: Meta
+		value_removed: Hodnota bola zmazaná
+		value_added: Hodnota bola pridaná
+		form:
+			key:
+				label: Kľúč
+				required: Kľúč je povinný
+			value:
+				label: Hodnota
+				required: Hodnota je povinná
+			submit: Ulož
+		no_record: Žiaden záznam
+		no_record_description: K tomuto typu predplatného neexistujú žiadne meta dáta.
+		key: Kľúč
+		value: Hodnota
+		created_at: Vytvorené
+		actions: Akcie
 
 data_provider:
 	delete:

@@ -17,6 +17,7 @@ use Crm\ApplicationModule\Menu\MenuItem;
 use Crm\ApplicationModule\SeederManager;
 use Crm\ApplicationModule\User\UserDataRegistrator;
 use Crm\ApplicationModule\Widget\WidgetManagerInterface;
+use Crm\SubscriptionsModule\Components\SubscriptionTypesMeta;
 use Crm\SubscriptionsModule\DataProvider\CanDeleteAddressDataProvider;
 use Crm\SubscriptionsModule\Events\PreNotificationEventHandler;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
@@ -103,6 +104,13 @@ class SubscriptionsModule extends CrmModule
 
     public function registerWidgets(WidgetManagerInterface $widgetManager)
     {
+        $widgetManager->registerWidget(
+            'subscription_types_admin.show.middle',
+            $this->getInstance(SubscriptionTypesMeta::class),
+            100
+        );
+
+
         $widgetManager->registerWidget(
             'admin.user.detail.bottom',
             $this->getInstance(\Crm\SubscriptionsModule\Components\UserSubscriptionsListing::class),

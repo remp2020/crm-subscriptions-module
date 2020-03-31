@@ -1,0 +1,30 @@
+<h2 class="page-header">{_subscriptions.admin.subscription_types_meta.header}</h2>
+{if count($meta) == 0}
+ <div class="bs-callout bs-callout-info">
+   <h4>{_subscriptions.admin.subscription_types_meta.no_record}</h4>
+   <p class="lead">{_subscriptions.admin.subscription_types_meta.no_record_description}</p>
+ </div>
+{else}
+  <table class="table table-striped table-hover">
+    <thead>
+    <tr>
+      <th>{_subscriptions.admin.subscription_types_meta.key}</th>
+      <th>{_subscriptions.admin.subscription_types_meta.value}</th>
+      <th>{_subscriptions.admin.subscription_types_meta.created_at}</th>
+      <th>{_subscriptions.admin.subscription_types_meta.actions}</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr n:foreach="$meta as $row">
+        <td>{$row->key}</td>
+        <td>{$row->value}</td>
+        <td class="text-muted">{$row->created_at}</td>
+        <td><a n:href="delete!, $subscriptionType['id'], $row->key" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
+      </tr>
+    </tbody>
+  </table>
+{/if}
+
+<hr>
+
+{control metaForm}

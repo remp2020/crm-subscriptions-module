@@ -40,6 +40,11 @@ class SubscriptionTypesMetaRepository extends Repository
         ])->order('sorting ASC')->fetchPairs('key', 'value');
     }
 
+    final public function subscriptionTypeMetaRows(IRow $subscriptionType)
+    {
+        return $this->getTable()->where(['subscription_type_id' => $subscriptionType['id']])->order('key ASC');
+    }
+
     final public function exists(IRow $subscriptionType, string $key): bool
     {
         return $this->getMeta($subscriptionType, $key)->count('*') > 0;
@@ -58,5 +63,10 @@ class SubscriptionTypesMetaRepository extends Repository
     final public function getMetaValue(IRow $subscriptionType, string $key): string
     {
         return $this->getMeta($subscriptionType, $key)->fetchField('value');
+    }
+
+    final public function removeMeta($subscriptionTypeId, $key)
+    {
+        return $this->getTable()->where(['subscription_type_id' => $subscriptionTypeId, 'key' => $key])->delete();
     }
 }

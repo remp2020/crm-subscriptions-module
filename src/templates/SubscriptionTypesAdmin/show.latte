@@ -94,19 +94,6 @@
 
 {control simpleWidget 'subscription_types_admin.show.middle', $type}
 
-<div n:if="count($meta) > 0" class="row">
-  <div class="col-md-12">
-    <h2 class="page-header">{_subscriptions.data.subscription_types.fields.meta}</h2>
-    <ul class="list-group">
-      <li n:foreach="$meta as $key => $value" class="list-group-item">
-        {$key}
-        <span class="text-muted pull-right" style="margin-right:20px;">{$value}</span>
-      </li>
-    </ul>
-  </div>
-</div>
-
-
 {snippet subscriptionTypeItemsSnippet}
 
 {var $calculatedItemsSum = 0}
