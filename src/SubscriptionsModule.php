@@ -110,7 +110,6 @@ class SubscriptionsModule extends CrmModule
             100
         );
 
-
         $widgetManager->registerWidget(
             'admin.user.detail.bottom',
             $this->getInstance(\Crm\SubscriptionsModule\Components\UserSubscriptionsListing::class),
