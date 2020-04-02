@@ -9,7 +9,7 @@ use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
 use Nette\Database\IRow;
 use Nette\Localization\ITranslator;
-use Tomaj\Form\Renderer\BootstrapInlineRenderer;
+use Tomaj\Form\Renderer\BootstrapRenderer;
 
 class SubscriptionTypesMeta extends Control implements WidgetInterface
 {
@@ -53,8 +53,7 @@ class SubscriptionTypesMeta extends Control implements WidgetInterface
     public function render(IRow $subscriptionType)
     {
         $this->subscriptionType = $subscriptionType;
-        $meta = $this->subscriptionTypesMetaRepository->subscriptionTypeMetaRows($this->subscriptionType);
-        $this->template->meta = $meta;
+        $this->template->meta = $this->subscriptionTypesMetaRepository->subscriptionTypeMetaRows($this->subscriptionType)->order('key ASC');
         $this->template->subscriptionType = $subscriptionType;
         $this->template->setFile(__DIR__ . '/' . $this->templateName);
         $this->template->render();
@@ -71,15 +70,15 @@ class SubscriptionTypesMeta extends Control implements WidgetInterface
     {
         $form = new Form();
         $form->setTranslator($this->translator);
-        $form->setRenderer(new BootstrapInlineRenderer());
+        $form->setRenderer(new BootstrapRenderer());
+        $form->getElementPrototype()->addAttributes(['class' => 'ajax']);
 
         $form->addText('key', 'subscriptions.admin.subscription_types_meta.form.key.label')
             ->setRequired('subscriptions.admin.subscription_types_meta.form.key.required');
-
         $form->addText('value', 'subscriptions.admin.subscription_types_meta.form.value.label')
             ->setRequired('subscriptions.admin.subscription_types_meta.form.value.required');
-
-        $form->addHidden('subscription_type_id', $this->subscriptionType['id']);
+        $form->addHidden('subscription_type_id', $this->subscriptionType['id'])
+            ->setHtmlId('subscription_type_id');
         $form->addSubmit('submit', 'subscriptions.admin.subscription_types_meta.form.submit');
 
         $form->onSuccess[] = function ($form, $values) {

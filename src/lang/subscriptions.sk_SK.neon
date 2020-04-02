@@ -257,6 +257,9 @@ admin:
 
 	subscription_types_meta:
 		header: Meta
+		title:
+		    create: Nový meta záznam
+		    update: Úprava meta
 		value_removed: Hodnota bola zmazaná
 		value_added: Hodnota bola pridaná
 		form:
@@ -268,11 +271,7 @@ admin:
 				required: Hodnota je povinná
 			submit: Ulož
 		no_record: Žiaden záznam
-		no_record_description: K tomuto typu predplatného neexistujú žiadne meta dáta.
-		key: Kľúč
-		value: Hodnota
-		created_at: Vytvorené
-		actions: Akcie
+		no_record_description: Tento typ predplatného neobsahuje žiadne meta dáta.
 
 data_provider:
 	delete:

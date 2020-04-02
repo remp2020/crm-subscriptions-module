@@ -42,7 +42,7 @@ class SubscriptionTypesMetaRepository extends Repository
 
     final public function subscriptionTypeMetaRows(IRow $subscriptionType)
     {
-        return $this->getTable()->where(['subscription_type_id' => $subscriptionType['id']])->order('key ASC');
+        return $this->getTable()->where(['subscription_type_id' => $subscriptionType['id']]);
     }
 
     final public function exists(IRow $subscriptionType, string $key): bool
