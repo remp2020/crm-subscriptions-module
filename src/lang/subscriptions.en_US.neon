@@ -268,11 +268,11 @@ admin:
 			value:
 				label: Value
 				required: Value is required
-			is_public:
-				label: Public
 			submit: Save
-		no_record: No record available
 		no_record_description: This subscription type doesn't contain any meta values.
+		error:
+		    internal: Internal error. Please contact administrator.
+		    duplicate: Meta key with same key already exists.
 
 data_provider:
 	delete:

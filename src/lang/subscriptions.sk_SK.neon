@@ -270,8 +270,10 @@ admin:
 				label: Hodnota
 				required: Hodnota je povinná
 			submit: Ulož
-		no_record: Žiaden záznam
 		no_record_description: Tento typ predplatného neobsahuje žiadne meta dáta.
+		error:
+		    internal: Nastala chyba. Prosím kontaktujte administrátora.
+		    duplicate: Meta s rovnakým kľúčom už existuje.
 
 data_provider:
 	delete:

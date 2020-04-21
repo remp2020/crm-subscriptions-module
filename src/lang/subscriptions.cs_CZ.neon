@@ -247,11 +247,11 @@ admin:
 			value:
 				label: Hodnota
 				required: Hodnota je povinná
-			is_public:
-				label: Veřejné
 			submit: Ulož
-		no_record: Žádný záznam
 		no_record_description: Tento typ předplatného neobsahuje žádné meta data.
+		error:
+		    internal: Nastala chyba. Prosím kontaktujte administrátora.
+		    duplicate: Meta se stejným klíčem již existuje.
 
 data_provider:
 	delete:
