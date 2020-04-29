@@ -5,7 +5,12 @@ menu:
 	subscriptions: Subscriptions
 	subscription_types: Subscription types
 	subscriptions_generator: Subscriptions generator
-
+dashboard:
+        subscriptions_recurrency:
+            recurrent_subscribers: Recurrent subscribers
+            nonrecurrent_subscribers: Non-reccurent subscribers
+            title: Recurrent subscribers
+            tooltip: "Number of paying subscribers with recurrent and non-recurrent subscription."
 data:
 	subscriptions:
 		fields:

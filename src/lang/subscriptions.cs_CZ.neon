@@ -5,6 +5,12 @@ menu:
 	subscriptions: Předplatné
 	subscription_types: Typy předplatného
 	subscriptions_generator: Generátor předplatného
+dashboard:
+        subscriptions_recurrency:
+            recurrent_subscribers: Rekurentní předplatitelé
+            nonrecurrent_subscribers: Nerekurentní předplatitelé
+            title: Rekurentnost předplatitelů
+            tooltip: Počet platících rekurentních a nerekurentních předplatitelů
 data:
 	subscriptions:
 		fields:

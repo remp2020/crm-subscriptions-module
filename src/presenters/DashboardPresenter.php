@@ -103,6 +103,43 @@ class DashboardPresenter extends AdminPresenter
         return $control;
     }
 
+    public function createComponentGoogleSubscriptionsRecurrencyStatsGraph(GoogleLineGraphGroupControlFactoryInterface $factory)
+    {
+        $this->getSession()->close();
+        $items = [];
+
+        $graphDataItem = new GraphDataItem();
+        $graphDataItem->setCriteria((new Criteria())
+            ->setTableName('subscriptions')
+            ->setRangeFields('start_time', 'end_time')
+            ->setValueField('count(distinct subscriptions.user_id)')
+            ->setWhere('AND is_recurrent = 1 AND is_paid = 1')
+            ->setStart($this->dateFrom)
+            ->setEnd($this->dateTo));
+        $graphDataItem->setName($this->translator->translate('subscriptions.dashboard.subscriptions_recurrency.recurrent_subscribers'));
+        $items[] = $graphDataItem;
+
+        $graphDataItem = new GraphDataItem();
+        $graphDataItem->setCriteria((new Criteria())
+            ->setTableName('subscriptions')
+            ->setRangeFields('start_time', 'end_time')
+            ->setValueField('count(distinct subscriptions.user_id)')
+            ->setWhere('AND is_recurrent = 0 AND is_paid = 1')
+            ->setStart($this->dateFrom)
+            ->setEnd($this->dateTo));
+        $graphDataItem->setName($this->translator->translate('subscriptions.dashboard.subscriptions_recurrency.nonrecurrent_subscribers'));
+        $items[] = $graphDataItem;
+
+        $control = $factory->create()
+            ->setGraphTitle($this->translator->translate('subscriptions.dashboard.subscriptions_recurrency.title'))
+            ->setGraphHelp($this->translator->translate('subscriptions.dashboard.subscriptions_recurrency.tooltip'));
+
+        foreach ($items as $graphDataItem) {
+            $control->addGraphDataItem($graphDataItem);
+        }
+        return $control;
+    }
+
     public function createComponentGoogleSubscriptionsGraph(GoogleLineGraphGroupControlFactoryInterface $factory)
     {
         $this->getSession()->close();
