@@ -112,6 +112,8 @@ class SubscriptionFormFactory
         }
         $form->addSelect('type', 'subscriptions.data.subscriptions.fields.type', $subscriptionTypeNames);
 
+        $form->addCheckbox('is_paid', 'subscriptions.data.subscriptions.fields.is_paid');
+
         $form->addText('start_time', 'subscriptions.data.subscriptions.fields.start_time')
             ->setRequired('subscriptions.data.subscriptions.required.start_time')
             ->setAttribute('placeholder', 'subscriptions.data.subscriptions.placeholder.start_time');
@@ -119,7 +121,6 @@ class SubscriptionFormFactory
         $form->addText('end_time', 'subscriptions.data.subscriptions.fields.end_time')
             ->setAttribute('placeholder', 'subscriptions.data.subscriptions.placeholder.end_time')
             ->setOption('description', 'subscriptions.data.subscriptions.description.end_time');
-
 
         $form->addTextArea('note', 'subscriptions.data.subscriptions.fields.note')
             ->setAttribute('placeholder', 'subscriptions.data.subscriptions.placeholder.note')
@@ -208,7 +209,8 @@ class SubscriptionFormFactory
 
             $subscription = $this->subscriptionsRepository->add(
                 $subscriptionType,
-                false, // manually created subscription cannot by recurrent by design
+                false,
+                $values['is_paid'],
                 $user,
                 $values['type'],
                 $startTime,

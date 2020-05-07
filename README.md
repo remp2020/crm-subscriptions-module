@@ -155,7 +155,9 @@ Creates new subscription for given user and returns new instance.
 | --- |---| --- | --- |
 | email | *String* | yes | Email of existing user. |
 | subscription_type_id | *String* | yes | ID of subscription type to use. List of all subscription types is available at `/subscriptions/subscription-types-admin`. |
+| is_paid | *Boolean* | yes | The identification of paid subscriptions. |
 | start_time | *String* | no | RFC3339 formatted start time. If not present, subscription will start immediately. |
+| end_time | *String* | no | RFC3339 formatted end time. If not present, end time will set based on subscription type. |
 | type | *String* | yes | Type of subscription - values allowed: `regular`, `free`, `donation`, `gift`, `special`, `upgrade`, `prepaid`. If not provided, defaults to `regular`. |
 
 
@@ -166,7 +168,7 @@ curl -X POST \
   http://crm.press/api/v1/subscriptions/create \
   -H 'Authorization: Bearer XXX' \
   -H 'Content-Type: application/x-www-form-urlencoded' \
-  -d 'email=user%40user.sk&subscription_type_id=73'
+  -d 'email=user%40user.sk&subscription_type_id=73&is_paid=true'
 ```
 
 Response:

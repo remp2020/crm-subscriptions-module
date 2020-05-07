@@ -17,6 +17,7 @@ data:
 			note: Poznámka
 			address_id: Adresa
 			payment: Platba
+			is_paid: Platené
 		required:
 			start_time: Začiatok je povinný
 			end_time: Koniec je povinný

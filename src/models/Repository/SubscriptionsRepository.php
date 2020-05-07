@@ -84,6 +84,7 @@ class SubscriptionsRepository extends Repository
     final public function add(
         IRow $subscriptionType,
         bool $isRecurrent,
+        bool $isPaid,
         IRow $user,
         $type = self::TYPE_REGULAR,
         DateTime $startTime = null,
@@ -117,6 +118,7 @@ class SubscriptionsRepository extends Repository
             'user_id' => $user->id,
             'subscription_type_id' => $subscriptionType->id,
             'is_recurrent' => $isRecurrent,
+            'is_paid' => $isPaid,
             'start_time' => $startTime,
             'end_time' => $endTime,
             'created_at' => new DateTime(),

@@ -99,6 +99,8 @@ class SubscriptionsGeneratorFormFactory
             ->setOption('description', 'subscriptions.admin.subscription_generator.description.end_time')
             ->setAttribute('class', 'flatpickr');
 
+        $form->addCheckbox('is_paid', 'subscriptions.data.subscriptions.fields.is_paid');
+
         $form->addSelect('type', 'subscriptions.data.subscriptions.fields.type', $this->subscriptionsRepository->availableTypes())
             ->setOption('description', 'subscriptions.admin.subscription_generator.description.type');
 
@@ -204,6 +206,7 @@ class SubscriptionsGeneratorFormFactory
                     'type' => $values['type'],
                     'start_time' => $startTime->format(DATE_RFC3339),
                     'end_time' => $endTime->format(DATE_RFC3339),
+                    'is_paid' => $values['is_paid'],
                 ];
                 $stats[self::NEWLY_REGISTERED] += 1;
 
@@ -233,6 +236,7 @@ class SubscriptionsGeneratorFormFactory
                 'type' => $values['type'],
                 'start_time' => $startTime->format(DATE_RFC3339),
                 'end_time' => $endTime->format(DATE_RFC3339),
+                'is_paid' => $values['is_paid'],
             ];
         }
 

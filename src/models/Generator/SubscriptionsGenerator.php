@@ -32,6 +32,7 @@ class SubscriptionsGenerator
             $subscription = $this->subscriptionsRepository->add(
                 $params->getSubscriptionType(),
                 false,
+                $params->getIsPaid(),
                 $params->getUser(),
                 $params->getType(),
                 $params->getStartTime(),

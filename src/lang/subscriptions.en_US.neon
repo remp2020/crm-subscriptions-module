@@ -17,6 +17,7 @@ data:
 			note: Note
 			address_id: Address
 			payment: Payment
+			is_paid: Paid
 		required:
 			start_time: Start time is required
 			end_time: End time is required

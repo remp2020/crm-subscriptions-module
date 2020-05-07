@@ -43,6 +43,7 @@ class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerI
         return [
             new InputParam(InputParam::TYPE_POST, 'email', InputParam::REQUIRED),
             new InputParam(InputParam::TYPE_POST, 'subscription_type_id', InputParam::REQUIRED),
+            new InputParam(InputParam::TYPE_POST, 'is_paid', InputParam::REQUIRED),
             new InputParam(InputParam::TYPE_POST, 'start_time', InputParam::OPTIONAL),
             new InputParam(InputParam::TYPE_POST, 'end_time', InputParam::OPTIONAL),
             new InputParam(InputParam::TYPE_POST, 'type', InputParam::OPTIONAL),
@@ -89,6 +90,7 @@ class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerI
         $subscription = $this->subscriptionsRepository->add(
             $subscriptionType,
             false,
+            $params['is_paid'],
             $user,
             $type,
             $startTime,

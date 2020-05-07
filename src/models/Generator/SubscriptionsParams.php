@@ -17,13 +17,23 @@ class SubscriptionsParams
 
     private $type;
 
-    public function __construct(IRow $subscriptionType, IRow $user, $type, DateTime $startTime, ?DateTime $endTime)
-    {
+    /** @var bool */
+    private $isPaid;
+
+    public function __construct(
+        IRow $subscriptionType,
+        IRow $user,
+        $type,
+        DateTime $startTime,
+        ?DateTime $endTime,
+        bool $isPaid
+    ) {
         $this->subscriptionType = $subscriptionType;
         $this->user = $user;
         $this->type = $type;
         $this->startTime = $startTime;
         $this->endTime = $endTime;
+        $this->isPaid = $isPaid;
     }
 
     public function getSubscriptionType()
@@ -49,5 +59,10 @@ class SubscriptionsParams
     public function getType()
     {
         return $this->type;
+    }
+
+    public function getIsPaid(): bool
+    {
+        return $this->isPaid;
     }
 }
