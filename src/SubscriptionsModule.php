@@ -184,7 +184,7 @@ class SubscriptionsModule extends CrmModule
     {
         $emitter->addListener(
             \Crm\SubscriptionsModule\Events\NewSubscriptionEvent::class,
-            $this->getInstance(\Crm\ApplicationModule\Events\RefreshUserDataTokenHandler::class),
+            $this->getInstance(\Crm\UsersModule\Events\RefreshUserDataTokenHandler::class),
             600
         );
         $emitter->addListener(

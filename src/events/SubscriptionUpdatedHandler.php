@@ -2,10 +2,10 @@
 
 namespace Crm\SubscriptionsModule\Events;
 
-use Crm\ApplicationModule\User\UserData;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\UsersModule\User\ISubscriptionGetter;
 use Crm\UsersModule\User\IUserGetter;
+use Crm\UsersModule\User\UserData;
 use League\Event\AbstractListener;
 use League\Event\Emitter;
 use League\Event\EventInterface;
