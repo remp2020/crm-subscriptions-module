@@ -256,6 +256,9 @@ admin:
 		title: Aktivní předplatitelé
 		help: "Unikátní předplatitelé, platící i neplatící."
 
+	users_abusive_additional_widget:
+		tooltip: Aktuální předplatné končí
+
 	subscription_types_meta:
 		header: Meta
 		title:
@@ -283,6 +286,9 @@ admin:
 data_provider:
 	delete:
 		three_months_active: 'Uživatel měl během posledních tří měsíců aktivní předplatné a nemůže být smazán. '
+	abusive_user:
+	    form:
+	        subscription_date_to: Předplatné do
 
 config:
 	category: Předplatné

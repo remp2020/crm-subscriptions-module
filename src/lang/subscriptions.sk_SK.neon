@@ -277,6 +277,9 @@ admin:
 		title: Aktívni predplatitelia
 		help: "Unikátny predplatitelia, platiaci aj neplatiaci."
 
+	users_abusive_additional_widget:
+		tooltip: Aktuálne predplatné končí
+
 	subscriptions_graph:
 		title: Nové predplatné
 		help: Novovytvorené predplatné v zvolenom odbobí
@@ -304,6 +307,9 @@ admin:
 data_provider:
 	delete:
 		three_months_active: Používateľ mal v posledných troch mesiacoch aktívne predplatné a nemôže byť zmazaný
+	abusive_user:
+	    form:
+	        subscription_date_to: Predplatné do
 
 config:
 	category: Predplatné

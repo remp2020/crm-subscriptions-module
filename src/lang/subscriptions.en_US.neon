@@ -276,6 +276,9 @@ admin:
 		title: Active Subscribers
 		help: "Unique subscribers, paying and non-paying."
 
+	users_abusive_additional_widget:
+		tooltip: Actual subscription ends
+
 	subscription_types_meta:
 		header: Meta
 		title:
@@ -303,6 +306,9 @@ admin:
 data_provider:
 	delete:
 		three_months_active: User had an active subscription within last three months and cannot be deleted
+	abusive_user:
+	    form:
+	        subscription_date_to: Subscription until
 
 config:
 	category: Subscriptions

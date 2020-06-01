@@ -18,6 +18,7 @@ use Crm\ApplicationModule\SeederManager;
 use Crm\ApplicationModule\User\UserDataRegistrator;
 use Crm\ApplicationModule\Widget\WidgetManagerInterface;
 use Crm\SubscriptionsModule\DataProvider\CanDeleteAddressDataProvider;
+use Crm\SubscriptionsModule\DataProvider\FilterAbusiveUserFormDataProvider;
 use Crm\SubscriptionsModule\Events\PreNotificationEventHandler;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Scenarios\ContentAccessCriteria;
@@ -178,6 +179,10 @@ class SubscriptionsModule extends CrmModule
             $this->getInstance(\Crm\SubscriptionsModule\Components\SubscribersWithMissingAddressWidget::class),
             2000
         );
+        $widgetManager->registerWidget(
+            'admin.user.abusive.additional',
+            $this->getInstance(\Crm\SubscriptionsModule\Components\UsersAbusiveAdditionalWidget::class)
+        );
     }
 
     public function registerEventHandlers(Emitter $emitter)
@@ -317,6 +322,10 @@ class SubscriptionsModule extends CrmModule
         $dataProviderManager->registerDataProvider(
             'users.dataprovider.address.can_delete',
             $this->getInstance(CanDeleteAddressDataProvider::class)
+        );
+        $dataProviderManager->registerDataProvider(
+            'users.dataprovider.filter_abusive_user_form',
+            $this->getInstance(FilterAbusiveUserFormDataProvider::class)
         );
     }
 
