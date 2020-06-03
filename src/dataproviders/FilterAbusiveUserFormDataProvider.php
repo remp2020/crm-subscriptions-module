@@ -35,10 +35,12 @@ class FilterAbusiveUserFormDataProvider implements FilterAbusiveUserFormDataProv
     public function filter(Selection $selection, array $params): Selection
     {
         if (isset($params['additional']['subscriptionTo'])) {
+            $subscriptionEndTime = new DateTime($params['additional']['subscriptionTo'] . ' 23:59:59');
+
             $selection->where([
                 ':subscriptions.start_time <= ?' => new DateTime(),
                 ':subscriptions.end_time >= ?' => new DateTime(),
-                ':subscriptions.end_time <= ?' => $params['additional']['subscriptionTo'],
+                ':subscriptions.end_time <= ?' => $subscriptionEndTime,
             ]);
         }
 
