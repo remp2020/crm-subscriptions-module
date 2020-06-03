@@ -5,6 +5,7 @@ namespace Crm\SubscriptionsModule\Forms;
 use Crm\ApplicationModule\Hermes\HermesMessage;
 use Crm\SubscriptionsModule\Events\SubscriptionPreUpdateEvent;
 use Crm\SubscriptionsModule\Events\SubscriptionUpdatedEvent;
+use Crm\SubscriptionsModule\Length\LengthMethodFactory;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Subscription\SubscriptionType;
@@ -27,6 +28,8 @@ class SubscriptionFormFactory
 
     private $addressesRepository;
 
+    private $lengthMethodFactory;
+
     private $translator;
 
     private $emitter;
@@ -42,6 +45,7 @@ class SubscriptionFormFactory
         SubscriptionTypesRepository $subscriptionTypesRepository,
         UsersRepository $usersRepository,
         AddressesRepository $addressesRepository,
+        LengthMethodFactory $lengthMethodFactory,
         Translator $translator,
         Emitter $emitter,
         \Tomaj\Hermes\Emitter $hermesEmitter
@@ -50,6 +54,7 @@ class SubscriptionFormFactory
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
         $this->usersRepository = $usersRepository;
         $this->addressesRepository = $addressesRepository;
+        $this->lengthMethodFactory = $lengthMethodFactory;
         $this->translator = $translator;
         $this->emitter = $emitter;
         $this->hermesEmitter = $hermesEmitter;
@@ -176,6 +181,12 @@ class SubscriptionFormFactory
             $values['internal_status'] = SubscriptionsRepository::INTERNAL_STATUS_UNKNOWN;
 
             $subscription = $this->subscriptionsRepository->find($subscriptionId);
+
+            if ($values['start_time'] && !$values['end_time']) {
+                $lengthMethod = $this->lengthMethodFactory->getExtension($subscriptionType->length_method_id);
+                $length = $lengthMethod->getEndTime($values['start_time'], $subscriptionType, false);
+                $values['end_time'] = $length->getEndTime();
+            }
 
             $this->emitter->emit(new SubscriptionPreUpdateEvent($subscription, $form, $values));
             if ($form->hasErrors()) {
