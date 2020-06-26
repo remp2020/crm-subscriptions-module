@@ -306,7 +306,8 @@ admin:
 
 data_provider:
 	delete:
-		three_months_active: User had an active subscription within last three months and cannot be deleted
+		active_subscription: User has/had an active subscription and cannot be deleted
+		unexpected_configuration_value: "Unexpected configuration value 'Users -> Count of days to check'"
 	abusive_user:
 	    form:
 	        subscription_date_to: Subscription until
@@ -316,3 +317,11 @@ config:
 	vat_default:
 		name: Default VAT rate
 		description: 'Default VAT rate for subscription type items (e.g. 20).'
+	users:
+		category: Users
+		prevent_anonymization:
+			name: Prevent the anonymization of user with active subscription
+			description: Will block the anonymization of user in the case of historic active subscription
+		prevent_anonymization_within_days:
+			name: Count of days to check
+			description: 'The count of days from last active subscription. If is empty, the user can be anonymized as soon as his currenct subscription expires. The setting is only taken into account if the "Prevent the anonymization of user with active subscription" option above is enabled.'

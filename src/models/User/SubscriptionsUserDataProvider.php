@@ -2,10 +2,13 @@
 
 namespace Crm\SubscriptionsModule\User;
 
+use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
 use Crm\ApplicationModule\User\UserDataProviderInterface;
+use Crm\SubscriptionsModule\Model\Config;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Nette\Localization\ITranslator;
 use Nette\Utils\DateTime;
+use Tracy\Debugger;
 
 class SubscriptionsUserDataProvider implements UserDataProviderInterface
 {
@@ -13,10 +16,16 @@ class SubscriptionsUserDataProvider implements UserDataProviderInterface
 
     private $translator;
 
-    public function __construct(SubscriptionsRepository $subscriptionsRepository, ITranslator $translator)
-    {
+    private $configRepository;
+
+    public function __construct(
+        SubscriptionsRepository $subscriptionsRepository,
+        ITranslator $translator,
+        ConfigsRepository $configRepository
+    ) {
         $this->subscriptionsRepository = $subscriptionsRepository;
         $this->translator = $translator;
+        $this->configRepository = $configRepository;
     }
 
     public static function identifier(): string
@@ -81,9 +90,21 @@ class SubscriptionsUserDataProvider implements UserDataProviderInterface
 
     public function canBeDeleted($userId): array
     {
-        $threeMonthsAgo = DateTime::from(strtotime('-3 months'));
-        if ($this->subscriptionsRepository->hasSubscriptionEndAfter($userId, $threeMonthsAgo)) {
-            return [false, $this->translator->translate('subscriptions.data_provider.delete.three_months_active')];
+        $configRow = $this->configRepository->loadByName(Config::BLOCK_ANONYMIZATION);
+        if ($configRow && $configRow->value) {
+            $configRow = $this->configRepository->loadByName(Config::BLOCK_ANONYMIZATION_WITHIN_DAYS);
+            if ($configRow && is_numeric($configRow->value) && $configRow->value >= 0) {
+                $deleteThreshold = new DateTime("-{$configRow->value} days");
+            } elseif (empty($configRow->value) === true) {
+                $deleteThreshold = new DateTime();
+            } else {
+                Debugger::log("Unexpected value for config option (" . Config::BLOCK_ANONYMIZATION_WITHIN_DAYS . "): {$configRow->value}");
+                return [false, $this->translator->translate('subscriptions.data_provider.delete.unexpected_configuration_value')];
+            }
+
+            if ($this->subscriptionsRepository->hasSubscriptionEndAfter($userId, $deleteThreshold)) {
+                return [false, $this->translator->translate('subscriptions.data_provider.delete.active_subscription')];
+            }
         }
 
         return [true, null];

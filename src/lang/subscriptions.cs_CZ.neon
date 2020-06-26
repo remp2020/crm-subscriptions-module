@@ -286,7 +286,8 @@ admin:
 
 data_provider:
 	delete:
-		three_months_active: 'Uživatel měl během posledních tří měsíců aktivní předplatné a nemůže být smazán. '
+		active_subscription: Uživatel má/měl aktivní předplatné a nemůže být smazán.
+		unexpected_configuration_value: "Neočekávaná konfigurační hodnota 'Uživatelé -> Počet kontrolovaných dnú'"
 	abusive_user:
 	    form:
 	        subscription_date_to: Předplatné do
@@ -296,3 +297,11 @@ config:
 	vat_default:
 		name: Běžná DPH
 		description: 'Standardní sazba DPH pro položky platby. Hodnota v % (např. 21).'
+	users:
+		category: Uživatelé
+		prevent_anonymization:
+			name: Zabránit anonymizaci uživatele s aktivním předplatným
+			description: Zabráni anonymizaci uživatele v případě pokud měl aktivne předplatné
+		prevent_anonymization_within_days:
+			name: Počet kontrolovaných dnú
+			description: 'Počet dnú, které musely uběhnout od konce posledního aktivního předplatného. Pokud není zadáno, uživatel může být anonymizovaných ihned jak mu vyprší jeho aktuální předplatné. Nastavení se bere v úvahu pouze v případě, že je povolena možnost "Zabránit anonymizaci uživatele s aktivním předplatným" výše.'
