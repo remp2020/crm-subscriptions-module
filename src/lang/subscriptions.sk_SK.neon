@@ -254,7 +254,7 @@ admin:
 		gift_header: Darované predplatné
 
 	subscription_button:
-		edit: Upraviť predplatné
+		title: Upraviť predplatné
 
 	actual_subscription_label:
 		subscription: Predplatné
