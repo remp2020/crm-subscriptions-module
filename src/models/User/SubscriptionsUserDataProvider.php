@@ -45,6 +45,7 @@ class SubscriptionsUserDataProvider implements UserDataProviderInterface
                 $types[] = $contentAccess->content_access->name;
             }
             $result[] = [
+                'id' => $subscription->id,
                 'start_time' => $subscription->start_time->getTimestamp(),
                 'end_time' => $subscription->end_time->getTimestamp(),
                 'code' => $subscription->subscription_type->code,
