@@ -5,6 +5,7 @@ namespace Crm\SubscriptionsModule\Scenarios;
 use Crm\ApplicationModule\Criteria\Params\StringLabeledArrayParam;
 use Crm\ApplicationModule\Criteria\ScenariosCriteriaInterface;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
+use Nette\Database\Table\IRow;
 use Nette\Database\Table\Selection;
 
 class ContentAccessCriteria implements ScenariosCriteriaInterface
@@ -26,10 +27,12 @@ class ContentAccessCriteria implements ScenariosCriteriaInterface
         ];
     }
 
-    public function addCondition(Selection $selection, $key, $values)
+    public function addCondition(Selection $selection, $values, IRow $criterionItemRow): bool
     {
         // ignore operator, assume OR for now
         $selection->where('subscription_type:subscription_type_content_access.content_access.name IN (?)', $values->selection);
+
+        return true;
     }
 
     public function label(): string

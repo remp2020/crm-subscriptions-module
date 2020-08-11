@@ -4,6 +4,7 @@ namespace Crm\SubscriptionsModule\Scenarios;
 
 use Crm\ApplicationModule\Criteria\Params\BooleanParam;
 use Crm\ApplicationModule\Criteria\ScenariosCriteriaInterface;
+use Nette\Database\Table\IRow;
 use Nette\Database\Table\Selection;
 
 class HasDisabledNotificationsCriteria implements ScenariosCriteriaInterface
@@ -17,9 +18,11 @@ class HasDisabledNotificationsCriteria implements ScenariosCriteriaInterface
         ];
     }
 
-    public function addCondition(Selection $selection, $key, $values)
+    public function addCondition(Selection $selection, $values, IRow $criterionItemRow): bool
     {
         $selection->where('subscription_type.disable_notifications = ?', (int)$values->selection);
+
+        return true;
     }
 
     public function label(): string

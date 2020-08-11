@@ -5,6 +5,7 @@ namespace Crm\SubscriptionsModule\Scenarios;
 use Crm\ApplicationModule\Criteria\Params\StringLabeledArrayParam;
 use Crm\ApplicationModule\Criteria\ScenariosCriteriaInterface;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Nette\Database\Table\IRow;
 use Nette\Database\Table\Selection;
 
 class TypeCriteria implements ScenariosCriteriaInterface
@@ -26,9 +27,11 @@ class TypeCriteria implements ScenariosCriteriaInterface
         ];
     }
 
-    public function addCondition(Selection $selection, $key, $values)
+    public function addCondition(Selection $selection, $values, IRow $criterionItemRow): bool
     {
         $selection->where('subscriptions.type IN (?)', $values->selection);
+
+        return true;
     }
 
     public function label(): string

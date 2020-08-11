@@ -4,6 +4,7 @@ namespace Crm\SubscriptionsModule\Scenarios;
 
 use Crm\ApplicationModule\Criteria\Params\BooleanParam;
 use Crm\ApplicationModule\Criteria\ScenariosCriteriaInterface;
+use Nette\Database\Table\IRow;
 use Nette\Database\Table\Selection;
 
 class IsRecurrentCriteria implements ScenariosCriteriaInterface
@@ -15,9 +16,11 @@ class IsRecurrentCriteria implements ScenariosCriteriaInterface
         ];
     }
 
-    public function addCondition(Selection $selection, $key, $values)
+    public function addCondition(Selection $selection, $values, IRow $criterionItemRow): bool
     {
         $selection->where('subscriptions.is_recurrent = ?', $values->selection);
+
+        return true;
     }
 
     public function label(): string

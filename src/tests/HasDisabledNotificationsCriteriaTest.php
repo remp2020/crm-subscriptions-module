@@ -2,7 +2,6 @@
 
 namespace Crm\SubscriptionsModule\Tests;
 
-use Crm\ApplicationModule\Selection;
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
 use Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
@@ -46,45 +45,45 @@ class HasDisabledNotificationsCriteriaTest extends DatabaseTestCase
 
     public function testHasDisabledNotificationsWithDisabledNotifications(): void
     {
-        $selection = $this->prepareData(true);
+        [$userSelection, $userRow] = $this->prepareData(true);
 
         $hasDisabledNotification = new HasDisabledNotificationsCriteria();
-        $hasDisabledNotification->addCondition($selection, HasDisabledNotificationsCriteria::KEY, (object)['selection' => true]);
+        $hasDisabledNotification->addCondition($userSelection, (object)['selection' => true], $userRow);
 
-        $this->assertNotFalse($selection->fetch());
+        $this->assertNotFalse($userSelection->fetch());
     }
 
     public function testHasDisabledNotificationsWithEnabledNotifications(): void
     {
-        $selection = $this->prepareData(false);
+        [$userSelection, $userRow] = $this->prepareData(false);
 
         $hasDisabledNotification = new HasDisabledNotificationsCriteria();
-        $hasDisabledNotification->addCondition($selection, HasDisabledNotificationsCriteria::KEY, (object)['selection' => true]);
+        $hasDisabledNotification->addCondition($userSelection, (object)['selection' => true], $userRow);
 
-        $this->assertFalse($selection->fetch());
+        $this->assertFalse($userSelection->fetch());
     }
 
     public function testHasEnabledNotificationsWithDisabledNotifications(): void
     {
-        $selection = $this->prepareData(true);
+        [$userSelection, $userRow] = $this->prepareData(true);
 
         $hasDisabledNotification = new HasDisabledNotificationsCriteria();
-        $hasDisabledNotification->addCondition($selection, HasDisabledNotificationsCriteria::KEY, (object)['selection' => false]);
+        $hasDisabledNotification->addCondition($userSelection, (object)['selection' => false], $userRow);
 
-        $this->assertFalse($selection->fetch());
+        $this->assertFalse($userSelection->fetch());
     }
 
     public function testHasEnabledNotificationsWithEnabledNotifications(): void
     {
-        $selection = $this->prepareData(false);
+        [$userSeletion, $userRow] = $this->prepareData(false);
 
         $hasDisabledNotification = new HasDisabledNotificationsCriteria();
-        $hasDisabledNotification->addCondition($selection, HasDisabledNotificationsCriteria::KEY, (object)['selection' => false]);
+        $hasDisabledNotification->addCondition($userSeletion, (object)['selection' => false], $userRow);
 
-        $this->assertNotFalse($selection->fetch());
+        $this->assertNotFalse($userSeletion->fetch());
     }
 
-    private function prepareData(bool $disabledNotifications): Selection
+    private function prepareData(bool $disabledNotifications): array
     {
         /** @var SubscriptionTypeBuilder $subscriptionTypeBuilder */
         $subscriptionTypeBuilder = $this->inject(SubscriptionTypeBuilder::class);
@@ -112,7 +111,9 @@ class HasDisabledNotificationsCriteriaTest extends DatabaseTestCase
             $userRow
         );
 
-        return $this->subscriptionsRepository->getTable()
+        $selection = $this->subscriptionsRepository->getTable()
             ->where(['subscriptions.id' => $subscriptionRow->id]);
+
+        return [$selection, $subscriptionRow];
     }
 }
