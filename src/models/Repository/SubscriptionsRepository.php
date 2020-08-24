@@ -384,21 +384,6 @@ class SubscriptionsRepository extends Repository
         return $this->getTable()->group('subscriptions.user_id')->order('subscriptions.start_time ASC');
     }
 
-    final public function getNotRenewedSubscriptions($date)
-    {
-        $notRenewedUsers = $this->getTable();
-
-        $allSubscriptions = $this->actualSubscriptions($date)->select('user_id');
-        if ($allSubscriptions->count() > 0) {
-            $notRenewedUsers->where('user_id NOT IN (?)', $allSubscriptions);
-        }
-        $notRenewedUsers
-            ->where('end_time < ?', $date)
-            ->where('subscription_type.print = ? ', 1)
-            ->group('user_id');
-        return $notRenewedUsers;
-    }
-
     final public function getExpiredSubscriptions(DateTime $dateTime = null)
     {
         if (!$dateTime) {
