@@ -61,11 +61,11 @@ class SubscriptionFormFactory
     }
 
     /**
-     * @param int $subscriptionId
      * @param IRow $user
+     * @param int|null $subscriptionId
      * @return Form
      */
-    public function create(int $subscriptionId = null, IRow $user = null)
+    public function create(IRow $user, int $subscriptionId = null)
     {
         $defaults = [];
         $subscription = false;
@@ -95,7 +95,7 @@ class SubscriptionFormFactory
         $subscriptionTypeId->getControlPrototype()->addAttributes(['class' => 'select2']);
 
         if (!$subscription) {
-            $subscriptionTypeId->addRule(function ($field, $user) {
+            $subscriptionTypeId->addRule(function ($field, IRow $user) {
                 $subscriptionType = $this->subscriptionTypesRepository->find($field->value);
                 if (!empty($subscriptionType->limit_per_user) &&
                     $this->subscriptionsRepository->getCount($subscriptionType->id, $user->id) >= $subscriptionType->limit_per_user) {
