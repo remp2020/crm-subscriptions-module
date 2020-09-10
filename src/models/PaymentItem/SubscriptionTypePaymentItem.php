@@ -3,21 +3,16 @@
 namespace Crm\SubscriptionsModule\PaymentItem;
 
 use Crm\PaymentsModule\PaymentItem\PaymentItemInterface;
+use Crm\PaymentsModule\PaymentItem\PaymentItemTrait;
 use Nette\Database\Table\IRow;
 
 class SubscriptionTypePaymentItem implements PaymentItemInterface
 {
+    use PaymentItemTrait;
+
     const TYPE = 'subscription_type';
 
     private $subscriptionTypeId;
-
-    private $count;
-
-    private $name;
-
-    private $vat;
-
-    private $price;
 
     public function __construct(
         int $subscriptionTypeId,
@@ -80,36 +75,6 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
             $paymentItem->vat,
             $paymentItem->count
         );
-    }
-
-    public function type(): string
-    {
-        return self::TYPE;
-    }
-
-    public function name(): string
-    {
-        return $this->name;
-    }
-
-    public function unitPrice(): float
-    {
-        return $this->price;
-    }
-
-    public function totalPrice(): float
-    {
-        return $this->unitPrice() * $this->count();
-    }
-
-    public function vat(): int
-    {
-        return $this->vat;
-    }
-
-    public function count(): int
-    {
-        return $this->count;
     }
 
     public function data(): array
