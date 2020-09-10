@@ -19,6 +19,7 @@ use Crm\ApplicationModule\User\UserDataRegistrator;
 use Crm\ApplicationModule\Widget\WidgetManagerInterface;
 use Crm\SubscriptionsModule\DataProvider\CanDeleteAddressDataProvider;
 use Crm\SubscriptionsModule\DataProvider\FilterAbusiveUserFormDataProvider;
+use Crm\SubscriptionsModule\DataProvider\SubscriptionsClaimUserDataProvider;
 use Crm\SubscriptionsModule\Events\PreNotificationEventHandler;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Scenarios\ContentAccessCriteria;
@@ -328,6 +329,10 @@ class SubscriptionsModule extends CrmModule
         $dataProviderManager->registerDataProvider(
             'users.dataprovider.filter_abusive_user_form',
             $this->getInstance(FilterAbusiveUserFormDataProvider::class)
+        );
+        $dataProviderManager->registerDataProvider(
+            'users.dataprovider.claim_unclaimed_user',
+            $this->getInstance(SubscriptionsClaimUserDataProvider::class)
         );
     }
 
