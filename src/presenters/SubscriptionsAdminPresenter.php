@@ -50,7 +50,7 @@ class SubscriptionsAdminPresenter extends AdminPresenter
             throw new BadRequestException();
         }
 
-        $form = $this->factory->create($id, $user);
+        $form = $this->factory->create($user, $id);
 
         $presenter = $this;
         $this->factory->onSave = function ($subscription) use ($presenter) {
