@@ -9,7 +9,6 @@ use Crm\ApiModule\Params\InputParam;
 use Crm\ApiModule\Params\ParamsProcessor;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\UsersModule\Auth\UsersApiAuthorizationInterface;
-use Crm\UsersModule\Repository\AccessTokensRepository;
 use Nette\Http\Response;
 use Nette\Utils\DateTime;
 
@@ -17,14 +16,10 @@ class UsersSubscriptionsHandler extends ApiHandler
 {
     private $subscriptionsRepository;
 
-    private $accessTokensRepository;
-
     public function __construct(
-        SubscriptionsRepository $subscriptionsRepository,
-        AccessTokensRepository $accessTokensRepository
+        SubscriptionsRepository $subscriptionsRepository
     ) {
         $this->subscriptionsRepository = $subscriptionsRepository;
-        $this->accessTokensRepository = $accessTokensRepository;
     }
 
     public function params()
@@ -40,15 +35,14 @@ class UsersSubscriptionsHandler extends ApiHandler
             throw new \Exception("Wrong authorization service used. Should be 'UsersApiAuthorizationInterface'");
         }
 
-        $data = $authorization->getAuthorizedData();
-        if (!isset($data['token'])) {
-            $response = new JsonResponse(['status' => 'error', 'message' => 'Cannot authorize user']);
-            $response->setHttpCode(Response::S403_FORBIDDEN);
+        $paramsProcessor = new ParamsProcessor($this->params());
+        if ($paramsProcessor->isError()) {
+            $response = new JsonResponse(['status' => 'error', 'code' => 'invalid_request', 'message' => $paramsProcessor->isError()]);
+            $response->setHttpCode(Response::S400_BAD_REQUEST);
             return $response;
         }
-
-        $paramsProcessor = new ParamsProcessor($this->params());
         $params = $paramsProcessor->getValues();
+        $authorizedUsers = $authorization->getAuthorizedUsers();
 
         $where = ['end_time >= ?' => new DateTime()];
         if (isset($params['show_finished']) && in_array($params['show_finished'], ['1', 'true'])) {
@@ -56,7 +50,6 @@ class UsersSubscriptionsHandler extends ApiHandler
         }
 
         $subscriptions = [];
-        $authorizedUsers = $authorization->getAuthorizedUsers();
         foreach ($authorizedUsers as $authorizedUser) {
             $subscriptions[] = $this->subscriptionsRepository->userSubscriptions($authorizedUser->id)->where($where)->fetchAll();
         }
