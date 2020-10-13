@@ -20,7 +20,6 @@ use Crm\ApplicationModule\Widget\WidgetManagerInterface;
 use Crm\SubscriptionsModule\DataProvider\CanDeleteAddressDataProvider;
 use Crm\SubscriptionsModule\DataProvider\FilterAbusiveUserFormDataProvider;
 use Crm\SubscriptionsModule\DataProvider\SubscriptionsClaimUserDataProvider;
-use Crm\SubscriptionsModule\Events\PreNotificationEventHandler;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Scenarios\ContentAccessCriteria;
 use Crm\SubscriptionsModule\Scenarios\HasDisabledNotificationsCriteria;
@@ -32,7 +31,6 @@ use Crm\SubscriptionsModule\Seeders\ContentAccessSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
-use Crm\UsersModule\Events\PreNotificationEvent;
 use Kdyby\Translation\Translator;
 use League\Event\Emitter;
 use Nette\Application\Routers\Route;
@@ -205,10 +203,6 @@ class SubscriptionsModule extends CrmModule
         $emitter->addListener(
             \Crm\UsersModule\Events\AddressRemovedEvent::class,
             $this->getInstance(\Crm\SubscriptionsModule\Events\AddressRemovedHandler::class)
-        );
-        $emitter->addListener(
-            PreNotificationEvent::class,
-            $this->getInstance(PreNotificationEventHandler::class)
         );
     }
 
