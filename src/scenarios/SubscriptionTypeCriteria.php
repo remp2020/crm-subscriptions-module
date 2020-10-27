@@ -20,10 +20,16 @@ class SubscriptionTypeCriteria implements ScenariosCriteriaInterface
 
     public function params(): array
     {
-        $types = $this->subscriptionTypesRepository->all()->fetchPairs('code', 'name');
+        $options = [];
+        foreach ($this->subscriptionTypesRepository->all()->select('code, name') as $subscriptionType) {
+            $options[$subscriptionType->code] = [
+                'label' => $subscriptionType->name,
+                'subtitle' => "($subscriptionType->code)",
+            ];
+        }
 
         return [
-            new StringLabeledArrayParam('subscription_type', 'Subscription type', $types),
+            new StringLabeledArrayParam('subscription_type', 'Subscription type', $options),
         ];
     }
 
