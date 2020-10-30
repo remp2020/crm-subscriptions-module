@@ -8,7 +8,7 @@ use Crm\SubscriptionsModule\Events\SubscriptionUpdatedEvent;
 use Crm\SubscriptionsModule\Length\LengthMethodFactory;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
-use Crm\SubscriptionsModule\Subscription\SubscriptionType;
+use Crm\SubscriptionsModule\Subscription\SubscriptionTypeHelper;
 use Crm\UsersModule\Repository\AddressesRepository;
 use Crm\UsersModule\Repository\UsersRepository;
 use Kdyby\Translation\Translator;
@@ -36,6 +36,8 @@ class SubscriptionFormFactory
 
     private $hermesEmitter;
 
+    private $subscriptionTypeHelper;
+
     public $onSave;
 
     public $onUpdate;
@@ -48,7 +50,8 @@ class SubscriptionFormFactory
         LengthMethodFactory $lengthMethodFactory,
         Translator $translator,
         Emitter $emitter,
-        \Tomaj\Hermes\Emitter $hermesEmitter
+        \Tomaj\Hermes\Emitter $hermesEmitter,
+        SubscriptionTypeHelper $subscriptionTypeHelper
     ) {
         $this->subscriptionsRepository = $subscriptionsRepository;
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
@@ -58,6 +61,7 @@ class SubscriptionFormFactory
         $this->translator = $translator;
         $this->emitter = $emitter;
         $this->hermesEmitter = $hermesEmitter;
+        $this->subscriptionTypeHelper = $subscriptionTypeHelper;
     }
 
     /**
@@ -80,11 +84,13 @@ class SubscriptionFormFactory
         $form->setTranslator($this->translator);
         $form->addProtection();
 
-        $active = $subscriptionTypePairs = SubscriptionType::getPairs(
-            $this->subscriptionTypesRepository->all()->where(['active' => true])
+        $active = $subscriptionTypePairs = $this->subscriptionTypeHelper->getPairs(
+            $this->subscriptionTypesRepository->all()->where(['active' => true]),
+            true
         );
-        $noActive = $subscriptionTypePairs = SubscriptionType::getPairs(
-            $this->subscriptionTypesRepository->all()->where(['active' => false])
+        $noActive = $subscriptionTypePairs = $this->subscriptionTypeHelper->getPairs(
+            $this->subscriptionTypesRepository->all()->where(['active' => false]),
+            true
         );
 
         $subscriptionTypeId = $form->addSelect(

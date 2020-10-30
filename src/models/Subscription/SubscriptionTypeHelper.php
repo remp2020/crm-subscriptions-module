@@ -2,21 +2,35 @@
 
 namespace Crm\SubscriptionsModule\Subscription;
 
+use Crm\ApplicationModule\Helpers\PriceHelper;
 use Nette\Database\Table\ActiveRow;
 use Nette\Utils\Json;
 
-class SubscriptionType
+class SubscriptionTypeHelper
 {
-    public static function getPairs($subscriptionTypes): array
+    private $priceHelper;
+
+    public function __construct(PriceHelper $priceHelper)
+    {
+        $this->priceHelper = $priceHelper;
+    }
+
+    public function getPairs($subscriptionTypes, $allowHtml = false): array
     {
         $subscriptionTypePairs = [];
         foreach ($subscriptionTypes as $st) {
-            $subscriptionTypePairs[$st->id] = "$st->name <small>({$st->code})</small>";
+            $price = $this->priceHelper->getFormattedPrice($st->price);
+            $subscriptionTypePairs[$st->id] = html_entity_decode(sprintf(
+                "%s / %s %s",
+                $st->name,
+                $price,
+                $allowHtml ? "<small>({$st->code})</small>" : "({$st->code})"
+            ));
         }
         return $subscriptionTypePairs;
     }
 
-    public static function getItems($subscriptionTypes): array
+    public function getItems($subscriptionTypes): array
     {
         $subscriptionPairs = [];
         /** @var ActiveRow $st */

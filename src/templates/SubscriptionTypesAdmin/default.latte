@@ -35,6 +35,10 @@
           <td>
             <div>
               <a n:href="SubscriptionTypesAdmin:Show $type->id">{$type->name}</a>
+              <small n:if="$type->next_subscription_type_id">
+                <i data-toggle="tooltip" data-placement="top" title="" class="fa fa-arrow-circle-right" data-original-title="{_subscriptions.data.subscription_types.fields.next_subscription_type_id}"></i>
+                <a n:href="SubscriptionTypesAdmin:Show $type->next_subscription_type_id">{$type->next_subscription->name} ({$type->next_subscription->price|price})</a>
+              </small>
               <span n:if="$type->default" class="label label-default">Default</span>
             </div>
             <div>
@@ -100,10 +104,16 @@
       <tr n:foreach="$inactiveSubscriptionTypes as $type">
         <td><small>{$type->id} /</small> ({$type->sorting})</td>
         <td>
+        <div>
           <a n:href="SubscriptionTypesAdmin:Show $type->id">
             {$type->name}
           </a>
-          <small>{$type->code}</small>
+          <span n:if="$type->default" class="label label-default">Default</span>
+        </div>
+        <div>
+          <code class="muted"><small>{$type->code}</small></code>
+        </div>
+
           <span n:if="$type->default" class="label label-success">Default</span>
         </td>
         <td>
