@@ -163,6 +163,7 @@ admin:
 			subscription_type_created: Typ předplatného byl vytvořen.
 			subscription_type_updated: Typ předplatného byl upraven.
 			subscription_type_not_found: Typ předplatného se nepodařilo nalézt.
+			subscription_type_not_editable: 'Typ předplatného nelze upravovat, protože obsahuje metadata.'
 		save: Uložit typ předplatného
 		form:
 			groups:

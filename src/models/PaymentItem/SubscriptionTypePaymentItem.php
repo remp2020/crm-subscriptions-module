@@ -12,6 +12,8 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
 
     const TYPE = 'subscription_type';
 
+    private $meta;
+
     private $subscriptionTypeId;
 
     public function __construct(
@@ -19,13 +21,15 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
         string $name,
         float $price,
         int $vat,
-        int $count = 1
+        int $count = 1,
+        array $meta = []
     ) {
         $this->subscriptionTypeId = $subscriptionTypeId;
         $this->name = $name;
         $this->price = $price;
         $this->vat = $vat;
         $this->count = $count;
+        $this->meta = $meta;
     }
 
     /**
@@ -36,7 +40,7 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
     public static function fromSubscriptionType(IRow $subscriptionType, int $count = 1): array
     {
         $rows = [];
-        foreach ($subscriptionType->related('subscription_type_items')->order('sorting') as $item) {
+        foreach ($subscriptionType->related('subscription_type_items') as $item) {
             $rows[] = static::fromSubscriptionTypeItem($item, $count);
         }
         return $rows;
@@ -49,12 +53,17 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
      */
     public static function fromSubscriptionTypeItem(IRow $subscriptionTypeItem, int $count = 1)
     {
+        $metas = ['subscription_type_item_id' => $subscriptionTypeItem->id];
+        foreach ($subscriptionTypeItem->related('subscription_type_item_meta') as $item) {
+            $metas[$item->key] = $item->value;
+        }
         return new SubscriptionTypePaymentItem(
             $subscriptionTypeItem->subscription_type_id,
             $subscriptionTypeItem->name,
             $subscriptionTypeItem->amount,
             $subscriptionTypeItem->vat,
-            $count
+            $count,
+            $metas
         );
     }
 
@@ -82,6 +91,11 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
         return [
             'subscription_type_id' => $this->subscriptionTypeId,
         ];
+    }
+
+    public function meta(): array
+    {
+        return $this->meta;
     }
 
     public function forceName(string $name): self

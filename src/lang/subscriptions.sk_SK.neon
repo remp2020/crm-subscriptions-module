@@ -178,6 +178,7 @@ admin:
 			subscription_type_item_deleted: Položka predplatného bola vymazaná
 			subscription_types_wrong_amount: 'Nesedí suma za položky so sumou predplatného. Rozdiel <strong>%price%</strong>'
 			no_subscription_type_items: Žiadne položky k predplatnému zatiaľ neboli vytvorené
+			subscription_type_not_editable: 'Typ predplatného nie je možné upravovať, pretože obsahuje metadáta.'
 		save: Uložiť typ predplatného
 		form:
 			groups:

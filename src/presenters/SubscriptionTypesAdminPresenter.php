@@ -9,6 +9,7 @@ use Crm\ApplicationModule\Graphs\GraphDataItem;
 use Crm\SubscriptionsModule\Forms\SubscriptionTypeItemsFormFactory;
 use Crm\SubscriptionsModule\Forms\SubscriptionTypeMetaFormFactory;
 use Crm\SubscriptionsModule\Forms\SubscriptionTypesFormFactory;
+use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemMetaRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesMetaRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
@@ -29,13 +30,16 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
 
     private $subscriptionType;
 
+    private $subscriptionTypeItemMetaRepository;
+
     public function __construct(
         SubscriptionTypesRepository $subscriptionTypesRepository,
         SubscriptionTypesFormFactory $subscriptionTypeFactory,
         SubscriptionTypeItemsRepository $subscriptionTypeItemsRepository,
         SubscriptionTypeItemsFormFactory $subscriptionTypeItemsFormFactory,
         SubscriptionTypesMetaRepository $subscriptionTypesMetaRepository,
-        SubscriptionTypeMetaFormFactory $subscriptionTypeMetaFormFactory
+        SubscriptionTypeMetaFormFactory $subscriptionTypeMetaFormFactory,
+        SubscriptionTypeItemMetaRepository $subscriptionTypeItemMetaRepository
     ) {
         parent::__construct();
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
@@ -44,6 +48,7 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
         $this->subscriptionTypeItemsFormFactory = $subscriptionTypeItemsFormFactory;
         $this->subscriptionTypesMetaRepository = $subscriptionTypesMetaRepository;
         $this->subscriptionTypeMetaFormFactory = $subscriptionTypeMetaFormFactory;
+        $this->subscriptionTypeItemMetaRepository = $subscriptionTypeItemMetaRepository;
     }
 
     public function renderDefault()
@@ -146,6 +151,10 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
         $subscriptionType = $this->subscriptionTypesRepository->find($id);
         if (!$subscriptionType) {
             $this->flashMessage($this->translator->translate('subscriptions.admin.subscription_types.messages.subscription_type_not_found'));
+            $this->redirect('default');
+        }
+        if ($this->subscriptionTypeItemMetaRepository->subscriptionTypeItemsHaveMeta($subscriptionType)) {
+            $this->flashMessage($this->translator->translate('subscriptions.admin.subscription_types.messages.subscription_type_not_editable'));
             $this->redirect('default');
         }
         $this->template->type = $subscriptionType;

@@ -2,13 +2,29 @@
 
 namespace Crm\SubscriptionsModule\Repository;
 
+use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Repository;
+use Crm\SubscriptionsModule\DataProvider\CanUpdateSubscriptionTypeItemDataProviderInterface;
+use Exception;
+use Nette\Caching\IStorage;
+use Nette\Database\Context;
 use Nette\Database\Table\IRow;
 use Nette\Utils\DateTime;
 
 class SubscriptionTypeItemsRepository extends Repository
 {
     protected $tableName = 'subscription_type_items';
+
+    private $dataProviderManager;
+
+    public function __construct(
+        Context $database,
+        IStorage $cacheStorage = null,
+        DataProviderManager $dataProviderManager
+    ) {
+        parent::__construct($database, $cacheStorage);
+        $this->dataProviderManager = $dataProviderManager;
+    }
 
     final public function add(IRow $subscriptionType, string $name, float $amount, int $vat, int $sorting = null)
     {
@@ -21,6 +37,16 @@ class SubscriptionTypeItemsRepository extends Repository
             'created_at' => new DateTime(),
             'updated_at' => new DateTime(),
         ]);
+    }
+
+    public function update(IRow &$row, $data)
+    {
+        if (!($this->canBeUpdated($row))) {
+            throw new Exception('Subscription type item ' . $row->id . ' cannot be updated');
+        }
+
+        $data['updated_at'] = new DateTime();
+        return parent::update($row, $data);
     }
 
     final public function exists(IRow $subscriptionType, string $name)
@@ -40,5 +66,18 @@ class SubscriptionTypeItemsRepository extends Repository
             return 100;
         }
         return $item->sorting + 100;
+    }
+
+    private function canBeUpdated($subscriptionTypeItem): bool
+    {
+        /** @var CanUpdateSubscriptionTypeItemDataProviderInterface[] $providers */
+        $providers = $this->dataProviderManager->getProviders('subscriptions.subscription_type_items.update', CanUpdateSubscriptionTypeItemDataProviderInterface::class);
+        foreach ($providers as $sorting => $provider) {
+            if (!($provider->provide(['subscriptionTypeItem' => $subscriptionTypeItem]))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

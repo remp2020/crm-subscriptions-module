@@ -13,6 +13,7 @@ services:
 	subscriptionTypeContentAccess: Crm\SubscriptionsModule\Repository\SubscriptionTypeContentAccess
 	subscriptionTypesMetaRepository: Crm\SubscriptionsModule\Repository\SubscriptionTypesMetaRepository
 	contentAccessRepository: Crm\SubscriptionsModule\Repository\ContentAccessRepository
+	subscriptionTypeItemMetaRepository: Crm\SubscriptionsModule\Repository\SubscriptionTypeItemMetaRepository
 
 	- Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder
 	- Crm\SubscriptionsModule\Forms\SubscriptionTypesFormFactory
