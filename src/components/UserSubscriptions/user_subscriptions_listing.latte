@@ -89,7 +89,12 @@
             {/if}
           </small>
         </td>
-        <td><a href="{plink :Subscriptions:SubscriptionsAdmin:edit $subscription->id, userId => $subscription->user_id}" class="btn btn-sm btn-primary" title="{_system.edit}"><i class="fa fa-edit"></i> {_system.edit}</a></td>
+        <td>
+          <a href="{plink :Subscriptions:SubscriptionsAdmin:edit $subscription->id, userId => $subscription->user_id}" class="btn btn-sm btn-primary" title="{_system.edit}">
+            <i class="fa fa-edit"></i> {_system.edit}
+          </a>
+          {control simpleWidget 'subscriptions.admin.user_subscriptions_listing.action', $subscription}
+        </td>
       </tr>
     </tbody>
   </table>
