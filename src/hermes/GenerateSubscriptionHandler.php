@@ -51,7 +51,8 @@ class GenerateSubscriptionHandler implements HandlerInterface
                     $record['type'],
                     DateTime::from($record['start_time']),
                     DateTime::from($record['end_time']),
-                    $record['is_paid']
+                    $record['is_paid'],
+                    $record['note'] ?? null
                 ),
                 1
             );

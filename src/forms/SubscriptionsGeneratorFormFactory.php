@@ -104,6 +104,9 @@ class SubscriptionsGeneratorFormFactory
         $form->addSelect('type', 'subscriptions.data.subscriptions.fields.type', $this->subscriptionsRepository->availableTypes())
             ->setOption('description', 'subscriptions.admin.subscription_generator.description.type');
 
+        $form->addText('note', 'subscriptions.data.subscriptions.fields.note')
+            ->setAttribute('placeholder', 'subscriptions.data.subscriptions.placeholder.note');
+
         $form->addGroup('subscriptions.admin.subscription_generator.group.users');
 
         $form->addTextArea('emails', 'subscriptions.admin.subscription_generator.field.emails')
@@ -200,7 +203,7 @@ class SubscriptionsGeneratorFormFactory
                     continue;
                 }
 
-                $payload['subscribe'][] = [
+                $subscriptionParams = [
                     'subscription_type_id' => $subscriptionType->id,
                     'email' => $email,
                     'type' => $values['type'],
@@ -208,6 +211,12 @@ class SubscriptionsGeneratorFormFactory
                     'end_time' => $endTime->format(DATE_RFC3339),
                     'is_paid' => $values['is_paid'],
                 ];
+
+                if (!empty($values['note'])) {
+                    $subscriptionParams['note'] = $values['note'];
+                }
+
+                $payload['subscribe'][] = $subscriptionParams;
                 $stats[self::NEWLY_REGISTERED] += 1;
 
                 // newly registered scenario handled completely
@@ -230,7 +239,7 @@ class SubscriptionsGeneratorFormFactory
 
             $actualSubscription ? $stats[self::ACTIVE] += 1 : $stats[self::INACTIVE] += 1;
 
-            $payload['subscribe'][] = [
+            $subscriptionParams = [
                 'subscription_type_id' => $subscriptionType->id,
                 'email' => $user->email,
                 'type' => $values['type'],
@@ -238,6 +247,12 @@ class SubscriptionsGeneratorFormFactory
                 'end_time' => $endTime->format(DATE_RFC3339),
                 'is_paid' => $values['is_paid'],
             ];
+
+            if (!empty($values['note'])) {
+                $subscriptionParams['note'] = $values['note'];
+            }
+
+            $payload['subscribe'][] = $subscriptionParams;
         }
 
         $messages = [];

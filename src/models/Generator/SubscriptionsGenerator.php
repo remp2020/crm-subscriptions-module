@@ -36,7 +36,8 @@ class SubscriptionsGenerator
                 $params->getUser(),
                 $params->getType(),
                 $params->getStartTime(),
-                $params->getEndTime()
+                $params->getEndTime(),
+                $params->getNote()
             );
 
             if ($subscription->start_time <= new DateTime() and $subscription->end_time > new DateTime()) {
