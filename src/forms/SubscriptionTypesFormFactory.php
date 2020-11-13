@@ -11,6 +11,7 @@ use Crm\SubscriptionsModule\Repository\SubscriptionExtensionMethodsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionLengthMethodsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
+use Crm\SubscriptionsModule\Subscription\SubscriptionTypeHelper;
 use Kdyby\Translation\Translator;
 use Nette\Application\UI\Form;
 use Nette\Forms\Container;
@@ -35,6 +36,8 @@ class SubscriptionTypesFormFactory
 
     private $dataProviderManager;
 
+    private $subscriptionTypeHelper;
+
     public $onSave;
 
     public $onUpdate;
@@ -47,7 +50,8 @@ class SubscriptionTypesFormFactory
         SubscriptionLengthMethodsRepository $subscriptionLengthMethodsRepository,
         ContentAccessRepository $contentAccess,
         Translator $translator,
-        DataProviderManager $dataProviderManager
+        DataProviderManager $dataProviderManager,
+        SubscriptionTypeHelper $subscriptionTypeHelper
     ) {
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
         $this->subscriptionTypeBuilder = $subscriptionTypeBuilder;
@@ -57,10 +61,13 @@ class SubscriptionTypesFormFactory
         $this->translator = $translator;
         $this->subscriptionTypeItemsRepository = $subscriptionTypeItemsRepository;
         $this->dataProviderManager = $dataProviderManager;
+        $this->subscriptionTypeHelper = $subscriptionTypeHelper;
     }
 
     /**
+     * @param $subscriptionTypeId
      * @return Form
+     * @throws \Crm\ApplicationModule\DataProvider\DataProviderException
      */
     public function create($subscriptionTypeId)
     {
@@ -115,8 +122,14 @@ class SubscriptionTypesFormFactory
             ->addRule(Form::FLOAT, 'subscriptions.admin.subscription_types.form.number')
             ->setAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.price');
 
-        $form->addSelect('next_subscription_type_id', 'subscriptions.data.subscription_types.fields.next_subscription_type_id', $this->subscriptionTypesRepository->all()->fetchPairs('id', 'name'))
-            ->setPrompt('--');
+
+        $types = $this->subscriptionTypeHelper->getPairs($this->subscriptionTypesRepository->all(), true);
+        $subscriptionTypeSelect = $form->addSelect(
+            'next_subscription_type_id',
+            'subscriptions.data.subscription_types.fields.next_subscription_type_id',
+            $types
+        )->setPrompt("--");
+        $subscriptionTypeSelect->getControlPrototype()->addAttributes(['class' => 'select2']);
 
         $form->addGroup('subscriptions.admin.subscription_types.form.groups.items');
 

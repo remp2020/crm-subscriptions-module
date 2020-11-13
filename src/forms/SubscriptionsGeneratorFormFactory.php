@@ -6,7 +6,7 @@ use Crm\ApplicationModule\Hermes\HermesMessage;
 use Crm\SubscriptionsModule\Generator\SubscriptionsGenerator;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
-use Crm\SubscriptionsModule\Subscription\SubscriptionType;
+use Crm\SubscriptionsModule\Subscription\SubscriptionTypeHelper;
 use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Email\EmailValidator;
 use DateInterval;
@@ -39,6 +39,8 @@ class SubscriptionsGeneratorFormFactory
 
     private $emitter;
 
+    private $subscriptionTypeHelper;
+
     public $onSubmit;
 
     public $onCreate;
@@ -50,7 +52,8 @@ class SubscriptionsGeneratorFormFactory
         Translator $translator,
         SubscriptionsRepository $subscriptionsRepository,
         EmailValidator $emailValidator,
-        Emitter $emitter
+        Emitter $emitter,
+        SubscriptionTypeHelper $subscriptionTypeHelper
     ) {
         $this->userManager = $userManager;
         $this->subscriptionsGenerator = $subscriptionsGenerator;
@@ -59,6 +62,7 @@ class SubscriptionsGeneratorFormFactory
         $this->subscriptionsRepository = $subscriptionsRepository;
         $this->emailValidator = $emailValidator;
         $this->emitter = $emitter;
+        $this->subscriptionTypeHelper = $subscriptionTypeHelper;
     }
 
     /**
@@ -83,7 +87,7 @@ class SubscriptionsGeneratorFormFactory
 
         $form->addGroup('subscriptions.menu.subscriptions');
 
-        $subscriptionTypePairs = SubscriptionType::getPairs($this->subscriptionTypesRepository->getAllActive());
+        $subscriptionTypePairs = $this->subscriptionTypeHelper->getPairs($this->subscriptionTypesRepository->getAllActive(), true);
         $subscriptionType = $form->addSelect('subscription_type', 'subscriptions.admin.subscription_generator.field.subscription_type', $subscriptionTypePairs)
             ->setPrompt("subscriptions.admin.subscription_generator.prompt.subscription_type")
             ->setRequired("subscriptions.admin.subscription_generator.required.subscription_type");
