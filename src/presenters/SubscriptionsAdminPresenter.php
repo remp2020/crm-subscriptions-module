@@ -41,11 +41,20 @@ class SubscriptionsAdminPresenter extends AdminPresenter
     public function createComponentSubscriptionForm()
     {
         $id = null;
+        $user = null;
+
         if (isset($this->params['id'])) {
             $id = $this->params['id'];
+            $subscription = $this->subscriptionsRepository->find($id);
+            if (!$subscription) {
+                throw new BadRequestException('Subscription does not exist: ' . $id);
+            }
+            $user = $subscription->user;
         }
 
-        $user = $this->usersRepository->find($this->params['userId']);
+        if (!$user && isset($this->params['userId'])) {
+            $user = $this->usersRepository->find($this->params['userId']);
+        }
         if (!$user) {
             throw new BadRequestException();
         }
