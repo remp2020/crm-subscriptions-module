@@ -5,6 +5,7 @@ namespace Crm\SubscriptionsModule\Builder;
 use Crm\ApplicationModule\Builder\Builder;
 use Crm\ApplicationModule\Config\ApplicationConfig;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
+use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemMetaRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Nette\Database\Context;
 use Nette\Utils\DateTime;
@@ -27,16 +28,20 @@ class SubscriptionTypeBuilder extends Builder
 
     private $metaItems = [];
 
+    private $subscriptionTypeItemMetaRepository;
+
     public function __construct(
         Context $database,
         ApplicationConfig $applicationConfig,
         ContentAccessRepository $contentAccessRepository,
+        SubscriptionTypeItemMetaRepository $subscriptionTypeItemMetaRepository,
         SubscriptionTypesRepository $subscriptionTypesRepository
     ) {
         parent::__construct($database);
         $this->applicationConfig = $applicationConfig;
         $this->contentAccessRepository = $contentAccessRepository;
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
+        $this->subscriptionTypeItemMetaRepository = $subscriptionTypeItemMetaRepository;
     }
 
     public function isValid()
@@ -209,12 +214,13 @@ class SubscriptionTypeBuilder extends Builder
         return $this->set('recurrent_charge_before', $recurrentChargeBefore);
     }
 
-    public function addSubscriptionTypeItem($name, $amount, $vat)
+    public function addSubscriptionTypeItem($name, $amount, $vat, $meta = [])
     {
         $this->subscriptionTypeItems[] = [
             'name' => $name,
             'amount' => $amount,
             'vat' => $vat,
+            'meta' => $meta
         ];
         return $this;
     }
@@ -266,7 +272,7 @@ class SubscriptionTypeBuilder extends Builder
         if (count($this->subscriptionTypeItems)) {
             $sorting = 100;
             foreach ($this->subscriptionTypeItems as $item) {
-                $this->database->table($this->subscriptionTypeItemsTable)->insert([
+                $subscriptionTypeItem = $this->database->table($this->subscriptionTypeItemsTable)->insert([
                     'subscription_type_id' => $subscriptionType->id,
                     'name' => $item['name'],
                     'amount' => $item['amount'],
@@ -275,6 +281,9 @@ class SubscriptionTypeBuilder extends Builder
                     'created_at' => new DateTime(),
                     'updated_at' => new DateTime(),
                 ]);
+                foreach ($item['meta'] as $key => $value) {
+                    $this->subscriptionTypeItemMetaRepository->add($subscriptionTypeItem, $key, $value);
+                }
                 $sorting += 100;
             }
         } else {
