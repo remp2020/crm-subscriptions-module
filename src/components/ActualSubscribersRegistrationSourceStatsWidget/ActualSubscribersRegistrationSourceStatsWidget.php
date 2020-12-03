@@ -51,11 +51,13 @@ class ActualSubscribersRegistrationSourceStatsWidget extends BaseWidget
         $this->template->setFile(__DIR__ . DIRECTORY_SEPARATOR . $this->templateName);
         $this->dateFrom = $params['dateFrom'];
         $this->dateTo = $params['dateTo'];
+        $this->template->asyncLoad = $params['asyncLoad'] ?? true;
         $this->template->render();
     }
 
     public function createComponentGoogleUserSubscribersRegistrationSourceStatsGraph()
     {
+        $this->getPresenter()->getSession()->close();
         $control = $this->factory->create();
 
         $results = $this->database->table('subscriptions')

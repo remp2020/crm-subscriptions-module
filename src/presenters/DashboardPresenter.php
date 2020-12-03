@@ -67,6 +67,7 @@ class DashboardPresenter extends AdminPresenter
 
     public function createComponentGoogleSubscriptionsFlowGraph(GoogleLineGraphGroupControlFactoryInterface $factory)
     {
+        $this->getSession()->close();
         $items = [];
 
         $graphDataItem = new GraphDataItem();
@@ -104,6 +105,7 @@ class DashboardPresenter extends AdminPresenter
 
     public function createComponentGoogleSubscriptionsGraph(GoogleLineGraphGroupControlFactoryInterface $factory)
     {
+        $this->getSession()->close();
         $items = [];
 
         $graphDataItem = new GraphDataItem();
@@ -150,6 +152,8 @@ class DashboardPresenter extends AdminPresenter
 
     public function createComponentGoogleSubscriptionsStatsGraph(GoogleBarGraphGroupControlFactoryInterface $factory)
     {
+        $this->getSession()->close();
+
         $graphDataItem = new GraphDataItem();
         $graphDataItem->setCriteria((new Criteria())
             ->setTableName('subscriptions')
@@ -170,6 +174,8 @@ class DashboardPresenter extends AdminPresenter
 
     public function createComponentGoogleNewSubscriptionsStatsGraph(GoogleBarGraphGroupControlFactoryInterface $factory)
     {
+        $this->getSession()->close();
+
         $graphDataItem = new GraphDataItem();
         $graphDataItem->setCriteria((new Criteria())
             ->setTableName('subscriptions')
@@ -195,6 +201,7 @@ class DashboardPresenter extends AdminPresenter
 
     public function createComponentGoogleSubscriptionsEndGraph(GoogleLineGraphGroupControlFactoryInterface $factory)
     {
+        $this->getSession()->close();
         $items = [];
 
         $graphDataItem = new GraphDataItem();
@@ -246,6 +253,7 @@ class DashboardPresenter extends AdminPresenter
 
     public function createComponentGoogleAccessStatsGraph(GoogleLineGraphGroupControlFactoryInterface $factory)
     {
+        $this->getSession()->close();
         $items = [];
 
         /** @var ActiveRow $contentAccess */
