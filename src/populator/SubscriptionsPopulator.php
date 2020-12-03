@@ -19,7 +19,6 @@ class SubscriptionsPopulator extends AbstractPopulator
             $subscriptions->insert([
                 'user_id' => $user->id,
                 'subscription_type_id' => $this->getRecord('subscription_types'),
-                'payment_gateway_id' => $this->getRecord('payment_gateways'),
                 'start_time' => $startTime,
                 'end_time' => $endTime,
                 'type' => $this->getRecord('subscription_type_names')->type,
