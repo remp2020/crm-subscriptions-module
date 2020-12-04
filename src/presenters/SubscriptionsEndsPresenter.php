@@ -119,14 +119,9 @@ class SubscriptionsEndsPresenter extends AdminPresenter
         $form->addSubmit('cancel', 'system.cancel_filter')->onClick[] = function () use ($presenter) {
             $presenter->redirect('default', ['text' => '']);
         };
-        $form->onSuccess[] = [$this, 'adminFilterSubmited'];
+        $form->onSuccess[] = [$this, 'adminFilterSubmitted'];
         $form->setDefaults((array) $this->params);
         return $form;
-    }
-
-    public function adminFilterSubmited($form, $values)
-    {
-        $this->redirect('default', (array) $values);
     }
 
     private function startDateTime(): DateTime
