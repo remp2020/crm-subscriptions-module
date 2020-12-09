@@ -3,7 +3,6 @@
 namespace Crm\SubscriptionsModule\Components;
 
 use Crm\ApplicationModule\Components\Graphs\GoogleBarGraphControlFactoryInterface;
-use Crm\ApplicationModule\Graphs\GraphData;
 use Crm\ApplicationModule\Widget\BaseWidget;
 use Crm\ApplicationModule\Widget\WidgetManager;
 use Nette\Database\Context;
@@ -21,27 +20,19 @@ class ActualSubscribersRegistrationSourceStatsWidget extends BaseWidget
 
     private $factory;
 
-    private $graphData;
-
     private $translator;
-
-    private $dateFrom;
-
-    private $dateTo;
 
     private $database;
 
     public function __construct(
         WidgetManager $widgetManager,
         GoogleBarGraphControlFactoryInterface $factory,
-        GraphData $graphData,
         ITranslator $translator,
         Context $database
     ) {
         parent::__construct($widgetManager);
 
         $this->factory = $factory;
-        $this->graphData = $graphData;
         $this->translator = $translator;
         $this->database = $database;
     }
@@ -49,8 +40,6 @@ class ActualSubscribersRegistrationSourceStatsWidget extends BaseWidget
     public function render($params)
     {
         $this->template->setFile(__DIR__ . DIRECTORY_SEPARATOR . $this->templateName);
-        $this->dateFrom = $params['dateFrom'];
-        $this->dateTo = $params['dateTo'];
         $this->template->asyncLoad = $params['asyncLoad'] ?? true;
         $this->template->render();
     }
