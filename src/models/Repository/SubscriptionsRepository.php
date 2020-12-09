@@ -10,6 +10,7 @@ use Crm\ApplicationModule\Repository\AuditLogRepository;
 use Crm\SubscriptionsModule\Events\NewSubscriptionEvent;
 use Crm\SubscriptionsModule\Events\SubscriptionEndsEvent;
 use Crm\SubscriptionsModule\Events\SubscriptionStartsEvent;
+use Crm\SubscriptionsModule\Events\SubscriptionUpdatedEvent;
 use Crm\SubscriptionsModule\Extension\Extension;
 use Crm\SubscriptionsModule\Extension\ExtensionMethodFactory;
 use Crm\SubscriptionsModule\Length\LengthMethodFactory;
@@ -113,6 +114,8 @@ class SubscriptionsRepository extends Repository
             $subscriptionLength = $length->getLength();
         }
 
+        $internalStatus = $this->getInternalStatus($startTime, $endTime);
+
         /** @var ActiveRow $newSubscription */
         $newSubscription = $this->insert([
             'user_id' => $user->id,
@@ -123,7 +126,7 @@ class SubscriptionsRepository extends Repository
             'end_time' => $endTime,
             'created_at' => new DateTime(),
             'modified_at' => new DateTime(),
-            'internal_status' => self::INTERNAL_STATUS_UNKNOWN,
+            'internal_status' => $internalStatus,
             'type' => $type,
             'length' => $subscriptionLength,
             'note' => $note,
@@ -147,7 +150,108 @@ class SubscriptionsRepository extends Repository
             'send_email' => $sendEmail
         ]));
 
+        $this->emitStatusNotifications($newSubscription);
+
         return $newSubscription;
+    }
+
+    final public function update(IRow &$row, $data)
+    {
+        $values['modified_at'] = new DateTime();
+
+        // Check if internal status has changed
+        $startTime = $row->start_time;
+        $endTime = $row->end_time;
+
+        if (isset($data['start_time'])) {
+            $startTime = $data['start_time'];
+        }
+
+        if (isset($data['end_time'])) {
+            $endTime = $data['end_time'];
+        }
+        $newInternalStatus = $this->getInternalStatus($startTime, $endTime);
+        $internalStatusChanged = false;
+        if ($newInternalStatus !== $row->internal_status) {
+            $data['internal_status'] = $newInternalStatus;
+            $internalStatusChanged = true;
+        }
+
+        // Check if one of the basic parameters is updated
+        $eventTriggeringParams = ['start_time', 'end_time', 'subscription_type_id', 'user_id'];
+        $fireUpdateEvent = false;
+        foreach ($eventTriggeringParams as $param) {
+            if (isset($data[$param]) && $data[$param] != $row->$param) {
+                $fireUpdateEvent = true;
+                break;
+            }
+        }
+
+        $result = parent::update($row, $data);
+        if ($result) {
+            /** @var ActiveRow $row */
+            $this->getTable()
+                ->where([
+                    'user_id' => $row->user_id,
+                    'end_time' => $row->start_time
+                ])
+                ->where('next_subscription_id IS NULL')
+                ->update(['next_subscription_id' => $row->id]);
+
+            if ($internalStatusChanged) {
+                $this->emitStatusNotifications($row);
+            }
+
+            if ($fireUpdateEvent) {
+                $this->emitter->emit(new SubscriptionUpdatedEvent($row));
+                $this->hermesEmitter->emit(new HermesMessage('update-subscription', [
+                    'subscription_id' => $row->id,
+                ]));
+            }
+        }
+
+        return $result;
+    }
+
+    private function getInternalStatus(DateTime $startTime, DateTime $endTime): string
+    {
+        $now = new DateTime();
+
+        if ($startTime <= $now and $endTime > $now) {
+            return self::INTERNAL_STATUS_ACTIVE;
+        }
+
+        if ($endTime <= $now) {
+            return self::INTERNAL_STATUS_AFTER_END;
+        }
+
+        if ($startTime > $now) {
+            return self::INTERNAL_STATUS_BEFORE_START;
+        }
+
+        return self::INTERNAL_STATUS_UNKNOWN;
+    }
+
+    // Emits events hooked on 'internal_status' change
+    private function emitStatusNotifications(IRow $subscription)
+    {
+        switch ($subscription->internal_status) {
+            case self::INTERNAL_STATUS_ACTIVE:
+                $this->emitter->emit(new SubscriptionStartsEvent($subscription));
+                break;
+            case self::INTERNAL_STATUS_AFTER_END:
+                $this->emitter->emit(new SubscriptionEndsEvent($subscription));
+                $this->hermesEmitter->emit(new HermesMessage('subscription-ends', [
+                    'subscription_id' => $subscription->id,
+                ]));
+                break;
+        }
+    }
+
+    final public function refreshInternalStatus(IRow $subscription): bool
+    {
+        // update with empty parameters will update subscription's internal_status
+        return $this->update($subscription, []);
     }
 
     final public function getSubscriptionExtension($subscriptionType, $user): Extension
@@ -270,23 +374,6 @@ class SubscriptionsRepository extends Repository
                 ->count('*') > 0;
     }
 
-    final public function update(IRow &$row, $data)
-    {
-        $values['modified_at'] = new DateTime();
-        $result = parent::update($row, $data);
-        if ($result) {
-            /** @var ActiveRow $row */
-            $this->getTable()
-                ->where([
-                    'user_id' => $row->user_id,
-                    'end_time' => $row->start_time
-                ])
-                ->where('next_subscription_id IS NULL')
-                ->update(['next_subscription_id' => $row->id]);
-        }
-        return $result;
-    }
-
     /**
      * @param $date
      * @return \Nette\Database\Table\Selection
@@ -398,25 +485,6 @@ class SubscriptionsRepository extends Repository
         ]);
     }
 
-    final public function setExpired($subscription, $endTime = null, string $note = null)
-    {
-        $data = [
-            'internal_status' => SubscriptionsRepository::INTERNAL_STATUS_AFTER_END,
-            'modified_at' => new DateTime(),
-        ];
-        if ($note) {
-            $data['note'] = $note;
-        }
-        if ($endTime) {
-            $data['end_time'] = $endTime;
-        }
-        $this->update($subscription, $data);
-        $this->emitter->emit(new SubscriptionEndsEvent($subscription));
-        $this->hermesEmitter->emit(new HermesMessage('subscription-ends', [
-            'subscription_id' => $subscription->id,
-        ]));
-    }
-
     final public function getStartedSubscriptions(DateTime $dateTime = null)
     {
         if (!$dateTime) {
@@ -430,12 +498,6 @@ class SubscriptionsRepository extends Repository
                 self::INTERNAL_STATUS_UNKNOWN
             ]
         ]);
-    }
-
-    final public function setStarted($subscription)
-    {
-        $this->update($subscription, ['internal_status' => SubscriptionsRepository::INTERNAL_STATUS_ACTIVE]);
-        $this->emitter->emit(new SubscriptionStartsEvent($subscription));
     }
 
     final public function getPreviousSubscription($subscriptionId)

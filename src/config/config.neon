@@ -45,7 +45,6 @@ services:
 	- Crm\SubscriptionsModule\Api\v1\UsersSubscriptionsHandler
 	- Crm\SubscriptionsModule\Subscription\ActualUserSubscription
 	- Crm\SubscriptionsModule\Events\AddressRemovedHandler
-	- Crm\SubscriptionsModule\Events\SubscriptionUpdatedHandler
 	- Crm\SubscriptionsModule\Hermes\GenerateSubscriptionHandler
 	- Crm\SubscriptionsModule\Api\v1\CreateSubscriptionHandler
 	- Crm\SubscriptionsModule\Api\v1\ListContentAccessHandler

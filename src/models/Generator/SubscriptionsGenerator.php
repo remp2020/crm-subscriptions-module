@@ -2,9 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Generator;
 
-use Crm\SubscriptionsModule\Events\SubscriptionStartsEvent;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
-use DateTime;
 use League\Event\Emitter;
 
 class SubscriptionsGenerator
@@ -39,13 +37,6 @@ class SubscriptionsGenerator
                 $params->getEndTime(),
                 $params->getNote()
             );
-
-            if ($subscription->start_time <= new DateTime() and $subscription->end_time > new DateTime()) {
-                $this->subscriptionsRepository->update($subscription, ['internal_status' => SubscriptionsRepository::INTERNAL_STATUS_ACTIVE]);
-                $this->emitter->emit(new SubscriptionStartsEvent($subscription));
-            } else {
-                $this->subscriptionsRepository->update($subscription, ['internal_status' => SubscriptionsRepository::INTERNAL_STATUS_BEFORE_START]);
-            }
             $subscriptions[] = $subscription;
         }
         return $subscriptions;

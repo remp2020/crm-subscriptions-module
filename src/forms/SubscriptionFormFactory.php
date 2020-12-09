@@ -2,9 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Forms;
 
-use Crm\ApplicationModule\Hermes\HermesMessage;
 use Crm\SubscriptionsModule\Events\SubscriptionPreUpdateEvent;
-use Crm\SubscriptionsModule\Events\SubscriptionUpdatedEvent;
 use Crm\SubscriptionsModule\Length\LengthMethodFactory;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
@@ -195,17 +193,12 @@ class SubscriptionFormFactory
                 $values['end_time'] = $length->getEndTime();
             }
 
-            $this->emitter->emit(new SubscriptionPreUpdateEvent($subscription, $form, $values));
             if ($form->hasErrors()) {
                 return;
             }
 
+            $this->emitter->emit(new SubscriptionPreUpdateEvent($subscription, $form, $values));
             $this->subscriptionsRepository->update($subscription, $values);
-            $this->emitter->emit(new SubscriptionUpdatedEvent($subscription));
-
-            $this->hermesEmitter->emit(new HermesMessage('update-subscription', [
-                'subscription_id' => $subscription->id,
-            ]));
             $this->onUpdate->__invoke($subscription);
         } else {
             $address = null;
