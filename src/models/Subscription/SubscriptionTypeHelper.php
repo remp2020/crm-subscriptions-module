@@ -4,7 +4,6 @@ namespace Crm\SubscriptionsModule\Subscription;
 
 use Crm\ApplicationModule\Helpers\PriceHelper;
 use Nette\Database\Table\ActiveRow;
-use Nette\Utils\Json;
 
 class SubscriptionTypeHelper
 {
@@ -44,7 +43,7 @@ class SubscriptionTypeHelper
                     'name' => $item->name,
                     'amount' => $item->amount,
                     'vat' => $item->vat,
-                    'meta' => Json::encode(array_merge($item->related('subscription_type_item_meta')->fetchPairs('key', 'value'), ['subscription_type_item_id' => $item->id]))
+                    'meta' => array_merge($item->related('subscription_type_item_meta')->fetchPairs('key', 'value'), ['subscription_type_item_id' => $item->id])
                 ];
             }
         }
