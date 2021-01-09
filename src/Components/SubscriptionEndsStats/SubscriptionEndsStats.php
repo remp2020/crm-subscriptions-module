@@ -24,8 +24,6 @@ class SubscriptionEndsStats extends UI\Control
     /** @var SubscriptionTypesRepository  */
     private $subscriptionTypesRepository;
 
-    private $translator;
-
     private $startTime;
 
     private $endTime;
@@ -39,11 +37,9 @@ class SubscriptionEndsStats extends UI\Control
     public function __construct(
         SubscriptionsRepository $subscriptionsRepository,
         SubscriptionTypesRepository $subscriptionTypesRepository,
-        Translator $translator
     ) {
         $this->subscriptionsRepository = $subscriptionsRepository;
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
-        $this->translator = $translator;
     }
 
     public function render()
@@ -70,9 +66,6 @@ class SubscriptionEndsStats extends UI\Control
         list($typesCounts, $contents) = $this->getCounts($data);
         $this->template->typesCounts = $typesCounts;
         $this->template->contents = $contents;
-
-        $this->template->setTranslator($this->translator);
-
         $this->template->setFile(__DIR__ . '/' . $this->templateName);
         $this->template->render();
     }

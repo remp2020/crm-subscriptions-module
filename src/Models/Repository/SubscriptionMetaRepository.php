@@ -55,13 +55,13 @@ class SubscriptionMetaRepository extends Repository
         return $this->getTable()->where(['subscription_id' => $subscription->id, 'key' => $key])->fetchField('value');
     }
 
-    final public function findSubscriptionBy(string $key, string $value)
+    final public function findSubscriptionBy(string $key, string $value): ?ActiveRow
     {
         $meta = $this->getTable()->where(['key' => $key, 'value' => $value])->limit(1)->fetch();
         if ($meta) {
             return $meta->subscription;
         }
-        return false;
+        return null;
     }
 
     final public function findBySubscriptionAndKey(ActiveRow $subscription, string $key)
