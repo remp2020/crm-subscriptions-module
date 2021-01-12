@@ -299,12 +299,8 @@ class SubscriptionsModule extends CrmModule
     public function registerDataProviders(DataProviderManager $dataProviderManager)
     {
         $dataProviderManager->registerDataProvider(
-            'users.dataprovider.filter_users_form',
+            'users.dataprovider.users_filter_form',
             $this->getInstance(\Crm\SubscriptionsModule\DataProvider\FilterUsersFormDataProvider::class)
-        );
-        $dataProviderManager->registerDataProvider(
-            'users.dataprovider.filter_users_selection',
-            $this->getInstance(\Crm\SubscriptionsModule\DataProvider\FilterUsersSelectionDataProvider::class)
         );
         $dataProviderManager->registerDataProvider(
             'users.dataprovider.filter_user_actions_log_selection',

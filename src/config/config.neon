@@ -65,7 +65,6 @@ services:
 	- Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder
 	- Crm\SubscriptionsModule\Access\SubscriptionAccessProvider
 	- Crm\SubscriptionsModule\DataProvider\FilterUsersFormDataProvider
-	- Crm\SubscriptionsModule\DataProvider\FilterUsersSelectionDataProvider
 	- Crm\SubscriptionsModule\DataProvider\FilterUserActionLogsSelectionDataProvider
 	- Crm\SubscriptionsModule\DataProvider\FilterUserActionLogsFormDataProvider
 	- Crm\SubscriptionsModule\DataProvider\CanDeleteAddressDataProvider
