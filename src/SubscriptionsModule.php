@@ -172,7 +172,7 @@ class SubscriptionsModule extends CrmModule
         );
         $widgetManager->registerWidget(
             'admin.user.list.emailcolumn',
-            $this->getInstance(\Crm\SubscriptionsModule\Components\ActualSubscriptionLabel::class),
+            $this->getInstance(\Crm\SubscriptionsModule\Components\UserSubscriptionInfoWidget::class),
             600
         );
         $widgetManager->registerWidget(

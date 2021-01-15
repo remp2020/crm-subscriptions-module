@@ -67,8 +67,6 @@ class FilterUsersFormDataProvider implements FilterUsersFormDataProviderInterfac
 
     public function filter(Selection $selection, array $formData): Selection
     {
-        $selection->select(':subscriptions.start_time, :subscriptions.end_time');
-
         $actualSubscription = $this->getActualSubscription($formData);
         if ($actualSubscription && $actualSubscription === '1') {
             $selection

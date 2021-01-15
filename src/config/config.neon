@@ -38,7 +38,7 @@ services:
 	- Crm\SubscriptionsModule\Components\RenewedSubscriptionsEndingWithinPeriodWidget
 	- Crm\SubscriptionsModule\Components\SubscriptionsEndingWithinPeriodWidget
 	- Crm\SubscriptionsModule\Components\MonthSubscriptionsSmallBarGraphWidget
-	- Crm\SubscriptionsModule\Components\ActualSubscriptionLabel
+	- Crm\SubscriptionsModule\Components\UserSubscriptionInfoWidget
 	- Crm\SubscriptionsModule\Components\UserSubscriptionsListing
 	- Crm\SubscriptionsModule\Components\SubscriptionEndsStatsFactoryInterface
 	- Crm\SubscriptionsModule\Commands\ChangeSubscriptionsStateCommand
