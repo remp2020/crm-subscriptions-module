@@ -5,7 +5,12 @@ menu:
 	subscriptions: Subscriptions
 	subscription_types: Subscription types
 	subscriptions_generator: Subscriptions generator
-
+dashboard:
+        subscriptions_length:
+            days: days
+            and_more_days: and more days
+            title: Length of subscriptions
+            tooltip: Length of subscriptions per user
 data:
 	subscriptions:
 		fields:

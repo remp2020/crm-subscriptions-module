@@ -103,6 +103,70 @@ class DashboardPresenter extends AdminPresenter
         return $control;
     }
 
+    public function createComponentGoogleSubscriptionsLengthStatsGraph(GoogleLineGraphGroupControlFactoryInterface $factory)
+    {
+
+        $dateranges = [
+            [
+                "from_days" => 1,
+                "to_days" => 27,
+            ],
+            [
+                "from_days" => 28,
+                "to_days" => 55,
+            ],
+            [
+                "from_days" => 56,
+                "to_days" => 99,
+            ],
+            [
+                "from_days" => 100,
+                "to_days" => 364,
+            ],
+            [
+                "from_days" => 365,
+                "to_days" => 545,
+            ]
+        ];
+
+        $items = [];
+
+        foreach ($dateranges as $daterange){
+            $graphDataItem = new GraphDataItem();
+            $graphDataItem->setCriteria((new Criteria())
+                ->setTableName('subscriptions')
+                ->setRangeFields('start_time', 'end_time')
+                ->setValueField('count(distinct subscriptions.user_id)')
+                ->setWhere(' AND length >=' . $daterange["from_days"] . ' AND length <=' . $daterange["to_days"])
+                ->setStart($this->dateFrom)
+                ->setEnd($this->dateTo));
+            $graphDataItem->setName($daterange["from_days"] . ' - ' . $daterange["to_days"] . ' ' . $this->translator->translate('subscriptions.dashboard.subscriptions_length.days'));
+            $items[] = $graphDataItem;
+        }
+
+        // we add one more default group for all the rest
+
+        $graphDataItem = new GraphDataItem();
+        $graphDataItem->setCriteria((new Criteria())
+            ->setTableName('subscriptions')
+            ->setRangeFields('start_time', 'end_time')
+            ->setValueField('count(distinct subscriptions.user_id)')
+            ->setWhere(' AND length > ' . $dateranges[array_key_last($dateranges)]["to_days"])
+            ->setStart($this->dateFrom)
+            ->setEnd($this->dateTo));
+        $graphDataItem->setName($dateranges[array_key_last($dateranges)]["to_days"] + 1 . ' ' . $this->translator->translate('subscriptions.dashboard.subscriptions_length.and_more_days') );
+        $items[] = $graphDataItem;
+
+        $control = $factory->create()
+            ->setGraphTitle($this->translator->translate('subscriptions.dashboard.subscriptions_length.title'))
+            ->setGraphHelp($this->translator->translate('subscriptions.dashboard.subscriptions_length.tooltip'));
+
+        foreach ($items as $graphDataItem) {
+            $control->addGraphDataItem($graphDataItem);
+        }
+        return $control;
+    }
+
     public function createComponentGoogleSubscriptionsGraph(GoogleLineGraphGroupControlFactoryInterface $factory)
     {
         $this->getSession()->close();

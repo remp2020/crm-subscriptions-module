@@ -5,6 +5,12 @@ menu:
 	subscriptions: Předplatné
 	subscription_types: Typy předplatného
 	subscriptions_generator: Generátor předplatného
+dashboard:
+        subscriptions_length:
+            days: dní
+            and_more_days: a více dní
+            title: Délka předplatného
+            tooltip: Délka předplatného na uživatele
 data:
 	subscriptions:
 		fields:
