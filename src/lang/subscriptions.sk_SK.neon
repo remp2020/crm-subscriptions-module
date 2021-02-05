@@ -5,12 +5,7 @@ menu:
 	subscriptions: Predplatné
 	subscription_types: Typy predplatného
 	subscriptions_generator: Generátor predplatného
-dashboard:
-        subscriptions_recurrency:
-            recurrent_subscribers: Rekurentní predplatitelia
-            nonrecurrent_subscribers: Nerekurentní predplatitelia
-            title: Rekurentnosť predplatiteľov
-            tooltip: Počet rekurentných a nerekurentných platiacich predplatiteľov
+
 data:
 	subscriptions:
 		fields:
@@ -242,6 +237,18 @@ admin:
 			active: "Vytvárame %count% predplatných pre aktívnych predplatiteľov."
 			skipped: "Nevytvárame %count% predplatných, keďže používatelia nespĺňajú zvolené podmienky"
 
+	dashboard:
+		subscriptions_recurrency:
+			recurrent_subscribers: Rekurentní predplatitelia
+			nonrecurrent_subscribers: Nerekurentní predplatitelia
+			title: Rekurentnosť predplatiteľov
+			tooltip: Počet rekurentných a nerekurentných platiacich predplatiteľov
+		subscriptions_length:
+			days: dní
+			and_more_days: a viac dní
+			title: Dĺžka predplatného
+			tooltip: Dĺžka predplatného na užívateľa
+
 	address:
 		cant_delete: 'Táto adresa sa používa pri predplatnom: %subscriptions%|Táto adresa sa používa pri predplatných: %subscriptions%'
 
@@ -294,8 +301,8 @@ admin:
 	subscription_types_meta:
 		header: Meta
 		title:
-		    create: Nový meta záznam
-		    update: Úprava meta
+			create: Nový meta záznam
+			update: Úprava meta
 		value_removed: Hodnota bola zmazaná
 		value_added: Hodnota bola pridaná
 		form:
@@ -308,16 +315,16 @@ admin:
 			submit: Ulož
 		no_record_description: Tento typ predplatného neobsahuje žiadne meta dáta.
 		error:
-		    internal: Nastala chyba. Prosím kontaktujte administrátora.
-		    duplicate: Meta s rovnakým kľúčom už existuje.
+			internal: Nastala chyba. Prosím kontaktujte administrátora.
+			duplicate: Meta s rovnakým kľúčom už existuje.
 
 data_provider:
 	delete:
 		active_subscription: Používateľ má/mal aktívne predplatné a nemôže byť zmazaný
 		unexpected_configuration_value: "Neočakávaná konfiguračná hodnota 'Používatelia  -> Počet kontrolovaných dní'"
 	abusive_user:
-	    form:
-	        subscription_date_to: Predplatné do
+		form:
+			subscription_date_to: Predplatné do
 
 config:
 	category: Predplatné

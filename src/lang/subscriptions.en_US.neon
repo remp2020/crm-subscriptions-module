@@ -5,12 +5,7 @@ menu:
 	subscriptions: Subscriptions
 	subscription_types: Subscription types
 	subscriptions_generator: Subscriptions generator
-dashboard:
-        subscriptions_recurrency:
-            recurrent_subscribers: Recurrent subscribers
-            nonrecurrent_subscribers: Non-reccurent subscribers
-            title: Recurrent subscribers
-            tooltip: "Number of paying subscribers with recurrent and non-recurrent subscription."
+
 data:
 	subscriptions:
 		fields:
@@ -244,6 +239,18 @@ admin:
 	address:
 		cant_delete: 'This address is used in subscription: %subscriptions%|This address is used in subscriptions: %subscriptions%'
 
+	dashboard:
+		subscriptions_recurrency:
+			recurrent_subscribers: Recurrent subscribers
+			nonrecurrent_subscribers: Non-reccurent subscribers
+			title: Recurrent subscribers
+			tooltip: "Number of paying subscribers with recurrent and non-recurrent subscription."
+		subscriptions_length:
+			days: days
+			and_more_days: and more days
+			title: Length of subscriptions
+			tooltip: Length of subscriptions per user
+
 	# componenty
 
 	actual_user_subscriptions:
@@ -303,8 +310,8 @@ admin:
 			submit: Save
 		no_record_description: This subscription type doesn't contain any meta values.
 		error:
-		    internal: Internal error. Please contact administrator.
-		    duplicate: Meta key with same key already exists.
+			internal: Internal error. Please contact administrator.
+			duplicate: Meta key with same key already exists.
 
 	subscriptions_graph:
 		title: New subscriptions
@@ -315,8 +322,8 @@ data_provider:
 		active_subscription: User has/had an active subscription and cannot be deleted
 		unexpected_configuration_value: "Unexpected configuration value 'Users -> Count of days to check'"
 	abusive_user:
-	    form:
-	        subscription_date_to: Subscription until
+		form:
+			subscription_date_to: Subscription until
 
 config:
 	category: Subscriptions

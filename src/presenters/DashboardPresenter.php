@@ -116,7 +116,7 @@ class DashboardPresenter extends AdminPresenter
             ->setWhere('AND is_recurrent = 1 AND is_paid = 1')
             ->setStart($this->dateFrom)
             ->setEnd($this->dateTo));
-        $graphDataItem->setName($this->translator->translate('subscriptions.dashboard.subscriptions_recurrency.recurrent_subscribers'));
+        $graphDataItem->setName($this->translator->translate('subscriptions.admin.dashboard.subscriptions_recurrency.recurrent_subscribers'));
         $items[] = $graphDataItem;
 
         $graphDataItem = new GraphDataItem();
@@ -127,12 +127,72 @@ class DashboardPresenter extends AdminPresenter
             ->setWhere('AND is_recurrent = 0 AND is_paid = 1')
             ->setStart($this->dateFrom)
             ->setEnd($this->dateTo));
-        $graphDataItem->setName($this->translator->translate('subscriptions.dashboard.subscriptions_recurrency.nonrecurrent_subscribers'));
+        $graphDataItem->setName($this->translator->translate('subscriptions.admin.dashboard.subscriptions_recurrency.nonrecurrent_subscribers'));
         $items[] = $graphDataItem;
 
         $control = $factory->create()
-            ->setGraphTitle($this->translator->translate('subscriptions.dashboard.subscriptions_recurrency.title'))
-            ->setGraphHelp($this->translator->translate('subscriptions.dashboard.subscriptions_recurrency.tooltip'));
+            ->setGraphTitle($this->translator->translate('subscriptions.admin.dashboard.subscriptions_recurrency.title'))
+            ->setGraphHelp($this->translator->translate('subscriptions.admin.dashboard.subscriptions_recurrency.tooltip'));
+
+        foreach ($items as $graphDataItem) {
+            $control->addGraphDataItem($graphDataItem);
+        }
+        return $control;
+    }
+
+    public function createComponentGoogleSubscriptionsLengthStatsGraph(GoogleLineGraphGroupControlFactoryInterface $factory)
+    {
+        $this->getSession()->close();
+        $dayRanges = [
+            ["from_days" => 1, "to_days" => 27],
+            ["from_days" => 28, "to_days" => 55],
+            ["from_days" => 56, "to_days" => 99],
+            ["from_days" => 100, "to_days" => 364],
+            ["from_days" => 365, "to_days" => 545]
+        ];
+
+        $items = [];
+
+        foreach ($dayRanges as $range) {
+            $graphDataItem = new GraphDataItem();
+            $graphDataItem->setCriteria((new Criteria())
+                ->setTableName('subscriptions')
+                ->setRangeFields('start_time', 'end_time')
+                ->setValueField('COUNT(DISTINCT subscriptions.user_id)')
+                ->setWhere(' AND length >=' . $range["from_days"] . ' AND length <=' . $range["to_days"])
+                ->setStart($this->dateFrom)
+                ->setEnd($this->dateTo));
+            
+            $graphDataItem->setName(sprintf(
+                "%s - %s %s",
+                $range["from_days"],
+                $range["to_days"],
+                $this->translator->translate('subscriptions.admin.dashboard.subscriptions_length.days')
+            ));
+            $items[] = $graphDataItem;
+        }
+
+        // we add one more default group for all the rest
+
+        $graphDataItem = new GraphDataItem();
+        $graphDataItem->setCriteria((new Criteria())
+            ->setTableName('subscriptions')
+            ->setRangeFields('start_time', 'end_time')
+            ->setValueField('count(distinct subscriptions.user_id)')
+            ->setWhere(' AND length > ' . $dayRanges[array_key_last($dayRanges)]["to_days"])
+            ->setStart($this->dateFrom)
+            ->setEnd($this->dateTo));
+
+        $graphDataItem->setName(sprintf(
+            "%s %s",
+            $dayRanges[array_key_last($dayRanges)]["to_days"] + 1,
+            $this->translator->translate('subscriptions.admin.dashboard.subscriptions_length.and_more_days')
+        ));
+        $items[] = $graphDataItem;
+
+        $control = $factory->create()
+            ->setGraphTitle($this->translator->translate('subscriptions.admin.dashboard.subscriptions_length.title'))
+            ->setGraphHelp($this->translator->translate('subscriptions.admin.dashboard.subscriptions_length.tooltip'));
 
         foreach ($items as $graphDataItem) {
             $control->addGraphDataItem($graphDataItem);
