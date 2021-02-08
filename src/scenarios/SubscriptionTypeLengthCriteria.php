@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Scenarios;
 
-use Crm\ApplicationModule\Criteria\Params\NumberParam;
+use Crm\ApplicationModule\Criteria\ScenarioParams\NumberParam;
 use Crm\ApplicationModule\Criteria\ScenariosCriteriaInterface;
 use Nette\Database\Table\IRow;
 use Nette\Database\Table\Selection;
