@@ -2,27 +2,37 @@
 
 namespace Crm\SubscriptionsModule\Extension;
 
-use Nette\Database\Context;
+use Crm\ApplicationModule\NowTrait;
+use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Nette\Database\Table\IRow;
-use Nette\Utils\DateTime;
 
 class ExtendSameActualExtension implements ExtensionInterface
 {
-    private $database;
+    use NowTrait;
 
-    public function __construct(Context $database)
-    {
-        $this->database = $database;
+    public const METHOD_CODE = 'extend_same_actual';
+
+    public const METHOD_NAME = 'Extend same actual';
+
+    private $subscriptionsRepository;
+
+    public function __construct(
+        SubscriptionsRepository $subscriptionsRepository
+    ) {
+        $this->subscriptionsRepository = $subscriptionsRepository;
     }
 
     public function getStartTime(IRow $user, IRow $subscriptionType)
     {
-        $actualSubscriptions = $this->database->getConnection()->query("SELECT end_time, subscription_type_id FROM subscriptions WHERE user_id=? AND start_time < ? AND end_time > ?", $user->id, new DateTime(), new DateTime())->fetchAll();
-        foreach ($actualSubscriptions as $subscription) {
-            if ($subscription->subscription_type_id == $subscriptionType->id) {
-                return new Extension($subscription->end_time, true);
-            }
+        $latestActualSubscriptionForType = $this->subscriptionsRepository
+            ->actualUserSubscriptions($user->id)
+            ->where('subscription_type_id', $subscriptionType->id)
+            ->fetch();
+
+        if ($latestActualSubscriptionForType) {
+            return new Extension($latestActualSubscriptionForType->end_time, true);
         }
-        return new Extension(new DateTime());
+
+        return new Extension($this->getNow());
     }
 }

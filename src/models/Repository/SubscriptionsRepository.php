@@ -5,6 +5,7 @@ namespace Crm\SubscriptionsModule\Repository;
 use Closure;
 use Crm\ApplicationModule\Cache\CacheRepository;
 use Crm\ApplicationModule\Hermes\HermesMessage;
+use Crm\ApplicationModule\NowTrait;
 use Crm\ApplicationModule\Repository;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
 use Crm\SubscriptionsModule\Events\NewSubscriptionEvent;
@@ -23,6 +24,8 @@ use Nette\Database\Table\Selection;
 
 class SubscriptionsRepository extends Repository
 {
+    use NowTrait;
+
     const TYPE_REGULAR = 'regular';
     const TYPE_FREE = 'free';
     const TYPE_DONATION = 'donation';
@@ -339,8 +342,8 @@ class SubscriptionsRepository extends Repository
     {
         return $this->getTable()->where([
             'user_id' => $userId,
-            'start_time <= ?' => new DateTime,
-            'end_time > ?' => new DateTime,
+            'start_time <= ?' => $this->getNow(),
+            'end_time > ?' => $this->getNow(),
         ])->order('subscription_type.mobile DESC, end_time DESC')->fetch();
     }
 

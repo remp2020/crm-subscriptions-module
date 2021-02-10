@@ -72,12 +72,17 @@ services:
 	- Crm\SubscriptionsModule\DataProvider\SubscriptionsClaimUserDataProvider
 	- Crm\SubscriptionsModule\Subscription\SubscriptionTypeHelper
 
+	- Crm\SubscriptionsModule\Extension\ExtendActualExtension
+	- Crm\SubscriptionsModule\Extension\ExtendSameActualExtension
+	- Crm\SubscriptionsModule\Extension\StartNowExtension
+	- Crm\SubscriptionsModule\Extension\ExtendSameTypeExtension
 	extensionMethodFactory:
 		class: Crm\SubscriptionsModule\Extension\ExtensionMethodFactory
 		setup:
-			- registerExtension('extend_actual', Crm\SubscriptionsModule\Extension\ExtendActualExtension())
-			- registerExtension('extend_same_actual', Crm\SubscriptionsModule\Extension\ExtendSameActualExtension())
-			- registerExtension('start_now', Crm\SubscriptionsModule\Extension\StartNowExtension())
+			- registerExtension(Crm\SubscriptionsModule\Extension\ExtendActualExtension::METHOD_CODE, Crm\SubscriptionsModule\Extension\ExtendActualExtension)
+			- registerExtension(Crm\SubscriptionsModule\Extension\ExtendSameActualExtension::METHOD_CODE, Crm\SubscriptionsModule\Extension\ExtendSameActualExtension)
+			- registerExtension(Crm\SubscriptionsModule\Extension\StartNowExtension::METHOD_CODE, Crm\SubscriptionsModule\Extension\StartNowExtension)
+			- registerExtension(Crm\SubscriptionsModule\Extension\ExtendSameTypeExtension::METHOD_CODE, Crm\SubscriptionsModule\Extension\ExtendSameTypeExtension)
 
 	lengthMethodFactory:
 		class: Crm\SubscriptionsModule\Length\LengthMethodFactory
