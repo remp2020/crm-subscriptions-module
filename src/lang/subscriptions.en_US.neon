@@ -322,8 +322,11 @@ data_provider:
 		active_subscription: User has/had an active subscription and cannot be deleted
 		unexpected_configuration_value: "Unexpected configuration value 'Users -> Count of days to check'"
 	abusive_user:
-		form:
-			subscription_date_to: Subscription until
+	    form:
+	        subscription_date_to: Subscription until
+	payment_item_types_filter:
+		key:
+			subscription_type: Subscription
 
 config:
 	category: Subscriptions
