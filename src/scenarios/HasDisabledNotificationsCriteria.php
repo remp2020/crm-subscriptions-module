@@ -18,9 +18,10 @@ class HasDisabledNotificationsCriteria implements ScenariosCriteriaInterface
         ];
     }
 
-    public function addCondition(Selection $selection, $values, IRow $criterionItemRow): bool
+    public function addConditions(Selection $selection, array $paramValues, IRow $criterionItemRow): bool
     {
-        $selection->where('subscription_type.disable_notifications = ?', (int)$values->selection);
+        $values = $paramValues[self::KEY];
+        $selection->where('subscription_type.disable_notifications = ?', (int) $values->selection);
 
         return true;
     }

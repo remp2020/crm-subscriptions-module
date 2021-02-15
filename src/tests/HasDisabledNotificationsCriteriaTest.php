@@ -48,7 +48,8 @@ class HasDisabledNotificationsCriteriaTest extends DatabaseTestCase
         [$userSelection, $userRow] = $this->prepareData(true);
 
         $hasDisabledNotification = new HasDisabledNotificationsCriteria();
-        $hasDisabledNotification->addCondition($userSelection, (object)['selection' => true], $userRow);
+        $values = (object)['selection' => true];
+        $hasDisabledNotification->addConditions($userSelection, [HasDisabledNotificationsCriteria::KEY => $values], $userRow);
 
         $this->assertNotFalse($userSelection->fetch());
     }
@@ -58,7 +59,8 @@ class HasDisabledNotificationsCriteriaTest extends DatabaseTestCase
         [$userSelection, $userRow] = $this->prepareData(false);
 
         $hasDisabledNotification = new HasDisabledNotificationsCriteria();
-        $hasDisabledNotification->addCondition($userSelection, (object)['selection' => true], $userRow);
+        $values = (object)['selection' => true];
+        $hasDisabledNotification->addConditions($userSelection, [HasDisabledNotificationsCriteria::KEY => $values], $userRow);
 
         $this->assertFalse($userSelection->fetch());
     }
@@ -68,7 +70,8 @@ class HasDisabledNotificationsCriteriaTest extends DatabaseTestCase
         [$userSelection, $userRow] = $this->prepareData(true);
 
         $hasDisabledNotification = new HasDisabledNotificationsCriteria();
-        $hasDisabledNotification->addCondition($userSelection, (object)['selection' => false], $userRow);
+        $values = (object)['selection' => false];
+        $hasDisabledNotification->addConditions($userSelection, [HasDisabledNotificationsCriteria::KEY => $values], $userRow);
 
         $this->assertFalse($userSelection->fetch());
     }
@@ -78,7 +81,8 @@ class HasDisabledNotificationsCriteriaTest extends DatabaseTestCase
         [$userSeletion, $userRow] = $this->prepareData(false);
 
         $hasDisabledNotification = new HasDisabledNotificationsCriteria();
-        $hasDisabledNotification->addCondition($userSeletion, (object)['selection' => false], $userRow);
+        $values = (object)['selection' => false];
+        $hasDisabledNotification->addConditions($userSeletion, [HasDisabledNotificationsCriteria::KEY => $values], $userRow);
 
         $this->assertNotFalse($userSeletion->fetch());
     }

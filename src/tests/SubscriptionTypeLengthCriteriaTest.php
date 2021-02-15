@@ -50,7 +50,7 @@ class SubscriptionTypeLengthCriteriaTest extends DatabaseTestCase
     {
         [$selection, $subscriptionRow] = $this->prepareData('user@example.com', $subscriptionTypeLength);
         $criteria = new SubscriptionTypeLengthCriteria();
-        $criteria->addCondition($selection, (object)['selection' => $criteriaLength, 'operator' => $criteriaOperator], $subscriptionRow);
+        $criteria->addConditions($selection, (object)['selection' => $criteriaLength, 'operator' => $criteriaOperator], $subscriptionRow);
         if ($shouldFetch) {
             $this->assertNotFalse($selection->fetch());
         } else {

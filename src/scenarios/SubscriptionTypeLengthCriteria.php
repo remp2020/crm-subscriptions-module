@@ -21,8 +21,10 @@ class SubscriptionTypeLengthCriteria implements ScenariosCriteriaInterface
         ];
     }
 
-    public function addCondition(Selection $selection, $values, IRow $criterionItemRow): bool
+    public function addConditions(Selection $selection, array $paramValues, IRow $criterionItemRow): bool
     {
+        $values = $paramValues[self::KEY];
+
         $operator = $values->operator;
         if (!in_array($operator, self::OPERATORS, true)) {
             throw new \Exception("Operator $operator is not a valid operator out of: " . Json::encode(self::OPERATORS));

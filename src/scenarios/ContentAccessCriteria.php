@@ -27,8 +27,10 @@ class ContentAccessCriteria implements ScenariosCriteriaInterface
         ];
     }
 
-    public function addCondition(Selection $selection, $values, IRow $criterionItemRow): bool
+    public function addConditions(Selection $selection, array $paramValues, IRow $criterionItemRow): bool
     {
+        $values = $paramValues['content_access'];
+
         // ignore operator, assume OR for now
         $selection->where('subscription_type:subscription_type_content_access.content_access.name IN (?)', $values->selection);
 
