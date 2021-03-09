@@ -332,6 +332,24 @@ admin:
         success: 'Subscription with ID %id% has been stopped.'
         stop_confirm: "Are you sure you want to stop subscription ID: %id% for user %email%?"
 
+measurements:
+    active_subscriptions:
+        title: "Active subscriptions"
+        description: "Number of active subscriptions. Includes every active subscription, without affiliation to the user."
+    active_subscribers:
+        title: "Active subscribers"
+        description: "Number of unique users with active subscription."
+    active_paying_subscribers:
+        title: "Active paying subscribers"
+        description: "Number of unique users with active paid subscription."
+    started_subscriptions:
+        title: "Started subscriptions"
+        description: "Number of subscriptions started during the selected period."
+    ended_subscriptions:
+        title: "Skončené predplatné"
+        description: "Number of subscriptions ended during the selected period."
+
+
 data_provider:
     delete:
         active_subscription: User has/had an active subscription and cannot be deleted

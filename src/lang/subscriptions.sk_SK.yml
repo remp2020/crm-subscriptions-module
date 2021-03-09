@@ -332,6 +332,23 @@ admin:
         success: 'Predplatné s ID %id% bolo zastavené.'
         stop_confirm: "Naozaj chcete zastaviť predplatné ID: %id% pre používateľa %email%?"
 
+measurements:
+    active_subscriptions:
+        title: "Aktívne predplatné"
+        description: "Počet aktívnych predplatných vo vybraných dňoch. Počíta všetky aktívne predplatné, bez ohľadu na používateľa."
+    active_subscribers:
+        title: "Aktívni používatelia"
+        description: "Počet unikátnych používateľov s aktívnym predplatným."
+    active_paying_subscribers:
+        title: "Aktívni platiaci používatelia"
+        description: "Počet unikátnych používateľov s aktívnym plateným predplatným."
+    started_subscriptions:
+        title: "Začaté predplatné"
+        description: "Počet začatých predplatných za vybrané obdobie."
+    ended_subscriptions:
+        title: "Skončené predplatné"
+        description: "Počet skončených predplatných za vybrané obdobie."
+
 data_provider:
     delete:
         active_subscription: Používateľ má/mal aktívne predplatné a nemôže byť zmazaný

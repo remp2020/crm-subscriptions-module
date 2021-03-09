@@ -15,6 +15,14 @@ services:
 	contentAccessRepository: Crm\SubscriptionsModule\Repository\ContentAccessRepository
 	subscriptionTypeItemMetaRepository: Crm\SubscriptionsModule\Repository\SubscriptionTypeItemMetaRepository
 
+	measurementManager:
+		setup:
+		    - register(Crm\SubscriptionsModule\Measurements\ActiveSubscriptionsMeasurement())
+		    - register(Crm\SubscriptionsModule\Measurements\ActiveSubscribersMeasurement())
+		    - register(Crm\SubscriptionsModule\Measurements\ActivePayingSubscribersMeasurement())
+		    - register(Crm\SubscriptionsModule\Measurements\StartedSubscriptionsMeasurement())
+		    - register(Crm\SubscriptionsModule\Measurements\EndedSubscriptionsMeasurement())
+
 	- Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder
 	- Crm\SubscriptionsModule\Forms\SubscriptionTypesFormFactory
 	- Crm\SubscriptionsModule\Forms\SubscriptionFormFactory
@@ -65,6 +73,7 @@ services:
 	- Crm\SubscriptionsModule\Scenarios\IsExpiredByAdminCriteria
 	- Crm\SubscriptionsModule\Seeders\ConfigSeeder
 	- Crm\SubscriptionsModule\Seeders\ContentAccessSeeder
+	- Crm\SubscriptionsModule\Seeders\MeasurementsSeeder
 	- Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder
 	- Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder
 	- Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder

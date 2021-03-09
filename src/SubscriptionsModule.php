@@ -32,6 +32,7 @@ use Crm\SubscriptionsModule\Scenarios\SubscriptionTypeLengthCriteria;
 use Crm\SubscriptionsModule\Scenarios\TypeCriteria;
 use Crm\SubscriptionsModule\Seeders\ConfigSeeder;
 use Crm\SubscriptionsModule\Seeders\ContentAccessSeeder;
+use Crm\SubscriptionsModule\Seeders\MeasurementsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
@@ -302,6 +303,7 @@ class SubscriptionsModule extends CrmModule
         $seederManager->addSeeder($this->getInstance(SubscriptionExtensionMethodsSeeder::class));
         $seederManager->addSeeder($this->getInstance(SubscriptionLengthMethodSeeder::class));
         $seederManager->addSeeder($this->getInstance(SubscriptionTypeNamesSeeder::class));
+        $seederManager->addSeeder($this->getInstance(MeasurementsSeeder::class));
     }
 
     public function registerAccessProvider(AccessManager $accessManager)

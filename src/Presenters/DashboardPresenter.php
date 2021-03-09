@@ -9,20 +9,24 @@ use Crm\ApplicationModule\Components\Graphs\GoogleLineGraphGroupControlFactoryIn
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Graphs\Criteria;
 use Crm\ApplicationModule\Graphs\GraphDataItem;
+use Crm\ApplicationModule\Models\Graphs\Scale\Measurements\RangeScaleFactory;
 use Crm\SubscriptionsModule\Components\SubscriptionEndsStatsFactoryInterface;
 use Crm\SubscriptionsModule\DataProvider\EndingSubscriptionsDataProviderInterface;
 use Crm\SubscriptionsModule\DataProvider\SubscriptionAccessStatsDataProviderInterface;
+use Crm\SubscriptionsModule\Measurements\ActivePayingSubscribersMeasurement;
+use Crm\SubscriptionsModule\Measurements\ActiveSubscribersMeasurement;
+use Crm\SubscriptionsModule\Measurements\ActiveSubscriptionsMeasurement;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
 use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
 
 class DashboardPresenter extends AdminPresenter
 {
-    /** @var DataProviderManager @inject */
-    public $dataProviderManager;
+    /** @inject */
+    public DataProviderManager $dataProviderManager;
 
-    /** @var ContentAccessRepository @inject */
-    public $contentAccessRepository;
+    /** @inject */
+    public ContentAccessRepository $contentAccessRepository;
 
     /** @persistent */
     public $dateFrom;
@@ -217,36 +221,34 @@ class DashboardPresenter extends AdminPresenter
         $this->getSession()->close();
         $items = [];
 
-        $graphDataItem = new GraphDataItem();
-        $graphDataItem->setCriteria((new Criteria())
-            ->setTableName('subscriptions')
-            ->setRangeFields('start_time', 'end_time')
-            ->setValueField('count(*)')
+        $criteria = (new Criteria)
+            ->setSeries(ActiveSubscriptionsMeasurement::CODE)
             ->setStart($this->dateFrom)
-            ->setEnd($this->dateTo));
-        $graphDataItem->setName($this->translator->translate('dashboard.subscriptions.title'));
+            ->setEnd($this->dateTo);
+        $graphDataItem = new GraphDataItem();
+        $graphDataItem->setCriteria($criteria)
+            ->setScaleProvider(RangeScaleFactory::PROVIDER_MEASUREMENT)
+            ->setName($this->translator->translate('dashboard.subscriptions.title'));
         $items[] = $graphDataItem;
 
-        $graphDataItem = new GraphDataItem();
-        $graphDataItem->setCriteria((new Criteria())
-            ->setTableName('subscriptions')
-            ->setRangeFields('start_time', 'end_time')
-            ->setValueField('count(distinct subscriptions.user_id)')
+        $criteria = (new Criteria)
+            ->setSeries(ActiveSubscribersMeasurement::CODE)
             ->setStart($this->dateFrom)
-            ->setEnd($this->dateTo));
-        $graphDataItem->setName($this->translator->translate('dashboard.users.subscribers'));
+            ->setEnd($this->dateTo);
+        $graphDataItem = new GraphDataItem();
+        $graphDataItem->setCriteria($criteria)
+            ->setScaleProvider(RangeScaleFactory::PROVIDER_MEASUREMENT)
+            ->setName($this->translator->translate('dashboard.users.subscribers'));
         $items[] = $graphDataItem;
 
-        $graphDataItem = new GraphDataItem();
-        $graphDataItem->setCriteria((new Criteria())
-            ->setTableName('subscriptions')
-            ->setWhere('AND payments.subscription_id is not NULL')
-            ->setJoin('LEFT JOIN payments ON subscriptions.id = payments.subscription_id')
-            ->setRangeFields('start_time', 'end_time')
-            ->setValueField('count(distinct subscriptions.user_id)')
+        $criteria = (new Criteria)
+            ->setSeries(ActivePayingSubscribersMeasurement::CODE)
             ->setStart($this->dateFrom)
-            ->setEnd($this->dateTo));
-        $graphDataItem->setName($this->translator->translate('dashboard.users.paying_subscribers'));
+            ->setEnd($this->dateTo);
+        $graphDataItem = new GraphDataItem();
+        $graphDataItem->setCriteria($criteria)
+            ->setScaleProvider(RangeScaleFactory::PROVIDER_MEASUREMENT)
+            ->setName($this->translator->translate('dashboard.users.paying_subscribers'));
         $items[] = $graphDataItem;
 
         $control = $factory->create()
