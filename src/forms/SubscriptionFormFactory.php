@@ -2,6 +2,8 @@
 
 namespace Crm\SubscriptionsModule\Forms;
 
+use Crm\ApplicationModule\DataProvider\DataProviderManager;
+use Crm\SubscriptionsModule\DataProvider\SubscriptionFormDataProviderInterface;
 use Crm\SubscriptionsModule\Events\SubscriptionPreUpdateEvent;
 use Crm\SubscriptionsModule\Length\LengthMethodFactory;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
@@ -18,6 +20,8 @@ use Tomaj\Form\Renderer\BootstrapRenderer;
 
 class SubscriptionFormFactory
 {
+    private $dataProviderManager;
+
     private $subscriptionsRepository;
 
     private $subscriptionTypesRepository;
@@ -41,6 +45,7 @@ class SubscriptionFormFactory
     public $onUpdate;
 
     public function __construct(
+        DataProviderManager $dataProviderManager,
         SubscriptionsRepository $subscriptionsRepository,
         SubscriptionTypesRepository $subscriptionTypesRepository,
         UsersRepository $usersRepository,
@@ -51,6 +56,7 @@ class SubscriptionFormFactory
         \Tomaj\Hermes\Emitter $hermesEmitter,
         SubscriptionTypeHelper $subscriptionTypeHelper
     ) {
+        $this->dataProviderManager = $dataProviderManager;
         $this->subscriptionsRepository = $subscriptionsRepository;
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
         $this->usersRepository = $usersRepository;
@@ -139,15 +145,22 @@ class SubscriptionFormFactory
             ->setPrompt('--');
 
         $form->addHidden('user_id', $user->id);
+        if ($subscriptionId) {
+            $form->addHidden('subscription_id', $subscriptionId);
+        }
+
+        $providers = $this->dataProviderManager->getProviders(
+            SubscriptionFormDataProviderInterface::PATH,
+            SubscriptionFormDataProviderInterface::class
+        );
+        foreach ($providers as $sorting => $provider) {
+            $form = $provider->provide(['form' => $form]);
+        }
 
         $form->addSubmit('send', 'system.save')
             ->getControlPrototype()
             ->setName('button')
             ->setHtml('<i class="fa fa-save"></i> ' . $this->translator->translate('system.save'));
-
-        if ($subscriptionId) {
-            $form->addHidden('subscription_id', $subscriptionId);
-        }
 
         $form->setDefaults($defaults);
 
