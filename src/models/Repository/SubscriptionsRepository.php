@@ -351,8 +351,8 @@ class SubscriptionsRepository extends Repository
     {
         return $this->getTable()->where([
             'subscriptions.user_id' => $userId,
-            'subscriptions.start_time <= ?' => new DateTime,
-            'subscriptions.end_time > ?' => new DateTime,
+            'subscriptions.start_time <= ?' => $this->getNow(),
+            'subscriptions.end_time > ?' => $this->getNow(),
         ])->order('subscription_type.mobile DESC, end_time DESC');
     }
 
