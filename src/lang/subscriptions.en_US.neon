@@ -239,6 +239,10 @@ admin:
 	address:
 		cant_delete: 'This address is used in subscription: %subscriptions%|This address is used in subscriptions: %subscriptions%'
 
+	scenarios:
+		subscription_type_is_default:
+			label: 'The subscription type has a flag "default"'
+
 	dashboard:
 		subscriptions_recurrency:
 			recurrent_subscribers: Recurrent subscribers

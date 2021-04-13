@@ -238,6 +238,10 @@ admin:
 	address:
 		cant_delete: 'Tato adresa se používá při předplatném: %subscriptions%|Tato adresa se používá při předplatných: %subscriptions%'
 
+	scenarios:
+		subscription_type_is_default:
+			label: 'Typ předplatného ma příznak "default"'
+
 	actual_user_subscriptions:
 		header: Předplatné
 		no_subscription: Nemá aktuální předplatné
