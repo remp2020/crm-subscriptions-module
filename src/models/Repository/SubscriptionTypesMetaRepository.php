@@ -60,9 +60,13 @@ class SubscriptionTypesMetaRepository extends Repository
         }
     }
 
-    final public function getMetaValue(IRow $subscriptionType, string $key): string
+    final public function getMetaValue(IRow $subscriptionType, string $key): ?string
     {
-        return $this->getMeta($subscriptionType, $key)->fetchField('value');
+        $value = $this->getMeta($subscriptionType, $key)->fetchField('value');
+        if ($value === false) {
+            return null;
+        }
+        return $value;
     }
 
     final public function removeMeta($subscriptionTypeId, $key)
