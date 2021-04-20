@@ -255,6 +255,8 @@ admin:
 	scenarios:
 		subscription_type_is_default:
 			label: 'Typ predplatneho ma priznak "default"'
+		has_later_ending_subscription:
+			label: 'Má ďaľšie predplatné končiace neskôr'
 
 	# componenty
 

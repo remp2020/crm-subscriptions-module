@@ -241,6 +241,8 @@ admin:
 	scenarios:
 		subscription_type_is_default:
 			label: 'Typ předplatného ma příznak "default"'
+		has_later_ending_subscription:
+			label: 'Má další předplatné končící později'
 
 	actual_user_subscriptions:
 		header: Předplatné

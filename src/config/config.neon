@@ -59,6 +59,7 @@ services:
 	- Crm\SubscriptionsModule\Scenarios\HasDisabledNotificationsCriteria
 	- Crm\SubscriptionsModule\Scenarios\SubscriptionTypeLengthCriteria
 	- Crm\SubscriptionsModule\Scenarios\SubscriptionTypeIsDefaultCriteria
+	- Crm\SubscriptionsModule\Scenarios\HasLaterEndingSubscriptionCriteria
 	- Crm\SubscriptionsModule\Seeders\ConfigSeeder
 	- Crm\SubscriptionsModule\Seeders\ContentAccessSeeder
 	- Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder

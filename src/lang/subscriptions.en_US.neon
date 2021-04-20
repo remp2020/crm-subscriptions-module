@@ -242,6 +242,8 @@ admin:
 	scenarios:
 		subscription_type_is_default:
 			label: 'The subscription type has a flag "default"'
+		has_later_ending_subscription:
+			label: 'The subscription has another later ending subcription'
 
 	dashboard:
 		subscriptions_recurrency:
