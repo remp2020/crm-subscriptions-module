@@ -27,6 +27,7 @@ class SubscriptionsPresenter extends FrontendPresenter
             $this->template->showTrackingCode = true;
         }
 
+        $this->template->userId = $this->getUser()->getId();
         $this->template->subscriptions = $this->subscriptionsRepository->userSubscriptions($this->getUser()->getId());
     }
 
