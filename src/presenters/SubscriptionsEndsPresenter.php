@@ -48,6 +48,9 @@ class SubscriptionsEndsPresenter extends AdminPresenter
         $this->endTime = $this->endTime ?? (new DateTime())->format('Y-m-d 23:59:59');
     }
 
+    /**
+     * @admin-access-level read
+     */
     public function renderDefault()
     {
         $subscriptions = $this->subscriptionsRepository->subscriptionsEndBetween(

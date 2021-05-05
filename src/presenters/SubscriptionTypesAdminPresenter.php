@@ -51,6 +51,9 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
         $this->subscriptionTypeItemMetaRepository = $subscriptionTypeItemMetaRepository;
     }
 
+    /**
+     * @admin-access-level read
+     */
     public function renderDefault()
     {
         $subscriptionTypes = $this->filteredSubscriptionTypes();
@@ -75,10 +78,16 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
         return $this->subscriptionTypesRepository->all($this->text)->order('sorting ASC');
     }
 
+    /**
+     * @admin-access-level write
+     */
     public function renderNew()
     {
     }
 
+    /**
+     * @admin-access-level read
+     */
     public function actionShow($id)
     {
         $this->subscriptionType = $this->subscriptionTypesRepository->find($id);
@@ -101,6 +110,9 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
         return $form;
     }
 
+    /**
+     * @admin-access-level write
+     */
     public function handleRemoveSubscriptionTypeItem($itemId)
     {
         $item = $this->subscriptionTypeItemsRepository->find($itemId);
@@ -133,6 +145,9 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
         return $form;
     }
 
+    /**
+     * @admin-access-level write
+     */
     public function handleRemoveSubscriptionTypeMeta($metaId)
     {
         $meta = $this->subscriptionTypesMetaRepository->find($metaId);
@@ -146,6 +161,9 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
         }
     }
 
+    /**
+     * @admin-access-level write
+     */
     public function renderEdit($id)
     {
         $subscriptionType = $this->subscriptionTypesRepository->find($id);
@@ -199,6 +217,9 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
         return $control;
     }
 
+    /**
+     * @admin-access-level read
+     */
     public function renderExport()
     {
         $this->getHttpResponse()->addHeader('Content-Type', 'application/csv');

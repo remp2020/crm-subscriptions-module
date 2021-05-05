@@ -10,6 +10,9 @@ class SubscriptionsGeneratorPresenter extends AdminPresenter
     /** @var SubscriptionsGeneratorFormFactory @inject */
     public $subscriptionsGeneratorFormFactory;
 
+    /**
+     * @admin-access-level read
+     */
     public function renderDefault()
     {
     }

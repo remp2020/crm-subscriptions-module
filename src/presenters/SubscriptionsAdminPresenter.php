@@ -19,6 +19,9 @@ class SubscriptionsAdminPresenter extends AdminPresenter
     /** @var SubscriptionFormFactory @inject */
     public $factory;
 
+    /**
+     * @admin-access-level write
+     */
     public function renderEdit($id, $userId)
     {
         $subscription = $this->subscriptionsRepository->find($id);
@@ -29,6 +32,9 @@ class SubscriptionsAdminPresenter extends AdminPresenter
         $this->template->user = $subscription->user;
     }
 
+    /**
+     * @admin-access-level write
+     */
     public function renderNew($userId)
     {
         $user = $this->usersRepository->find($userId);

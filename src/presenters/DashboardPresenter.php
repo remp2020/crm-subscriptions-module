@@ -46,10 +46,16 @@ class DashboardPresenter extends AdminPresenter
         $this->template->dateTo = $this->dateTo;
     }
 
+    /**
+     * @admin-access-level read
+     */
     public function renderDefault()
     {
     }
 
+    /**
+     * @admin-access-level read
+     */
     public function renderEndings()
     {
     }
