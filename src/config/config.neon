@@ -41,10 +41,12 @@ services:
 	- Crm\SubscriptionsModule\Components\UserSubscriptionInfoWidget
 	- Crm\SubscriptionsModule\Components\UserSubscriptionsListing
 	- Crm\SubscriptionsModule\Components\SubscriptionEndsStatsFactoryInterface
+	- Crm\SubscriptionsModule\Components\StopSubscriptionWidget
 	- Crm\SubscriptionsModule\Commands\ChangeSubscriptionsStateCommand
 	- Crm\SubscriptionsModule\Api\v1\UsersSubscriptionsHandler
 	- Crm\SubscriptionsModule\Subscription\ActualUserSubscription
 	- Crm\SubscriptionsModule\Events\AddressRemovedHandler
+	- Crm\SubscriptionsModule\Events\SubscriptionShortenedHandler
 	- Crm\SubscriptionsModule\Hermes\GenerateSubscriptionHandler
 	- Crm\SubscriptionsModule\Api\v1\CreateSubscriptionHandler
 	- Crm\SubscriptionsModule\Api\v1\ListContentAccessHandler
@@ -65,6 +67,7 @@ services:
 	- Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder
 	- Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder
 	- Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder
+	- Crm\SubscriptionsModule\Seeders\TestSeeder
 	- Crm\SubscriptionsModule\Access\SubscriptionAccessProvider
 	- Crm\SubscriptionsModule\DataProvider\FilterUsersFormDataProvider
 	- Crm\SubscriptionsModule\DataProvider\FilterUserActionLogsSelectionDataProvider
@@ -73,6 +76,7 @@ services:
 	- Crm\SubscriptionsModule\DataProvider\FilterAbusiveUserFormDataProvider
 	- Crm\SubscriptionsModule\DataProvider\SubscriptionsClaimUserDataProvider
 	- Crm\SubscriptionsModule\Subscription\SubscriptionTypeHelper
+	- Crm\SubscriptionsModule\Subscription\StopSubscriptionHandler
 
 	- Crm\SubscriptionsModule\Extension\ExtendActualExtension
 	- Crm\SubscriptionsModule\Extension\ExtendSameActualExtension

@@ -323,6 +323,12 @@ admin:
 		title: New subscriptions
 		help: Newly created subscriptions within selected time range
 
+	stop_subscription_widget:
+		button_label: Stop subscription
+		no_subscription: 'Subscription with ID %id% not found.'
+		success: 'Subscription with ID %id% has been stopped.'
+		stop_confirm: "Are you sure you want to stop subscription ID: %id% for user %email%?"
+
 data_provider:
 	delete:
 		active_subscription: User has/had an active subscription and cannot be deleted

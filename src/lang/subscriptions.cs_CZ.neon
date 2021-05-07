@@ -304,6 +304,12 @@ admin:
 		title: Nové předplatné
 		help: Novovytvorené predplatné v zvolenom odbobí
 
+	stop_subscription_widget:
+		button_label: Zastavit předplatné
+		no_subscription: 'Předplatné s ID %id% se nenašlo.'
+		success: 'Předplatné s ID %id% bylo zastaveno.'
+		stop_confirm: "Opravdu chcete zastavit předplatné ID: %id% pro uživatele %email%?"
+
 data_provider:
 	delete:
 		active_subscription: Uživatel má/měl aktivní předplatné a nemůže být smazán.

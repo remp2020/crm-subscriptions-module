@@ -324,6 +324,12 @@ admin:
 			internal: Nastala chyba. Prosím kontaktujte administrátora.
 			duplicate: Meta s rovnakým kľúčom už existuje.
 
+	stop_subscription_widget:
+		button_label: Zastaviť predplatné
+		no_subscription: 'Predplatné s ID %id% sa nenašlo.'
+		success: 'Predplatné s ID %id% bolo zastavené.'
+		stop_confirm: "Naozaj chcete zastaviť predplatné ID: %id% pre používateľa %email%?"
+
 data_provider:
 	delete:
 		active_subscription: Používateľ má/mal aktívne predplatné a nemôže byť zmazaný

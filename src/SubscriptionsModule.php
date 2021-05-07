@@ -186,6 +186,10 @@ class SubscriptionsModule extends CrmModule
             'admin.user.abusive.additional',
             $this->getInstance(\Crm\SubscriptionsModule\Components\UsersAbusiveAdditionalWidget::class)
         );
+        $widgetManager->registerWidget(
+            'subscriptions.admin.user_subscriptions_listing.action',
+            $this->getInstance(\Crm\SubscriptionsModule\Components\StopSubscriptionWidget::class)
+        );
     }
 
     public function registerEventHandlers(Emitter $emitter)
@@ -202,6 +206,10 @@ class SubscriptionsModule extends CrmModule
         $emitter->addListener(
             \Crm\UsersModule\Events\AddressRemovedEvent::class,
             $this->getInstance(\Crm\SubscriptionsModule\Events\AddressRemovedHandler::class)
+        );
+        $emitter->addListener(
+            \Crm\SubscriptionsModule\Events\SubscriptionShortenedEvent::class,
+            $this->getInstance(\Crm\SubscriptionsModule\Events\SubscriptionShortenedHandler::class)
         );
     }
 
