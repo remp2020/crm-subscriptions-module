@@ -334,6 +334,29 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
         $this->assertEquals(new \DateTime('2022-09-01'), $subscriptions[0]->end_time);
     }
 
+    public function testStopSubscriptionSameStartAndEnd()
+    {
+        $user = $this->loadUser('admin@example.com');
+
+        $subscription1 = $this->createSubscription($user, 'upgrade_tests_yearly', new \DateTime('2021-01-01'), new \DateTime('2021-01-01'));
+        $originalEndTime = $subscription1->end_time;
+        $originalModifiedTime = $subscription1->modified_at;
+
+        $this->subscriptionShortenedHandler->handle(
+            new SubscriptionShortenedEvent($subscription1, $originalEndTime)
+        );
+
+        $subscriptions = [];
+        foreach ($this->subscriptionsRepository->userSubscriptions($user->id) as $s) {
+            $subscriptions[] = $s;
+        }
+        $this->assertCount(1, $subscriptions);
+        $this->assertEquals(new \DateTime('2021-01-01'), $subscriptions[0]->start_time);
+        $this->assertEquals(new \DateTime('2021-01-01'), $subscriptions[0]->end_time);
+        $this->assertEquals($originalModifiedTime, $subscriptions[0]->modified_at);
+        $this->assertNull($subscriptions[0]->note);
+    }
+
     private function createSubscription(ActiveRow $user, string $code, \DateTime $startTime, \DateTime $endTime = null)
     {
         $st = $this->subscriptionTypesRepository->findByCode($code);

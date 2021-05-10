@@ -51,9 +51,11 @@ class SubscriptionShortenedHandler extends AbstractListener
     {
         return $this->subscriptionsRepository->getTable()
             ->where([
+                'id != ?' => $subscription->id,
                 'user_id' => $subscription->user_id,
                 'start_time' => $previousSubscriptionEndTime, // search for subscriptions, which start at the same time as previous ends
             ])
+            ->where('start_time < end_time')
             ->fetch();
     }
 

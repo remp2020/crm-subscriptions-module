@@ -50,6 +50,11 @@ class StopSubscriptionWidget extends BaseWidget
 
     private function isSubscriptionStoppable(IRow $subscription): bool
     {
+        // already stopped
+        if ($subscription->start_time == $subscription->end_time) {
+            return false;
+        }
+
         if ($subscription->end_time > new DateTime()) {
             return true;
         }
