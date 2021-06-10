@@ -160,7 +160,7 @@ class SubscriptionsRepository extends Repository
 
     final public function update(IRow &$row, $data)
     {
-        $values['modified_at'] = new DateTime();
+        $data['modified_at'] = new DateTime();
 
         // Check if internal status has changed
         $startTime = $row->start_time;
