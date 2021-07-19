@@ -89,4 +89,9 @@ class ContentAccessRepository extends Repository
             ->where('users.active = ?', true)
             ->group('users.id');
     }
+
+    final public function getByName($name)
+    {
+        return $this->getTable()->where('name', $name)->fetch();
+    }
 }
