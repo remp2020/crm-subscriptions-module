@@ -165,7 +165,9 @@ class SubscriptionTypesFormFactory
             ->setAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.length');
 
         $form->addText('extending_length', 'subscriptions.data.subscription_types.fields.extending_length')
-            ->setAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.extending_length');
+            ->setAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.extending_length')
+            ->addCondition(Form::FILLED)
+            ->addRule(Form::INTEGER, 'subscriptions.data.subscription_types.validation.integer');
 
         $form->addText('fixed_start', 'subscriptions.data.subscription_types.fields.fixed_start')
             ->setAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.fixed_start');
@@ -187,7 +189,7 @@ class SubscriptionTypesFormFactory
 
         $form->addText('limit_per_user', 'subscriptions.data.subscription_types.fields.limit_per_user')
             ->addCondition(Form::FILLED)
-            ->addRule(Form::INTEGER, 'subscriptions.data.subscription_types.validation.integer.limit_per_user')
+            ->addRule(Form::INTEGER, 'subscriptions.data.subscription_types.validation.integer')
             ->addRule(Form::MIN, 'subscriptions.data.subscription_types.validation.minimum.limit_per_user', 1);
 
         $form->addCheckbox('ask_address', 'subscriptions.data.subscription_types.fields.ask_address');
@@ -238,24 +240,28 @@ class SubscriptionTypesFormFactory
 
     public function formSucceeded($form, $values)
     {
-        if ($values['limit_per_user'] == '') {
+        if ($values['limit_per_user'] === '') {
             $values['limit_per_user'] = null;
         }
 
-        if ($values['fixed_start'] == '') {
+        if ($values['fixed_start'] === '') {
             $values['fixed_start'] = null;
         } else {
             $values['fixed_start'] = DateTime::from(strtotime($values['fixed_start']));
         }
 
-        if ($values['fixed_end'] == '') {
+        if ($values['fixed_end'] === '') {
             $values['fixed_end'] = null;
         } else {
             $values['fixed_end'] = DateTime::from(strtotime($values['fixed_end']));
         }
 
-        if ($values['recurrent_charge_before'] == '') {
+        if ($values['recurrent_charge_before'] === '') {
             $values['recurrent_charge_before'] = null;
+        }
+
+        if ($values['extending_length'] === '') {
+            $values['extending_length'] = null;
         }
 
         $contentAccesses = $this->contentAccessRepository->all();

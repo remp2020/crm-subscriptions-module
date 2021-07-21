@@ -68,8 +68,7 @@ data:
 			price: Cena je povinná
 			user_label: Veřejný popis je povinný
 		validation:
-			integer:
-				limit_per_user: Musí být číslo
+			integer: Musí být číslo
 			minimum:
 				limit_per_user: Minimální hodnota 1
 		placeholder:

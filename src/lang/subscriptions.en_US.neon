@@ -70,8 +70,7 @@ data:
 			price: Price is required
 			user_label: User label is required
 		validation:
-			integer:
-				limit_per_user: Must be number
+			integer: Must be number
 			minimum:
 				limit_per_user: Minum value 1
 		placeholder:
