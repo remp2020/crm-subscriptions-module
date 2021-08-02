@@ -193,13 +193,44 @@ class SubscriptionsRepository extends Repository
         $result = parent::update($row, $data);
         if ($result) {
             /** @var ActiveRow $row */
-            $this->getTable()
-                ->where([
-                    'user_id' => $row->user_id,
-                    'end_time' => $row->start_time
-                ])
-                ->where('next_subscription_id IS NULL')
-                ->update(['next_subscription_id' => $row->id]);
+
+            if (isset($data['start_time'])) {
+               // remove link from previous subscription if change of start time created gap
+                $this->getTable()
+                    ->where([
+                        'user_id' => $row->user_id,
+                        'next_subscription_id' => $row->id,
+                        'end_time != ?' => $row->start_time
+                    ])
+                    ->update(['next_subscription_id' => null]);
+
+                // set new link from previous subscription if change of start time linked them
+                $this->getTable()
+                    ->where([
+                        'user_id' => $row->user_id,
+                        'end_time' => $row->start_time,
+                    ])
+                    ->where('next_subscription_id IS NULL')
+                    ->update(['next_subscription_id' => $row->id]);
+            }
+
+            if (isset($data['end_time'])) {
+                // check if there is next subscription following without gap
+                $nextSubscription = $this->getTable()
+                    ->where([
+                        'user_id' => $row->user_id,
+                        'start_time' => $row->end_time,
+                    ])
+                    ->fetch();
+
+                if ($nextSubscription === false && $row->next_subscription_id !== null) {
+                    // remove link if it's invalid
+                    parent::update($row, ['next_subscription_id' => null]);
+                } elseif ($nextSubscription !== false && $nextSubscription->id !== $row->next_subscription_id) {
+                    // set new link if found
+                    parent::update($row, ['next_subscription_id' => $nextSubscription->id]);
+                }
+            }
 
             if ($internalStatusChanged) {
                 $this->emitStatusNotifications($row);
