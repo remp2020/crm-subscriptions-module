@@ -31,18 +31,27 @@ class SubscriptionShortenedHandler extends AbstractListener
         }
 
         $newStartTime = $event->getBaseSubscription()->end_time;
-        // following new end time of base subscription
+        $alignedSubscriptions = [
+            $event->getBaseSubscription()->id => true,
+        ];
+
+        // $newStartTime is end time of the base subscription, unless there are some further following subscriptions.
+        // In that case we'll follow them and $newStartTime is the end_time of the last in the chain.
         $followingSubscription = $this->getFollowingSubscription($event->getBaseSubscription(), $newStartTime);
         while ($followingSubscription) {
+            $alignedSubscriptions[$followingSubscription->id] = true;
             $newStartTime = $followingSubscription->end_time;
             $followingSubscription = $this->getFollowingSubscription($followingSubscription, $newStartTime);
         }
 
-        // following original end time of base subscription
+        // Now we find the first subscription affected by baseSubscription shortening. There should be a gap to fill.
         $followingSubscription = $this->getFollowingSubscription($event->getBaseSubscription(), $event->getOriginalEndTime());
         while ($followingSubscription) {
             $followedEndTime = clone $followingSubscription->end_time;
-            $newStartTime = $this->moveSubscription($followingSubscription, $newStartTime);
+            if (!isset($alignedSubscriptions[$followingSubscription->id])) {
+                $newStartTime = $this->moveSubscription($followingSubscription, $newStartTime);
+                $alignedSubscriptions[$followingSubscription->id] = true;
+            }
             $followingSubscription = $this->getFollowingSubscription($followingSubscription, $followedEndTime);
         }
     }

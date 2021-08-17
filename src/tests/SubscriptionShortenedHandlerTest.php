@@ -334,6 +334,38 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
         $this->assertEquals(new \DateTime('2022-09-01'), $subscriptions[0]->end_time);
     }
 
+    public function testShorteningDuringUpgrade()
+    {
+        $user = $this->loadUser('admin@example.com');
+
+        $subscription1 = $this->createSubscription($user, 'upgrade_tests_monthly', new \DateTime('2021-01-01'), new \DateTime('2021-02-01'));
+        $subscription2 = $this->createSubscription($user, 'upgrade_tests_monthly', new \DateTime('2021-02-01'), new \DateTime('2021-03-01'));
+
+        // simulate upgrade before end of subscription 1
+        $this->subscriptionsRepository->update($subscription1, [
+            'end_time' => new \DateTime('2021-01-31'),
+        ]);
+        $subscription3 = $this->createSubscription($user, 'upgrade_tests_monthly', new \DateTime('2021-01-31'), new \DateTime('2021-02-01'));
+
+        // emit the event, that the original subscription was shortened
+        $this->subscriptionShortenedHandler->handle(
+            new SubscriptionShortenedEvent($subscription1, new \DateTime('2021-02-01'))
+        );
+
+        $subscriptions = [];
+        foreach ($this->subscriptionsRepository->userSubscriptions($user->id) as $s) {
+            $subscriptions[] = $s;
+        }
+
+        $this->assertCount(3, $subscriptions);
+        $this->assertEquals(new \DateTime('2021-01-01'), $subscriptions[2]->start_time);
+        $this->assertEquals(new \DateTime('2021-01-31'), $subscriptions[2]->end_time);
+        $this->assertEquals(new \DateTime('2021-01-31'), $subscriptions[1]->start_time);
+        $this->assertEquals(new \DateTime('2021-02-01'), $subscriptions[1]->end_time);
+        $this->assertEquals(new \DateTime('2021-02-01'), $subscriptions[0]->start_time);
+        $this->assertEquals(new \DateTime('2021-03-01'), $subscriptions[0]->end_time);
+    }
+
     public function testStopSubscriptionSameStartAndEnd()
     {
         $user = $this->loadUser('admin@example.com');
