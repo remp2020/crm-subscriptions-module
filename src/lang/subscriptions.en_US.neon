@@ -274,7 +274,6 @@ admin:
 		title: Edit subscription
 
 	actual_subscription_label:
-		subscription: Subscription
 		actual: Actual
 
 	filter_users:

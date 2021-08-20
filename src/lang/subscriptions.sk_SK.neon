@@ -275,7 +275,6 @@ admin:
 		title: Upraviť predplatné
 
 	actual_subscription_label:
-		subscription: Predplatné
 		actual: Aktuálne
 
 	filter_users:

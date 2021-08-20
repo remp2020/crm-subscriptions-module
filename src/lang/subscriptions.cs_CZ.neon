@@ -256,7 +256,6 @@ admin:
 	subscription_button:
 		title: Upravit předplatné
 	actual_subscription_label:
-		subscription: Předplatné
 		actual: Aktuální
 	filter_users:
 		subscription_type: Typ předplatného

@@ -1,7 +1,7 @@
 {foreach $subscriptions as $subscription}
 <div>
 	<small>
-		{_subscriptions.admin.actual_subscription_label.subscription}: {$subscription->start_time|userDate} - {$subscription->end_time|userDate}
+		<a href="{plink :Subscriptions:SubscriptionTypesAdmin:show $subscription->subscription_type->id}" style="color: #333;">{$subscription->subscription_type->name}</a>: {$subscription->start_time|userDate} - {$subscription->end_time|userDate}
 	</small>
 	<span n:if="$subscription->actual" class="label label-primary">{_subscriptions.admin.actual_subscription_label.actual}</span>
 </div>
