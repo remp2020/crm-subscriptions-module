@@ -94,14 +94,14 @@ class SubscriptionsGeneratorFormFactory
         $subscriptionType->getControlPrototype()->addAttributes(['class' => 'select2']);
 
         $form->addText('start_time', 'subscriptions.data.subscriptions.fields.start_time')
-            ->setAttribute('placeholder', 'subscriptions.data.subscriptions.placeholder.start_time')
+            ->setHtmlAttribute('placeholder', 'subscriptions.data.subscriptions.placeholder.start_time')
             ->setOption('description', 'subscriptions.admin.subscription_generator.description.start_time')
-            ->setAttribute('class', 'flatpickr');
+            ->setHtmlAttribute('class', 'flatpickr');
 
         $form->addText('end_time', 'subscriptions.data.subscriptions.fields.end_time')
-            ->setAttribute('placeholder', 'subscriptions.data.subscriptions.placeholder.end_time')
+            ->setHtmlAttribute('placeholder', 'subscriptions.data.subscriptions.placeholder.end_time')
             ->setOption('description', 'subscriptions.admin.subscription_generator.description.end_time')
-            ->setAttribute('class', 'flatpickr');
+            ->setHtmlAttribute('class', 'flatpickr');
 
         $form->addCheckbox('is_paid', 'subscriptions.data.subscriptions.fields.is_paid');
 
@@ -109,14 +109,14 @@ class SubscriptionsGeneratorFormFactory
             ->setOption('description', 'subscriptions.admin.subscription_generator.description.type');
 
         $form->addText('note', 'subscriptions.data.subscriptions.fields.note')
-            ->setAttribute('placeholder', 'subscriptions.data.subscriptions.placeholder.note');
+            ->setHtmlAttribute('placeholder', 'subscriptions.data.subscriptions.placeholder.note');
 
         $form->addGroup('subscriptions.admin.subscription_generator.group.users');
 
         $form->addTextArea('emails', 'subscriptions.admin.subscription_generator.field.emails')
-            ->setAttribute('rows', 20)
+            ->setHtmlAttribute('rows', 20)
             ->setRequired('subscriptions.admin.subscription_generator.required.emails')
-            ->setAttribute('placeholder', 'subscriptions.admin.subscription_generator.placeholder.emails')
+            ->setHtmlAttribute('placeholder', 'subscriptions.admin.subscription_generator.placeholder.emails')
             ->setOption('description', 'subscriptions.admin.subscription_generator.description.emails');
 
         $form->addCheckbox('create_users', 'subscriptions.admin.subscription_generator.field.create_users')

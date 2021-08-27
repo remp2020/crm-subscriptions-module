@@ -101,16 +101,16 @@ class SubscriptionTypesFormFactory
 
         $form->addText('name', 'subscriptions.data.subscription_types.fields.name')
             ->setRequired('subscriptions.data.subscription_types.required.name')
-            ->setAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.name')
+            ->setHtmlAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.name')
             ->setOption('description', 'subscriptions.data.subscription_types.description.name');
 
         $form->addText('code', 'subscriptions.data.subscription_types.fields.code')
             ->setRequired()
-            ->setAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.code');
+            ->setHtmlAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.code');
 
         $form->addText('user_label', 'subscriptions.data.subscription_types.fields.user_label')
             ->setRequired('subscriptions.data.subscription_types.required.user_label')
-            ->setAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.user_label')
+            ->setHtmlAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.user_label')
             ->setOption('description', 'subscriptions.data.subscription_types.description.user_label');
 
         $form->addTextArea('description', 'subscriptions.data.subscription_types.fields.description');
@@ -120,7 +120,7 @@ class SubscriptionTypesFormFactory
         $form->addText('price', 'subscriptions.data.subscription_types.fields.price')
             ->setRequired('subscriptions.data.subscription_types.required.price')
             ->addRule(Form::FLOAT, 'subscriptions.admin.subscription_types.form.number')
-            ->setAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.price');
+            ->setHtmlAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.price');
 
 
         $types = $this->subscriptionTypeHelper->getPairs($this->subscriptionTypesRepository->all(), true);
@@ -163,18 +163,18 @@ class SubscriptionTypesFormFactory
 
         $form->addText('length', 'subscriptions.data.subscription_types.fields.length')
             ->setRequired('subscriptions.data.subscription_types.required.length')
-            ->setAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.length');
+            ->setHtmlAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.length');
 
         $form->addText('extending_length', 'subscriptions.data.subscription_types.fields.extending_length')
-            ->setAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.extending_length')
+            ->setHtmlAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.extending_length')
             ->addCondition(Form::FILLED)
             ->addRule(Form::INTEGER, 'subscriptions.data.subscription_types.validation.integer');
 
         $form->addText('fixed_start', 'subscriptions.data.subscription_types.fields.fixed_start')
-            ->setAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.fixed_start');
+            ->setHtmlAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.fixed_start');
 
         $form->addText('fixed_end', 'subscriptions.data.subscription_types.fields.fixed_end')
-            ->setAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.fixed_end');
+            ->setHtmlAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.fixed_end');
 
         $form->addGroup('subscriptions.admin.subscription_types.form.groups.content_access');
 
@@ -186,7 +186,7 @@ class SubscriptionTypesFormFactory
         $form->addGroup('subscriptions.admin.subscription_types.form.groups.other');
 
         $form->addText('recurrent_charge_before', 'subscriptions.data.subscription_types.fields.recurrent_charge_before')
-            ->setType('number');
+            ->setHtmlType('number');
 
         $form->addText('limit_per_user', 'subscriptions.data.subscription_types.fields.limit_per_user')
             ->addCondition(Form::FILLED)

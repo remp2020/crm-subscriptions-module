@@ -126,18 +126,18 @@ class SubscriptionFormFactory
 
         $form->addText('start_time', 'subscriptions.data.subscriptions.fields.start_time')
             ->setRequired('subscriptions.data.subscriptions.required.start_time')
-            ->setAttribute('placeholder', 'subscriptions.data.subscriptions.placeholder.start_time')
-            ->setAttribute('class', 'flatpickr')
-            ->setAttribute('flatpickr_datetime_seconds', "1");
+            ->setHtmlAttribute('placeholder', 'subscriptions.data.subscriptions.placeholder.start_time')
+            ->setHtmlAttribute('class', 'flatpickr')
+            ->setHtmlAttribute('flatpickr_datetime_seconds', "1");
 
         $form->addText('end_time', 'subscriptions.data.subscriptions.fields.end_time')
-            ->setAttribute('placeholder', 'subscriptions.data.subscriptions.placeholder.end_time')
+            ->setHtmlAttribute('placeholder', 'subscriptions.data.subscriptions.placeholder.end_time')
             ->setOption('description', 'subscriptions.data.subscriptions.description.end_time')
-            ->setAttribute('class', 'flatpickr')
-            ->setAttribute('flatpickr_datetime_seconds', "1");
+            ->setHtmlAttribute('class', 'flatpickr')
+            ->setHtmlAttribute('flatpickr_datetime_seconds', "1");
 
         $form->addTextArea('note', 'subscriptions.data.subscriptions.fields.note')
-            ->setAttribute('placeholder', 'subscriptions.data.subscriptions.placeholder.note')
+            ->setHtmlAttribute('placeholder', 'subscriptions.data.subscriptions.placeholder.note')
             ->getControlPrototype()
             ->addAttributes(['class' => 'autosize']);
 

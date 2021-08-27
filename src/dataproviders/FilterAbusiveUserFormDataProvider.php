@@ -25,7 +25,7 @@ class FilterAbusiveUserFormDataProvider implements FilterAbusiveUserFormDataProv
         $form = $params['form'];
         $container = $form->addContainer('additional');
         $container->addText('subscriptionTo', 'subscriptions.data_provider.abusive_user.form.subscription_date_to')
-            ->setAttribute('class', 'form-control flatpickr text flatpickr-input input active');
+            ->setHtmlAttribute('class', 'form-control flatpickr text flatpickr-input input active');
 
         $form->setDefaults($params['params']);
 
