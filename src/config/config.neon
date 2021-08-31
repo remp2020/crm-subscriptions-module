@@ -31,9 +31,9 @@ services:
 	- Crm\SubscriptionsModule\Components\MonthSubscriptionsStatWidget
 	- Crm\SubscriptionsModule\Components\MonthToDateSubscriptionsStatWidget
 	subscribersWithMissingAddressWidget:
-		class: Crm\SubscriptionsModule\Components\SubscribersWithMissingAddressWidget
+		factory: Crm\SubscriptionsModule\Components\SubscribersWithMissingAddressWidget
 	usersAbusiveAdditionalWidget:
-		class: Crm\SubscriptionsModule\Components\UsersAbusiveAdditionalWidget
+		factory: Crm\SubscriptionsModule\Components\UsersAbusiveAdditionalWidget
 	- Crm\SubscriptionsModule\Components\EndingSubscriptionsWidget
 	- Crm\SubscriptionsModule\Components\RenewedSubscriptionsEndingWithinPeriodWidget
 	- Crm\SubscriptionsModule\Components\SubscriptionsEndingWithinPeriodWidget
@@ -85,7 +85,7 @@ services:
 	- Crm\SubscriptionsModule\Extension\StartNowExtension
 	- Crm\SubscriptionsModule\Extension\ExtendSameTypeExtension
 	extensionMethodFactory:
-		class: Crm\SubscriptionsModule\Extension\ExtensionMethodFactory
+		factory: Crm\SubscriptionsModule\Extension\ExtensionMethodFactory
 		setup:
 			- registerExtension(Crm\SubscriptionsModule\Extension\ExtendActualExtension::METHOD_CODE, Crm\SubscriptionsModule\Extension\ExtendActualExtension)
 			- registerExtension(Crm\SubscriptionsModule\Extension\ExtendSameActualExtension::METHOD_CODE, Crm\SubscriptionsModule\Extension\ExtendSameActualExtension)
@@ -94,7 +94,7 @@ services:
 			- registerExtension(Crm\SubscriptionsModule\Extension\ExtendSameContentAccess::METHOD_CODE, Crm\SubscriptionsModule\Extension\ExtendSameContentAccess)
 
 	lengthMethodFactory:
-		class: Crm\SubscriptionsModule\Length\LengthMethodFactory
+		factory: Crm\SubscriptionsModule\Length\LengthMethodFactory
 		setup:
 			- registerExtension('fix_days', Crm\SubscriptionsModule\Length\FixDaysLengthMethod())
 
