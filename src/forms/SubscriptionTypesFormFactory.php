@@ -2,6 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Forms;
 
+use Contributte\FormMultiplier\Multiplier;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder;
 use Crm\SubscriptionsModule\DataProvider\SubscriptionTypeFormProviderInterface;
@@ -132,6 +133,7 @@ class SubscriptionTypesFormFactory
 
         $form->addGroup('subscriptions.admin.subscription_types.form.groups.items');
 
+        /** @var Multiplier $items */
         $items = $form->addMultiplier('items', function (Container $container, \Nette\Forms\Form $form) {
             $container->addText('name', 'subscriptions.admin.subscription_types.form.name')
                 ->setRequired('subscriptions.admin.subscription_types.form.required')
