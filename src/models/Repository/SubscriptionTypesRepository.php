@@ -38,7 +38,7 @@ class SubscriptionTypesRepository extends Repository
 
     final public function update(IRow &$row, $data)
     {
-        $values['modified_at'] = new \DateTime();
+        $data['modified_at'] = new \DateTime();
         return parent::update($row, $data);
     }
 
