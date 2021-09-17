@@ -10,6 +10,7 @@ use Crm\ApplicationModule\Repository;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
 use Crm\SubscriptionsModule\Events\NewSubscriptionEvent;
 use Crm\SubscriptionsModule\Events\SubscriptionEndsEvent;
+use Crm\SubscriptionsModule\Events\SubscriptionMovedEvent;
 use Crm\SubscriptionsModule\Events\SubscriptionStartsEvent;
 use Crm\SubscriptionsModule\Events\SubscriptionUpdatedEvent;
 use Crm\SubscriptionsModule\Extension\Extension;
@@ -650,5 +651,26 @@ class SubscriptionsRepository extends Repository
             ])
             ->order('end_time DESC')
             ->limit(1);
+    }
+
+    public function moveSubscription(ActiveRow $subscription, DateTime $newStartTime)
+    {
+        /** @var DateTime $originalStartTime */
+        $originalStartTime = $subscription->start_time;
+        /** @var DateTime $originalEndTime */
+        $originalEndTime = $subscription->end_time;
+
+        // We don't use DateTime::diff here, because of inconsistent behavior during leap years.
+        // http://sandbox.onlinephpfunctions.com/code/bdcdba7c301d880a3555d36208a030034094df19
+        $lengthInSeconds = $subscription->end_time->getTimestamp() - $subscription->start_time->getTimestamp();
+        $newEndTime = (clone $newStartTime)->add(new \DateInterval("PT{$lengthInSeconds}S"));
+
+        $this->update($subscription, [
+            'start_time' => $newStartTime,
+            'end_time' => $newEndTime,
+        ]);
+
+        $this->emitter->emit(new SubscriptionMovedEvent($subscription, $originalStartTime, $originalEndTime));
+        return $subscription;
     }
 }

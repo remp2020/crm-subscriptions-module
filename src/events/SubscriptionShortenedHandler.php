@@ -70,14 +70,11 @@ class SubscriptionShortenedHandler extends AbstractListener
 
     private function moveSubscription(ActiveRow &$subscription, DateTime $startTime)
     {
-        $lengthInSeconds = $subscription->end_time->getTimestamp() - $subscription->start_time->getTimestamp();
-        $endTime = (clone $startTime)->add(new \DateInterval("PT{$lengthInSeconds}S"));
+        $subscription = $this->subscriptionsRepository->moveSubscription(
+            $subscription,
+            $startTime
+        );
 
-        $this->subscriptionsRepository->update($subscription, [
-            'start_time' => $startTime,
-            'end_time' => $endTime,
-        ]);
-
-        return $endTime;
+        return $subscription->end_time;
     }
 }

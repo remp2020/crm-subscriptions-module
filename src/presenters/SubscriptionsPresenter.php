@@ -28,7 +28,9 @@ class SubscriptionsPresenter extends FrontendPresenter
         }
 
         $this->template->userId = $this->getUser()->getId();
-        $this->template->subscriptions = $this->subscriptionsRepository->userSubscriptions($this->getUser()->getId());
+        $this->template->subscriptions = $this->subscriptionsRepository
+            ->userSubscriptions($this->getUser()->getId())
+            ->where('subscriptions.end_time > subscriptions.start_time');
     }
 
     public function renderNew($funnel = null)
