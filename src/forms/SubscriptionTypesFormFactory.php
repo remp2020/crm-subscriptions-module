@@ -3,7 +3,6 @@
 namespace Crm\SubscriptionsModule\Forms;
 
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
-use Crm\MobiletechModule\DataProvider\SubscriptionTypeFormProvider;
 use Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder;
 use Crm\SubscriptionsModule\DataProvider\SubscriptionTypeFormProviderInterface;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
@@ -283,8 +282,11 @@ class SubscriptionTypesFormFactory
             $items = $values['items'];
             unset($values['items']);
 
-            /** @var SubscriptionTypeFormProvider[] $providers */
-            $providers = $this->dataProviderManager->getProviders('subscriptions.dataprovider.subscription_type_form', SubscriptionTypeFormProvider::class);
+            /** @var SubscriptionTypeFormProviderInterface[] $providers */
+            $providers = $this->dataProviderManager->getProviders(
+                'subscriptions.dataprovider.subscription_type_form',
+                SubscriptionTypeFormProviderInterface::class
+            );
             foreach ($providers as $sorting => $provider) {
                 [$form, $values] = $provider->formSucceeded($form, $values);
             }
@@ -333,8 +335,11 @@ class SubscriptionTypesFormFactory
 
             $subscriptionType = $subscriptionType->save();
 
-            /** @var SubscriptionTypeFormProvider[] $providers */
-            $providers = $this->dataProviderManager->getProviders('subscriptions.dataprovider.subscription_type_form', SubscriptionTypeFormProvider::class);
+            /** @var SubscriptionTypeFormProviderInterface[] $providers */
+            $providers = $this->dataProviderManager->getProviders(
+                'subscriptions.dataprovider.subscription_type_form',
+                SubscriptionTypeFormProviderInterface::class
+            );
             foreach ($providers as $sorting => $provider) {
                 [$form, $values] = $provider->formSucceeded($form, $values);
             }
