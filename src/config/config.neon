@@ -80,6 +80,7 @@ services:
 
 	- Crm\SubscriptionsModule\Extension\ExtendActualExtension
 	- Crm\SubscriptionsModule\Extension\ExtendSameActualExtension
+	- Crm\SubscriptionsModule\Extension\ExtendSameContentAccess
 	- Crm\SubscriptionsModule\Extension\StartNowExtension
 	- Crm\SubscriptionsModule\Extension\ExtendSameTypeExtension
 	extensionMethodFactory:
@@ -89,6 +90,7 @@ services:
 			- registerExtension(Crm\SubscriptionsModule\Extension\ExtendSameActualExtension::METHOD_CODE, Crm\SubscriptionsModule\Extension\ExtendSameActualExtension)
 			- registerExtension(Crm\SubscriptionsModule\Extension\StartNowExtension::METHOD_CODE, Crm\SubscriptionsModule\Extension\StartNowExtension)
 			- registerExtension(Crm\SubscriptionsModule\Extension\ExtendSameTypeExtension::METHOD_CODE, Crm\SubscriptionsModule\Extension\ExtendSameTypeExtension)
+			- registerExtension(Crm\SubscriptionsModule\Extension\ExtendSameContentAccess::METHOD_CODE, Crm\SubscriptionsModule\Extension\ExtendSameContentAccess)
 
 	lengthMethodFactory:
 		class: Crm\SubscriptionsModule\Length\LengthMethodFactory
