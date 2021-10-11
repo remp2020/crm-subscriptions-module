@@ -6,7 +6,7 @@ use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Repository;
 use Crm\SubscriptionsModule\DataProvider\CanUpdateSubscriptionTypeItemDataProviderInterface;
 use Exception;
-use Nette\Caching\IStorage;
+use Nette\Caching\Storage;
 use Nette\Database\Context;
 use Nette\Database\Table\IRow;
 use Nette\Utils\DateTime;
@@ -19,7 +19,7 @@ class SubscriptionTypeItemsRepository extends Repository
 
     public function __construct(
         Context $database,
-        IStorage $cacheStorage = null,
+        Storage $cacheStorage = null,
         DataProviderManager $dataProviderManager
     ) {
         parent::__construct($database, $cacheStorage);
