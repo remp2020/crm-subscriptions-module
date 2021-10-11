@@ -7,7 +7,7 @@ use Crm\ApplicationModule\Config\ApplicationConfig;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemMetaRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Nette\Utils\DateTime;
 
 class SubscriptionTypeBuilder extends Builder
@@ -31,7 +31,7 @@ class SubscriptionTypeBuilder extends Builder
     private $subscriptionTypeItemMetaRepository;
 
     public function __construct(
-        Context $database,
+        Explorer $database,
         ApplicationConfig $applicationConfig,
         ContentAccessRepository $contentAccessRepository,
         SubscriptionTypeItemMetaRepository $subscriptionTypeItemMetaRepository,

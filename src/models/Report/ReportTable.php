@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Report;
 
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 
 class ReportTable
 {
@@ -16,7 +16,7 @@ class ReportTable
 
     private $belongs = [];
 
-    public function __construct(array $params, Context $db, ReportGroup $reportGroup)
+    public function __construct(array $params, Explorer $db, ReportGroup $reportGroup)
     {
         $this->params = $params;
         $this->db = $db;

@@ -4,7 +4,7 @@ namespace Crm\SubscriptionsModule\Repository;
 
 use Crm\ApplicationModule\Repository;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Nette\Database\Table\IRow;
 use Nette\Database\Table\Selection;
 
@@ -12,7 +12,7 @@ class SubscriptionTypesRepository extends Repository
 {
     protected $tableName = 'subscription_types';
 
-    public function __construct(Context $database, AuditLogRepository $auditLogRepository)
+    public function __construct(Explorer $database, AuditLogRepository $auditLogRepository)
     {
         parent::__construct($database);
         $this->auditLogRepository = $auditLogRepository;

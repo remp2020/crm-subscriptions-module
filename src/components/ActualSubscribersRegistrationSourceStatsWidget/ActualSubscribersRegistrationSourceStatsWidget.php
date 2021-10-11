@@ -5,7 +5,7 @@ namespace Crm\SubscriptionsModule\Components;
 use Crm\ApplicationModule\Components\Graphs\GoogleBarGraphControlFactoryInterface;
 use Crm\ApplicationModule\Widget\BaseWidget;
 use Crm\ApplicationModule\Widget\WidgetManager;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Nette\Localization\ITranslator;
 
 /**
@@ -28,7 +28,7 @@ class ActualSubscribersRegistrationSourceStatsWidget extends BaseWidget
         WidgetManager $widgetManager,
         GoogleBarGraphControlFactoryInterface $factory,
         ITranslator $translator,
-        Context $database
+        Explorer $database
     ) {
         parent::__construct($widgetManager);
 

@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Report;
 
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Nette\Localization\ITranslator;
 
 abstract class BaseReport implements ReportInterface
@@ -11,7 +11,7 @@ abstract class BaseReport implements ReportInterface
 
     private $id;
 
-    /** @var  Context */
+    /** @var Explorer */
     private $db;
 
     protected $translator;
@@ -33,7 +33,7 @@ abstract class BaseReport implements ReportInterface
         return $this->name;
     }
 
-    public function injectDatabase(Context $db)
+    public function injectDatabase(Explorer $db)
     {
         $this->db = $db;
     }

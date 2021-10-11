@@ -18,7 +18,7 @@ use Crm\SubscriptionsModule\Extension\ExtensionMethodFactory;
 use Crm\SubscriptionsModule\Length\LengthMethodFactory;
 use DateTime;
 use League\Event\Emitter;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\IRow;
 use Nette\Database\Table\Selection;
@@ -53,7 +53,7 @@ class SubscriptionsRepository extends Repository
     private $hermesEmitter;
 
     public function __construct(
-        Context $database,
+        Explorer $database,
         ExtensionMethodFactory $extensionMethodFactory,
         LengthMethodFactory $lengthMethodFactory,
         AuditLogRepository $auditLogRepository,
