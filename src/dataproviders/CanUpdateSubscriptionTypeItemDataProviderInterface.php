@@ -8,9 +8,7 @@ use Nette\Database\Table\IRow;
 interface CanUpdateSubscriptionTypeItemDataProviderInterface extends DataProviderInterface
 {
     /**
-     * @param array $params {
-     *   @type IRow $subscriptionTypeItem
-     * }
+     * @param array{subscriptionTypeItem: IRow} $params
      */
     public function provide(array $params);
 }
