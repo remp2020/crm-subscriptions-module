@@ -4,8 +4,8 @@ namespace Crm\SubscriptionsModule\Extension;
 
 use Crm\ApplicationModule\NowTrait;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
-use Nette\Database\Table\IRow;
 use DateTime;
+use Nette\Database\Table\IRow;
 
 class ExtendSameTypeExtension implements ExtensionInterface
 {

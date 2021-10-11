@@ -10,8 +10,8 @@ use Crm\SegmentModule\Params\NumberArrayParam;
 use Crm\SegmentModule\Params\ParamsBag;
 use Crm\SegmentModule\Params\StringArrayParam;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
+use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 
 abstract class BaseActiveSubscriptionCriteria implements CriteriaInterface
 {

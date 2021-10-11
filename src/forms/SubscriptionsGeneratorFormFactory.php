@@ -4,8 +4,8 @@ namespace Crm\SubscriptionsModule\Forms;
 
 use Crm\ApplicationModule\Hermes\HermesMessage;
 use Crm\SubscriptionsModule\Generator\SubscriptionsGenerator;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
+use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Subscription\SubscriptionTypeHelper;
 use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Email\EmailValidator;
