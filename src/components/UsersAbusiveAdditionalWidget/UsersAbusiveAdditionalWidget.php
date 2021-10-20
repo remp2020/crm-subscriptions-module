@@ -5,7 +5,7 @@ namespace Crm\SubscriptionsModule\Components;
 use Crm\ApplicationModule\Widget\BaseWidget;
 use Crm\ApplicationModule\Widget\WidgetManager;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 class UsersAbusiveAdditionalWidget extends BaseWidget
 {
@@ -27,7 +27,7 @@ class UsersAbusiveAdditionalWidget extends BaseWidget
         return 'subscriptionusersabusiveadditionalwidget';
     }
 
-    public function render(IRow $userRow)
+    public function render(ActiveRow $userRow)
     {
         $actualSubscriptionsSelection = $this->subscriptionsRepository->actualUserSubscriptions($userRow->id);
         $actualSubscriptionRow = current($actualSubscriptionsSelection->fetchAll());

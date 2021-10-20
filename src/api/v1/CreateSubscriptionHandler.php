@@ -12,7 +12,7 @@ use Crm\SubscriptionsModule\Repository\SubscriptionMetaRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\UsersModule\Auth\UserManager;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 use Nette\Http\Response;
 use Nette\Utils\DateTime;
 
@@ -112,7 +112,7 @@ class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerI
         return $this->createResponse($subscription);
     }
 
-    private function createResponse(IRow $subscription)
+    private function createResponse(ActiveRow $subscription)
     {
         $response = new JsonResponse([
             'status' => 'ok',

@@ -2,14 +2,14 @@
 
 namespace Crm\SubscriptionsModule\Extension;
 
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 interface ExtensionInterface
 {
     /**
-     * @param IRow $user
-     * @param IRow $subscriptionType
+     * @param ActiveRow $user
+     * @param ActiveRow $subscriptionType
      * @return Extension
      */
-    public function getStartTime(IRow $user, IRow $subscriptionType);
+    public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType);
 }

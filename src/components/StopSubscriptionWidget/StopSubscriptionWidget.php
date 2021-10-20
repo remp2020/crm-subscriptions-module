@@ -7,7 +7,7 @@ use Crm\ApplicationModule\Widget\WidgetManager;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Subscription\StopSubscriptionHandler;
 use DateTime;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 use Nette\Localization\ITranslator;
 
 class StopSubscriptionWidget extends BaseWidget
@@ -37,7 +37,7 @@ class StopSubscriptionWidget extends BaseWidget
         return 'stopsubscriptionwidget';
     }
 
-    public function render(IRow $subscription)
+    public function render(ActiveRow $subscription)
     {
         if (!$this->isSubscriptionStoppable($subscription)) {
             return;
@@ -48,7 +48,7 @@ class StopSubscriptionWidget extends BaseWidget
         $this->template->render();
     }
 
-    private function isSubscriptionStoppable(IRow $subscription): bool
+    private function isSubscriptionStoppable(ActiveRow $subscription): bool
     {
         // already stopped
         if ($subscription->start_time == $subscription->end_time) {

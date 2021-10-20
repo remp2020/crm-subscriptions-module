@@ -3,7 +3,7 @@
 namespace Crm\SubscriptionsModule\Repository;
 
 use Crm\ApplicationModule\Repository;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 use Nette\Utils\DateTime;
 
@@ -11,7 +11,7 @@ class SubscriptionTypesMetaRepository extends Repository
 {
     protected $tableName = 'subscription_types_meta';
 
-    final public function add(IRow $subscriptionType, string $key, $value, int $sorting = 100)
+    final public function add(ActiveRow $subscriptionType, string $key, $value, int $sorting = 100)
     {
         return $this->getTable()->insert([
             'subscription_type_id' => $subscriptionType->id,
@@ -28,29 +28,29 @@ class SubscriptionTypesMetaRepository extends Repository
         return $this->getTable()->where(['key' => $key]);
     }
 
-    final public function getMeta(IRow $subscriptionType, string $key): Selection
+    final public function getMeta(ActiveRow $subscriptionType, string $key): Selection
     {
         return $this->getTable()->where(['subscription_type_id' => $subscriptionType->id, 'key' => $key]);
     }
 
-    final public function subscriptionTypeMeta(IRow $subscriptionType): array
+    final public function subscriptionTypeMeta(ActiveRow $subscriptionType): array
     {
         return $this->getTable()->where([
             'subscription_type_id' => $subscriptionType->id,
         ])->order('sorting ASC')->fetchPairs('key', 'value');
     }
 
-    final public function getAllBySubscriptionType(IRow $subscriptionType)
+    final public function getAllBySubscriptionType(ActiveRow $subscriptionType)
     {
         return $subscriptionType->related('subscription_types_meta');
     }
 
-    final public function exists(IRow $subscriptionType, string $key): bool
+    final public function exists(ActiveRow $subscriptionType, string $key): bool
     {
         return $this->getMeta($subscriptionType, $key)->count('*') > 0;
     }
 
-    final public function setMeta(IRow $subscriptionType, string $key, $value): IRow
+    final public function setMeta(ActiveRow $subscriptionType, string $key, $value): ActiveRow
     {
         if ($meta = $this->getMeta($subscriptionType, $key)->fetch()) {
             $this->update($meta, ['value' => $value]);
@@ -60,7 +60,7 @@ class SubscriptionTypesMetaRepository extends Repository
         }
     }
 
-    final public function getMetaValue(IRow $subscriptionType, string $key): ?string
+    final public function getMetaValue(ActiveRow $subscriptionType, string $key): ?string
     {
         return $this->getMeta($subscriptionType, $key)->fetchField('value');
     }

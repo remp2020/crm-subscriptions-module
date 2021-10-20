@@ -2,9 +2,9 @@
 
 namespace Crm\UsersModule\User;
 
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 interface ISubscriptionGetter
 {
-    public function getSubscription(): IRow;
+    public function getSubscription(): ActiveRow;
 }

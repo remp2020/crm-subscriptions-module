@@ -4,7 +4,7 @@ namespace Crm\SubscriptionsModule\PaymentItem;
 
 use Crm\PaymentsModule\PaymentItem\PaymentItemInterface;
 use Crm\PaymentsModule\PaymentItem\PaymentItemTrait;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 class SubscriptionTypePaymentItem implements PaymentItemInterface
 {
@@ -33,11 +33,11 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
     }
 
     /**
-     * @param IRow $subscriptionType
+     * @param ActiveRow $subscriptionType
      * @param int $count
      * @return static[]
      */
-    public static function fromSubscriptionType(IRow $subscriptionType, int $count = 1): array
+    public static function fromSubscriptionType(ActiveRow $subscriptionType, int $count = 1): array
     {
         $rows = [];
         foreach ($subscriptionType->related('subscription_type_items') as $item) {
@@ -47,11 +47,11 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
     }
 
     /**
-     * @param IRow $subscriptionTypeItem
+     * @param ActiveRow $subscriptionTypeItem
      * @param int $count
      * @return static
      */
-    public static function fromSubscriptionTypeItem(IRow $subscriptionTypeItem, int $count = 1)
+    public static function fromSubscriptionTypeItem(ActiveRow $subscriptionTypeItem, int $count = 1)
     {
         $metas = ['subscription_type_item_id' => $subscriptionTypeItem->id];
         foreach ($subscriptionTypeItem->related('subscription_type_item_meta') as $item) {
@@ -68,11 +68,11 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
     }
 
     /**
-     * @param IRow $paymentItem
+     * @param ActiveRow $paymentItem
      * @return SubscriptionTypePaymentItem
      * @throws \Exception Thrown if payment item isn't `subscription_type` payment item type.
      */
-    public static function fromPaymentItem(IRow $paymentItem)
+    public static function fromPaymentItem(ActiveRow $paymentItem)
     {
         if ($paymentItem->type != self::TYPE) {
             throw new \Exception("Can not load SubscriptionTypePaymentItem from payment item of different type. Got [{$paymentItem->type}]");

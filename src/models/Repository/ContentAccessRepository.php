@@ -3,7 +3,7 @@
 namespace Crm\SubscriptionsModule\Repository;
 
 use Crm\ApplicationModule\Repository;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 use Nette\Utils\DateTime;
 
@@ -33,7 +33,7 @@ class ContentAccessRepository extends Repository
         return $this->getTable()->where(['name' => $name])->count('*') > 0;
     }
 
-    final public function hasAccess(IRow $subscriptionType, $name)
+    final public function hasAccess(ActiveRow $subscriptionType, $name)
     {
         return $this->getDatabase()->table('subscription_type_content_access')
             ->where([
@@ -43,7 +43,7 @@ class ContentAccessRepository extends Repository
             ->count('*') > 0;
     }
 
-    final public function allForSubscriptionType(IRow $subscriptionType): Selection
+    final public function allForSubscriptionType(ActiveRow $subscriptionType): Selection
     {
         return $this->getTable()
             ->where([
@@ -52,7 +52,7 @@ class ContentAccessRepository extends Repository
             ->order('sorting');
     }
 
-    final public function addAccess(IRow $subscriptionType, $name)
+    final public function addAccess(ActiveRow $subscriptionType, $name)
     {
         $this->getDatabase()->table('subscription_type_content_access')->insert([
             'subscription_type_id' => $subscriptionType->id,
@@ -61,7 +61,7 @@ class ContentAccessRepository extends Repository
         ]);
     }
 
-    final public function removeAccess(IRow $subscriptionType, $name)
+    final public function removeAccess(ActiveRow $subscriptionType, $name)
     {
         $this->getDatabase()->table('subscription_type_content_access')->where([
             'subscription_type_id' => $subscriptionType->id,
@@ -78,7 +78,7 @@ class ContentAccessRepository extends Repository
      * @param $contentAccess
      * @param DateTime $startTime
      * @param DateTime $endTime
-     * @return \Nette\Database\Table\Selection
+     * @return Selection
      */
     final public function usersWithAccessActiveBetween($contentAccess, DateTime $startTime, DateTime $endTime)
     {

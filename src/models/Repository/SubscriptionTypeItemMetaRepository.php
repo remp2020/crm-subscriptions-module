@@ -4,7 +4,6 @@ namespace Crm\SubscriptionsModule\Repository;
 
 use Crm\ApplicationModule\Repository;
 use Nette\Database\Table\ActiveRow;
-use Nette\Database\Table\IRow;
 use Nette\Database\Table\Selection;
 use Nette\Utils\DateTime;
 
@@ -23,22 +22,22 @@ class SubscriptionTypeItemMetaRepository extends Repository
         ]);
     }
 
-    final public function findBySubscriptionTypeItem(IRow $subscriptionTypeItem): Selection
+    final public function findBySubscriptionTypeItem(ActiveRow $subscriptionTypeItem): Selection
     {
         return $this->getTable()->where(['subscription_type_item_id' => $subscriptionTypeItem->id]);
     }
 
-    final public function findBySubscriptionTypeItemAndKey(IRow $subscriptionTypeItem, string $key): Selection
+    final public function findBySubscriptionTypeItemAndKey(ActiveRow $subscriptionTypeItem, string $key): Selection
     {
         return $this->findBySubscriptionTypeItem($subscriptionTypeItem)->where(['key' => $key]);
     }
 
-    final public function exists(IRow $subscriptionTypeItem, string $key): bool
+    final public function exists(ActiveRow $subscriptionTypeItem, string $key): bool
     {
         return $this->findBySubscriptionTypeItemAndKey($subscriptionTypeItem, $key)->count('*') > 0;
     }
 
-    final public function subscriptionTypeItemsHaveMeta(IRow $subscriptionType): bool
+    final public function subscriptionTypeItemsHaveMeta(ActiveRow $subscriptionType): bool
     {
         $subscriptionTypeItemIds = $subscriptionType->related('subscription_type_items')->fetchPairs(null, 'id');
         return $this->getTable()->where('subscription_type_item_id', $subscriptionTypeItemIds)->count('*') > 0;

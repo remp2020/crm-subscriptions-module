@@ -4,7 +4,7 @@ namespace Crm\SubscriptionsModule\Extension;
 
 use Crm\ApplicationModule\NowTrait;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 class ExtendSameActualExtension implements ExtensionInterface
 {
@@ -22,7 +22,7 @@ class ExtendSameActualExtension implements ExtensionInterface
         $this->subscriptionsRepository = $subscriptionsRepository;
     }
 
-    public function getStartTime(IRow $user, IRow $subscriptionType)
+    public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType)
     {
         $latestActualSubscriptionForType = $this->subscriptionsRepository
             ->actualUserSubscriptions($user->id)

@@ -20,7 +20,6 @@ use DateTime;
 use League\Event\Emitter;
 use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
-use Nette\Database\Table\IRow;
 use Nette\Database\Table\Selection;
 
 class SubscriptionsRepository extends Repository
@@ -87,15 +86,15 @@ class SubscriptionsRepository extends Repository
     }
 
     final public function add(
-        IRow $subscriptionType,
+        ActiveRow $subscriptionType,
         bool $isRecurrent,
         bool $isPaid,
-        IRow $user,
+        ActiveRow $user,
         $type = self::TYPE_REGULAR,
         DateTime $startTime = null,
         DateTime $endTime = null,
         $note = null,
-        IRow $address = null,
+        ActiveRow $address = null,
         bool $sendEmail = true,
         Closure $callbackBeforeNewSubscriptionEvent = null
     ) {
@@ -159,7 +158,7 @@ class SubscriptionsRepository extends Repository
         return $newSubscription;
     }
 
-    final public function update(IRow &$row, $data)
+    final public function update(ActiveRow &$row, $data)
     {
         $data['modified_at'] = new DateTime();
 
@@ -268,7 +267,7 @@ class SubscriptionsRepository extends Repository
     }
 
     // Emits events hooked on 'internal_status' change
-    private function emitStatusNotifications(IRow $subscription)
+    private function emitStatusNotifications(ActiveRow $subscription)
     {
         switch ($subscription->internal_status) {
             case self::INTERNAL_STATUS_ACTIVE:
@@ -283,7 +282,7 @@ class SubscriptionsRepository extends Repository
         }
     }
 
-    final public function refreshInternalStatus(IRow $subscription): bool
+    final public function refreshInternalStatus(ActiveRow $subscription): bool
     {
         // update with empty parameters will update subscription's internal_status
         return $this->update($subscription, []);

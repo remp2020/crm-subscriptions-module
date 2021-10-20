@@ -7,7 +7,7 @@ use Crm\SubscriptionsModule\Repository\SubscriptionMetaRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use DateTime;
 use League\Event\Emitter;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 class StopSubscriptionHandler
 {
@@ -29,7 +29,7 @@ class StopSubscriptionHandler
         $this->emitter = $emitter;
     }
 
-    public function stopSubscription(IRow $subscription): void
+    public function stopSubscription(ActiveRow $subscription): void
     {
         $originalEndTime = clone $subscription->end_time;
         $newEndTime = new DateTime();

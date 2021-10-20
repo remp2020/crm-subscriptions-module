@@ -12,7 +12,6 @@ use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
 use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Repository\UsersRepository;
 use Nette\Database\Table\ActiveRow;
-use Nette\Database\Table\IRow;
 use Nette\Utils\DateTime;
 
 class NextSubscriptionIdTest extends DatabaseTestCase
@@ -66,7 +65,7 @@ class NextSubscriptionIdTest extends DatabaseTestCase
         return $subscriptionTypeRow;
     }
 
-    private function addSubscription(IRow $subscriptionType, DateTime $from = null, DateTime $to = null): ActiveRow
+    private function addSubscription(ActiveRow $subscriptionType, DateTime $from = null, DateTime $to = null): ActiveRow
     {
         return $this->subscriptionsRepository->add(
             $subscriptionType,

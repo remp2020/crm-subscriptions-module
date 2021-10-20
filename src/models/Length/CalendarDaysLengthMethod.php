@@ -3,11 +3,11 @@
 namespace Crm\SubscriptionsModule\Length;
 
 use DateTime;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 class CalendarDaysLengthMethod implements LengthMethodInterface
 {
-    public function getEndTime(DateTime $startTime, IRow $subscriptionType, bool $isExtending): Length
+    public function getEndTime(DateTime $startTime, ActiveRow $subscriptionType, bool $isExtending): Length
     {
         $length = intval(date('t', $startTime->getTimestamp()));
         $interval = new \DateInterval("P{$length}D");

@@ -5,7 +5,7 @@ namespace Crm\SubscriptionsModule\Forms;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesMetaRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Nette\Application\UI\Form;
-use Nette\Database\IRow;
+use Nette\Database\Table\ActiveRow;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\Localization\ITranslator;
 use Nette\SmartObject;
@@ -36,7 +36,7 @@ class SubscriptionTypeMetaFormFactory
         $this->translator = $translator;
     }
 
-    public function create(IRow $subscriptionType): Form
+    public function create(ActiveRow $subscriptionType): Form
     {
         $form = new Form();
         $form->setTranslator($this->translator);

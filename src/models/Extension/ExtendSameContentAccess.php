@@ -5,7 +5,7 @@ namespace Crm\SubscriptionsModule\Extension;
 use Crm\ApplicationModule\NowTrait;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository as ContentAccessRepositoryAlias;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
 
 class ExtendSameContentAccess implements ExtensionInterface
@@ -29,12 +29,12 @@ class ExtendSameContentAccess implements ExtensionInterface
     }
 
     /**
-     * @param IRow $user
-     * @param IRow $subscriptionType
+     * @param ActiveRow $user
+     * @param ActiveRow $subscriptionType
      * @return Extension
      * @throws \Exception
      */
-    public function getStartTime(IRow $user, IRow $subscriptionType): Extension
+    public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType): Extension
     {
         $requiredContentAccesses = $this->contentAccessRepository->allForSubscriptionType($subscriptionType)
             ->fetchAssoc('id');

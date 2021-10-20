@@ -6,7 +6,7 @@ use Crm\ApplicationModule\Criteria\ScenarioParams\BooleanParam;
 use Crm\ApplicationModule\Criteria\ScenariosCriteriaInterface;
 use Crm\SubscriptionsModule\Subscription\StopSubscriptionHandler;
 use Kdyby\Translation\Translator;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 
 class IsExpiredByAdminCriteria implements ScenariosCriteriaInterface
@@ -27,7 +27,7 @@ class IsExpiredByAdminCriteria implements ScenariosCriteriaInterface
         ];
     }
 
-    public function addConditions(Selection $selection, array $paramValues, IRow $criterionItemRow): bool
+    public function addConditions(Selection $selection, array $paramValues, ActiveRow $criterionItemRow): bool
     {
         $values = $paramValues['is_expired_by_admin'];
 

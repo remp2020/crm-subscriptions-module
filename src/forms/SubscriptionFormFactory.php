@@ -14,7 +14,7 @@ use Crm\UsersModule\Repository\UsersRepository;
 use Kdyby\Translation\Translator;
 use League\Event\Emitter;
 use Nette\Application\UI\Form;
-use Nette\Database\IRow;
+use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
 use Tomaj\Form\Renderer\BootstrapRenderer;
 
@@ -69,11 +69,9 @@ class SubscriptionFormFactory
     }
 
     /**
-     * @param IRow $user
-     * @param int|null $subscriptionId
      * @return Form
      */
-    public function create(IRow $user, int $subscriptionId = null)
+    public function create(ActiveRow $user, int $subscriptionId = null)
     {
         $defaults = [];
         $subscription = false;
@@ -105,7 +103,7 @@ class SubscriptionFormFactory
         $subscriptionTypeId->getControlPrototype()->addAttributes(['class' => 'select2']);
 
         if (!$subscription) {
-            $subscriptionTypeId->addRule(function ($field, IRow $user) {
+            $subscriptionTypeId->addRule(function ($field, ActiveRow $user) {
                 $subscriptionType = $this->subscriptionTypesRepository->find($field->value);
                 if (!empty($subscriptionType->limit_per_user) &&
                     $this->subscriptionsRepository->getCount($subscriptionType->id, $user->id) >= $subscriptionType->limit_per_user) {

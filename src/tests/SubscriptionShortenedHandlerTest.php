@@ -17,7 +17,6 @@ use Crm\SubscriptionsModule\Seeders\TestSeeder;
 use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Repository\UsersRepository;
 use Nette\Database\Table\ActiveRow;
-use Nette\Database\Table\IRow;
 
 class SubscriptionShortenedHandlerTest extends DatabaseTestCase
 {
@@ -403,7 +402,7 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
         );
     }
 
-    private function loadUser($email) : IRow
+    private function loadUser($email) : ActiveRow
     {
         $user = $this->userManager->loadUserByEmail($email);
         if (!$user) {

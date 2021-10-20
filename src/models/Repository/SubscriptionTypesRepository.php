@@ -5,7 +5,7 @@ namespace Crm\SubscriptionsModule\Repository;
 use Crm\ApplicationModule\Repository;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
 use Nette\Database\Explorer;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 
 class SubscriptionTypesRepository extends Repository
@@ -36,7 +36,7 @@ class SubscriptionTypesRepository extends Repository
         return $this->getTable()->order('sorting');
     }
 
-    final public function update(IRow &$row, $data)
+    final public function update(ActiveRow &$row, $data)
     {
         $data['modified_at'] = new \DateTime();
         return parent::update($row, $data);

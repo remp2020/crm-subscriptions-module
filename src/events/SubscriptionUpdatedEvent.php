@@ -6,7 +6,6 @@ use Crm\UsersModule\User\ISubscriptionGetter;
 use Crm\UsersModule\User\IUserGetter;
 use League\Event\AbstractEvent;
 use Nette\Database\Table\ActiveRow;
-use Nette\Database\Table\IRow;
 
 /**
  * Event emitted in case of subscription's basic parameters (start_time, end_time, subscription_type_id, user_id) update
@@ -19,12 +18,12 @@ class SubscriptionUpdatedEvent extends AbstractEvent implements IUserGetter, ISu
     private $subscription;
 
 
-    public function __construct(IRow $subscription)
+    public function __construct(ActiveRow $subscription)
     {
         $this->subscription = $subscription;
     }
 
-    public function getSubscription(): IRow
+    public function getSubscription(): ActiveRow
     {
         return $this->subscription;
     }

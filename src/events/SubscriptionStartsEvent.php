@@ -6,19 +6,18 @@ use Crm\UsersModule\User\ISubscriptionGetter;
 use Crm\UsersModule\User\IUserGetter;
 use League\Event\AbstractEvent;
 use Nette\Database\Table\ActiveRow;
-use Nette\Database\Table\IRow;
 
 class SubscriptionStartsEvent extends AbstractEvent implements ISubscriptionGetter, IUserGetter
 {
     /** @var ActiveRow */
     private $subscription;
 
-    public function __construct(IRow $subscription)
+    public function __construct(ActiveRow $subscription)
     {
         $this->subscription = $subscription;
     }
 
-    public function getSubscription(): IRow
+    public function getSubscription(): ActiveRow
     {
         return $this->subscription;
     }

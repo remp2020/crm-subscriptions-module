@@ -3,7 +3,7 @@
 namespace Crm\SubscriptionsModule\Generator;
 
 use DateTime;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 class SubscriptionsParams
 {
@@ -23,8 +23,8 @@ class SubscriptionsParams
     private $note;
 
     public function __construct(
-        IRow $subscriptionType,
-        IRow $user,
+        ActiveRow $subscriptionType,
+        ActiveRow $user,
         $type,
         DateTime $startTime,
         ?DateTime $endTime,

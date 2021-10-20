@@ -5,7 +5,7 @@ namespace Crm\SubscriptionsModule\Scenarios;
 use Crm\ApplicationModule\Criteria\ScenarioParams\BooleanParam;
 use Crm\ApplicationModule\Criteria\ScenariosCriteriaInterface;
 use Kdyby\Translation\Translator;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 
 class SubscriptionTypeIsDefaultCriteria implements ScenariosCriteriaInterface
@@ -27,7 +27,7 @@ class SubscriptionTypeIsDefaultCriteria implements ScenariosCriteriaInterface
         ];
     }
 
-    public function addConditions(Selection $selection, array $paramValues, IRow $criterionItemRow): bool
+    public function addConditions(Selection $selection, array $paramValues, ActiveRow $criterionItemRow): bool
     {
         $values = $paramValues[self::KEY];
         $selection->where('subscription_type.default = ?', $values->selection);

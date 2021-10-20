@@ -3,11 +3,11 @@
 namespace Crm\SubscriptionsModule\Length;
 
 use DateTime;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 class FixDaysLengthMethod implements LengthMethodInterface
 {
-    public function getEndTime(DateTime $startTime, IRow $subscriptionType, bool $isExtending = false): Length
+    public function getEndTime(DateTime $startTime, ActiveRow $subscriptionType, bool $isExtending = false): Length
     {
         $length = $subscriptionType->length;
         if ($isExtending && $subscriptionType->extending_length) {

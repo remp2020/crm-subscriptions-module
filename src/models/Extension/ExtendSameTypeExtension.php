@@ -5,7 +5,7 @@ namespace Crm\SubscriptionsModule\Extension;
 use Crm\ApplicationModule\NowTrait;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use DateTime;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 class ExtendSameTypeExtension implements ExtensionInterface
 {
@@ -22,7 +22,7 @@ class ExtendSameTypeExtension implements ExtensionInterface
         $this->subscriptionsRepository = $subscriptionsRepository;
     }
 
-    public function getStartTime(IRow $user, IRow $subscriptionType)
+    public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType)
     {
         $lifetimeThreshold = new DateTime('+ 30 years');
         $lastSubscriptionTypeSubscription = $this->subscriptionsRepository->userSubscriptions($user->id)
