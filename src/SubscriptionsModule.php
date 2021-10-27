@@ -37,7 +37,6 @@ use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
 use Kdyby\Translation\Translator;
 use League\Event\Emitter;
-use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
 use Nette\DI\Container;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -293,7 +292,7 @@ class SubscriptionsModule extends CrmModule
 
     public function registerRoutes(RouteList $router)
     {
-        $router[] = new Route('subscriptions/[funnel/<funnel>]', 'Subscriptions:Subscriptions:new');
+        $router->addRoute('subscriptions/[funnel/<funnel>]', 'Subscriptions:Subscriptions:new');
     }
 
     public function registerSeeders(SeederManager $seederManager)
