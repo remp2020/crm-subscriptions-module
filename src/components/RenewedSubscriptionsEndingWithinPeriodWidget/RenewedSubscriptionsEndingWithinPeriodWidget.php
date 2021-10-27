@@ -5,7 +5,7 @@ namespace Crm\SubscriptionsModule\Components;
 use Crm\ApplicationModule\Widget\BaseWidget;
 use Crm\ApplicationModule\Widget\WidgetManager;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 use Nette\Utils\DateTime;
 
 /**
@@ -25,7 +25,7 @@ class RenewedSubscriptionsEndingWithinPeriodWidget extends BaseWidget implements
     public function __construct(
         WidgetManager $widgetManager,
         SubscriptionsRepository $subscriptionsRepository,
-        ITranslator $translator
+        Translator $translator
     ) {
         parent::__construct($widgetManager);
         $this->subscriptionsRepository = $subscriptionsRepository;

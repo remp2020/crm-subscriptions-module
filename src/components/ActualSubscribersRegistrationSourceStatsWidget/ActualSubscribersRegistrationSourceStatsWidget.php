@@ -6,7 +6,7 @@ use Crm\ApplicationModule\Components\Graphs\GoogleBarGraphControlFactoryInterfac
 use Crm\ApplicationModule\Widget\BaseWidget;
 use Crm\ApplicationModule\Widget\WidgetManager;
 use Nette\Database\Explorer;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 
 /**
  * This widget fetches user source from subscriptions and renders
@@ -27,7 +27,7 @@ class ActualSubscribersRegistrationSourceStatsWidget extends BaseWidget
     public function __construct(
         WidgetManager $widgetManager,
         GoogleBarGraphControlFactoryInterface $factory,
-        ITranslator $translator,
+        Translator $translator,
         Explorer $database
     ) {
         parent::__construct($widgetManager);

@@ -3,7 +3,7 @@
 namespace Crm\SubscriptionsModule\Report;
 
 use Nette\Database\Explorer;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 
 abstract class BaseReport implements ReportInterface
 {
@@ -16,7 +16,7 @@ abstract class BaseReport implements ReportInterface
 
     protected $translator;
 
-    public function __construct($name, ITranslator $translator)
+    public function __construct($name, Translator $translator)
     {
         $this->name = $name;
         $this->id = md5(time() . rand(1, 10000) . rand(1000, 1000) . 'hello');

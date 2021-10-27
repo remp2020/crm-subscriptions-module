@@ -7,7 +7,7 @@ use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\UniqueConstraintViolationException;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 use Nette\SmartObject;
 use Nette\Utils\DateTime;
 use Tomaj\Form\Renderer\BootstrapRenderer;
@@ -29,7 +29,7 @@ class SubscriptionTypeMetaFormFactory
     public function __construct(
         SubscriptionTypesRepository $subscriptionTypesRepository,
         SubscriptionTypesMetaRepository $subscriptionTypesMetaRepository,
-        ITranslator $translator
+        Translator $translator
     ) {
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
         $this->subscriptionTypesMetaRepository = $subscriptionTypesMetaRepository;

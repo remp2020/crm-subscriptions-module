@@ -8,7 +8,7 @@ use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Subscription\StopSubscriptionHandler;
 use DateTime;
 use Nette\Database\Table\ActiveRow;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 
 class StopSubscriptionWidget extends BaseWidget
 {
@@ -24,7 +24,7 @@ class StopSubscriptionWidget extends BaseWidget
         WidgetManager $widgetManager,
         SubscriptionsRepository $subscriptionsRepository,
         StopSubscriptionHandler $stopSubscriptionHandler,
-        ITranslator $translator
+        Translator $translator
     ) {
         parent::__construct($widgetManager);
         $this->subscriptionsRepository = $subscriptionsRepository;

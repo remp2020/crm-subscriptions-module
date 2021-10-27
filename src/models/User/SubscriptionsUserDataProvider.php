@@ -6,7 +6,7 @@ use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
 use Crm\ApplicationModule\User\UserDataProviderInterface;
 use Crm\SubscriptionsModule\Model\Config;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 use Nette\Utils\DateTime;
 use Tracy\Debugger;
 
@@ -20,7 +20,7 @@ class SubscriptionsUserDataProvider implements UserDataProviderInterface
 
     public function __construct(
         SubscriptionsRepository $subscriptionsRepository,
-        ITranslator $translator,
+        Translator $translator,
         ConfigsRepository $configRepository
     ) {
         $this->subscriptionsRepository = $subscriptionsRepository;

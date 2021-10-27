@@ -5,7 +5,7 @@ namespace Crm\SubscriptionsModule\Components;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Nette\Application\UI;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 use Nette\Utils\DateTime;
 
 /**
@@ -39,7 +39,7 @@ class SubscriptionEndsStats extends UI\Control
     public function __construct(
         SubscriptionsRepository $subscriptionsRepository,
         SubscriptionTypesRepository $subscriptionTypesRepository,
-        ITranslator $translator
+        Translator $translator
     ) {
         $this->subscriptionsRepository = $subscriptionsRepository;
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
@@ -139,7 +139,7 @@ class SubscriptionEndsStats extends UI\Control
         }
 
         $types = $this->processTypes($subscriptionsTypes, $types);
-        
+
         usort($types, function ($a, $b) {
             return $a['count'] < $b['count'];
         });

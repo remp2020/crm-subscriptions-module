@@ -8,7 +8,7 @@ use Crm\ApplicationModule\Graphs\GraphData;
 use Crm\ApplicationModule\Graphs\GraphDataItem;
 use Crm\ApplicationModule\Widget\BaseWidget;
 use Crm\ApplicationModule\Widget\WidgetManager;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 
 /**
  * This widget uses graph data to fetch subscriptions from last 31 days
@@ -30,7 +30,7 @@ class MonthSubscriptionsSmallBarGraphWidget extends BaseWidget
         WidgetManager $widgetManager,
         SmallBarGraphControlFactoryInterface $factory,
         GraphData $graphData,
-        ITranslator $translator
+        Translator $translator
     ) {
         parent::__construct($widgetManager);
         $this->factory = $factory;

@@ -9,7 +9,7 @@ use Crm\SubscriptionsModule\Subscription\SubscriptionTypeHelper;
 use Crm\UsersModule\DataProvider\FilterUsersFormDataProviderInterface;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\Selection;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 
 class FilterUsersFormDataProvider implements FilterUsersFormDataProviderInterface
 {
@@ -23,7 +23,7 @@ class FilterUsersFormDataProvider implements FilterUsersFormDataProviderInterfac
 
     public function __construct(
         SubscriptionTypesRepository $subscriptionTypesRepository,
-        ITranslator $translator,
+        Translator $translator,
         SubscriptionTypeHelper $subscriptionTypeHelper
     ) {
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
