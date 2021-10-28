@@ -228,13 +228,13 @@ class SubscriptionTypesFormFactory
     public function validateItemsAmount(Form $form)
     {
         $totalSum = 0;
-        $values = $form->getValues();
+        $values = $form->getUnsafeValues('array');
 
         foreach ($values['items'] as $item) {
-            $totalSum += (float) $item->amount;
+            $totalSum += (float) $item['amount'];
         }
 
-        if ($totalSum != $values->price) {
+        if ($totalSum !== (float) $values['price']) {
             $form->addError('subscriptions.admin.subscription_type_items.sum_error');
         }
     }
