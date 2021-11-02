@@ -61,6 +61,12 @@ class ActualUserSubscription
         return $this->actualSubscription;
     }
 
+    public function getActualSubscriptionType()
+    {
+        $this->init();
+        return $this->actualSubscription->subscription_type->code ?? null;
+    }
+
     public function hasNextSubscription()
     {
         $this->init();
