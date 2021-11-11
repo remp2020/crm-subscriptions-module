@@ -9,6 +9,8 @@ use Crm\SubscriptionsModule\DataProvider\SubscriptionsClaimUserDataProvider;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;
+use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
 use Crm\UsersModule\Repository\UserMetaRepository;
 use Crm\UsersModule\Repository\UsersRepository;
@@ -23,9 +25,6 @@ class SubscriptionsClaimUserDataProviderTest extends DatabaseTestCase
 
     /** @var SubscriptionsRepository */
     private $subscriptionsRepository;
-
-    /** @var SubscriptionTypesRepository */
-    private $subscriptionTypeRepository;
 
     /** @var SubscriptionTypeBuilder */
     private $subscriptionTypeBuilder;
@@ -55,7 +54,9 @@ class SubscriptionsClaimUserDataProviderTest extends DatabaseTestCase
     {
         return [
             UsersSeeder::class,
-            SubscriptionTypeNamesSeeder::class
+            SubscriptionExtensionMethodsSeeder::class,
+            SubscriptionLengthMethodSeeder::class,
+            SubscriptionTypeNamesSeeder::class,
         ];
     }
 
@@ -66,7 +67,6 @@ class SubscriptionsClaimUserDataProviderTest extends DatabaseTestCase
         $this->dataProvider = $this->inject(SubscriptionsClaimUserDataProvider::class);
 
         $this->subscriptionsRepository = $this->getRepository(SubscriptionsRepository::class);
-        $this->subscriptionTypeRepository = $this->getRepository(SubscriptionTypesRepository::class);
         $this->unclaimedUser = $this->inject(UnclaimedUser::class);
         $this->usersRepository = $this->getRepository(UsersRepository::class);
 

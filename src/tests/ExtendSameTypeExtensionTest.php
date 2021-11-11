@@ -60,9 +60,9 @@ class ExtendSameTypeExtensionTest extends DatabaseTestCase
     protected function requiredSeeders(): array
     {
         return [
-            SubscriptionTypeNamesSeeder::class,
             SubscriptionExtensionMethodsSeeder::class,
-            SubscriptionLengthMethodSeeder::class
+            SubscriptionLengthMethodSeeder::class,
+            SubscriptionTypeNamesSeeder::class,
         ];
     }
 

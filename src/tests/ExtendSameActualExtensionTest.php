@@ -9,6 +9,7 @@ use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
+use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
 use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Repository\UsersRepository;
 use Nette\Database\Table\IRow;
@@ -56,7 +57,8 @@ class ExtendSameActualExtensionTest extends DatabaseTestCase
     {
         return [
             SubscriptionExtensionMethodsSeeder::class,
-            SubscriptionLengthMethodSeeder::class
+            SubscriptionLengthMethodSeeder::class,
+            SubscriptionTypeNamesSeeder::class,
         ];
     }
 
