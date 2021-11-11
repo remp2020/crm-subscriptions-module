@@ -37,6 +37,15 @@ class ExtendSameTypeExtensionTest extends DatabaseTestCase
         $this->user = $userManager->addNewUser('test@example.com');
     }
 
+    public function tearDown(): void
+    {
+        // reset NOW; it affects tests run after this class
+        $this->extension->setNow(null);
+        $this->subscriptionsRepository->setNow(null);
+
+        parent::tearDown();
+    }
+
     protected function requiredRepositories(): array
     {
         return [
