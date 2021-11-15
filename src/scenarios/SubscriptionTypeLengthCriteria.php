@@ -30,7 +30,7 @@ class SubscriptionTypeLengthCriteria implements ScenariosCriteriaInterface
             throw new \Exception("Operator $operator is not a valid operator out of: " . Json::encode(self::OPERATORS));
         }
 
-        $selection->where('.subscription_type.length ' . $operator . ' ?', $values->selection);
+        $selection->where('subscription_type.length ' . $operator . ' ?', $values->selection);
         return true;
     }
 
