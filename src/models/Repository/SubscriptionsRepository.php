@@ -100,7 +100,7 @@ class SubscriptionsRepository extends Repository
         Closure $callbackBeforeNewSubscriptionEvent = null
     ) {
         $isExtending = false;
-        if ($startTime == null) {
+        if ($startTime === null) {
             $extension = $this->getSubscriptionExtension($subscriptionType, $user);
             $startTime = $extension->getDate();
             $isExtending = $extension->isExtending();
@@ -111,7 +111,7 @@ class SubscriptionsRepository extends Repository
         }
 
         $subscriptionLength = $isExtending && $subscriptionType->extending_length ? $subscriptionType->extending_length : $subscriptionType->length;
-        if ($endTime == null) {
+        if ($endTime === null) {
             $lengthMethod = $this->lengthMethodFactory->getExtension($subscriptionType->length_method_id);
             $length = $lengthMethod->getEndTime($startTime, $subscriptionType, $isExtending);
             $endTime = $length->getEndTime();
@@ -224,10 +224,10 @@ class SubscriptionsRepository extends Repository
                     ])
                     ->fetch();
 
-                if ($nextSubscription === false && $row->next_subscription_id !== null) {
+                if (!$nextSubscription && $row->next_subscription_id !== null) {
                     // remove link if it's invalid
                     parent::update($row, ['next_subscription_id' => null]);
-                } elseif ($nextSubscription !== false && $nextSubscription->id !== $row->next_subscription_id) {
+                } elseif ($nextSubscription && $nextSubscription->id !== $row->next_subscription_id) {
                     // set new link if found
                     parent::update($row, ['next_subscription_id' => $nextSubscription->id]);
                 }

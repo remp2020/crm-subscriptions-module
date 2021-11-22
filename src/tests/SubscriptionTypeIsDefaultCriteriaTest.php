@@ -53,7 +53,7 @@ class SubscriptionTypeIsDefaultCriteriaTest extends DatabaseTestCase
             SubscriptionTypeIsDefaultCriteria::KEY => (object)['selection' => 1]
         ], $subscriptionRow);
 
-        $this->assertNotFalse($subscriptionSelection->fetch());
+        $this->assertNotNull($subscriptionSelection->fetch());
     }
 
     public function testSubTypeDefaultAndNotDefaultRequired()
@@ -66,7 +66,7 @@ class SubscriptionTypeIsDefaultCriteriaTest extends DatabaseTestCase
             SubscriptionTypeIsDefaultCriteria::KEY => (object)['selection' => 0]
         ], $subscriptionRow);
 
-        $this->assertFalse($subscriptionSelection->fetch());
+        $this->assertNull($subscriptionSelection->fetch());
     }
 
     public function testSubTypeNotDefaultAndDefaultRequired()
@@ -79,7 +79,7 @@ class SubscriptionTypeIsDefaultCriteriaTest extends DatabaseTestCase
             SubscriptionTypeIsDefaultCriteria::KEY => (object)['selection' => 1]
         ], $subscriptionRow);
 
-        $this->assertFalse($subscriptionSelection->fetch());
+        $this->assertNull($subscriptionSelection->fetch());
     }
 
     public function testSubTypeNotDefaultAndNotDefaultRequired()
@@ -92,7 +92,7 @@ class SubscriptionTypeIsDefaultCriteriaTest extends DatabaseTestCase
             SubscriptionTypeIsDefaultCriteria::KEY => (object)['selection' => 1]
         ], $subscriptionRow);
 
-        $this->assertNotFalse($subscriptionSelection->fetch());
+        $this->assertNotNull($subscriptionSelection->fetch());
     }
 
     private function prepareData($defaultSubType)

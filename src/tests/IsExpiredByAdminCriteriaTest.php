@@ -60,21 +60,21 @@ class IsExpiredByAdminCriteriaTest extends DatabaseTestCase
         $criteria->addConditions($subscriptionSelection, [
                 IsExpiredByAdminCriteria::KEY => (object)['selection' => 1]
             ], $subscriptionRow);
-        $this->assertFalse($subscriptionSelection->fetch());
+        $this->assertNull($subscriptionSelection->fetch());
 
         $this->subscriptionMetaRepository->setMeta($subscriptionRow, StopSubscriptionHandler::META_KEY_EXPIRED_BY_ADMIN, false);
 
         $criteria->addConditions($subscriptionSelection, [
             IsExpiredByAdminCriteria::KEY => (object)['selection' => 1]
         ], $subscriptionRow);
-        $this->assertFalse($subscriptionSelection->fetch());
+        $this->assertNull($subscriptionSelection->fetch());
 
         $this->subscriptionMetaRepository->setMeta($subscriptionRow, StopSubscriptionHandler::META_KEY_EXPIRED_BY_ADMIN, true);
 
         $criteria->addConditions($subscriptionSelection, [
                 IsExpiredByAdminCriteria::KEY => (object)['selection' => 1]
             ], $subscriptionRow);
-        $this->assertNotFalse($subscriptionSelection->fetch());
+        $this->assertNotNull($subscriptionSelection->fetch());
     }
 
     public function testIsExpiredByAdminNotRequired(): void
@@ -86,20 +86,20 @@ class IsExpiredByAdminCriteriaTest extends DatabaseTestCase
         $criteria->addConditions($subscriptionSelection, [
                 IsExpiredByAdminCriteria::KEY => (object)['selection' => 0]
             ], $subscriptionRow);
-        $this->assertNotFalse($subscriptionSelection->fetch());
+        $this->assertNotNull($subscriptionSelection->fetch());
 
         $this->subscriptionMetaRepository->setMeta($subscriptionRow, StopSubscriptionHandler::META_KEY_EXPIRED_BY_ADMIN, false);
 
         $criteria->addConditions($subscriptionSelection, [
                 IsExpiredByAdminCriteria::KEY => (object)['selection' => 0]
             ], $subscriptionRow);
-        $this->assertNotFalse($subscriptionSelection->fetch());
+        $this->assertNotNull($subscriptionSelection->fetch());
 
         $this->subscriptionMetaRepository->setMeta($subscriptionRow, StopSubscriptionHandler::META_KEY_EXPIRED_BY_ADMIN, true);
         $criteria->addConditions($subscriptionSelection, [
                 IsExpiredByAdminCriteria::KEY => (object)['selection' => 0]
             ], $subscriptionRow);
-        $this->assertFalse($subscriptionSelection->fetch());
+        $this->assertNull($subscriptionSelection->fetch());
     }
 
     private function prepareData(): array

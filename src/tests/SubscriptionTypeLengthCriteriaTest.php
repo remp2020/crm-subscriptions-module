@@ -54,9 +54,9 @@ class SubscriptionTypeLengthCriteriaTest extends DatabaseTestCase
             'subscription_type_length' => (object)['selection' => $criteriaLength, 'operator' => $criteriaOperator]
         ], $subscriptionRow);
         if ($shouldFetch) {
-            $this->assertNotFalse($selection->fetch());
+            $this->assertNotNull($selection->fetch());
         } else {
-            $this->assertFalse($selection->fetch());
+            $this->assertNull($selection->fetch());
         }
     }
 
