@@ -243,6 +243,8 @@ admin:
 			label: 'The subscription type has a flag "default"'
 		has_later_ending_subscription:
 			label: 'The subscription has another later ending subcription'
+		is_expired_by_admin:
+			label: 'Expired by admin'
 
 	dashboard:
 		subscriptions_recurrency:

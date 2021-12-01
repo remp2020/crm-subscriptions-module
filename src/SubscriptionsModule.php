@@ -24,6 +24,7 @@ use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Scenarios\ContentAccessCriteria;
 use Crm\SubscriptionsModule\Scenarios\HasDisabledNotificationsCriteria;
 use Crm\SubscriptionsModule\Scenarios\HasLaterEndingSubscriptionCriteria;
+use Crm\SubscriptionsModule\Scenarios\IsExpiredByAdminCriteria;
 use Crm\SubscriptionsModule\Scenarios\IsRecurrentCriteria;
 use Crm\SubscriptionsModule\Scenarios\SubscriptionTypeCriteria;
 use Crm\SubscriptionsModule\Scenarios\SubscriptionTypeIsDefaultCriteria;
@@ -268,6 +269,7 @@ class SubscriptionsModule extends CrmModule
         $scenariosCriteriaStorage->register('subscription', HasDisabledNotificationsCriteria::KEY, $this->getInstance(HasDisabledNotificationsCriteria::class));
         $scenariosCriteriaStorage->register('subscription', SubscriptionTypeLengthCriteria::KEY, $this->getInstance(SubscriptionTypeLengthCriteria::class));
         $scenariosCriteriaStorage->register('subscription', HasLaterEndingSubscriptionCriteria::KEY, $this->getInstance(HasLaterEndingSubscriptionCriteria::class));
+        $scenariosCriteriaStorage->register('subscription', IsExpiredByAdminCriteria::KEY, $this->getInstance(IsExpiredByAdminCriteria::class));
     }
 
     public function registerSegmentCriteria(CriteriaStorage $criteriaStorage)

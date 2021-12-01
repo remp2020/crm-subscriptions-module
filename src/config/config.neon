@@ -62,6 +62,7 @@ services:
 	- Crm\SubscriptionsModule\Scenarios\SubscriptionTypeLengthCriteria
 	- Crm\SubscriptionsModule\Scenarios\SubscriptionTypeIsDefaultCriteria
 	- Crm\SubscriptionsModule\Scenarios\HasLaterEndingSubscriptionCriteria
+	- Crm\SubscriptionsModule\Scenarios\IsExpiredByAdminCriteria
 	- Crm\SubscriptionsModule\Seeders\ConfigSeeder
 	- Crm\SubscriptionsModule\Seeders\ContentAccessSeeder
 	- Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder

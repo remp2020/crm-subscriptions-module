@@ -11,6 +11,8 @@ use Nette\Database\Table\IRow;
 
 class StopSubscriptionHandler
 {
+    public const META_KEY_EXPIRED_BY_ADMIN = 'expired_by_admin';
+
     private $subscriptionsRepository;
 
     private $subscriptionMetaRepository;
@@ -41,7 +43,7 @@ class StopSubscriptionHandler
             $note = $subscription->note . "\n" . $note;
         }
 
-        $this->subscriptionMetaRepository->setMeta($subscription, 'expired_by_admin', true);
+        $this->subscriptionMetaRepository->setMeta($subscription, self::META_KEY_EXPIRED_BY_ADMIN, true);
         $this->subscriptionsRepository->update($subscription, [
             'end_time' => $newEndTime,
             'note' => $note

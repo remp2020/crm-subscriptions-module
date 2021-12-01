@@ -242,6 +242,8 @@ admin:
 			label: 'Typ předplatného ma příznak "default"'
 		has_later_ending_subscription:
 			label: 'Má další předplatné končící později'
+		is_expired_by_admin:
+			label: 'Ukončeno adminem'
 
 	actual_user_subscriptions:
 		header: Předplatné

@@ -256,6 +256,8 @@ admin:
 			label: 'Typ predplatneho ma priznak "default"'
 		has_later_ending_subscription:
 			label: 'Má ďaľšie predplatné končiace neskôr'
+		is_expired_by_admin:
+			label: 'Ukončené adminom'
 
 	# componenty
 
