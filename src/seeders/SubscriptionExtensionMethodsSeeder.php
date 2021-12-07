@@ -5,6 +5,7 @@ namespace Crm\SubscriptionsModule\Seeders;
 use Crm\ApplicationModule\Seeders\ISeeder;
 use Crm\SubscriptionsModule\Extension\ExtendActualExtension;
 use Crm\SubscriptionsModule\Extension\ExtendSameActualExtension;
+use Crm\SubscriptionsModule\Extension\ExtendSameContentAccess;
 use Crm\SubscriptionsModule\Extension\ExtendSameTypeExtension;
 use Crm\SubscriptionsModule\Extension\StartNowExtension;
 use Crm\SubscriptionsModule\Repository\SubscriptionExtensionMethodsRepository;
@@ -40,7 +41,7 @@ class SubscriptionExtensionMethodsSeeder implements ISeeder
                 $method,
                 ExtendSameActualExtension::METHOD_NAME,
                 'Put new subscription after actual subscription of the same type or starts now',
-                100
+                110
             );
             $output->writeln("  <comment>* subscription extension method <info>{$method}</info> created</comment>");
         } else {
@@ -66,7 +67,20 @@ class SubscriptionExtensionMethodsSeeder implements ISeeder
                 $method,
                 ExtendSameTypeExtension::METHOD_NAME,
                 'Put new subscription after last subscription of the same type or use extend_actual method',
-                100
+                120
+            );
+            $output->writeln("  <comment>* subscription extension method <info>{$method}</info> created</comment>");
+        } else {
+            $output->writeln("  * subscription extension method <info>{$method}</info> exists");
+        }
+
+        $method = ExtendSameContentAccess::METHOD_CODE;
+        if (!$this->subscriptionExtensionMethodsRepository->exists($method)) {
+            $this->subscriptionExtensionMethodsRepository->add(
+                $method,
+                ExtendSameContentAccess::METHOD_NAME,
+                'Put new subscription after last subscription of the same content access type or start immediately',
+                130
             );
             $output->writeln("  <comment>* subscription extension method <info>{$method}</info> created</comment>");
         } else {
