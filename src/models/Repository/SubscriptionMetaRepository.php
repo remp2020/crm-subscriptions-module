@@ -63,4 +63,12 @@ class SubscriptionMetaRepository extends Repository
         }
         return false;
     }
+
+    final public function findBySubscriptionAndKey(IRow $subscription, string $key)
+    {
+        return $this->getTable()->where([
+            'subscription_id' => $subscription->id,
+            'key' => $key,
+        ])->fetch();
+    }
 }
