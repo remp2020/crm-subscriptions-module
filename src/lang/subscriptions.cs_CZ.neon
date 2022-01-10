@@ -155,10 +155,7 @@ admin:
 			title: Nový typ předplatného
 			back: zpět na typ předplatného
 		show:
-			back: Zpět na seznam
-			edit: Uprav typ předplatného
 			general_settings: Základní nastavení
-			new_subscriptions: Nové předplatné
 		messages:
 			subscription_type_created: Typ předplatného byl vytvořen.
 			subscription_type_updated: Typ předplatného byl upraven.
@@ -177,6 +174,13 @@ admin:
 			name: Název
 			amount: Cena
 			vat: DPH
+		header:
+			back: Zpět na seznam
+			edit: Uprav typ předplatného
+			show: Obecné
+			stats: Statistiky
+		stats:
+			new_subscriptions: Nové předplatné
 
 	subscription_type_items:
 		add: Přidat položku

@@ -2,19 +2,7 @@
 
 {block #content}
 
-<div class="row">
-  <div class="col-md-12">
-    <a n:href="default"><i class="fa fa-angle-left"></i> {_subscriptions.admin.subscription_types.show.back}</a>
-
-    <div class="page-header">
-      <h1>
-        <small>[{$type->id}]</small>
-        {$type->name}
-        <a n:href="edit $type->id" class="btn btn-primary btn-lg pull-right"><i class="fa fa-edit"></i> {_subscriptions.admin.subscription_types.show.edit}</a>
-      </h1>
-    </div>
-  </div>
-</div>
+{include 'header.latte', type => $type}
 
 <div class="row">
   <div class="col-md-6 col-sm-6">
@@ -205,14 +193,6 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-md-12">
-    <h2 class="page-header">{_subscriptions.admin.subscription_types.show.new_subscriptions}</h2>
-
-    {control subscriptionsGraph}
-  </div>
-</div>
-
 {control simpleWidget 'subscription_types_admin.show.middle', $type}
 
 <div class="modal fade" id="subscription-type-item-modal">
@@ -279,7 +259,3 @@
       $(this).find('#' + {$control["subscriptionTypeMetaForm"]['subscription_type_meta_id']->htmlId}).val(invoker.data('subscription_type_meta_id'));
   });
 </script>
-
-<h2 class="page-header">{_subscriptions.data.subscription_types.fields.stats}</h2>
-
-{control simpleWidget 'admin.subscription_types.show.bottom_stats', $type->id}

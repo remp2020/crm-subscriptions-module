@@ -100,6 +100,19 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
         $this->template->meta = $this->subscriptionTypesMetaRepository->getAllBySubscriptionType($this->subscriptionType)->order('key ASC');
     }
 
+    /**
+     * @admin-access-level read
+     */
+    public function actionStats($id)
+    {
+        $this->subscriptionType = $this->subscriptionTypesRepository->find($id);
+        if (!$this->subscriptionType) {
+            $this->flashMessage($this->translator->translate('subscriptions.admin.subscription_types.messages.subscription_type_not_found'));
+            $this->redirect('default');
+        }
+        $this->template->type = $this->subscriptionType;
+    }
+
     protected function createComponentSubscriptionTypeItemsForm()
     {
         $form = $this->subscriptionTypeItemsFormFactory->create($this->params['id']);

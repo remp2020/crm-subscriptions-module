@@ -1,0 +1,17 @@
+{block #title}{$type->name}{/block}
+
+{block #content}
+
+{include 'header.latte', type => $type}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="page-header">{_subscriptions.admin.subscription_types.stats.new_subscriptions}</h2>
+
+        {control subscriptionsGraph}
+    </div>
+</div>
+
+<h2 class="page-header">{_subscriptions.data.subscription_types.fields.stats}</h2>
+
+{control simpleWidget 'admin.subscription_types.show.bottom_stats', $type->id}
