@@ -17,7 +17,7 @@ class ListContentAccessHandler extends ApiHandler
         $this->contentAccessRepository = $contentAccessRepository;
     }
 
-    public function params()
+    public function params(): array
     {
         return [];
     }

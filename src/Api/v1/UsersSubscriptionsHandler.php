@@ -22,7 +22,7 @@ class UsersSubscriptionsHandler extends ApiHandler
         $this->subscriptionsRepository = $subscriptionsRepository;
     }
 
-    public function params()
+    public function params(): array
     {
         return [
             new InputParam(InputParam::TYPE_GET, 'show_finished', InputParam::OPTIONAL),

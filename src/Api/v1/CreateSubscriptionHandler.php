@@ -38,7 +38,7 @@ class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerI
         $this->userManager = $userManager;
     }
 
-    public function params()
+    public function params(): array
     {
         return [
             new InputParam(InputParam::TYPE_POST, 'email', InputParam::REQUIRED),
