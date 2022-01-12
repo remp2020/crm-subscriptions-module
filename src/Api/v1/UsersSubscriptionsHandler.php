@@ -4,9 +4,9 @@ namespace Crm\SubscriptionsModule\Api\v1;
 
 use Crm\ApiModule\Api\ApiHandler;
 use Crm\ApiModule\Api\JsonResponse;
-use Crm\ApiModule\Authorization\ApiAuthorizationInterface;
 use Crm\ApiModule\Params\InputParam;
 use Crm\ApiModule\Params\ParamsProcessor;
+use Crm\ApiModule\Response\ApiResponseInterface;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\UsersModule\Auth\UsersApiAuthorizationInterface;
 use Nette\Http\Response;
@@ -29,7 +29,7 @@ class UsersSubscriptionsHandler extends ApiHandler
         ];
     }
 
-    public function handle(ApiAuthorizationInterface $authorization)
+    public function handle(array $params): ApiResponseInterface
     {
         if (!($authorization instanceof UsersApiAuthorizationInterface)) {
             throw new \Exception("Wrong authorization service used. Should be 'UsersApiAuthorizationInterface'");

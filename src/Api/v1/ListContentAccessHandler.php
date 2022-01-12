@@ -4,7 +4,7 @@ namespace Crm\SubscriptionsModule\Api\v1;
 
 use Crm\ApiModule\Api\ApiHandler;
 use Crm\ApiModule\Api\JsonResponse;
-use Crm\ApiModule\Authorization\ApiAuthorizationInterface;
+use Crm\ApiModule\Response\ApiResponseInterface;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
 use Nette\Http\Response;
 
@@ -22,7 +22,7 @@ class ListContentAccessHandler extends ApiHandler
         return [];
     }
 
-    public function handle(ApiAuthorizationInterface $authorization)
+    public function handle(array $params): ApiResponseInterface
     {
         $contentAccesses = $this->contentAccessRepository->all();
 
