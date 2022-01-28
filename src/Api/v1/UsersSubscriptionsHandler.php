@@ -37,8 +37,8 @@ class UsersSubscriptionsHandler extends ApiHandler
         }
 
         $paramsProcessor = new ParamsProcessor($this->params());
-        if ($paramsProcessor->isError()) {
-            $response = new JsonResponse(['status' => 'error', 'code' => 'invalid_request', 'message' => $paramsProcessor->isError()]);
+        if ($paramsProcessor->hasError()) {
+            $response = new JsonResponse(['status' => 'error', 'code' => 'invalid_request', 'message' => $paramsProcessor->hasError()]);
             $response->setHttpCode(Response::S400_BAD_REQUEST);
             return $response;
         }
