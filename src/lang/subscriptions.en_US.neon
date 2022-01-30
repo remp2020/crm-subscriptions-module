@@ -165,10 +165,7 @@ admin:
 			title: New subscription type
 			back: back to subscription types
 		show:
-			back: back to listing
-			edit: Edit subscription type
 			general_settings: General settings
-			new_subscriptions: New subscriptions
 		messages:
 			subscription_type_created: Subscription type was created.
 			subscription_type_updated: Subscription type was updated.
@@ -191,6 +188,13 @@ admin:
 			name: Name
 			amount: Amount
 			vat: VAT
+		header:
+			back: Back to listing
+			edit: Edit subscription type
+			show: General
+			stats: Stats
+		stats:
+			new_subscriptions: New subscriptions
 
 	subscription_type_items:
 		add: Add item

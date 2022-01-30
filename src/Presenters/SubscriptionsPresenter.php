@@ -35,11 +35,6 @@ class SubscriptionsPresenter extends FrontendPresenter
 
     public function renderNew($funnel = null)
     {
-        $homepage = $this->applicationConfig->get('homepage_url');
-        if ($homepage) {
-            $this->redirectUrl($homepage);
-        }
-
         if ($funnel === null) {
             $funnel = $this->applicationConfig->get('default_sales_funnel_url_key');
         }
