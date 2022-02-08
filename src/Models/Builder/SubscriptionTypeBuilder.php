@@ -20,15 +20,15 @@ class SubscriptionTypeBuilder extends Builder
 
     private $subscriptionTypeItemsTable = 'subscription_type_items';
 
-    private $subscriptionTypeItems = [];
-
     private $contentAccessRepository;
 
     private $subscriptionTypesRepository;
 
+    private $subscriptionTypeItemMetaRepository;
+
     private $metaItems = [];
 
-    private $subscriptionTypeItemMetaRepository;
+    private $subscriptionTypeItems = [];
 
     public function __construct(
         Explorer $database,
@@ -66,6 +66,7 @@ class SubscriptionTypeBuilder extends Builder
     public function createNew()
     {
         $this->subscriptionTypeItems = [];
+        $this->metaItems = [];
         return parent::createNew();
     }
 
