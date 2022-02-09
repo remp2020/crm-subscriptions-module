@@ -21,10 +21,6 @@ class TypeLabel
             return Html::el('span', ['class' => 'label label-warning'])->setText($type);
         }
 
-        if ($type == SubscriptionsRepository::TYPE_GIFT) {
-            return Html::el('span', ['class' => 'label label-default'])->setText($type);
-        }
-
         if ($type == SubscriptionsRepository::TYPE_PREPAID) {
             return Html::el('span', ['class' => 'label label-danger'])->setText($type);
         }
