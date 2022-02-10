@@ -29,9 +29,6 @@ class SubscriptionsRepository extends Repository
     const TYPE_REGULAR = 'regular';
     const TYPE_FREE = 'free';
     const TYPE_DONATION = 'donation';
-    const TYPE_GIFT = 'gift';
-    const TYPE_SPECIAL = 'special';
-    const TYPE_UPGRADE = 'upgrade';
     const TYPE_PREPAID = 'prepaid';
 
     const INTERNAL_STATUS_UNKNOWN = 'unknown';
@@ -51,6 +48,13 @@ class SubscriptionsRepository extends Repository
 
     private $hermesEmitter;
 
+    private $types = [
+        self::TYPE_REGULAR => self::TYPE_REGULAR,
+        self::TYPE_FREE => self::TYPE_FREE,
+        self::TYPE_DONATION => self::TYPE_DONATION,
+        self::TYPE_PREPAID => self::TYPE_PREPAID
+    ];
+
     public function __construct(
         Explorer $database,
         ExtensionMethodFactory $extensionMethodFactory,
@@ -67,6 +71,11 @@ class SubscriptionsRepository extends Repository
         $this->cacheRepository = $cacheRepository;
         $this->emitter = $emitter;
         $this->hermesEmitter = $hermesEmitter;
+    }
+
+    final public function registerType(string $type)
+    {
+        $this->types[$type] = $type;
     }
 
     final public function totalCount($allowCached = false, $forceCacheUpdate = false)
@@ -301,15 +310,7 @@ class SubscriptionsRepository extends Repository
 
     final public function availableTypes()
     {
-        return [
-            self::TYPE_REGULAR => self::TYPE_REGULAR,
-            self::TYPE_FREE => self::TYPE_FREE,
-            self::TYPE_DONATION => self::TYPE_DONATION,
-            self::TYPE_GIFT => self::TYPE_GIFT,
-            self::TYPE_SPECIAL => self::TYPE_SPECIAL,
-            self::TYPE_UPGRADE => self::TYPE_UPGRADE,
-            self::TYPE_PREPAID => self::TYPE_PREPAID,
-        ];
+        return $this->types;
     }
 
     final public function activeSubscriptionTypes()
