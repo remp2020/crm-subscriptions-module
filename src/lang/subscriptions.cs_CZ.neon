@@ -319,8 +319,8 @@ data_provider:
 		active_subscription: Uživatel má/měl aktivní předplatné a nemůže být smazán.
 		unexpected_configuration_value: "Neočekávaná konfigurační hodnota 'Uživatelé -> Počet kontrolovaných dnú'"
 	abusive_user:
-	    form:
-	        subscription_date_to: Předplatné do
+		form:
+			subscription_date_to: Předplatné do
 	payment_item_types_filter:
 		key:
 			subscription_type: Předplatné

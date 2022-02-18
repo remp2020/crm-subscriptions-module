@@ -337,10 +337,10 @@ admin:
 data_provider:
 	delete:
 		active_subscription: Používateľ má/mal aktívne predplatné a nemôže byť zmazaný
-		unexpected_configuration_value: "Neočakávaná konfiguračná hodnota 'Používatelia  -> Počet kontrolovaných dní'"
+		unexpected_configuration_value: "Neočakávaná konfiguračná hodnota 'Používatelia -> Počet kontrolovaných dní'"
 	abusive_user:
-	    form:
-	        subscription_date_to: Predplatné do
+		form:
+			subscription_date_to: Predplatné do
 	payment_item_types_filter:
 		key:
 			subscription_type: Predplatné
