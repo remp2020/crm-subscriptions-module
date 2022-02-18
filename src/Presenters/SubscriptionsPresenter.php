@@ -20,13 +20,6 @@ class SubscriptionsPresenter extends FrontendPresenter
     {
         $this->onlyLoggedIn();
 
-        $this->template->showTrackingCode = false;
-        $session = $this->getSession('success_login');
-        if (isset($session->success) && $session->success == 'success') {
-            unset($session->success);
-            $this->template->showTrackingCode = true;
-        }
-
         $this->template->userId = $this->getUser()->getId();
         $this->template->subscriptions = $this->subscriptionsRepository
             ->userSubscriptions($this->getUser()->getId())
