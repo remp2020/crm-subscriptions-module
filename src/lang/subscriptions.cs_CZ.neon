@@ -1,351 +1,351 @@
 menu:
-	stats: Předplatné a předplatitelé
-	endings: Končící předplatné
-	my_subscriptions: Moje předplatné
-	subscriptions: Předplatné
-	subscription_types: Typy předplatného
-	subscriptions_generator: Generátor předplatného
+    stats: Předplatné a předplatitelé
+    endings: Končící předplatné
+    my_subscriptions: Moje předplatné
+    subscriptions: Předplatné
+    subscription_types: Typy předplatného
+    subscriptions_generator: Generátor předplatného
 
 data:
-	subscriptions:
-		fields:
-			subscription_type: Typ předplatného
-			payment_gateway: Platební brána
-			start_time: Začátek
-			end_time: Konec
-			type: Typ
-			note: Poznámka
-			address_id: Adresa
-			payment: Platba
-			is_paid: Placené
-		required:
-			start_time: Začátek je povinný
-			end_time: Konec je povinný
-			subscription_type_id: Překročený limit na uživatele
-		placeholder:
-			start_time: například 13.2.2019
-			end_time: například 13.11.2018
-			note: Libovolná poznámka k předplatnému
-		errors:
-			end_time_before_start_time: Konec musí následovat po začátku
-			no_subscription_type_id: Nebyl vybraný typ předplatného
-			start_time_before_paid_at: "Začátek předplatného nemůže předcházet datu zaplacení (%paid_at%)"
-		description:
-			end_time: Nechat prázdné pro automatické vyplnění podle vybraného typu předplatného
+    subscriptions:
+        fields:
+            subscription_type: Typ předplatného
+            payment_gateway: Platební brána
+            start_time: Začátek
+            end_time: Konec
+            type: Typ
+            note: Poznámka
+            address_id: Adresa
+            payment: Platba
+            is_paid: Placené
+        required:
+            start_time: Začátek je povinný
+            end_time: Konec je povinný
+            subscription_type_id: Překročený limit na uživatele
+        placeholder:
+            start_time: například 13.2.2019
+            end_time: například 13.11.2018
+            note: Libovolná poznámka k předplatnému
+        errors:
+            end_time_before_start_time: Konec musí následovat po začátku
+            no_subscription_type_id: Nebyl vybraný typ předplatného
+            start_time_before_paid_at: "Začátek předplatného nemůže předcházet datu zaplacení (%paid_at%)"
+        description:
+            end_time: Nechat prázdné pro automatické vyplnění podle vybraného typu předplatného
 
-	subscription_types:
-		fields:
-			name: Název
-			code: Identifikátor
-			next_subscription_type_id: Následující předplatné
-			price: Cena
-			length: "Délka (dny)"
-			extending_length: "Délka (dny) při prodloužení předplatného"
-			fixed_start: Fixní začátek předplatného
-			fixed_end: Fixní konec předplatného
-			user_label: Veřejný popis
-			limit_per_user: Maximální počet předplatných na uživatele
-			content: Obsah
-			active: Aktivní
-			visible: Viditelné
-			web: Web
-			print_friday: Print pátek
-			print: Print
-			club: Klub
-			mobile: Mobile
-			sorting: Pořadí
-			description: Popis
-			default: Default
-			stats: Statistiky
-			ask_address: Vyžádej adresu
-			disable_notifications: Vypnuté notifikace
-			extension_method_id: Způsob prodloužení předplatného
-			recurrent_charge_before: "Realizace následující platby (počet hodin před vypršením)"
-			items: Položky
-		required:
-			name: Název je povinný
-			length: "Délka (ve dnech) je povinná"
-			price: Cena je povinná
-			user_label: Veřejný popis je povinný
-		validation:
-			integer: Musí být číslo
-			minimum:
-				limit_per_user: Minimální hodnota 1
-		placeholder:
-			name: "například Roční předplatné (42CZK, od 2019/02)"
-			code: například year123
-			user_label: například Roční předplatné
-			next_subscription_type_id: ID
-			length: například 31
-			extending_length: například 35
-			fixed_end: například 3.5.2020
-			price: například 325
-		description:
-			name: Interní název viditelný v administraci
-			user_label: "Název předplatného, který vidí uživatel ve svém profilu"
-		values:
-			active: Aktivní
-			inactive: Neaktivní
-			visible: Viditelné
-			hidden: Skryté
-	subscription_type_items:
-		title:
-			add: Přidat položku typu předplatného
-			edit: Upravit položku typu předplatného
-		fields:
-			name: Název
-			amount: Částka
-			vat: 'DPH (%)'
-		placeholder:
-			name: například 'Tištěné předplatné magazínu'
-			amount: například '123.45'
-			vat: například 20
-		required:
-			name: Název je povinný
-			amount: Suma je povinná
-			vat: DPH je povinná
+    subscription_types:
+        fields:
+            name: Název
+            code: Identifikátor
+            next_subscription_type_id: Následující předplatné
+            price: Cena
+            length: "Délka (dny)"
+            extending_length: "Délka (dny) při prodloužení předplatného"
+            fixed_start: Fixní začátek předplatného
+            fixed_end: Fixní konec předplatného
+            user_label: Veřejný popis
+            limit_per_user: Maximální počet předplatných na uživatele
+            content: Obsah
+            active: Aktivní
+            visible: Viditelné
+            web: Web
+            print_friday: Print pátek
+            print: Print
+            club: Klub
+            mobile: Mobile
+            sorting: Pořadí
+            description: Popis
+            default: Default
+            stats: Statistiky
+            ask_address: Vyžádej adresu
+            disable_notifications: Vypnuté notifikace
+            extension_method_id: Způsob prodloužení předplatného
+            recurrent_charge_before: "Realizace následující platby (počet hodin před vypršením)"
+            items: Položky
+        required:
+            name: Název je povinný
+            length: "Délka (ve dnech) je povinná"
+            price: Cena je povinná
+            user_label: Veřejný popis je povinný
+        validation:
+            integer: Musí být číslo
+            minimum:
+                limit_per_user: Minimální hodnota 1
+        placeholder:
+            name: "například Roční předplatné (42CZK, od 2019/02)"
+            code: například year123
+            user_label: například Roční předplatné
+            next_subscription_type_id: ID
+            length: například 31
+            extending_length: například 35
+            fixed_end: například 3.5.2020
+            price: například 325
+        description:
+            name: Interní název viditelný v administraci
+            user_label: "Název předplatného, který vidí uživatel ve svém profilu"
+        values:
+            active: Aktivní
+            inactive: Neaktivní
+            visible: Viditelné
+            hidden: Skryté
+    subscription_type_items:
+        title:
+            add: Přidat položku typu předplatného
+            edit: Upravit položku typu předplatného
+        fields:
+            name: Název
+            amount: Částka
+            vat: 'DPH (%)'
+        placeholder:
+            name: například 'Tištěné předplatné magazínu'
+            amount: například '123.45'
+            vat: například 20
+        required:
+            name: Název je povinný
+            amount: Suma je povinná
+            vat: DPH je povinná
 
 frontend:
-	my:
-		history: Historie předplatných
-		actual: Aktuální předplatné
-		no_subscription: Nemáte žádné předplatné
-		buy_new_subscription: Můžete si ho zakoupit a získat tak přístup k obsahu
-	new:
-		title: Předplaťte si %site_name%
-	actual_subscription_widget:
-		active_subscription: 'Vaše předplatné v současnosti <span class="label label-success"><b>je aktivní</b></span>'
-		active_recurrent: Máte zvolený nejpohodlnější způsob platby za předplatné s automatickým obnovováním. Vaše předplatné se obnoví nejdříve
-		stopped_recurrent: Vaše automatické předplatné se zastavené
-		no_subscription: 'Vaše předplatné v současnosti <span class="label label-success"><b>není</b></span> aktivní'
-		refresh: Obnovit předplatné
-		active_without_extension: Vaše předplatné bude ukončeno <strong>%end_time%</strong> a nebude automaticky obnoveno.
-		active_with_next: Vaše předplatné s přístupem %access_actual% skončí <strong>%end_time%</strong> a pokračovat bude předplatné s přístupem %access_next%.
-		extend: Prodloužit předplatné
+    my:
+        history: Historie předplatných
+        actual: Aktuální předplatné
+        no_subscription: Nemáte žádné předplatné
+        buy_new_subscription: Můžete si ho zakoupit a získat tak přístup k obsahu
+    new:
+        title: Předplaťte si %site_name%
+    actual_subscription_widget:
+        active_subscription: 'Vaše předplatné v současnosti <span class="label label-success"><b>je aktivní</b></span>'
+        active_recurrent: Máte zvolený nejpohodlnější způsob platby za předplatné s automatickým obnovováním. Vaše předplatné se obnoví nejdříve
+        stopped_recurrent: Vaše automatické předplatné se zastavené
+        no_subscription: 'Vaše předplatné v současnosti <span class="label label-success"><b>není</b></span> aktivní'
+        refresh: Obnovit předplatné
+        active_without_extension: Vaše předplatné bude ukončeno <strong>%end_time%</strong> a nebude automaticky obnoveno.
+        active_with_next: Vaše předplatné s přístupem %access_actual% skončí <strong>%end_time%</strong> a pokračovat bude předplatné s přístupem %access_next%.
+        extend: Prodloužit předplatné
 
 admin:
-	subscriptions:
-		new:
-			title: Nové předplatné
-			header: Nové předplatné pro %name%
-			back: zpět na uživatele
+    subscriptions:
+        new:
+            title: Nové předplatné
+            header: Nové předplatné pro %name%
+            back: zpět na uživatele
 
-		edit:
-			title: Uprav předplatné %name%
-			header: Uprav předplatné
-			back: zpět na uživatele
+        edit:
+            title: Uprav předplatné %name%
+            header: Uprav předplatné
+            back: zpět na uživatele
 
-		messages:
-			subscription_created: Předplatné bylo vytvořeno
-			subscription_updated: Předplatné bylo upraveno
+        messages:
+            subscription_created: Předplatné bylo vytvořeno
+            subscription_updated: Předplatné bylo upraveno
 
-		stats:
-			title: Statistiky předplatného
+        stats:
+            title: Statistiky předplatného
 
-	subscriptions_ends:
-		default:
-			title: Končící předplatné
-			without_next: Neprodloužené
-			without_recurrent: Bez recurrentu
-			free_subscriptions: Bezplatné
+    subscriptions_ends:
+        default:
+            title: Končící předplatné
+            without_next: Neprodloužené
+            without_recurrent: Bez recurrentu
+            free_subscriptions: Bezplatné
 
-	subscription_types:
-		default:
-			title: Typ předplatného
-			new: Nový typ předplatného
-			hidden: Skryté - nepoužívané
-		edit:
-			title: Typ předplatného
-			header: Uprav typ předplatného
-			back: zpět na typ předplatného
-		new:
-			title: Nový typ předplatného
-			back: zpět na typ předplatného
-		show:
-			general_settings: Základní nastavení
-		messages:
-			subscription_type_created: Typ předplatného byl vytvořen.
-			subscription_type_updated: Typ předplatného byl upraven.
-			subscription_type_not_found: Typ předplatného se nepodařilo nalézt.
-			subscription_type_not_editable: 'Typ předplatného nelze upravovat, protože obsahuje metadata.'
-		save: Uložit typ předplatného
-		form:
-			groups:
-				price: Cena a následující předplatné
-				items: Položky typu předplatného
-				length_extension: Délka a prodloužení předplatného
-				other: Ostatní
-				content_access: Přístup k obsahu
-			required: Toto pole je povinné.
-			number: Toto pole musí obsahovat číselnou hodnotu.
-			name: Název
-			amount: Cena
-			vat: DPH
-		header:
-			back: Zpět na seznam
-			edit: Uprav typ předplatného
-			show: Obecné
-			stats: Statistiky
-		stats:
-			new_subscriptions: Nové předplatné
+    subscription_types:
+        default:
+            title: Typ předplatného
+            new: Nový typ předplatného
+            hidden: Skryté - nepoužívané
+        edit:
+            title: Typ předplatného
+            header: Uprav typ předplatného
+            back: zpět na typ předplatného
+        new:
+            title: Nový typ předplatného
+            back: zpět na typ předplatného
+        show:
+            general_settings: Základní nastavení
+        messages:
+            subscription_type_created: Typ předplatného byl vytvořen.
+            subscription_type_updated: Typ předplatného byl upraven.
+            subscription_type_not_found: Typ předplatného se nepodařilo nalézt.
+            subscription_type_not_editable: 'Typ předplatného nelze upravovat, protože obsahuje metadata.'
+        save: Uložit typ předplatného
+        form:
+            groups:
+                price: Cena a následující předplatné
+                items: Položky typu předplatného
+                length_extension: Délka a prodloužení předplatného
+                other: Ostatní
+                content_access: Přístup k obsahu
+            required: Toto pole je povinné.
+            number: Toto pole musí obsahovat číselnou hodnotu.
+            name: Název
+            amount: Cena
+            vat: DPH
+        header:
+            back: Zpět na seznam
+            edit: Uprav typ předplatného
+            show: Obecné
+            stats: Statistiky
+        stats:
+            new_subscriptions: Nové předplatné
 
-	subscription_type_items:
-		add: Přidat položku
-		remove: Odstranit položku
-		vat: DPH
-		sum_error: Součet cen položek předplatného musí být rovný ceně typu předplatného.
+    subscription_type_items:
+        add: Přidat položku
+        remove: Odstranit položku
+        vat: DPH
+        sum_error: Součet cen položek předplatného musí být rovný ceně typu předplatného.
 
-	subscription_generator:
-		form:
-			header: Generátor předplatného
-			generate: Vygeneruj předplatné
-			send: Odešli
-		field:
-			emails: E-maily
-			create_users: Vytvořit uživatele
-			user_groups: Komu vytvořit předplatné
-			newly_registered: Aktuálně zaregistrování
-			inactive: Zaregistrováni v minulosti bez aktivního předplatného
-			active: Zaregistrováni v minulosti s aktivním předplatným
-			subscription_type: Typ předplatného
-		description:
-			generate: "Pokud se nezaškrtne, zkontrolují se jen vstupy a vypíše se stav."
-			start_time: "Pokud není zadáno, předplatné bude platit od aktuálního času."
-			end_time: "Pokud není zadáno, konec předplatného bude vypočítám podle počtu dní vybraného předplatného."
-			emails: Jedna e-mailová adresa na každý řádek
-			create_users: "Pokud zadaný email neexistuje, bude konto vytvořeno"
-			user_groups: "Předplatné bude vytvořeno pouze uživatelům splňujících zvolen stav"
-		errors:
-			invalid_email: E-mail "%email%" není platný
-		required:
-			emails: E-mail uživatele musí být vyplněn
-			subscription_type: Typ předplatného musí být vybrán
-		placeholder:
-			emails: například jozko@pucik.sk
-		prompt:
-			subscription_type: Vyberte typ předplatného
-		group:
-			users: Informace o uživatelích
-		messages:
-			registrations: "Registrujeme %count% uživatelů."
-			newly_registered: "Vytváříme %count% předplatných pro nově registrované uživatele."
-			inactive: "Vytváříme %count% předplatných pro již registrované uživatele bez předplatného."
-			active: "Vytváříme %count% předplatných pro aktivní předplatitele."
-			skipped: "Nevytváříme %count% předplatných, protože uživatelé nesplňují zvolené podmínky"
+    subscription_generator:
+        form:
+            header: Generátor předplatného
+            generate: Vygeneruj předplatné
+            send: Odešli
+        field:
+            emails: E-maily
+            create_users: Vytvořit uživatele
+            user_groups: Komu vytvořit předplatné
+            newly_registered: Aktuálně zaregistrování
+            inactive: Zaregistrováni v minulosti bez aktivního předplatného
+            active: Zaregistrováni v minulosti s aktivním předplatným
+            subscription_type: Typ předplatného
+        description:
+            generate: "Pokud se nezaškrtne, zkontrolují se jen vstupy a vypíše se stav."
+            start_time: "Pokud není zadáno, předplatné bude platit od aktuálního času."
+            end_time: "Pokud není zadáno, konec předplatného bude vypočítám podle počtu dní vybraného předplatného."
+            emails: Jedna e-mailová adresa na každý řádek
+            create_users: "Pokud zadaný email neexistuje, bude konto vytvořeno"
+            user_groups: "Předplatné bude vytvořeno pouze uživatelům splňujících zvolen stav"
+        errors:
+            invalid_email: E-mail "%email%" není platný
+        required:
+            emails: E-mail uživatele musí být vyplněn
+            subscription_type: Typ předplatného musí být vybrán
+        placeholder:
+            emails: například jozko@pucik.sk
+        prompt:
+            subscription_type: Vyberte typ předplatného
+        group:
+            users: Informace o uživatelích
+        messages:
+            registrations: "Registrujeme %count% uživatelů."
+            newly_registered: "Vytváříme %count% předplatných pro nově registrované uživatele."
+            inactive: "Vytváříme %count% předplatných pro již registrované uživatele bez předplatného."
+            active: "Vytváříme %count% předplatných pro aktivní předplatitele."
+            skipped: "Nevytváříme %count% předplatných, protože uživatelé nesplňují zvolené podmínky"
 
-	dashboard:
-		subscriptions_recurrency:
-			recurrent_subscribers: Rekurentní předplatitelé
-			nonrecurrent_subscribers: Nerekurentní předplatitelé
-			title: Rekurentnost předplatitelů
-			tooltip: Počet platících rekurentních a nerekurentních předplatitelů
-		subscriptions_length:
-			days: dní
-			and_more_days: a více dní
-			title: Délka předplatného
-			tooltip: Délka předplatného na uživatele
+    dashboard:
+        subscriptions_recurrency:
+            recurrent_subscribers: Rekurentní předplatitelé
+            nonrecurrent_subscribers: Nerekurentní předplatitelé
+            title: Rekurentnost předplatitelů
+            tooltip: Počet platících rekurentních a nerekurentních předplatitelů
+        subscriptions_length:
+            days: dní
+            and_more_days: a více dní
+            title: Délka předplatného
+            tooltip: Délka předplatného na uživatele
 
-	address:
-		cant_delete: 'Tato adresa se používá při předplatném: %subscriptions%|Tato adresa se používá při předplatných: %subscriptions%'
+    address:
+        cant_delete: 'Tato adresa se používá při předplatném: %subscriptions%|Tato adresa se používá při předplatných: %subscriptions%'
 
-	scenarios:
-		subscription_type_is_default:
-			label: 'Typ předplatného ma příznak "default"'
-		has_later_ending_subscription:
-			label: 'Má další předplatné končící později'
-		is_expired_by_admin:
-			label: 'Ukončeno adminem'
+    scenarios:
+        subscription_type_is_default:
+            label: 'Typ předplatného ma příznak "default"'
+        has_later_ending_subscription:
+            label: 'Má další předplatné končící později'
+        is_expired_by_admin:
+            label: 'Ukončeno adminem'
 
-	actual_user_subscriptions:
-		header: Předplatné
-		no_subscription: Nemá aktuální předplatné
-		add_subscription: Přidej předplatné
+    actual_user_subscriptions:
+        header: Předplatné
+        no_subscription: Nemá aktuální předplatné
+        add_subscription: Přidej předplatné
 
-	user_subscriptions:
-		header: Předplatné
-		no_subscription_header: Žádný záznam
-		no_subscription: Tento uživatel nemá žádné předplatné.
-		new_subscription: Přidej nové předplatné manuálně
-		gift_header: Darované předplatné
+    user_subscriptions:
+        header: Předplatné
+        no_subscription_header: Žádný záznam
+        no_subscription: Tento uživatel nemá žádné předplatné.
+        new_subscription: Přidej nové předplatné manuálně
+        gift_header: Darované předplatné
 
-	subscription_button:
-		title: Upravit předplatné
+    subscription_button:
+        title: Upravit předplatné
 
-	actual_subscription_label:
-		actual: Aktuální
+    actual_subscription_label:
+        actual: Aktuální
 
-	filter_users:
-		subscription_type: Typ předplatného
-		actual_subscription: Jen aktuální
+    filter_users:
+        subscription_type: Typ předplatného
+        actual_subscription: Jen aktuální
 
-	subscription_end_stats:
-		subscription_types: Typy předplatného
-		content_access_types: Typy přístupu k obsahu
+    subscription_end_stats:
+        subscription_types: Typy předplatného
+        content_access_types: Typy přístupu k obsahu
 
-	month_subscriptions_small_bar_graph_widget:
-		title: Předplatné
+    month_subscriptions_small_bar_graph_widget:
+        title: Předplatné
 
-	subscribers_with_missing_address_widget:
-		title: Užívatelé bez vyplněné adresy
+    subscribers_with_missing_address_widget:
+        title: Užívatelé bez vyplněné adresy
 
-	actual_subscribers_stat_widget:
-		title: Aktivní předplatitelé
-		help: "Unikátní předplatitelé, platící i neplatící."
+    actual_subscribers_stat_widget:
+        title: Aktivní předplatitelé
+        help: "Unikátní předplatitelé, platící i neplatící."
 
-	users_abusive_additional_widget:
-		tooltip: Aktuální předplatné končí
+    users_abusive_additional_widget:
+        tooltip: Aktuální předplatné končí
 
-	subscriptions_graph:
-		title: Nové předplatné
-		help: Novovytvorené predplatné v zvolenom odbobí
+    subscriptions_graph:
+        title: Nové předplatné
+        help: Novovytvorené predplatné v zvolenom odbobí
 
-	subscription_types_meta:
-		header: Meta
-		title:
-			create: Nový meta záznam
-			update: Úprava meta
-		value_removed: Hodnota byla smazána
-		value_added: Hodnota byla přidána
-		form:
-			key:
-				label: Klíč
-				required: Klíč je povinný
-			value:
-				label: Hodnota
-				required: Hodnota je povinná
-			submit: Ulož
-		no_record_description: Tento typ předplatného neobsahuje žádné meta data.
-		error:
-			internal: Nastala chyba. Prosím kontaktujte administrátora.
-			duplicate: Meta se stejným klíčem již existuje.
+    subscription_types_meta:
+        header: Meta
+        title:
+            create: Nový meta záznam
+            update: Úprava meta
+        value_removed: Hodnota byla smazána
+        value_added: Hodnota byla přidána
+        form:
+            key:
+                label: Klíč
+                required: Klíč je povinný
+            value:
+                label: Hodnota
+                required: Hodnota je povinná
+            submit: Ulož
+        no_record_description: Tento typ předplatného neobsahuje žádné meta data.
+        error:
+            internal: Nastala chyba. Prosím kontaktujte administrátora.
+            duplicate: Meta se stejným klíčem již existuje.
 
-	stop_subscription_widget:
-		button_label: Zastavit předplatné
-		no_subscription: 'Předplatné s ID %id% se nenašlo.'
-		success: 'Předplatné s ID %id% bylo zastaveno.'
-		stop_confirm: "Opravdu chcete zastavit předplatné ID: %id% pro uživatele %email%?"
+    stop_subscription_widget:
+        button_label: Zastavit předplatné
+        no_subscription: 'Předplatné s ID %id% se nenašlo.'
+        success: 'Předplatné s ID %id% bylo zastaveno.'
+        stop_confirm: "Opravdu chcete zastavit předplatné ID: %id% pro uživatele %email%?"
 
 data_provider:
-	delete:
-		active_subscription: Uživatel má/měl aktivní předplatné a nemůže být smazán.
-		unexpected_configuration_value: "Neočekávaná konfigurační hodnota 'Uživatelé -> Počet kontrolovaných dnú'"
-	abusive_user:
-		form:
-			subscription_date_to: Předplatné do
-	payment_item_types_filter:
-		key:
-			subscription_type: Předplatné
+    delete:
+        active_subscription: Uživatel má/měl aktivní předplatné a nemůže být smazán.
+        unexpected_configuration_value: "Neočekávaná konfigurační hodnota 'Uživatelé -> Počet kontrolovaných dnú'"
+    abusive_user:
+        form:
+            subscription_date_to: Předplatné do
+    payment_item_types_filter:
+        key:
+            subscription_type: Předplatné
 
 config:
-	category: Předplatné
-	vat_default:
-		name: Běžná DPH
-		description: 'Standardní sazba DPH pro položky platby. Hodnota v % (např. 21).'
-	users:
-		category: Uživatelé
-		prevent_anonymization:
-			name: Zabránit anonymizaci uživatele s aktivním předplatným
-			description: Zabráni anonymizaci uživatele v případě pokud měl aktivne předplatné
-		prevent_anonymization_within_days:
-			name: Počet kontrolovaných dnú
-			description: 'Počet dnú, které musely uběhnout od konce posledního aktivního předplatného. Pokud není zadáno, uživatel může být anonymizovaných ihned jak mu vyprší jeho aktuální předplatné. Nastavení se bere v úvahu pouze v případě, že je povolena možnost "Zabránit anonymizaci uživatele s aktivním předplatným" výše.'
+    category: Předplatné
+    vat_default:
+        name: Běžná DPH
+        description: 'Standardní sazba DPH pro položky platby. Hodnota v % (např. 21).'
+    users:
+        category: Uživatelé
+        prevent_anonymization:
+            name: Zabránit anonymizaci uživatele s aktivním předplatným
+            description: Zabráni anonymizaci uživatele v případě pokud měl aktivne předplatné
+        prevent_anonymization_within_days:
+            name: Počet kontrolovaných dnú
+            description: 'Počet dnú, které musely uběhnout od konce posledního aktivního předplatného. Pokud není zadáno, uživatel může být anonymizovaných ihned jak mu vyprší jeho aktuální předplatné. Nastavení se bere v úvahu pouze v případě, že je povolena možnost "Zabránit anonymizaci uživatele s aktivním předplatným" výše.'
