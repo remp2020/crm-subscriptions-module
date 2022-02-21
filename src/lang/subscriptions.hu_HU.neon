@@ -179,7 +179,6 @@ admin:
 	subscription_generator:
 		form:
 			header: Előfizetés generátor
-			subscriptions_count: Előfizetések száma
 			generate: Előfizetések generálása
 			send: Küldés
 		field:
@@ -231,7 +230,6 @@ admin:
 		title: Előfizetés szerkesztése
 
 	actual_subscription_label:
-		subscription: Előfizetés
 		actual: Aktuális
 
 	filter_users:
