@@ -60,7 +60,7 @@ data:
 			ask_address: Ask address
 			disable_notifications: Disabled notifications
 			extension_method_id: Extension method
-			length_method_id: Subscription length calculcation method
+			length_method_id: Subscription length calculation method
 			recurrent_charge_before: "Recurrent charge before (hours)"
 			subscription_type_items: Subscripton items
 			items: Items
@@ -205,7 +205,6 @@ admin:
 	subscription_generator:
 		form:
 			header: Subscriptions generator
-			subscriptions_count: Subscriptions count
 			generate: Generate subscriptions
 			send: Send
 		field:
@@ -230,6 +229,8 @@ admin:
 			subscription_type: Subscription type is required
 		placeholder:
 			emails: e.g. jozko@pucik.sk
+		prompt:
+			subscription_type: Select subscription type
 		group:
 			users: User information
 		messages:

@@ -55,7 +55,6 @@ data:
 			sorting: Pořadí
 			description: Popis
 			default: Default
-			sales_funnels: Dostupné v oknech
 			stats: Statistiky
 			ask_address: Vyžádej adresu
 			disable_notifications: Vypnuté notifikace
