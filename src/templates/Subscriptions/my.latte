@@ -1,16 +1,5 @@
 {block title}{_subscriptions.menu.my_subscriptions}{/block}
 
-{block afterTagManager}
-  {if $showTrackingCode}
-    <script>
-      dataLayer.push( { 'event':'login' } );
-      dataLayer.push( {
-        'loggedin': 'yes'
-      } );
-    </script>
-  {/if}
-{/block}
-
 {block #content}
 
 {control 'simpleWidget', 'frontend.subscriptions.top', $userId}

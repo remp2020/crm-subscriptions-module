@@ -60,7 +60,7 @@ data:
 			ask_address: Ask address
 			disable_notifications: Disabled notifications
 			extension_method_id: Extension method
-			length_method_id: Subscription length calculcation method
+			length_method_id: Subscription length calculation method
 			recurrent_charge_before: "Recurrent charge before (hours)"
 			subscription_type_items: Subscripton items
 			items: Items
@@ -173,7 +173,7 @@ admin:
 			subscription_type_item_created: Subscription item was created.
 			subscription_type_item_deleted: Subscription item was deleted.
 			subscription_types_wrong_amount: 'Wrong subscription items amounts sum. Difference <strong>%price%</strong>'
-			no_subscription_type_items: This subscripton type doesn't contains any items.
+			no_subscription_type_items: "This subscripton type doesn't contains any items."
 			subscription_type_not_editable: Subscription type is not editable because it contains metadata.
 		save: Save subscription type
 		form:
@@ -205,7 +205,6 @@ admin:
 	subscription_generator:
 		form:
 			header: Subscriptions generator
-			subscriptions_count: Subscriptions count
 			generate: Generate subscriptions
 			send: Send
 		field:
@@ -230,6 +229,8 @@ admin:
 			subscription_type: Subscription type is required
 		placeholder:
 			emails: e.g. jozko@pucik.sk
+		prompt:
+			subscription_type: Select subscription type
 		group:
 			users: User information
 		messages:
@@ -238,17 +239,6 @@ admin:
 			inactive: "We are generating %count% subscription for existing users without an active subscription."
 			active: "We are generating %count% subscriptions for existing users with an active subscription."
 			skipped: "We have skipped generation of subscription for %count% users, as they don't match the selected criteria for subscription."
-
-	address:
-		cant_delete: 'This address is used in subscription: %subscriptions%|This address is used in subscriptions: %subscriptions%'
-
-	scenarios:
-		subscription_type_is_default:
-			label: 'The subscription type has a flag "default"'
-		has_later_ending_subscription:
-			label: 'The subscription has another later ending subcription'
-		is_expired_by_admin:
-			label: 'Expired by admin'
 
 	dashboard:
 		subscriptions_recurrency:
@@ -262,7 +252,16 @@ admin:
 			title: Length of subscriptions
 			tooltip: Length of subscriptions per user
 
-	# componenty
+	address:
+		cant_delete: 'This address is used in subscription: %subscriptions%|This address is used in subscriptions: %subscriptions%'
+
+	scenarios:
+		subscription_type_is_default:
+			label: 'The subscription type has a flag "default"'
+		has_later_ending_subscription:
+			label: 'The subscription has another later ending subcription'
+		is_expired_by_admin:
+			label: 'Expired by admin'
 
 	actual_user_subscriptions:
 		header: Subscription
@@ -303,6 +302,10 @@ admin:
 	users_abusive_additional_widget:
 		tooltip: Actual subscription ends
 
+	subscriptions_graph:
+		title: New subscriptions
+		help: Newly created subscriptions within selected time range
+
 	subscription_types_meta:
 		header: Meta
 		title:
@@ -318,14 +321,10 @@ admin:
 				label: Value
 				required: Value is required
 			submit: Save
-		no_record_description: This subscription type doesn't contain any meta values.
+		no_record_description: "This subscription type doesn't contain any meta values."
 		error:
 			internal: Internal error. Please contact administrator.
 			duplicate: Meta key with same key already exists.
-
-	subscriptions_graph:
-		title: New subscriptions
-		help: Newly created subscriptions within selected time range
 
 	stop_subscription_widget:
 		button_label: Stop subscription
@@ -338,8 +337,8 @@ data_provider:
 		active_subscription: User has/had an active subscription and cannot be deleted
 		unexpected_configuration_value: "Unexpected configuration value 'Users -> Count of days to check'"
 	abusive_user:
-	    form:
-	        subscription_date_to: Subscription until
+		form:
+			subscription_date_to: Subscription until
 	payment_item_types_filter:
 		key:
 			subscription_type: Subscription

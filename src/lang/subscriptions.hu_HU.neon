@@ -179,7 +179,6 @@ admin:
 	subscription_generator:
 		form:
 			header: Előfizetés generátor
-			subscriptions_count: Előfizetések száma
 			generate: Előfizetések generálása
 			send: Küldés
 		field:
@@ -213,8 +212,6 @@ admin:
 			active: "Generálunk %count% előfizetést létezo, aktív előfizetéssel rendelkező felhasználóknak"
 			skipped: "Kihagytunk %count% felhasználót, mivel nem felelnek meg a kritériumoknak."
 
-	# componenty
-
 	actual_user_subscriptions:
 		header: Előfizetés
 		no_subscription: Nincs aktív előfizetés
@@ -231,7 +228,6 @@ admin:
 		title: Előfizetés szerkesztése
 
 	actual_subscription_label:
-		subscription: Előfizetés
 		actual: Aktuális
 
 	filter_users:

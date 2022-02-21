@@ -32,6 +32,7 @@ data:
 			start_time_before_paid_at: "Začátek předplatného nemůže předcházet datu zaplacení (%paid_at%)"
 		description:
 			end_time: Nechat prázdné pro automatické vyplnění podle vybraného typu předplatného
+
 	subscription_types:
 		fields:
 			name: Název
@@ -55,7 +56,6 @@ data:
 			sorting: Pořadí
 			description: Popis
 			default: Default
-			sales_funnels: Dostupné v oknech
 			stats: Statistiky
 			ask_address: Vyžádej adresu
 			disable_notifications: Vypnuté notifikace
@@ -104,6 +104,7 @@ data:
 			name: Název je povinný
 			amount: Suma je povinná
 			vat: DPH je povinná
+
 frontend:
 	my:
 		history: Historie předplatných
@@ -121,27 +122,33 @@ frontend:
 		active_without_extension: Vaše předplatné bude ukončeno <strong>%end_time%</strong> a nebude automaticky obnoveno.
 		active_with_next: Vaše předplatné s přístupem %access_actual% skončí <strong>%end_time%</strong> a pokračovat bude předplatné s přístupem %access_next%.
 		extend: Prodloužit předplatné
+
 admin:
 	subscriptions:
 		new:
 			title: Nové předplatné
 			header: Nové předplatné pro %name%
 			back: zpět na uživatele
+
 		edit:
 			title: Uprav předplatné %name%
 			header: Uprav předplatné
 			back: zpět na uživatele
+
 		messages:
 			subscription_created: Předplatné bylo vytvořeno
 			subscription_updated: Předplatné bylo upraveno
+
 		stats:
 			title: Statistiky předplatného
+
 	subscriptions_ends:
 		default:
 			title: Končící předplatné
 			without_next: Neprodloužené
 			without_recurrent: Bez recurrentu
 			free_subscriptions: Bezplatné
+
 	subscription_types:
 		default:
 			title: Typ předplatného
@@ -253,16 +260,20 @@ admin:
 		header: Předplatné
 		no_subscription: Nemá aktuální předplatné
 		add_subscription: Přidej předplatné
+
 	user_subscriptions:
 		header: Předplatné
 		no_subscription_header: Žádný záznam
 		no_subscription: Tento uživatel nemá žádné předplatné.
 		new_subscription: Přidej nové předplatné manuálně
 		gift_header: Darované předplatné
+
 	subscription_button:
 		title: Upravit předplatné
+
 	actual_subscription_label:
 		actual: Aktuální
+
 	filter_users:
 		subscription_type: Typ předplatného
 		actual_subscription: Jen aktuální
@@ -284,6 +295,10 @@ admin:
 	users_abusive_additional_widget:
 		tooltip: Aktuální předplatné končí
 
+	subscriptions_graph:
+		title: Nové předplatné
+		help: Novovytvorené predplatné v zvolenom odbobí
+
 	subscription_types_meta:
 		header: Meta
 		title:
@@ -304,10 +319,6 @@ admin:
 			internal: Nastala chyba. Prosím kontaktujte administrátora.
 			duplicate: Meta se stejným klíčem již existuje.
 
-	subscriptions_graph:
-		title: Nové předplatné
-		help: Novovytvorené predplatné v zvolenom odbobí
-
 	stop_subscription_widget:
 		button_label: Zastavit předplatné
 		no_subscription: 'Předplatné s ID %id% se nenašlo.'
@@ -319,8 +330,8 @@ data_provider:
 		active_subscription: Uživatel má/měl aktivní předplatné a nemůže být smazán.
 		unexpected_configuration_value: "Neočekávaná konfigurační hodnota 'Uživatelé -> Počet kontrolovaných dnú'"
 	abusive_user:
-	    form:
-	        subscription_date_to: Předplatné do
+		form:
+			subscription_date_to: Předplatné do
 	payment_item_types_filter:
 		key:
 			subscription_type: Předplatné
