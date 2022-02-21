@@ -212,8 +212,6 @@ admin:
 			active: "Generálunk %count% előfizetést létezo, aktív előfizetéssel rendelkező felhasználóknak"
 			skipped: "Kihagytunk %count% felhasználót, mivel nem felelnek meg a kritériumoknak."
 
-	# componenty
-
 	actual_user_subscriptions:
 		header: Előfizetés
 		no_subscription: Nincs aktív előfizetés

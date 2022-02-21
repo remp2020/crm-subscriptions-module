@@ -263,8 +263,6 @@ admin:
 		is_expired_by_admin:
 			label: 'Ukončené adminom'
 
-	# componenty
-
 	actual_user_subscriptions:
 		header: Predplatné
 		no_subscription: Nemá aktuálne predplatné

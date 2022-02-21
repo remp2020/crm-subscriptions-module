@@ -240,17 +240,6 @@ admin:
 			active: "We are generating %count% subscriptions for existing users with an active subscription."
 			skipped: "We have skipped generation of subscription for %count% users, as they don't match the selected criteria for subscription."
 
-	address:
-		cant_delete: 'This address is used in subscription: %subscriptions%|This address is used in subscriptions: %subscriptions%'
-
-	scenarios:
-		subscription_type_is_default:
-			label: 'The subscription type has a flag "default"'
-		has_later_ending_subscription:
-			label: 'The subscription has another later ending subcription'
-		is_expired_by_admin:
-			label: 'Expired by admin'
-
 	dashboard:
 		subscriptions_recurrency:
 			recurrent_subscribers: Recurrent subscribers
@@ -263,7 +252,16 @@ admin:
 			title: Length of subscriptions
 			tooltip: Length of subscriptions per user
 
-	# componenty
+	address:
+		cant_delete: 'This address is used in subscription: %subscriptions%|This address is used in subscriptions: %subscriptions%'
+
+	scenarios:
+		subscription_type_is_default:
+			label: 'The subscription type has a flag "default"'
+		has_later_ending_subscription:
+			label: 'The subscription has another later ending subcription'
+		is_expired_by_admin:
+			label: 'Expired by admin'
 
 	actual_user_subscriptions:
 		header: Subscription
@@ -304,6 +302,10 @@ admin:
 	users_abusive_additional_widget:
 		tooltip: Actual subscription ends
 
+	subscriptions_graph:
+		title: New subscriptions
+		help: Newly created subscriptions within selected time range
+
 	subscription_types_meta:
 		header: Meta
 		title:
@@ -323,10 +325,6 @@ admin:
 		error:
 			internal: Internal error. Please contact administrator.
 			duplicate: Meta key with same key already exists.
-
-	subscriptions_graph:
-		title: New subscriptions
-		help: Newly created subscriptions within selected time range
 
 	stop_subscription_widget:
 		button_label: Stop subscription
