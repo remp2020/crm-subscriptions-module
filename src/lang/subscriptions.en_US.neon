@@ -173,7 +173,7 @@ admin:
 			subscription_type_item_created: Subscription item was created.
 			subscription_type_item_deleted: Subscription item was deleted.
 			subscription_types_wrong_amount: 'Wrong subscription items amounts sum. Difference <strong>%price%</strong>'
-			no_subscription_type_items: This subscripton type doesn't contains any items.
+			no_subscription_type_items: "This subscripton type doesn't contains any items."
 			subscription_type_not_editable: Subscription type is not editable because it contains metadata.
 		save: Save subscription type
 		form:
@@ -318,7 +318,7 @@ admin:
 				label: Value
 				required: Value is required
 			submit: Save
-		no_record_description: This subscription type doesn't contain any meta values.
+		no_record_description: "This subscription type doesn't contain any meta values."
 		error:
 			internal: Internal error. Please contact administrator.
 			duplicate: Meta key with same key already exists.
