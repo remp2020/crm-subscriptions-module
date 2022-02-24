@@ -30,7 +30,7 @@ class SubscriptionTypesMetaRepository extends Repository
 
     final public function getMeta(ActiveRow $subscriptionType, string $key): Selection
     {
-        return $this->getTable()->where(['subscription_type_id' => $subscriptionType->id, 'key' => $key]);
+        return $subscriptionType->related('subscription_types_meta')->where(['key' => $key]);
     }
 
     final public function subscriptionTypeMeta(ActiveRow $subscriptionType): array
