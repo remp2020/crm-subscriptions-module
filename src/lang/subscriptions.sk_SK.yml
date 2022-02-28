@@ -27,9 +27,9 @@ data:
             end_time: napríklad 13.2.2015
             note: Ľubovoľná poznámka k predplatnému
         errors:
-            end_time_before_start_time: Koniec musí nasledovať po začiatku
-            no_subscription_type_id: Nebol vybraný typ predplatného
-            start_time_before_paid_at: "Začiatok predplatného nemôže začať pred dátumom zaplatenia (%paid_at%)"
+            end_time_before_start_time: Koniec musí nasledovať po začiatku.
+            no_subscription_type_id: Nebol vybraný typ predplatného.
+            start_time_before_paid_at: "Začiatok predplatného nemôže začať pred dátumom zaplatenia (%paid_at%)."
         description:
             end_time: Nechať prázdne pre automatické vyplnenie podľa vybraného typu predplatného.
 
@@ -170,10 +170,10 @@ admin:
             subscription_type_created: Typ predplatného bol vytvorený.
             subscription_type_updated: Typ predplatného bol upravený.
             subscription_type_not_found: Typ predplatného sa nepodarilo nájsť.
-            subscription_type_item_created: Položka predplatného bola vytvorená
-            subscription_type_item_deleted: Položka predplatného bola vymazaná
-            subscription_types_wrong_amount: 'Nesedí suma za položky so sumou predplatného. Rozdiel <strong>%price%</strong>'
-            no_subscription_type_items: Žiadne položky k predplatnému zatiaľ neboli vytvorené
+            subscription_type_item_created: Položka predplatného bola vytvorená.
+            subscription_type_item_deleted: Položka predplatného bola vymazaná.
+            subscription_types_wrong_amount: 'Nesedí suma za položky so sumou predplatného. Rozdiel <strong>%price%</strong>.'
+            no_subscription_type_items: Žiadne položky k predplatnému zatiaľ neboli vytvorené.
             subscription_type_not_editable: 'Typ predplatného nie je možné upravovať, pretože obsahuje metadáta.'
         save: Uložiť typ predplatného
         form:
@@ -223,7 +223,7 @@ admin:
             create_users: "Ak zadaný email neexistuje, bude konto vytvorené"
             user_groups: "Predplatné bude vytvorené iba používateľom spĺňajúcich zvolený stav"
         errors:
-            invalid_email: Email "%email%" nie je platný
+            invalid_email: Email "%email%" nie je platný.
         required:
             emails: Email používateľa musí byť vyplnený
             subscription_type: Typ predplatného musí byť vybratý
@@ -352,7 +352,7 @@ config:
         category: Používatelia
         prevent_anonymization:
             name: Zabrániť anonymizácii používateľa s aktívnym predplatným
-            description: Zabráni anonymizácii používateľa v prípade ak mal aktivne predplatné
+            description: Zabráni anonymizácii používateľa v prípade ak mal aktívne predplatné
         prevent_anonymization_within_days:
             name: Počet kontrolovaných dní
             description: 'Počet dní, ktoré museli ubehnúť od konca posledného aktívneho predplatného. Ak nie je zadané, používateľ môže byť anonymizovaný ihneď ako mu vyprší jeho aktuálne predplatné. Nastavenie sa berie do úvahy len v prípade, že je povolená možnosť "Zabrániť anonymizácii používateľa s aktívnym predplatným" vyššie.'
