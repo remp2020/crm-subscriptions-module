@@ -26,11 +26,11 @@ data:
             end_time: pl. 13.2.2015
             note: Saját megjegyzés az előfizetéshez
         errors:
-            end_time_before_start_time: Előfizetés vége későbbi dátum kell legyen mint a kezdete
-            no_subscription_type_id: Nincs előfizetés típus
-            start_time_before_paid_at: "Előfizetés kezdete nem lehet hamarabb mint a fizetés dátuma: (%paid_at%)"
+            end_time_before_start_time: Előfizetés vége későbbi dátum kell legyen mint a kezdete.
+            no_subscription_type_id: Nincs előfizetés típus.
+            start_time_before_paid_at: "Előfizetés kezdete nem lehet hamarabb mint a fizetés dátuma: (%paid_at%)."
         description:
-            end_time: 'Hagyja üresen, hogy automatikusan ki legyen számolva az előfizetés típusa alapján'
+            end_time: 'Hagyja üresen, hogy automatikusan ki legyen számolva az előfizetés típusa alapján.'
 
     subscription_types:
         fields:
@@ -62,15 +62,13 @@ data:
             length_method_id: Előfizetés hossz számítás módja
             recurrent_charge_before: "Ismétlődő bekérés lejárat előtt (órákban)"
             subscription_type_items: Előfizetés tételek
-            meta: Meta
         required:
             name: Név kötelező
             length: "Időtartam (napokban) kötelező"
             price: Ár kötelező
             user_label: Felhasználó cimke kötelező
         validation:
-            integer:
-                limit_per_user: Számnak kell lennie
+            integer: {}
             minimum:
                 limit_per_user: "Minum érték: 1"
         placeholder:
@@ -112,14 +110,14 @@ frontend:
     my:
         history: Előfizetés előzmények
         actual: Aktuális előfizetés
-        no_subscription: Önnek nincs előfizetése.
+        no_subscription: Önnek nincs előfizetése
         buy_new_subscription: Vásárolhat új előfizetést.
     new:
         title: Előfizetés ide %site_name%
     actual_subscription_widget:
         active_subscription: 'Előfizetése <span class="label label-success"><b>aktív</b></span>'
         active_recurrent: 'Ismétlődő fizetés aktív. Következő díjbekérés'
-        stopped_recurrent: Ismétlődő fizetés inaktív
+        stopped_recurrent: Ismétlődő fizetés inaktív.
         no_subscription: 'Előfizetése <span class="label label-danger"><b>nem</b></span> aktív'
         refresh: Előfizetés megújítása
         active_without_extension: 'Előfizetésének a vége: <strong>%end_time%</strong>. Nem lesz autómatikusan megújítva.'
@@ -164,16 +162,14 @@ admin:
         new:
             title: Új előfizetés típus
             back: vissza előfizetés típusokhoz
-        show:
-            back: vissza a listázáshoz
-            edit: Előfizetés típus szerkesztése
+        show: {}
         messages:
             subscription_type_created: Előfizetés típus létrehozva.
             subscription_type_updated: Előfizetés típus frissítve.
             subscription_type_not_found: Ismeretlen előfizetés típus.
             subscription_type_item_created: Előfizetés tétel létrehozva.
             subscription_type_item_deleted: Előfizetés tétel törölve.
-            subscription_types_wrong_amount: 'Eltérő előfizetés tétel árak összege. Különbség <strong>%price%</strong>'
+            subscription_types_wrong_amount: 'Eltérő előfizetés tétel árak összege. Különbség <strong>%price%</strong>.'
             no_subscription_type_items: Ez az előfizetés típus nem tartalmaz tételeket.
 
     subscription_generator:
@@ -197,7 +193,7 @@ admin:
             create_users: "Ha nincs fiók ezzel az e-mail címmel, létre lesz hozva egy új"
             user_groups: "Előfizeteések csak megadott tipusi felhasználóknak lesznek létrehozva"
         errors:
-            invalid_email: 'Hibás e-mail cím: "%email%"'
+            invalid_email: 'Hibás e-mail cím: "%email%".'
         required:
             emails: Legalább egy e-mail címet meg kell adni
             subscription_type: Előfizetés típusa kötelező
@@ -209,8 +205,8 @@ admin:
             registrations: "Létre fog jönni %count% új felhasználó."
             newly_registered: "Generálunk %count% előfizetést az új felhasználóknak."
             inactive: "Generálunk %count% előfizetést létezo, aktív előfizetéssel nem rendelkező felhasználóknak."
-            active: "Generálunk %count% előfizetést létezo, aktív előfizetéssel rendelkező felhasználóknak"
-            skipped: "Kihagytunk %count% felhasználót, mivel nem felelnek meg a kritériumoknak."
+            active: "Generálunk %count% előfizetést létezo, aktív előfizetéssel rendelkező felhasználóknak."
+            skipped: "Kihagytunk %count% felhasználót, mivel nem felelnek meg a kritériumoknak"
 
     actual_user_subscriptions:
         header: Előfizetés
@@ -249,9 +245,7 @@ admin:
         help: "Egyedi előfizetők, fizető és nem fizető."
 
 data_provider:
-    delete:
-        three_months_active: Felhasználó rendelkezett aktív előfizetéssel az elmúlt három hónapban ezért nem törölhető
-
+    delete: {}
 config:
     category: Előfizetések
     vat_default:

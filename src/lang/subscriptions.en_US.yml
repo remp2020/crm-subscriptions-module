@@ -27,9 +27,9 @@ data:
             end_time: for example 13.2.2015
             note: Your custom note to subscription
         errors:
-            end_time_before_start_time: End time must be after start time
-            no_subscription_type_id: No subscription type
-            start_time_before_paid_at: "Subscription start time cannot be before payment paid date (%paid_at%)"
+            end_time_before_start_time: End time must be after start time.
+            no_subscription_type_id: No subscription type selected.
+            start_time_before_paid_at: "Subscription start time cannot be before payment paid date (%paid_at%)."
         description:
             end_time: Leave empty to calculate automaticaly based on selected subscription type.
 
@@ -112,14 +112,14 @@ frontend:
     my:
         history: Subscriptions history
         actual: Actual subscription
-        no_subscription: "You don't have any subscription."
+        no_subscription: "You don't have any subscription"
         buy_new_subscription: You can buy new subscription.
     new:
         title: Subscribe to %site_name%
     actual_subscription_widget:
         active_subscription: 'Your subscription <span class="label label-success"><b>is active</b></span>'
         active_recurrent: 'You have recurrent payment enabled. Next charge will occur'
-        stopped_recurrent: Recurring payment is disabled
+        stopped_recurrent: Recurring payment is disabled.
         no_subscription: 'Your subscription <span class="label label-danger"><b>is not</b></span> active now'
         refresh: Renew subscription
         active_without_extension: Your subscription will end on <strong>%end_time%</strong> and will not be renewed automatically.
@@ -172,7 +172,7 @@ admin:
             subscription_type_not_found: Subscription type not found.
             subscription_type_item_created: Subscription item was created.
             subscription_type_item_deleted: Subscription item was deleted.
-            subscription_types_wrong_amount: 'Wrong subscription items amounts sum. Difference <strong>%price%</strong>'
+            subscription_types_wrong_amount: 'Wrong subscription items amounts sum. Difference <strong>%price%</strong>.'
             no_subscription_type_items: "This subscripton type doesn't contains any items."
             subscription_type_not_editable: Subscription type is not editable because it contains metadata.
         save: Save subscription type
@@ -223,7 +223,7 @@ admin:
             create_users: "If there's no account with given email, new account will be created"
             user_groups: "Subscription will be created only to users matching selected states"
         errors:
-            invalid_email: Email "%email%" is not valid
+            invalid_email: Email "%email%" is not valid.
         required:
             emails: At least one email needs to be entered
             subscription_type: Subscription type is required
@@ -238,14 +238,14 @@ admin:
             newly_registered: "We are generating %count% subscriptions for newly-created users."
             inactive: "We are generating %count% subscription for existing users without an active subscription."
             active: "We are generating %count% subscriptions for existing users with an active subscription."
-            skipped: "We have skipped generation of subscription for %count% users, as they don't match the selected criteria for subscription."
+            skipped: "We have skipped generation of subscription for %count% users, as they don't match the selected criteria for subscription"
 
     dashboard:
         subscriptions_recurrency:
             recurrent_subscribers: Recurrent subscribers
             nonrecurrent_subscribers: Non-reccurent subscribers
             title: Recurrent subscribers
-            tooltip: "Number of paying subscribers with recurrent and non-recurrent subscription."
+            tooltip: "Number of paying subscribers with recurrent and non-recurrent subscription"
         subscriptions_length:
             days: days
             and_more_days: and more days

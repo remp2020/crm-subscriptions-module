@@ -27,11 +27,11 @@ data:
             end_time: například 13.11.2018
             note: Libovolná poznámka k předplatnému
         errors:
-            end_time_before_start_time: Konec musí následovat po začátku
-            no_subscription_type_id: Nebyl vybraný typ předplatného
-            start_time_before_paid_at: "Začátek předplatného nemůže předcházet datu zaplacení (%paid_at%)"
+            end_time_before_start_time: Konec musí následovat po začátku.
+            no_subscription_type_id: Nebyl vybraný typ předplatného.
+            start_time_before_paid_at: "Začátek předplatného nemůže předcházet datu zaplacení (%paid_at%)."
         description:
-            end_time: Nechat prázdné pro automatické vyplnění podle vybraného typu předplatného
+            end_time: Nechat prázdné pro automatické vyplnění podle vybraného typu předplatného.
 
     subscription_types:
         fields:
@@ -110,13 +110,13 @@ frontend:
         history: Historie předplatných
         actual: Aktuální předplatné
         no_subscription: Nemáte žádné předplatné
-        buy_new_subscription: Můžete si ho zakoupit a získat tak přístup k obsahu
+        buy_new_subscription: Můžete si ho zakoupit a získat tak přístup k obsahu.
     new:
         title: Předplaťte si %site_name%
     actual_subscription_widget:
         active_subscription: 'Vaše předplatné v současnosti <span class="label label-success"><b>je aktivní</b></span>'
         active_recurrent: Máte zvolený nejpohodlnější způsob platby za předplatné s automatickým obnovováním. Vaše předplatné se obnoví nejdříve
-        stopped_recurrent: Vaše automatické předplatné se zastavené
+        stopped_recurrent: Vaše automatické předplatné se zastavené.
         no_subscription: 'Vaše předplatné v současnosti <span class="label label-success"><b>není</b></span> aktivní'
         refresh: Obnovit předplatné
         active_without_extension: Vaše předplatné bude ukončeno <strong>%end_time%</strong> a nebude automaticky obnoveno.
@@ -136,8 +136,8 @@ admin:
             back: zpět na uživatele
 
         messages:
-            subscription_created: Předplatné bylo vytvořeno
-            subscription_updated: Předplatné bylo upraveno
+            subscription_created: Předplatné bylo vytvořeno.
+            subscription_updated: Předplatné bylo upraveno.
 
         stats:
             title: Statistiky předplatného
@@ -216,7 +216,7 @@ admin:
             create_users: "Pokud zadaný email neexistuje, bude konto vytvořeno"
             user_groups: "Předplatné bude vytvořeno pouze uživatelům splňujících zvolen stav"
         errors:
-            invalid_email: E-mail "%email%" není platný
+            invalid_email: E-mail "%email%" není platný.
         required:
             emails: E-mail uživatele musí být vyplněn
             subscription_type: Typ předplatného musí být vybrán
@@ -327,7 +327,7 @@ admin:
 
 data_provider:
     delete:
-        active_subscription: Uživatel má/měl aktivní předplatné a nemůže být smazán.
+        active_subscription: Uživatel má/měl aktivní předplatné a nemůže být smazán
         unexpected_configuration_value: "Neočekávaná konfigurační hodnota 'Uživatelé -> Počet kontrolovaných dnú'"
     abusive_user:
         form:
