@@ -88,7 +88,7 @@
         <div class="col-md-12">
           <h2 class="page-header">{_subscriptions.data.subscription_types.fields.subscription_type_items}</h2>
 
-          {if $calculatedItemsSum != $type->price}
+          {if !Nette\Utils\Floats::areEqual($type->price, $calculatedItemsSum)}
             <div class="alert alert-danger">
               <h4><i class="fa fa-exclamation-circle"></i> {_'system.message.warning'}</h4>
               <p>{_'subscriptions.admin.subscription_types.messages.subscription_types_wrong_amount', ['price' => $type->price-$calculatedItemsSum]|noescape}</p>
