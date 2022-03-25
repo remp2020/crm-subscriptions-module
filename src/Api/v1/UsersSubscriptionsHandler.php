@@ -3,14 +3,14 @@
 namespace Crm\SubscriptionsModule\Api\v1;
 
 use Crm\ApiModule\Api\ApiHandler;
-use Crm\ApiModule\Api\JsonResponse;
 use Crm\ApiModule\Params\InputParam;
 use Crm\ApiModule\Params\ParamsProcessor;
-use Crm\ApiModule\Response\ApiResponseInterface;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\UsersModule\Auth\UsersApiAuthorizationInterface;
 use Nette\Http\Response;
 use Nette\Utils\DateTime;
+use Tomaj\NetteApi\Response\JsonApiResponse;
+use Tomaj\NetteApi\Response\ResponseInterface;
 
 class UsersSubscriptionsHandler extends ApiHandler
 {
@@ -29,7 +29,7 @@ class UsersSubscriptionsHandler extends ApiHandler
         ];
     }
 
-    public function handle(array $params): ApiResponseInterface
+    public function handle(array $params): ResponseInterface
     {
         $authorization = $this->getAuthorization();
         if (!($authorization instanceof UsersApiAuthorizationInterface)) {
@@ -38,8 +38,7 @@ class UsersSubscriptionsHandler extends ApiHandler
 
         $paramsProcessor = new ParamsProcessor($this->params());
         if ($paramsProcessor->hasError()) {
-            $response = new JsonResponse(['status' => 'error', 'code' => 'invalid_request', 'message' => $paramsProcessor->hasError()]);
-            $response->setHttpCode(Response::S400_BAD_REQUEST);
+            $response = new JsonApiResponse(Response::S400_BAD_REQUEST, ['status' => 'error', 'code' => 'invalid_request', 'message' => $paramsProcessor->hasError()]);
             return $response;
         }
         $params = $paramsProcessor->getValues();
@@ -69,8 +68,7 @@ class UsersSubscriptionsHandler extends ApiHandler
             $result['subscriptions'][] = $this->formatSubscription($subscription, $subscriptionType);
         }
 
-        $response = new JsonResponse($result);
-        $response->setHttpCode(Response::S200_OK);
+        $response = new JsonApiResponse(Response::S200_OK, $result);
         return $response;
     }
 

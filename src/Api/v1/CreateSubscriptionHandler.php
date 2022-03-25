@@ -4,10 +4,8 @@ namespace Crm\SubscriptionsModule\Api\v1;
 
 use Crm\ApiModule\Api\ApiHandler;
 use Crm\ApiModule\Api\IdempotentHandlerInterface;
-use Crm\ApiModule\Api\JsonResponse;
 use Crm\ApiModule\Params\InputParam;
 use Crm\ApiModule\Params\ParamsProcessor;
-use Crm\ApiModule\Response\ApiResponseInterface;
 use Crm\SubscriptionsModule\Repository\SubscriptionMetaRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
@@ -15,6 +13,8 @@ use Crm\UsersModule\Auth\UserManager;
 use Nette\Database\Table\ActiveRow;
 use Nette\Http\Response;
 use Nette\Utils\DateTime;
+use Tomaj\NetteApi\Response\JsonApiResponse;
+use Tomaj\NetteApi\Response\ResponseInterface;
 
 class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerInterface
 {
@@ -51,15 +51,14 @@ class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerI
         ];
     }
 
-    public function handle(array $params): ApiResponseInterface
+    public function handle(array $params): ResponseInterface
     {
         $paramsProcessor = new ParamsProcessor($this->params());
         $params = $paramsProcessor->getValues();
 
         $subscriptionType = $this->subscriptionTypesRepository->find($params['subscription_type_id']);
         if (!$subscriptionType) {
-            $response = new JsonResponse(['status' => 'error', 'message' => 'Subscription type not found']);
-            $response->setHttpCode(Response::S404_NOT_FOUND);
+            $response = new JsonApiResponse(Response::S404_NOT_FOUND, ['status' => 'error', 'message' => 'Subscription type not found']);
             return $response;
         }
 
@@ -67,8 +66,7 @@ class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerI
 
         if (!empty($subscriptionType->limit_per_user) &&
             $this->subscriptionsRepository->getCount($subscriptionType->id, $user->id) >= $subscriptionType->limit_per_user) {
-            $response = new JsonResponse(['status' => 'error', 'message' => 'Limit per user reached']);
-            $response->setHttpCode(Response::S400_BAD_REQUEST);
+            $response = new JsonApiResponse(Response::S400_BAD_REQUEST, ['status' => 'error', 'message' => 'Limit per user reached']);
             return $response;
         }
 
@@ -105,7 +103,7 @@ class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerI
         return $this->createResponse($subscription);
     }
 
-    public function idempotentHandle(array $params): ApiResponseInterface
+    public function idempotentHandle(array $params): ResponseInterface
     {
         $subscription = $this->subscriptionMetaRepository->findSubscriptionBy('idempotent_key', $this->idempotentKey());
 
@@ -114,7 +112,7 @@ class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerI
 
     private function createResponse(ActiveRow $subscription)
     {
-        $response = new JsonResponse([
+        $response = new JsonApiResponse(Response::S200_OK, [
             'status' => 'ok',
             'message' => 'Subscription created',
             'subscriptions' => [
@@ -123,7 +121,6 @@ class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerI
                 'end_time' => $subscription->end_time->format('c'),
             ],
         ]);
-        $response->setHttpCode(Response::S200_OK);
         return $response;
     }
 }

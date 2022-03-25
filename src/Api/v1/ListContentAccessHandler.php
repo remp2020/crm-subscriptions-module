@@ -3,10 +3,10 @@
 namespace Crm\SubscriptionsModule\Api\v1;
 
 use Crm\ApiModule\Api\ApiHandler;
-use Crm\ApiModule\Api\JsonResponse;
-use Crm\ApiModule\Response\ApiResponseInterface;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
 use Nette\Http\Response;
+use Tomaj\NetteApi\Response\JsonApiResponse;
+use Tomaj\NetteApi\Response\ResponseInterface;
 
 class ListContentAccessHandler extends ApiHandler
 {
@@ -22,7 +22,7 @@ class ListContentAccessHandler extends ApiHandler
         return [];
     }
 
-    public function handle(array $params): ApiResponseInterface
+    public function handle(array $params): ResponseInterface
     {
         $contentAccesses = $this->contentAccessRepository->all();
 
@@ -34,8 +34,7 @@ class ListContentAccessHandler extends ApiHandler
             ];
         }
 
-        $response = new JsonResponse($result);
-        $response->setHttpCode(Response::S200_OK);
+        $response = new JsonApiResponse(Response::S200_OK, $result);
         return $response;
     }
 }
