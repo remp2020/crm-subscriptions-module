@@ -99,11 +99,26 @@ services:
 	extensionMethodFactory:
 		factory: Crm\SubscriptionsModule\Extension\ExtensionMethodFactory
 		setup:
-			- registerExtension(Crm\SubscriptionsModule\Extension\ExtendActualExtension::METHOD_CODE, Crm\SubscriptionsModule\Extension\ExtendActualExtension)
-			- registerExtension(Crm\SubscriptionsModule\Extension\ExtendSameActualExtension::METHOD_CODE, Crm\SubscriptionsModule\Extension\ExtendSameActualExtension)
-			- registerExtension(Crm\SubscriptionsModule\Extension\StartNowExtension::METHOD_CODE, Crm\SubscriptionsModule\Extension\StartNowExtension)
-			- registerExtension(Crm\SubscriptionsModule\Extension\ExtendSameTypeExtension::METHOD_CODE, Crm\SubscriptionsModule\Extension\ExtendSameTypeExtension)
-			- registerExtension(Crm\SubscriptionsModule\Extension\ExtendSameContentAccess::METHOD_CODE, Crm\SubscriptionsModule\Extension\ExtendSameContentAccess)
+			- registerExtension(
+				Crm\SubscriptionsModule\Extension\ExtendActualExtension::METHOD_CODE,
+				Crm\SubscriptionsModule\Extension\ExtendActualExtension
+			)
+			- registerExtension(
+				Crm\SubscriptionsModule\Extension\ExtendSameActualExtension::METHOD_CODE,
+				Crm\SubscriptionsModule\Extension\ExtendSameActualExtension
+			)
+			- registerExtension(
+				Crm\SubscriptionsModule\Extension\StartNowExtension::METHOD_CODE,
+				Crm\SubscriptionsModule\Extension\StartNowExtension
+			)
+			- registerExtension(
+				Crm\SubscriptionsModule\Extension\ExtendSameTypeExtension::METHOD_CODE,
+				Crm\SubscriptionsModule\Extension\ExtendSameTypeExtension
+			)
+			- registerExtension(
+				Crm\SubscriptionsModule\Extension\ExtendSameContentAccess::METHOD_CODE,
+				Crm\SubscriptionsModule\Extension\ExtendSameContentAccess
+			)
 
 	lengthMethodFactory:
 		factory: Crm\SubscriptionsModule\Length\LengthMethodFactory

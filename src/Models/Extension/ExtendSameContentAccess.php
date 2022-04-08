@@ -3,7 +3,7 @@
 namespace Crm\SubscriptionsModule\Extension;
 
 use Crm\ApplicationModule\NowTrait;
-use Crm\SubscriptionsModule\Repository\ContentAccessRepository as ContentAccessRepositoryAlias;
+use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
@@ -13,19 +13,18 @@ class ExtendSameContentAccess implements ExtensionInterface
     use NowTrait;
 
     public const METHOD_CODE = 'extend_same_content_access';
-
     public const METHOD_NAME = 'Extend same content access';
 
-    private $subscriptionsRepository;
+    private ContentAccessRepository $contentAccessRepository;
 
-    private $contentAccessRepository;
+    private SubscriptionsRepository $subscriptionsRepository;
 
     public function __construct(
-        SubscriptionsRepository $subscriptionsRepository,
-        ContentAccessRepositoryAlias $contentAccessRepository
+        ContentAccessRepository $contentAccessRepository,
+        SubscriptionsRepository $subscriptionsRepository
     ) {
-        $this->subscriptionsRepository = $subscriptionsRepository;
         $this->contentAccessRepository = $contentAccessRepository;
+        $this->subscriptionsRepository = $subscriptionsRepository;
     }
 
     /**
@@ -35,6 +34,21 @@ class ExtendSameContentAccess implements ExtensionInterface
      * @throws \Exception
      */
     public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType): Extension
+    {
+        $startTimeForSameContentAccess = $this->getStartTimeForSameContentAccess($user, $subscriptionType);
+        if ($startTimeForSameContentAccess !== null) {
+            return new Extension($startTimeForSameContentAccess, true);
+        }
+
+        return new Extension($this->getNow());
+    }
+
+    /**
+     * Helper method used to get start time following subscription of same content access.
+     *
+     * @return \DateTime|null Returns null if not subscription with same content access was found
+     */
+    public function getStartTimeForSameContentAccess(ActiveRow $user, ActiveRow $subscriptionType): ?\DateTime
     {
         $requiredContentAccesses = $this->contentAccessRepository->allForSubscriptionType($subscriptionType)
             ->fetchAssoc('id');
@@ -63,10 +77,10 @@ class ExtendSameContentAccess implements ExtensionInterface
             if ($matchedCount === count($requiredContentAccesses)
                 && $matchedCount === count($subscriptionContentAccesses)
             ) {
-                return new Extension($subscription->end_time, true);
+                return $subscription->end_time;
             }
         }
 
-        return new Extension($this->getNow());
+        return null;
     }
 }
