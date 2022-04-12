@@ -245,7 +245,8 @@ admin:
         help: "Egyedi előfizetők, fizető és nem fizető."
 
 data_provider:
-    delete: {}
+    delete:
+        unexpected_configuration_value: Váratlan konfigurációs érték 'Felhasználók -> Az ellenőrzött napok száma'
 config:
     category: Előfizetések
     vat_default:
