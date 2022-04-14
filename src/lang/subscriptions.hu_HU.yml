@@ -1,5 +1,5 @@
 menu:
-    stats: Előfizetések and előfizetők
+    stats: Előfizetések és előfizetők
     endings: Lejáró előfizetések
     my_subscriptions: Előfizetéseim
     subscriptions: Előfizetések
@@ -10,13 +10,14 @@ data:
     subscriptions:
         fields:
             subscription_type: Előfizetés típusa
-            payment_gateway: Fizetési átjáró
+            payment_gateway: Fizetési kapu
             start_time: Előfizetés kezdete
             end_time: Előfizetés vége
             type: Típus
             note: Megjegyzés
             address_id: Cím
             payment: Fizetés
+            is_paid: Kifizetve
         required:
             start_time: Előfizetés kezdete kötelező
             end_time: Előfizetés vége kötelező
@@ -26,11 +27,11 @@ data:
             end_time: pl. 13.2.2015
             note: Saját megjegyzés az előfizetéshez
         errors:
-            end_time_before_start_time: Előfizetés vége későbbi dátum kell legyen mint a kezdete.
-            no_subscription_type_id: Nincs előfizetés típus.
-            start_time_before_paid_at: "Előfizetés kezdete nem lehet hamarabb mint a fizetés dátuma: (%paid_at%)."
+            end_time_before_start_time: Előfizetés vége későbbi dátum kell legyen, mint a kezdete.
+            no_subscription_type_id: Nincs kiválasztva előfizetés típus.
+            start_time_before_paid_at: "Előfizetés kezdete nem lehet hamarabb, mint a fizetés dátuma: (%paid_at%)."
         description:
-            end_time: 'Hagyja üresen, hogy automatikusan ki legyen számolva az előfizetés típusa alapján.'
+            end_time: 'Hagyja üresen, hogy automatikusan ki legyen töltve az előfizetés típusa alapján.'
 
     subscription_types:
         fields:
@@ -40,39 +41,40 @@ data:
             price: Ár
             length: "Időtartam (napokban)"
             extending_length: "Időtartam (napokban) hosszabbítás esetén"
-            fixed_start: "Meghatározott kezdési időpont"
-            fixed_end: "Meghatározott befejezési időpont"
-            user_label: Felhasználó cimke
+            fixed_start: "Az előfizetés meghatározott kezdete"
+            fixed_end: "Az előfizetés meghatározott vége"
+            user_label: Publikus leírás
             limit_per_user: Felhasználónkénti maximális előfizetésszám
-            content: Hozzáférés
+            content: Tartalom
             active: Aktív
             visible: Látható
             web: Web
             print_friday: Pénteki nyomtatás
             print: Nyomtatás
-            club: Klubb
+            club: Klub
             mobile: Mobil
             sorting: Rendezés
             description: Leírás
             default: Default
-            stats: Állapot
-            ask_address: Ask address
+            stats: Statisztikák
+            ask_address: Kérdezzen rá a címre
             disable_notifications: Értesítések kikapcsolása
-            extension_method_id: Hosszabbítás módja
-            length_method_id: Előfizetés hossz számítás módja
-            recurrent_charge_before: "Ismétlődő bekérés lejárat előtt (órákban)"
-            subscription_type_items: Előfizetés tételek
+            extension_method_id: Előfizetés hosszabbításának módja
+            length_method_id: Előfizetéshossz számításának módja
+            recurrent_charge_before: "Ismétlődő bekérés lejárat előtt (időpont lejárat előtt)"
+            subscription_type_items: Előfizetési tételek
+            items: Tételek
         required:
             name: Név kötelező
             length: "Időtartam (napokban) kötelező"
             price: Ár kötelező
-            user_label: Felhasználó cimke kötelező
+            user_label: Publikus leírás kötelező
         validation:
-            integer: {}
+            integer: Szám kötelező
             minimum:
-                limit_per_user: "Minum érték: 1"
+                limit_per_user: "Minimum érték: 1"
         placeholder:
-            name: "pl. Éves előfizetés (42€, od 2019/02)"
+            name: "pl. Éves előfizetés (42€, 2019/02-tól)"
             code: pl. year123
             user_label: pl. Éves előfizetés
             next_subscription_type_id: Azonosító
@@ -80,7 +82,7 @@ data:
             extending_length: pl. 35
             fixed_start: pl. 3.4.2020
             fixed_end: pl. 3.5.2020
-            price: "pl: 12.99"
+            price: "például 12.99"
         description:
             name: Adminisztrátorok számára látható név
             user_label: "Felhasználók számára látható előfizetés neve"
@@ -98,7 +100,7 @@ data:
             amount: Összeg
             vat: 'ÁFA (%)'
         placeholder:
-            name: pl. 'Nyomtatás előfizetés'
+            name: pl. 'Nyomtatott előfizetés'
             amount: pl. '123.45'
             vat: pl. 20
         required:
@@ -111,18 +113,18 @@ frontend:
         history: Előfizetés előzmények
         actual: Aktuális előfizetés
         no_subscription: Önnek nincs előfizetése
-        buy_new_subscription: Vásárolhat új előfizetést.
+        buy_new_subscription: Vásárolhat új előfizetést és hozzáférhet a tartalomhoz.
     new:
-        title: Előfizetés ide %site_name%
+        title: Fizessen elő %site_name%
     actual_subscription_widget:
         active_subscription: 'Előfizetése <span class="label label-success"><b>aktív</b></span>'
-        active_recurrent: 'Ismétlődő fizetés aktív. Következő díjbekérés'
+        active_recurrent: 'A legkényelmesebb fizetési mód, vagyis az ismétlődő fizetés aktív. Előfizetése legközelebbi megújulása:'
         stopped_recurrent: Ismétlődő fizetés inaktív.
         no_subscription: 'Előfizetése <span class="label label-danger"><b>nem</b></span> aktív'
         refresh: Előfizetés megújítása
-        active_without_extension: 'Előfizetésének a vége: <strong>%end_time%</strong>. Nem lesz autómatikusan megújítva.'
+        active_without_extension: 'Előfizetésének vége: <strong>%end_time%</strong>. Nem lesz automatikusan megújítva.'
         active_with_next: "Előfizetése %access_actual% hozzáféréssel véget ér: <strong>%end_time%</strong>, előfizetés %access_next% hozzáféréssel fog folytatódni."
-        extend: Renew subscription
+        extend: Előfizetés meghosszabbítása
 
 admin:
     subscriptions:
@@ -141,7 +143,7 @@ admin:
             subscription_updated: Előfizetés frissítve.
 
         stats:
-            title: Előfizetés statisztikák
+            title: Előfizetési statisztikák
 
     subscriptions_ends:
         default:
@@ -247,6 +249,13 @@ admin:
 data_provider:
     delete:
         unexpected_configuration_value: Váratlan konfigurációs érték 'Felhasználók -> Az ellenőrzött napok száma'
+        active_subscription: A felhasználónak van/volt aktív előfizetése, és nem törölhető.
+    abusive_user:
+        form:
+            subscription_date_to: Az előfizetés érvényessége
+    payment_item_types_filter:
+        key:
+            subscription_type: Előfizetés
 config:
     category: Előfizetések
     vat_default:
