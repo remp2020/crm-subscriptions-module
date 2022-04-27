@@ -3,8 +3,8 @@ menu:
     endings: Lejáró előfizetések
     my_subscriptions: Előfizetéseim
     subscriptions: Előfizetések
-    subscription_types: Előfizetés típusok
-    subscriptions_generator: Előfizetés generátor
+    subscription_types: Előfizetés-típusok
+    subscriptions_generator: Előfizetés-generátor
 
 data:
     subscriptions:
@@ -21,15 +21,15 @@ data:
         required:
             start_time: Előfizetés kezdete kötelező
             end_time: Előfizetés vége kötelező
-            subscription_type_id: Felhasználónkénti határ elérve
+            subscription_type_id: Átlépte az egy felhasználóra szóló keretet
         placeholder:
             start_time: pl. 13.2.2015
             end_time: pl. 13.2.2015
-            note: Saját megjegyzés az előfizetéshez
+            note: Tetszőleges megjegyzés az előfizetéshez
         errors:
-            end_time_before_start_time: Előfizetés vége későbbi dátum kell legyen, mint a kezdete.
+            end_time_before_start_time: Az előfizetés vége későbbi dátum kell legyen, mint a kezdete.
             no_subscription_type_id: Nincs kiválasztva előfizetés típus.
-            start_time_before_paid_at: "Előfizetés kezdete nem lehet hamarabb, mint a fizetés dátuma: (%paid_at%)."
+            start_time_before_paid_at: "Az előfizetés kezdete nem lehet korábban, mint a fizetés dátuma: (%paid_at%)."
         description:
             end_time: 'Hagyja üresen, hogy automatikusan ki legyen töltve az előfizetés típusa alapján.'
 
@@ -40,7 +40,7 @@ data:
             next_subscription_type_id: Következő előfizetés
             price: Ár
             length: "Időtartam (napokban)"
-            extending_length: "Időtartam (napokban) hosszabbítás esetén"
+            extending_length: "Időtartam (napokban) meghosszabbítás esetén"
             fixed_start: "Az előfizetés meghatározott kezdete"
             fixed_end: "Az előfizetés meghatározott vége"
             user_label: Publikus leírás
@@ -53,15 +53,15 @@ data:
             print: Nyomtatás
             club: Klub
             mobile: Mobil
-            sorting: Rendezés
+            sorting: Sorrend
             description: Leírás
             default: Default
             stats: Statisztikák
             ask_address: Kérdezzen rá a címre
-            disable_notifications: Értesítések kikapcsolása
+            disable_notifications: Értesítések kikapcsolva
             extension_method_id: Előfizetés hosszabbításának módja
-            length_method_id: Előfizetéshossz számításának módja
-            recurrent_charge_before: "Ismétlődő bekérés lejárat előtt (időpont lejárat előtt)"
+            length_method_id: Előfizetéshossz kiszámításának módja
+            recurrent_charge_before: "Ismétlődő bekérés lejárat előtt (a lejárat előtti órák száma)"
             subscription_type_items: Előfizetési tételek
             items: Tételek
         required:
@@ -85,7 +85,7 @@ data:
             price: "például 12.99"
         description:
             name: Adminisztrátorok számára látható név
-            user_label: "Felhasználók számára látható előfizetés neve"
+            user_label: "A felhasználó számára látható előfizetés neve"
         values:
             active: Aktív
             inactive: Inaktív
@@ -93,8 +93,8 @@ data:
             hidden: Rejtett
     subscription_type_items:
         title:
-            add: Előfizetés típus hozzáadása
-            edit: Előfizetés típus szerkesztése
+            add: Előfizetés-típus hozzáadása
+            edit: Előfizetés-típus szerkesztése
         fields:
             name: Név
             amount: Összeg
@@ -110,17 +110,17 @@ data:
 
 frontend:
     my:
-        history: Előfizetés előzmények
+        history: Előfizetési előzmények
         actual: Aktuális előfizetés
         no_subscription: Önnek nincs előfizetése
-        buy_new_subscription: Vásárolhat új előfizetést és hozzáférhet a tartalomhoz.
+        buy_new_subscription: Ha új előfizetést vásárol, hozzáférhet a tartalomhoz.
     new:
         title: Fizessen elő %site_name%
     actual_subscription_widget:
-        active_subscription: 'Előfizetése <span class="label label-success"><b>aktív</b></span>'
+        active_subscription: 'Előfizetése jelenleg <span class="label label-success"><b>aktív</b></span>'
         active_recurrent: 'A legkényelmesebb fizetési mód, vagyis az ismétlődő fizetés aktív. Előfizetése legközelebbi megújulása:'
         stopped_recurrent: Ismétlődő fizetés inaktív.
-        no_subscription: 'Előfizetése <span class="label label-danger"><b>nem</b></span> aktív'
+        no_subscription: 'Előfizetése jelenleg <span class="label label-danger"><b>nem</b></span> aktív'
         refresh: Előfizetés megújítása
         active_without_extension: 'Előfizetésének vége: <strong>%end_time%</strong>. Nem lesz automatikusan megújítva.'
         active_with_next: "Előfizetése %access_actual% hozzáféréssel véget ér: <strong>%end_time%</strong>, előfizetés %access_next% hozzáféréssel fog folytatódni."
@@ -154,25 +154,25 @@ admin:
 
     subscription_types:
         default:
-            title: Előfizetési típusok
+            title: Előfizetés-típus
             new: Új előfizetési típus
-            hidden: Rejtett
+            hidden: Rejtett – használaton kívüli
         edit:
             title: Előfizetés típusa
             header: Előfizetés típus szerkesztése
             back: vissza a részletekhez
         new:
-            title: Új előfizetés típus
-            back: vissza előfizetés típusokhoz
+            title: Új előfizetés-típus
+            back: vissza előfizetés-típusokhoz
         show: {}
         messages:
-            subscription_type_created: Előfizetés típus létrehozva.
-            subscription_type_updated: Előfizetés típus frissítve.
-            subscription_type_not_found: Ismeretlen előfizetés típus.
-            subscription_type_item_created: Előfizetés tétel létrehozva.
-            subscription_type_item_deleted: Előfizetés tétel törölve.
-            subscription_types_wrong_amount: 'Eltérő előfizetés tétel árak összege. Különbség <strong>%price%</strong>.'
-            no_subscription_type_items: Ez az előfizetés típus nem tartalmaz tételeket.
+            subscription_type_created: Előfizetés-típus létrehozva.
+            subscription_type_updated: Előfizetés-típus frissítve.
+            subscription_type_not_found: Ismeretlen előfizetés-típus.
+            subscription_type_item_created: Előfizetési tétel létrehozva.
+            subscription_type_item_deleted: Előfizetései tétel törölve.
+            subscription_types_wrong_amount: 'Eltérő előfizetésitétel-árak összege. Különbség <strong>%price%</strong>.'
+            no_subscription_type_items: Ez az előfizetési típus nem tartalmaz tételeket.
 
     subscription_generator:
         form:
@@ -252,7 +252,7 @@ data_provider:
         active_subscription: A felhasználónak van/volt aktív előfizetése, és nem törölhető.
     abusive_user:
         form:
-            subscription_date_to: Az előfizetés érvényessége
+            subscription_date_to: Az előfizetés vége
     payment_item_types_filter:
         key:
             subscription_type: Előfizetés
