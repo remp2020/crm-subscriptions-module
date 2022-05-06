@@ -16,25 +16,25 @@ use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 
 class SubscriptionTypesAdminPresenter extends AdminPresenter
 {
-    private $subscriptionTypesRepository;
+    private SubscriptionTypesRepository $subscriptionTypesRepository;
 
-    private $subscriptionTypeFactory;
+    private SubscriptionTypesFormFactory $subscriptionTypesFormFactory;
 
-    private $subscriptionTypeItemsRepository;
+    private SubscriptionTypeItemsRepository $subscriptionTypeItemsRepository;
 
-    private $subscriptionTypeItemsFormFactory;
+    private SubscriptionTypeItemsFormFactory $subscriptionTypeItemsFormFactory;
 
-    private $subscriptionTypesMetaRepository;
+    private SubscriptionTypesMetaRepository $subscriptionTypesMetaRepository;
 
-    private $subscriptionTypeMetaFormFactory;
+    private SubscriptionTypeMetaFormFactory $subscriptionTypeMetaFormFactory;
+
+    private SubscriptionTypeItemMetaRepository $subscriptionTypeItemMetaRepository;
 
     private $subscriptionType;
 
-    private $subscriptionTypeItemMetaRepository;
-
     public function __construct(
         SubscriptionTypesRepository $subscriptionTypesRepository,
-        SubscriptionTypesFormFactory $subscriptionTypeFactory,
+        SubscriptionTypesFormFactory $subscriptionTypesFormFactory,
         SubscriptionTypeItemsRepository $subscriptionTypeItemsRepository,
         SubscriptionTypeItemsFormFactory $subscriptionTypeItemsFormFactory,
         SubscriptionTypesMetaRepository $subscriptionTypesMetaRepository,
@@ -43,7 +43,7 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
     ) {
         parent::__construct();
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
-        $this->subscriptionTypeFactory = $subscriptionTypeFactory;
+        $this->subscriptionTypesFormFactory = $subscriptionTypesFormFactory;
         $this->subscriptionTypeItemsRepository = $subscriptionTypeItemsRepository;
         $this->subscriptionTypeItemsFormFactory = $subscriptionTypeItemsFormFactory;
         $this->subscriptionTypesMetaRepository = $subscriptionTypesMetaRepository;
@@ -198,13 +198,13 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
             $id = $this->params['id'];
         }
 
-        $form = $this->subscriptionTypeFactory->create($id);
+        $form = $this->subscriptionTypesFormFactory->create($id);
 
-        $this->subscriptionTypeFactory->onSave = function ($subscriptionType) {
+        $this->subscriptionTypesFormFactory->onSave = function ($subscriptionType) {
             $this->flashMessage($this->translator->translate('subscriptions.admin.subscription_types.messages.subscription_type_created'));
             $this->redirect('SubscriptionTypesAdmin:Show', $subscriptionType->id);
         };
-        $this->subscriptionTypeFactory->onUpdate = function ($subscriptionType) {
+        $this->subscriptionTypesFormFactory->onUpdate = function ($subscriptionType) {
             $this->flashMessage($this->translator->translate('subscriptions.admin.subscription_types.messages.subscription_type_updated'));
             $this->redirect('SubscriptionTypesAdmin:Show', $subscriptionType->id);
         };
