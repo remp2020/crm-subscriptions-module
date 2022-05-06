@@ -9,6 +9,7 @@ use Crm\ApplicationModule\Graphs\GraphDataItem;
 use Crm\SubscriptionsModule\Forms\SubscriptionTypeItemsFormFactory;
 use Crm\SubscriptionsModule\Forms\SubscriptionTypeMetaFormFactory;
 use Crm\SubscriptionsModule\Forms\SubscriptionTypesFormFactory;
+use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemMetaRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesMetaRepository;
@@ -16,6 +17,8 @@ use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 
 class SubscriptionTypesAdminPresenter extends AdminPresenter
 {
+    private ContentAccessRepository $contentAccessRepository;
+
     private SubscriptionTypesRepository $subscriptionTypesRepository;
 
     private SubscriptionTypesFormFactory $subscriptionTypesFormFactory;
@@ -33,6 +36,7 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
     private $subscriptionType;
 
     public function __construct(
+        ContentAccessRepository $contentAccessRepository,
         SubscriptionTypesRepository $subscriptionTypesRepository,
         SubscriptionTypesFormFactory $subscriptionTypesFormFactory,
         SubscriptionTypeItemsRepository $subscriptionTypeItemsRepository,
@@ -42,6 +46,7 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
         SubscriptionTypeItemMetaRepository $subscriptionTypeItemMetaRepository
     ) {
         parent::__construct();
+        $this->contentAccessRepository = $contentAccessRepository;
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
         $this->subscriptionTypesFormFactory = $subscriptionTypesFormFactory;
         $this->subscriptionTypeItemsRepository = $subscriptionTypeItemsRepository;
@@ -238,6 +243,51 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
         $this->getHttpResponse()->addHeader('Content-Type', 'application/csv');
         $this->getHttpResponse()->addHeader('Content-Disposition', 'attachment; filename=export.csv');
 
-        $this->template->types = $this->subscriptionTypesRepository->all();
+        $contentAccesses = $this->contentAccessRepository->getTable()
+            ->order('sorting')
+            ->fetchPairs('name', 'name');
+
+        $columns = ['id', 'name', 'code', 'price', 'length'];
+        $columns = array_merge($columns, $contentAccesses);
+        // fill values with 0 so missing content accesses are printed as 0
+        $columns = array_fill_keys($columns, 0);
+
+        $subscriptionTypes = [];
+        foreach ($this->subscriptionTypesRepository->all() as $subscriptionTypeRow) {
+            // prefill subscription type also with empty content accesses
+            $subscriptionType = $columns;
+
+            // set subscription type data
+            $subscriptionType['id'] = $subscriptionTypeRow->id;
+            $subscriptionType['name'] = $subscriptionTypeRow->name;
+            $subscriptionType['code'] = $subscriptionTypeRow->code;
+            $subscriptionType['price'] = $subscriptionTypeRow->price;
+            $subscriptionType['length'] = $subscriptionTypeRow->length;
+
+            // set content accesses data
+            $subscriptionTypeContentAccesses = $subscriptionTypeRow
+                ->related('subscription_type_content_access')
+                ->fetchAll();
+            foreach ($subscriptionTypeContentAccesses as $stca) {
+                $subscriptionType[$stca->content_access->name] = true;
+            }
+
+            $subscriptionTypes[] = $subscriptionType;
+        }
+
+        // format all for csv
+        $data = "";
+        foreach ($columns as $column => $_) {
+            $data .= '"' . $column . '";';
+        }
+        $data .= PHP_EOL;
+        foreach ($subscriptionTypes as $subscriptionType) {
+            foreach ($columns as $column => $_) {
+                $data .= '"' . $subscriptionType[$column] . '";';
+            }
+            $data .= PHP_EOL;
+        }
+
+        $this->template->data = $data;
     }
 }
