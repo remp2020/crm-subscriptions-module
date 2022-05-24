@@ -3,15 +3,21 @@
 namespace Crm\SubscriptionsModule\Subscription;
 
 use Crm\ApplicationModule\Helpers\PriceHelper;
+use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Nette\Database\Table\ActiveRow;
 
 class SubscriptionTypeHelper
 {
     private $priceHelper;
 
-    public function __construct(PriceHelper $priceHelper)
-    {
+    private $subscriptionsRepository;
+
+    public function __construct(
+        PriceHelper $priceHelper,
+        SubscriptionsRepository $subscriptionsRepository
+    ) {
         $this->priceHelper = $priceHelper;
+        $this->subscriptionsRepository = $subscriptionsRepository;
     }
 
     public function getPairs($subscriptionTypes, $allowHtml = false): array
@@ -48,5 +54,27 @@ class SubscriptionTypeHelper
             }
         }
         return $subscriptionPairs;
+    }
+
+    public function validateSubscriptionTypeCounts(ActiveRow $subscriptionType, ActiveRow $user): bool
+    {
+        if (!$subscriptionType->limit_per_user) {
+            return true;
+        }
+
+        $userSubscriptionsTypesCount = $this->subscriptionsRepository->userSubscriptionTypesCounts(
+            $user->id,
+            [
+                $subscriptionType->id
+            ]
+        );
+
+        if (!isset($userSubscriptionsTypesCount[$subscriptionType->id])) {
+            return true;
+        }
+        if ($subscriptionType->limit_per_user <= $userSubscriptionsTypesCount[$subscriptionType->id]) {
+            return false;
+        }
+        return true;
     }
 }
