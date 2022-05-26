@@ -33,7 +33,7 @@ class SubscriptionsUserDataProvider implements UserDataProviderInterface
         return 'subscriptions';
     }
 
-    public function data($userId)
+    public function data($userId): ?array
     {
         $subscriptions = $this->subscriptionsRepository->userSubscriptions($userId)->where(['end_time > ?' => new DateTime()]);
 
