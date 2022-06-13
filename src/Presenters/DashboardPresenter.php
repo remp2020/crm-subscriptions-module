@@ -100,7 +100,9 @@ class DashboardPresenter extends AdminPresenter
 
         $control = $factory->create()
             ->setGraphTitle($this->translator->translate('dashboard.subscriptions.difference.title'))
-            ->setGraphHelp($this->translator->translate('dashboard.subscriptions.difference.tooltip'));
+            ->setGraphHelp($this->translator->translate('dashboard.subscriptions.difference.tooltip'))
+            ->setFrom($this->dateFrom)
+            ->setTo($this->dateTo);
 
         foreach ($items as $graphDataItem) {
             $control->addGraphDataItem($graphDataItem);
@@ -138,7 +140,9 @@ class DashboardPresenter extends AdminPresenter
 
         $control = $factory->create()
             ->setGraphTitle($this->translator->translate('subscriptions.admin.dashboard.subscriptions_recurrency.title'))
-            ->setGraphHelp($this->translator->translate('subscriptions.admin.dashboard.subscriptions_recurrency.tooltip'));
+            ->setGraphHelp($this->translator->translate('subscriptions.admin.dashboard.subscriptions_recurrency.tooltip'))
+            ->setFrom($this->dateFrom)
+            ->setTo($this->dateTo);
 
         foreach ($items as $graphDataItem) {
             $control->addGraphDataItem($graphDataItem);
@@ -198,7 +202,9 @@ class DashboardPresenter extends AdminPresenter
 
         $control = $factory->create()
             ->setGraphTitle($this->translator->translate('subscriptions.admin.dashboard.subscriptions_length.title'))
-            ->setGraphHelp($this->translator->translate('subscriptions.admin.dashboard.subscriptions_length.tooltip'));
+            ->setGraphHelp($this->translator->translate('subscriptions.admin.dashboard.subscriptions_length.tooltip'))
+            ->setFrom($this->dateFrom)
+            ->setTo($this->dateTo);
 
         foreach ($items as $graphDataItem) {
             $control->addGraphDataItem($graphDataItem);
@@ -245,7 +251,9 @@ class DashboardPresenter extends AdminPresenter
 
         $control = $factory->create()
             ->setGraphTitle($this->translator->translate('dashboard.users.new_or_subscribers.title'))
-            ->setGraphHelp($this->translator->translate('dashboard.users.new_or_subscribers.tooltip'));
+            ->setGraphHelp($this->translator->translate('dashboard.users.new_or_subscribers.tooltip'))
+            ->setFrom($this->dateFrom)
+            ->setTo($this->dateTo);
 
         foreach ($items as $graphDataItem) {
             $control->addGraphDataItem($graphDataItem);
@@ -270,7 +278,9 @@ class DashboardPresenter extends AdminPresenter
         $control = $factory->create();
         $control->setGraphTitle($this->translator->translate('dashboard.subscriptions.by_type.title'))
             ->setGraphHelp($this->translator->translate('dashboard.subscriptions.by_type.tooltip'))
-            ->addGraphDataItem($graphDataItem);
+            ->addGraphDataItem($graphDataItem)
+            ->setFrom($this->dateFrom)
+            ->setTo($this->dateTo);
 
         return $control;
     }
@@ -297,7 +307,9 @@ class DashboardPresenter extends AdminPresenter
         $control = $factory->create();
         $control->setGraphTitle($this->translator->translate('dashboard.subscriptions.only_new_by_type.title'))
             ->setGraphHelp($this->translator->translate('dashboard.subscriptions.only_new_by_type.tooltip'))
-            ->addGraphDataItem($graphDataItem);
+            ->addGraphDataItem($graphDataItem)
+            ->setFrom($this->dateFrom)
+            ->setTo($this->dateTo);
 
         return $control;
     }
@@ -336,7 +348,9 @@ class DashboardPresenter extends AdminPresenter
 
         $control = $factory->create()
             ->setGraphTitle($this->translator->translate('dashboard.subscriptions.ending.title'))
-            ->setGraphHelp($this->translator->translate('dashboard.subscriptions.ending.tooltip'));
+            ->setGraphHelp($this->translator->translate('dashboard.subscriptions.ending.tooltip'))
+            ->setFrom($this->dateFrom)
+            ->setTo($this->dateTo);
 
         foreach ($items as $graphDataItem) {
             $control->addGraphDataItem($graphDataItem);
@@ -388,7 +402,9 @@ SQL
 
         $control = $factory->create();
         $control->setGraphTitle($this->translator->translate('dashboard.subscriptions.access.title'))
-            ->setGraphHelp($this->translator->translate('dashboard.subscriptions.access.tooltip'));
+            ->setGraphHelp($this->translator->translate('dashboard.subscriptions.access.tooltip'))
+            ->setFrom($this->dateFrom)
+            ->setTo($this->dateTo);
 
         foreach ($items as $item) {
             $control->addGraphDataItem($item);
