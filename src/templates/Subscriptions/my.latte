@@ -26,10 +26,10 @@
             {$subscription->subscription_type->user_label}
           </td>
           <td>
-            {$subscription->start_time|userDate:true}
+            {$subscription->start_time|localizedDate:true}
             <span n:if="$subscription->start_time < new \DateTime() && $subscription->end_time > new \DateTime()" class="label label-success">{_system.actual}</span>
           </td>
-          <td>{$subscription->end_time|userDate:true}</td>
+          <td>{$subscription->end_time|localizedDate:true}</td>
         </tr>
       </tbody>
     </table>
