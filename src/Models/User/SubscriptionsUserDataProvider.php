@@ -6,6 +6,7 @@ use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
 use Crm\ApplicationModule\User\UserDataProviderInterface;
 use Crm\SubscriptionsModule\Model\Config;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Subscription\StopSubscriptionHandler;
 use Nette\Localization\Translator;
 use Nette\Utils\DateTime;
 use Tracy\Debugger;
@@ -18,14 +19,18 @@ class SubscriptionsUserDataProvider implements UserDataProviderInterface
 
     private $configRepository;
 
+    private StopSubscriptionHandler $stopSubscriptionHandler;
+
     public function __construct(
         SubscriptionsRepository $subscriptionsRepository,
         Translator $translator,
-        ConfigsRepository $configRepository
+        ConfigsRepository $configRepository,
+        StopSubscriptionHandler $stopSubscriptionHandler
     ) {
         $this->subscriptionsRepository = $subscriptionsRepository;
         $this->translator = $translator;
         $this->configRepository = $configRepository;
+        $this->stopSubscriptionHandler = $stopSubscriptionHandler;
     }
 
     public static function identifier(): string
@@ -86,7 +91,13 @@ class SubscriptionsUserDataProvider implements UserDataProviderInterface
 
     public function delete($userId, $protectedData = [])
     {
-        return false;
+        $now = new DateTime();
+        $subscriptions = $this->subscriptionsRepository->userSubscriptions($userId)
+            ->where('end_time > ?', $now);
+
+        foreach ($subscriptions as $subscription) {
+            $this->stopSubscriptionHandler->stopSubscription($subscription);
+        }
     }
 
     public function canBeDeleted($userId): array
