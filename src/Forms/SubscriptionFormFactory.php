@@ -2,6 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Forms;
 
+use Contributte\Translation\Translator;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\SubscriptionsModule\DataProvider\SubscriptionFormDataProviderInterface;
 use Crm\SubscriptionsModule\Events\SubscriptionPreUpdateEvent;
@@ -11,7 +12,6 @@ use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Subscription\SubscriptionTypeHelper;
 use Crm\UsersModule\Repository\AddressesRepository;
 use Crm\UsersModule\Repository\UsersRepository;
-use Kdyby\Translation\Translator;
 use League\Event\Emitter;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;

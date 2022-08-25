@@ -2,6 +2,7 @@
 
 namespace Crm\SubscriptionsModule;
 
+use Contributte\Translation\Translator;
 use Crm\ApiModule\Api\ApiRoutersContainerInterface;
 use Crm\ApiModule\Router\ApiIdentifier;
 use Crm\ApiModule\Router\ApiRoute;
@@ -36,7 +37,6 @@ use Crm\SubscriptionsModule\Seeders\MeasurementsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
-use Kdyby\Translation\Translator;
 use League\Event\Emitter;
 use Nette\Application\Routers\RouteList;
 use Nette\DI\Container;

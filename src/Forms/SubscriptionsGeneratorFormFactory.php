@@ -2,16 +2,15 @@
 
 namespace Crm\SubscriptionsModule\Forms;
 
+use Contributte\Translation\Translator;
+use Contributte\Translation\Wrappers\Message;
 use Crm\ApplicationModule\Hermes\HermesMessage;
-use Crm\SubscriptionsModule\Generator\SubscriptionsGenerator;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Subscription\SubscriptionTypeHelper;
 use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Email\EmailValidator;
 use DateInterval;
-use Kdyby\Translation\Phrase;
-use Kdyby\Translation\Translator;
 use Nette\Application\UI\Form;
 use Nette\Utils\DateTime;
 use Tomaj\Form\Renderer\BootstrapRenderer;
@@ -29,8 +28,6 @@ class SubscriptionsGeneratorFormFactory
 
     private $subscriptionTypesRepository;
 
-    private $subscriptionsGenerator;
-
     private $translator;
 
     private $subscriptionsRepository;
@@ -47,7 +44,6 @@ class SubscriptionsGeneratorFormFactory
 
     public function __construct(
         UserManager $userManager,
-        SubscriptionsGenerator $subscriptionsGenerator,
         SubscriptionTypesRepository $subscriptionTypesRepository,
         Translator $translator,
         SubscriptionsRepository $subscriptionsRepository,
@@ -56,7 +52,6 @@ class SubscriptionsGeneratorFormFactory
         SubscriptionTypeHelper $subscriptionTypeHelper
     ) {
         $this->userManager = $userManager;
-        $this->subscriptionsGenerator = $subscriptionsGenerator;
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
         $this->translator = $translator;
         $this->subscriptionsRepository = $subscriptionsRepository;
@@ -170,7 +165,7 @@ class SubscriptionsGeneratorFormFactory
                 continue;
             }
             if (!$this->emailValidator->isValid($email)) {
-                $form['emails']->addError(new Phrase('subscriptions.admin.subscription_generator.errors.invalid_email', null, ['email' => $email]));
+                $form['emails']->addError(new Message('subscriptions.admin.subscription_generator.errors.invalid_email', ['email' => $email]));
             }
             if (!empty($email)) {
                 $emails[] = $email;

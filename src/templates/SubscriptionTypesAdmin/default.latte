@@ -55,7 +55,7 @@
                       {$subscriptionTypeItem->name}
                     </div>
                     <div class="col-md-3">
-                      {var $itemSum += $subscriptionTypeItem->amount}
+                      {php $itemSum += $subscriptionTypeItem->amount}
                       <div>{$subscriptionTypeItem->amount|price}</div>
                       <div><small><span class="text-muted">{$subscriptionTypeItem->vat}% {_'subscriptions.admin.subscription_type_items.vat'}</span></small></div>
                     </div>

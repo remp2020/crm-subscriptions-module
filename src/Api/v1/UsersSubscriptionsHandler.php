@@ -55,7 +55,7 @@ class UsersSubscriptionsHandler extends ApiHandler
         }
         $subscriptions = array_merge([], ...$subscriptions);
         usort($subscriptions, function ($a, $b) {
-            return $a->end_time < $b->end_time;
+            return ($a->end_time <=> $b->end_time) * -1;
         });
 
         $result = [

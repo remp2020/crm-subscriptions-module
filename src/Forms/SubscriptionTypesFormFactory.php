@@ -3,6 +3,7 @@
 namespace Crm\SubscriptionsModule\Forms;
 
 use Contributte\FormMultiplier\Multiplier;
+use Contributte\Translation\Translator;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder;
 use Crm\SubscriptionsModule\DataProvider\SubscriptionTypeFormProviderInterface;
@@ -12,7 +13,6 @@ use Crm\SubscriptionsModule\Repository\SubscriptionLengthMethodsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Subscription\SubscriptionTypeHelper;
-use Kdyby\Translation\Translator;
 use Nette\Application\UI\Form;
 use Nette\Forms\Container;
 use Nette\Utils\DateTime;
