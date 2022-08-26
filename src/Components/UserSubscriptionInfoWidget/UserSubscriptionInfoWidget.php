@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
 
 /**
  * This widget displays info about user's actual subscriptions or
@@ -10,7 +10,7 @@ use Crm\ApplicationModule\Widget\BaseWidget;
  *
  * @package Crm\SubscriptionsModule\Components
  */
-class UserSubscriptionInfoWidget extends BaseWidget
+class UserSubscriptionInfoWidget extends BaseLazyWidget
 {
     private $templateName = 'user_subscription_info_widget.latte';
 

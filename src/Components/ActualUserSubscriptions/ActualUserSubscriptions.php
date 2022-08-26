@@ -2,8 +2,8 @@
 
 namespace Crm\SubscriptionsModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
-use Crm\ApplicationModule\Widget\WidgetManager;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Widget\LazyWidgetManager;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 
 /**
@@ -12,7 +12,7 @@ use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
  *
  * @package Crm\SubscriptionsModule\Components
  */
-class ActualUserSubscriptions extends BaseWidget
+class ActualUserSubscriptions extends BaseLazyWidget
 {
     private $templateName = 'actual_user_subscriptions.latte';
 
@@ -20,10 +20,10 @@ class ActualUserSubscriptions extends BaseWidget
     private $subscriptionsRepository;
 
     public function __construct(
-        WidgetManager $widgetManager,
+        LazyWidgetManager $lazyWidgetManager,
         SubscriptionsRepository $subscriptionsRepository
     ) {
-        parent::__construct($widgetManager);
+        parent::__construct($lazyWidgetManager);
         $this->subscriptionsRepository = $subscriptionsRepository;
     }
 

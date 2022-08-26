@@ -2,15 +2,15 @@
 
 namespace Crm\SubscriptionsModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
-use Crm\ApplicationModule\Widget\WidgetManager;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Widget\LazyWidgetManager;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Subscription\StopSubscriptionHandler;
 use DateTime;
 use Nette\Database\Table\ActiveRow;
 use Nette\Localization\Translator;
 
-class StopSubscriptionWidget extends BaseWidget
+class StopSubscriptionWidget extends BaseLazyWidget
 {
     private $templateName = 'stop_subscription_widget.latte';
 
@@ -21,12 +21,12 @@ class StopSubscriptionWidget extends BaseWidget
     private $stopSubscriptionHandler;
 
     public function __construct(
-        WidgetManager $widgetManager,
+        LazyWidgetManager $lazyWidgetManager,
         SubscriptionsRepository $subscriptionsRepository,
         StopSubscriptionHandler $stopSubscriptionHandler,
         Translator $translator
     ) {
-        parent::__construct($widgetManager);
+        parent::__construct($lazyWidgetManager);
         $this->subscriptionsRepository = $subscriptionsRepository;
         $this->translator = $translator;
         $this->stopSubscriptionHandler = $stopSubscriptionHandler;

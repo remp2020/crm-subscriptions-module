@@ -2,22 +2,22 @@
 
 namespace Crm\SubscriptionsModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
-use Crm\ApplicationModule\Widget\WidgetManager;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Widget\LazyWidgetManager;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Nette\Database\Table\ActiveRow;
 
-class UsersAbusiveAdditionalWidget extends BaseWidget
+class UsersAbusiveAdditionalWidget extends BaseLazyWidget
 {
     private $templateName = 'users_abusive_additional_widget.latte';
 
     private $subscriptionsRepository;
 
     public function __construct(
-        WidgetManager $widgetManager,
+        LazyWidgetManager $lazyWidgetManager,
         SubscriptionsRepository $subscriptionsRepository
     ) {
-        parent::__construct($widgetManager);
+        parent::__construct($lazyWidgetManager);
 
         $this->subscriptionsRepository = $subscriptionsRepository;
     }

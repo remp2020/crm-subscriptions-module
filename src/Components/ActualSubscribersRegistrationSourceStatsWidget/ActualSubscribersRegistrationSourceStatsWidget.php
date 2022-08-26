@@ -3,8 +3,8 @@
 namespace Crm\SubscriptionsModule\Components;
 
 use Crm\ApplicationModule\Components\Graphs\GoogleBarGraphControlFactoryInterface;
-use Crm\ApplicationModule\Widget\BaseWidget;
-use Crm\ApplicationModule\Widget\WidgetManager;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Widget\LazyWidgetManager;
 use Nette\Database\Explorer;
 use Nette\Localization\Translator;
 
@@ -14,7 +14,7 @@ use Nette\Localization\Translator;
  *
  * @package Crm\SubscriptionsModule\Components
  */
-class ActualSubscribersRegistrationSourceStatsWidget extends BaseWidget
+class ActualSubscribersRegistrationSourceStatsWidget extends BaseLazyWidget
 {
     private $templateName = 'actual_subscribers_registration_source_stats_widget.latte';
 
@@ -25,12 +25,12 @@ class ActualSubscribersRegistrationSourceStatsWidget extends BaseWidget
     private $database;
 
     public function __construct(
-        WidgetManager $widgetManager,
+        LazyWidgetManager $lazyWidgetManager,
         GoogleBarGraphControlFactoryInterface $factory,
         Translator $translator,
         Explorer $database
     ) {
-        parent::__construct($widgetManager);
+        parent::__construct($lazyWidgetManager);
 
         $this->factory = $factory;
         $this->translator = $translator;

@@ -2,8 +2,8 @@
 
 namespace Crm\SubscriptionsModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
-use Crm\ApplicationModule\Widget\WidgetManager;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Widget\LazyWidgetManager;
 use Crm\SegmentModule\Repository\SegmentsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 
@@ -13,7 +13,7 @@ use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
  *
  * @package Crm\SubscriptionsModule\Components
  */
-class ActualSubscribersStatWidget extends BaseWidget
+class ActualSubscribersStatWidget extends BaseLazyWidget
 {
     private $templateName = 'actual_subscribers_stat_widget.latte';
 
@@ -22,11 +22,11 @@ class ActualSubscribersStatWidget extends BaseWidget
     private $segmentsRepository;
 
     public function __construct(
-        WidgetManager $widgetManager,
+        LazyWidgetManager $lazyWidgetManager,
         SubscriptionsRepository $subscriptionsRepository,
         SegmentsRepository $segmentsRepository
     ) {
-        parent::__construct($widgetManager);
+        parent::__construct($lazyWidgetManager);
         $this->subscriptionsRepository = $subscriptionsRepository;
         $this->segmentsRepository = $segmentsRepository;
     }

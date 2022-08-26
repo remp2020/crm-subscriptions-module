@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
 
 /**
  * This widget fetches all widgets from `subscriptions.endinglist` namespace
@@ -10,7 +10,7 @@ use Crm\ApplicationModule\Widget\BaseWidget;
  *
  * @package Crm\SubscriptionsModule\Components
  */
-class EndingSubscriptionsWidget extends BaseWidget
+class EndingSubscriptionsWidget extends BaseLazyWidget
 {
     private $templateName = 'ending_subscriptions_widget.latte';
 

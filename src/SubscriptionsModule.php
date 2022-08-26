@@ -17,7 +17,7 @@ use Crm\ApplicationModule\Menu\MenuContainerInterface;
 use Crm\ApplicationModule\Menu\MenuItem;
 use Crm\ApplicationModule\SeederManager;
 use Crm\ApplicationModule\User\UserDataRegistrator;
-use Crm\ApplicationModule\Widget\WidgetManagerInterface;
+use Crm\ApplicationModule\Widget\LazyWidgetManagerInterface;
 use Crm\SubscriptionsModule\DataProvider\CanDeleteAddressDataProvider;
 use Crm\SubscriptionsModule\DataProvider\FilterAbusiveUserFormDataProvider;
 use Crm\SubscriptionsModule\DataProvider\SubscriptionsClaimUserDataProvider;
@@ -106,90 +106,90 @@ class SubscriptionsModule extends CrmModule
         $menuContainer->attachMenuItem($menuItem);
     }
 
-    public function registerWidgets(WidgetManagerInterface $widgetManager)
+    public function registerLazyWidgets(LazyWidgetManagerInterface $widgetManager)
     {
         $widgetManager->registerWidget(
             'admin.user.detail.bottom',
-            $this->getInstance(\Crm\SubscriptionsModule\Components\UserSubscriptionsListing::class),
+            \Crm\SubscriptionsModule\Components\UserSubscriptionsListing::class,
             100
         );
         $widgetManager->registerWidget(
             'admin.payments.listing.action',
-            $this->getInstance(\Crm\SubscriptionsModule\Components\SubscriptionButton::class),
+            \Crm\SubscriptionsModule\Components\SubscriptionButton::class,
             6000
         );
         $widgetManager->registerWidget(
             'admin.user.detail.box',
-            $this->getInstance(\Crm\SubscriptionsModule\Components\ActualUserSubscriptions::class),
+            \Crm\SubscriptionsModule\Components\ActualUserSubscriptions::class,
             300
         );
         $widgetManager->registerWidget(
             'dashboard.singlestat.totals',
-            $this->getInstance(\Crm\SubscriptionsModule\Components\TotalSubscriptionsStatWidget::class),
+            \Crm\SubscriptionsModule\Components\TotalSubscriptionsStatWidget::class,
             600
         );
         $widgetManager->registerWidget(
             'dashboard.singlestat.actuals.subscribers',
-            $this->getInstance(\Crm\SubscriptionsModule\Components\ActualSubscribersStatWidget::class),
+            \Crm\SubscriptionsModule\Components\ActualSubscribersStatWidget::class,
             700
         );
         $widgetManager->registerWidget(
             'dashboard.stats.actuals.subscribers.source',
-            $this->getInstance(\Crm\SubscriptionsModule\Components\ActualSubscribersRegistrationSourceStatsWidget::class),
+            \Crm\SubscriptionsModule\Components\ActualSubscribersRegistrationSourceStatsWidget::class,
             700
         );
         $widgetManager->registerWidget(
             'dashboard.singlestat.today',
-            $this->getInstance(\Crm\SubscriptionsModule\Components\TodaySubscriptionsStatWidget::class),
+            \Crm\SubscriptionsModule\Components\TodaySubscriptionsStatWidget::class,
             500
         );
         $widgetManager->registerWidget(
             'dashboard.singlestat.month',
-            $this->getInstance(\Crm\SubscriptionsModule\Components\MonthSubscriptionsStatWidget::class),
+            \Crm\SubscriptionsModule\Components\MonthSubscriptionsStatWidget::class,
             600
         );
         $widgetManager->registerWidget(
             'dashboard.singlestat.mtd',
-            $this->getInstance(\Crm\SubscriptionsModule\Components\MonthToDateSubscriptionsStatWidget::class),
+            \Crm\SubscriptionsModule\Components\MonthToDateSubscriptionsStatWidget::class,
             600
         );
         $widgetManager->registerWidget(
             'dashboard.bottom',
-            $this->getInstance(\Crm\SubscriptionsModule\Components\EndingSubscriptionsWidget::class),
+            \Crm\SubscriptionsModule\Components\EndingSubscriptionsWidget::class,
             100
         );
         $widgetManager->registerWidget(
             'subscriptions.endinglist',
-            $this->getInstance(\Crm\SubscriptionsModule\Components\SubscriptionsEndingWithinPeriodWidget::class),
+            \Crm\SubscriptionsModule\Components\SubscriptionsEndingWithinPeriodWidget::class,
             500
         );
         $widgetManager->registerWidget(
             'subscriptions.endinglist',
-            $this->getInstance(\Crm\SubscriptionsModule\Components\RenewedSubscriptionsEndingWithinPeriodWidget::class),
+            \Crm\SubscriptionsModule\Components\RenewedSubscriptionsEndingWithinPeriodWidget::class,
             600
         );
         $widgetManager->registerWidget(
             'admin.users.header',
-            $this->getInstance(\Crm\SubscriptionsModule\Components\MonthSubscriptionsSmallBarGraphWidget::class),
+            \Crm\SubscriptionsModule\Components\MonthSubscriptionsSmallBarGraphWidget::class,
             600
         );
         $widgetManager->registerWidget(
             'admin.user.list.emailcolumn',
-            $this->getInstance(\Crm\SubscriptionsModule\Components\UserSubscriptionInfoWidget::class),
+            \Crm\SubscriptionsModule\Components\UserSubscriptionInfoWidget::class,
             600
         );
         $widgetManager->registerWidget(
             'admin.payments.top',
-            $this->getInstance(\Crm\SubscriptionsModule\Components\SubscribersWithMissingAddressWidget::class),
+            \Crm\SubscriptionsModule\Components\SubscribersWithMissingAddressWidget::class,
             2000
         );
         $widgetManager->registerWidget(
             'admin.user.abusive.additional',
-            $this->getInstance(\Crm\SubscriptionsModule\Components\UsersAbusiveAdditionalWidget::class)
+            \Crm\SubscriptionsModule\Components\UsersAbusiveAdditionalWidget::class
         );
         $widgetManager->registerWidget(
             'subscriptions.admin.user_subscriptions_listing.action',
-            $this->getInstance(\Crm\SubscriptionsModule\Components\StopSubscriptionWidget::class)
+            \Crm\SubscriptionsModule\Components\StopSubscriptionWidget::class
         );
     }
 

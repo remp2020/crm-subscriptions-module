@@ -2,8 +2,8 @@
 
 namespace Crm\SubscriptionsModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
-use Crm\ApplicationModule\Widget\WidgetManager;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Widget\LazyWidgetManager;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Nette\Utils\DateTime;
 
@@ -13,17 +13,17 @@ use Nette\Utils\DateTime;
  *
  * @package Crm\SubscriptionsModule\Components
  */
-class TodaySubscriptionsStatWidget extends BaseWidget
+class TodaySubscriptionsStatWidget extends BaseLazyWidget
 {
     private $templateName = 'today_subscriptions_stat_widget.latte';
 
     private $subscriptionsRepository;
 
     public function __construct(
-        WidgetManager $widgetManager,
+        LazyWidgetManager $lazyWidgetManager,
         SubscriptionsRepository $subscriptionsRepository
     ) {
-        parent::__construct($widgetManager);
+        parent::__construct($lazyWidgetManager);
         $this->subscriptionsRepository = $subscriptionsRepository;
     }
 

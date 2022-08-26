@@ -2,8 +2,8 @@
 
 namespace Crm\SubscriptionsModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
-use Crm\ApplicationModule\Widget\WidgetManager;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Widget\LazyWidgetManager;
 use Crm\UsersModule\Repository\AddressesRepository;
 use Crm\UsersModule\Repository\UserMetaRepository;
 use Crm\UsersModule\Repository\UsersRepository;
@@ -14,12 +14,9 @@ use Crm\UsersModule\Repository\UsersRepository;
  *
  * @package Crm\SubscriptionsModule\Components
  */
-class SubscribersWithMissingAddressWidget extends BaseWidget
+class SubscribersWithMissingAddressWidget extends BaseLazyWidget
 {
     private $templateName = 'subscribers_with_missing_address_widget.latte';
-
-    /** @var WidgetManager */
-    protected $widgetManager;
 
     protected $usersRepository;
 
@@ -32,12 +29,12 @@ class SubscribersWithMissingAddressWidget extends BaseWidget
     protected $addressTypes = ['print'];
 
     public function __construct(
-        WidgetManager $widgetManager,
+        LazyWidgetManager $lazyWidgetManager,
         UsersRepository $usersRepository,
         AddressesRepository $addressesRepository,
         UserMetaRepository $userMetaRepository
     ) {
-        parent::__construct($widgetManager);
+        parent::__construct($lazyWidgetManager);
 
         $this->usersRepository = $usersRepository;
         $this->addressesRepository = $addressesRepository;

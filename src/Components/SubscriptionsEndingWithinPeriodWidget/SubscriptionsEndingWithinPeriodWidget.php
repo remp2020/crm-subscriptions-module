@@ -2,8 +2,8 @@
 
 namespace Crm\SubscriptionsModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
-use Crm\ApplicationModule\Widget\WidgetManager;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Widget\LazyWidgetManager;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Nette\Localization\Translator;
 use Nette\Utils\DateTime;
@@ -14,7 +14,7 @@ use Nette\Utils\DateTime;
  *
  * @package Crm\SubscriptionsModule\Components
  */
-class SubscriptionsEndingWithinPeriodWidget extends BaseWidget implements IWidgetLegend
+class SubscriptionsEndingWithinPeriodWidget extends BaseLazyWidget implements IWidgetLegend
 {
     private $templateName = 'subscriptions_ending_within_period_widget.latte';
 
@@ -23,11 +23,11 @@ class SubscriptionsEndingWithinPeriodWidget extends BaseWidget implements IWidge
     private $translator;
 
     public function __construct(
-        WidgetManager $widgetManager,
+        LazyWidgetManager $lazyWidgetManager,
         SubscriptionsRepository $subscriptionsRepository,
         Translator $translator
     ) {
-        parent::__construct($widgetManager);
+        parent::__construct($lazyWidgetManager);
         $this->subscriptionsRepository = $subscriptionsRepository;
         $this->translator = $translator;
     }

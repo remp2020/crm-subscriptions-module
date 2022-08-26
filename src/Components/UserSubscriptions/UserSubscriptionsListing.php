@@ -2,8 +2,8 @@
 
 namespace Crm\SubscriptionsModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
-use Crm\ApplicationModule\Widget\WidgetManager;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Widget\LazyWidgetManager;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Nette\Localization\Translator;
 
@@ -13,7 +13,7 @@ use Nette\Localization\Translator;
  *
  * @package Crm\SubscriptionsModule\Components
  */
-class UserSubscriptionsListing extends BaseWidget
+class UserSubscriptionsListing extends BaseLazyWidget
 {
     private $templateName = 'user_subscriptions_listing.latte';
 
@@ -22,11 +22,11 @@ class UserSubscriptionsListing extends BaseWidget
     private $translator;
 
     public function __construct(
-        WidgetManager $widgetManager,
+        LazyWidgetManager $lazyWidgetManager,
         SubscriptionsRepository $subscriptionsRepository,
         Translator $translator
     ) {
-        parent::__construct($widgetManager);
+        parent::__construct($lazyWidgetManager);
         $this->subscriptionsRepository = $subscriptionsRepository;
         $this->translator = $translator;
     }
