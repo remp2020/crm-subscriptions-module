@@ -23,13 +23,11 @@ use Nette\Utils\DateTime;
 
 class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
 {
-    /** @var SubscriptionsRepository */
-    private $subscriptionsRepository;
+    private ExtendSameContentAccess $extension;
 
-    /** @var ExtendSameContentAccess */
-    private $extension;
+    private SubscriptionsRepository $subscriptionsRepository;
 
-    private $user;
+    private ActiveRow $user;
 
     public function setUp(): void
     {
@@ -37,6 +35,7 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
 
         $this->extension = $this->inject(ExtendSameContentAccess::class);
         $this->subscriptionsRepository = $this->getRepository(SubscriptionsRepository::class);
+        /** @var UserManager $userManager */
         $userManager = $this->inject(UserManager::class);
         $this->user = $userManager->addNewUser('test@example.com');
     }
@@ -158,6 +157,27 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
         $this->extension->setNow($nowDate);
         $result = $this->extension->getStartTime($this->user, $subscriptionType);
 
+        $this->assertEquals($nowDate, $result->getDate());
+        $this->assertFalse($result->isExtending());
+    }
+
+    public function testDifferentActualSubscription()
+    {
+        $nowDate = DateTime::from('2021-02-01');
+
+        $subscriptionType = $this->getSubscriptionType();
+
+        $differentSubscriptionType = $this->getDifferentSubscriptionType();
+        $this->addSubscription(
+            $differentSubscriptionType,
+            $nowDate,
+            $nowDate->modifyClone('+25 days')
+        );
+
+        $this->extension->setNow($nowDate);
+        $result = $this->extension->getStartTime($this->user, $subscriptionType);
+
+        // active subscription has different content access; start immediatelly
         $this->assertEquals($nowDate, $result->getDate());
         $this->assertFalse($result->isExtending());
     }
