@@ -7,6 +7,8 @@ use Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder;
 use Crm\SubscriptionsModule\Extension\ExtendSameContentAccess;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionExtensionMethodsRepository;
+use Crm\SubscriptionsModule\Repository\SubscriptionLengthMethodsRepository;
+use Crm\SubscriptionsModule\Repository\SubscriptionTypeContentAccess;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeNamesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
@@ -51,12 +53,14 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
     protected function requiredRepositories(): array
     {
         return [
+            ContentAccessRepository::class,
             SubscriptionsRepository::class,
+            SubscriptionTypeContentAccess::class,
             SubscriptionTypesRepository::class,
             SubscriptionTypeNamesRepository::class,
             SubscriptionExtensionMethodsRepository::class,
+            SubscriptionLengthMethodsRepository::class,
             UsersRepository::class,
-            ContentAccessRepository::class,
         ];
     }
 
@@ -77,6 +81,7 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
 
         $subscriptionTypeRow = $subscriptionTypeBuilder
             ->createNew()
+            // use only seeded accesses Crm\SubscriptionsModule\Seeders\ContentAccessSeeder
             ->setContentAccessOption('web')
             ->setNameAndUserLabel(random_int(0, 9999))
             ->setActive(1)
@@ -94,7 +99,8 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
 
         $subscriptionTypeRow = $subscriptionTypeBuilder
             ->createNew()
-            ->setContentAccessOption('web', 'mobile')
+            // use only seeded accesses Crm\SubscriptionsModule\Seeders\ContentAccessSeeder
+            ->setContentAccessOption('web', 'print')
             ->setNameAndUserLabel(random_int(0, 9999))
             ->setActive(1)
             ->setPrice(1)
@@ -156,7 +162,7 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
         $this->assertFalse($result->isExtending());
     }
 
-    public function testMoreSubscriptions()
+    public function testMoreSubscriptionsConnected()
     {
         $nowDate = DateTime::from('2021-02-01');
 
@@ -177,6 +183,30 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
         $this->extension->setNow($nowDate);
         $result = $this->extension->getStartTime($this->user, $subscriptionType);
         $this->assertEquals($nowDate->modifyClone('+5 days'), $result->getDate());
+        $this->assertTrue($result->isExtending());
+    }
+
+    public function testMoreSubscriptionsDiffOrderConnected()
+    {
+        $nowDate = DateTime::from('2021-02-01');
+
+        $differentSubscriptionType = $this->getDifferentSubscriptionType();
+        $this->addSubscription(
+            $differentSubscriptionType,
+            $nowDate,
+            $nowDate->modifyClone('+5 days')
+        );
+
+        $subscriptionType = $this->getSubscriptionType();
+        $this->addSubscription(
+            $subscriptionType,
+            $nowDate->modifyClone('+5 days'),
+            $nowDate->modifyClone('+35 days')
+        );
+
+        $this->extension->setNow($nowDate);
+        $result = $this->extension->getStartTime($this->user, $subscriptionType);
+        $this->assertEquals($nowDate->modifyClone('+35 days'), $result->getDate());
         $this->assertTrue($result->isExtending());
     }
 
@@ -228,7 +258,7 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
         $this->assertTrue($result->isExtending());
     }
 
-    public function testMoreSubscriptionAddToLaterSubscription()
+    public function testMoreSubscriptionDiffOrderNotConnected()
     {
         $nowDate = DateTime::from('2021-02-01');
 

@@ -5,6 +5,10 @@ namespace Crm\SubscriptionsModule\Tests;
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
 use Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder;
 use Crm\SubscriptionsModule\Extension\ExtendSameActualExtension;
+use Crm\SubscriptionsModule\Repository\SubscriptionExtensionMethodsRepository;
+use Crm\SubscriptionsModule\Repository\SubscriptionLengthMethodsRepository;
+use Crm\SubscriptionsModule\Repository\SubscriptionTypeContentAccess;
+use Crm\SubscriptionsModule\Repository\SubscriptionTypeNamesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;
@@ -48,7 +52,11 @@ class ExtendSameActualExtensionTest extends DatabaseTestCase
     {
         return [
             SubscriptionsRepository::class,
+            SubscriptionTypeContentAccess::class,
             SubscriptionTypesRepository::class,
+            SubscriptionTypeNamesRepository::class,
+            SubscriptionExtensionMethodsRepository::class,
+            SubscriptionLengthMethodsRepository::class,
             UsersRepository::class,
         ];
     }
