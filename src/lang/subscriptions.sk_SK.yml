@@ -332,6 +332,27 @@ admin:
         success: 'Predplatné s ID %id% bolo zastavené.'
         stop_confirm: "Naozaj chcete zastaviť predplatné ID: %id% pre používateľa %email%?"
 
+    admin_filter_form:
+        name:
+            label: Názov
+        code:
+            label: Identifikátor
+        content_access:
+            label: Typ obsahu
+        price_from:
+            label: Cena od (vrátane)
+        price_to:
+            label: Cena do (vrátane)
+        length_from:
+            label: Dĺžka od (vrátane)
+        length_to:
+            label: Dĺžka do (vrátane)
+        default:
+            label: Iba základné (defaultne)
+        submit: Filtrovať
+        cancel_filter: Zrušiť filter
+        more: Viac možností
+
 measurements:
     active_subscriptions:
         title: "Aktívne predplatné"

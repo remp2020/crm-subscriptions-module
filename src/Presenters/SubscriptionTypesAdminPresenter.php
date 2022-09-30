@@ -6,9 +6,11 @@ use Crm\AdminModule\Presenters\AdminPresenter;
 use Crm\ApplicationModule\Components\Graphs\GoogleLineGraphGroupControlFactoryInterface;
 use Crm\ApplicationModule\Graphs\Criteria;
 use Crm\ApplicationModule\Graphs\GraphDataItem;
+use Crm\SubscriptionsModule\Forms\AdminFilterFormFactory;
 use Crm\SubscriptionsModule\Forms\SubscriptionTypeItemsFormFactory;
 use Crm\SubscriptionsModule\Forms\SubscriptionTypeMetaFormFactory;
 use Crm\SubscriptionsModule\Forms\SubscriptionTypesFormFactory;
+use Crm\SubscriptionsModule\Models\AdminFilterFormData;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemMetaRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemsRepository;
@@ -17,43 +19,30 @@ use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 
 class SubscriptionTypesAdminPresenter extends AdminPresenter
 {
-    private ContentAccessRepository $contentAccessRepository;
-
-    private SubscriptionTypesRepository $subscriptionTypesRepository;
-
-    private SubscriptionTypesFormFactory $subscriptionTypesFormFactory;
-
-    private SubscriptionTypeItemsRepository $subscriptionTypeItemsRepository;
-
-    private SubscriptionTypeItemsFormFactory $subscriptionTypeItemsFormFactory;
-
-    private SubscriptionTypesMetaRepository $subscriptionTypesMetaRepository;
-
-    private SubscriptionTypeMetaFormFactory $subscriptionTypeMetaFormFactory;
-
-    private SubscriptionTypeItemMetaRepository $subscriptionTypeItemMetaRepository;
+    /** @persistent */
+    public $formData = [];
 
     private $subscriptionType;
 
     public function __construct(
-        ContentAccessRepository $contentAccessRepository,
-        SubscriptionTypesRepository $subscriptionTypesRepository,
-        SubscriptionTypesFormFactory $subscriptionTypesFormFactory,
-        SubscriptionTypeItemsRepository $subscriptionTypeItemsRepository,
-        SubscriptionTypeItemsFormFactory $subscriptionTypeItemsFormFactory,
-        SubscriptionTypesMetaRepository $subscriptionTypesMetaRepository,
-        SubscriptionTypeMetaFormFactory $subscriptionTypeMetaFormFactory,
-        SubscriptionTypeItemMetaRepository $subscriptionTypeItemMetaRepository
+        private ContentAccessRepository $contentAccessRepository,
+        private SubscriptionTypesRepository $subscriptionTypesRepository,
+        private SubscriptionTypesFormFactory $subscriptionTypesFormFactory,
+        private SubscriptionTypeItemsRepository $subscriptionTypeItemsRepository,
+        private SubscriptionTypeItemsFormFactory $subscriptionTypeItemsFormFactory,
+        private SubscriptionTypesMetaRepository $subscriptionTypesMetaRepository,
+        private SubscriptionTypeMetaFormFactory $subscriptionTypeMetaFormFactory,
+        private SubscriptionTypeItemMetaRepository $subscriptionTypeItemMetaRepository,
+        private AdminFilterFormFactory $adminFilterFormFactory,
+        private AdminFilterFormData $adminFilterFormData,
     ) {
         parent::__construct();
-        $this->contentAccessRepository = $contentAccessRepository;
-        $this->subscriptionTypesRepository = $subscriptionTypesRepository;
-        $this->subscriptionTypesFormFactory = $subscriptionTypesFormFactory;
-        $this->subscriptionTypeItemsRepository = $subscriptionTypeItemsRepository;
-        $this->subscriptionTypeItemsFormFactory = $subscriptionTypeItemsFormFactory;
-        $this->subscriptionTypesMetaRepository = $subscriptionTypesMetaRepository;
-        $this->subscriptionTypeMetaFormFactory = $subscriptionTypeMetaFormFactory;
-        $this->subscriptionTypeItemMetaRepository = $subscriptionTypeItemMetaRepository;
+    }
+
+    public function startup()
+    {
+        parent::startup();
+        $this->adminFilterFormData->parse($this->formData);
     }
 
     /**
@@ -61,26 +50,44 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
      */
     public function renderDefault()
     {
-        $subscriptionTypes = $this->filteredSubscriptionTypes();
-        $activeSubscriptionTypes = [];
-        $inactiveSubscriptionTypes = [];
+        $subscriptionTypes = $this->adminFilterFormData->getFilteredSubscriptionTypes();
+
+        $visibleSubscriptionTypes = [];
+        $invisibleSubscriptionTypes = [];
         foreach ($subscriptionTypes as $subscriptionType) {
             if ($subscriptionType->visible) {
-                $activeSubscriptionTypes[] = $subscriptionType;
+                $visibleSubscriptionTypes[] = $subscriptionType;
             } else {
-                $inactiveSubscriptionTypes[] = $subscriptionType;
+                $invisibleSubscriptionTypes[] = $subscriptionType;
             }
         }
 
-        $this->template->activeSubscriptionTypes = $activeSubscriptionTypes;
-        $this->template->inactiveSubscriptionTypes = $inactiveSubscriptionTypes;
+        $this->template->activeSubscriptionTypes = $visibleSubscriptionTypes;
+        $this->template->inactiveSubscriptionTypes = $invisibleSubscriptionTypes;
 
-        $this->template->totalSubscriptionTypes = $this->subscriptionTypesRepository->totalCount();
+        $this->template->totalSubscriptionTypes = $subscriptionTypes->count();
     }
 
     private function filteredSubscriptionTypes()
     {
         return $this->subscriptionTypesRepository->all($this->text)->order('sorting ASC');
+    }
+
+    public function createComponentAdminFilterForm()
+    {
+        $form = $this->adminFilterFormFactory->create();
+        $form->setDefaults($this->adminFilterFormData->getFormValues());
+
+        $this->adminFilterFormFactory->onFilter = function (array $values) {
+            $this->redirect($this->action, ['formData' => array_map(function ($item) {
+                return $item ?: null;
+            }, $values)]);
+        };
+        $this->adminFilterFormFactory->onCancel = function (array $emptyValues) {
+            $this->redirect($this->action, ['formData' => $emptyValues]);
+        };
+
+        return $form;
     }
 
     /**

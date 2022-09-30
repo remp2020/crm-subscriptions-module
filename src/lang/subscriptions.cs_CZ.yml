@@ -325,6 +325,27 @@ admin:
         success: 'Předplatné s ID %id% bylo zastaveno.'
         stop_confirm: "Opravdu chcete zastavit předplatné ID: %id% pro uživatele %email%?"
 
+    admin_filter_form:
+        name:
+            label: Název
+        code:
+            label: Identifikátor
+        content_access:
+            label: Typ obsahu
+        price_from:
+            label: Cena od (včetně)
+        price_to:
+            label: Cena do (včetně)
+        length_from:
+            label: Délka od (včetně)
+        length_to:
+            label: Délka do (včetně)
+        default:
+            label: Pouze základní (default)
+        submit: Filtrovat
+        cancel_filter: Zrušit filtr
+        more: Více možností
+
 data_provider:
     delete:
         active_subscription: Uživatel má/měl aktivní předplatné a nemůže být smazán

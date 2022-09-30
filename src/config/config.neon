@@ -29,6 +29,7 @@ services:
 	- Crm\SubscriptionsModule\Forms\SubscriptionsGeneratorFormFactory
 	- Crm\SubscriptionsModule\Forms\SubscriptionTypeItemsFormFactory
 	- Crm\SubscriptionsModule\Forms\SubscriptionTypeMetaFormFactory
+	- Crm\SubscriptionsModule\Forms\AdminFilterFormFactory
 	- Crm\SubscriptionsModule\Generator\SubscriptionsGenerator
 	- Crm\SubscriptionsModule\Components\SubscriptionButton
 	- Crm\SubscriptionsModule\Components\ActualUserSubscriptions
@@ -87,6 +88,8 @@ services:
 	- Crm\SubscriptionsModule\DataProvider\SubscriptionsClaimUserDataProvider
 	- Crm\SubscriptionsModule\Subscription\SubscriptionTypeHelper
 	- Crm\SubscriptionsModule\Subscription\StopSubscriptionHandler
+
+	- Crm\SubscriptionsModule\Models\AdminFilterFormData
 
 	- Crm\SubscriptionsModule\Extension\ExtendActualExtension
 	- Crm\SubscriptionsModule\Extension\ExtendSameActualExtension

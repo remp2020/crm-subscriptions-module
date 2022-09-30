@@ -332,6 +332,27 @@ admin:
         success: 'Subscription with ID %id% has been stopped.'
         stop_confirm: "Are you sure you want to stop subscription ID: %id% for user %email%?"
 
+    admin_filter_form:
+        name:
+            label: Name
+        code:
+            label: Code
+        content_access:
+            label: Content access
+        price_from:
+            label: Price from (inclusive)
+        price_to:
+            label: Price to (inclusive)
+        length_from:
+            label: Length to (inclusive)
+        length_to:
+            label: Length from (inclusive)
+        default:
+            label: Only default
+        submit: Filter
+        cancel_filter: Cancel filter
+        more: More options
+
 measurements:
     active_subscriptions:
         title: "Active subscriptions"
