@@ -30,7 +30,7 @@ class AdminFilterFormData
             $subscriptionTypes->where('subscription_types.name LIKE ?', "%{$this->getName()}%");
         }
         if ($this->getCode()) {
-            $subscriptionTypes->where('subscription_types.name LIKE ?', "%{$this->getCode()}%");
+            $subscriptionTypes->where('subscription_types.code LIKE ?', "%{$this->getCode()}%");
         }
         if ($this->getContentAccesses()) {
             // match all selected content accesses
