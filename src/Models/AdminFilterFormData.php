@@ -53,7 +53,7 @@ class AdminFilterFormData
             $subscriptionTypes->where('subscription_types.price <= ?', $this->getPriceTo());
         }
         if ($this->getLengthFrom()) {
-            $subscriptionTypes->where('subscription_types.length <= ?', $this->getLengthFrom());
+            $subscriptionTypes->where('subscription_types.length >= ?', $this->getLengthFrom());
         }
         if ($this->getLengthTo()) {
             $subscriptionTypes->where('subscription_types.length <= ?', $this->getLengthTo());
