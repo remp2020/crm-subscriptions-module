@@ -250,12 +250,12 @@
   });
 
   $('#subscription-type-meta-modal').on('show.bs.modal', function(e) {
-      var invoker = $(e.relatedTarget);
+    var invoker = $(e.relatedTarget);
 
-      $(this).find('.alert').hide(); // hide all rendered form alerts (errors). Use case: form save -> error -> close modal -> opan modal.
-      $(this).find('#modal-title').html(invoker.data('modal-title'));
-      $(this).find('#' + {$control["subscriptionTypeMetaForm"]['key']->htmlId}).val(invoker.data('key'));
-      $(this).find('#' + {$control["subscriptionTypeMetaForm"]['value']->htmlId}).val(invoker.data('value'));
-      $(this).find('#' + {$control["subscriptionTypeMetaForm"]['subscription_type_meta_id']->htmlId}).val(invoker.data('subscription_type_meta_id'));
+    $(this).find('.alert').hide(); // hide all rendered form alerts (errors). Use case: form save -> error -> close modal -> opan modal.
+    $(this).find('#modal-title').html(invoker.data('modal-title'));
+    $(this).find('#' + {$control["subscriptionTypeMetaForm"]['key']->htmlId}).val(invoker.data('key'));
+    $(this).find('#' + {$control["subscriptionTypeMetaForm"]['value']->htmlId}).val(invoker.attr('data-value'));
+    $(this).find('#' + {$control["subscriptionTypeMetaForm"]['subscription_type_meta_id']->htmlId}).val(invoker.data('subscription_type_meta_id'));
   });
 </script>
