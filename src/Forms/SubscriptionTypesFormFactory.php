@@ -15,53 +15,27 @@ use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Subscription\SubscriptionTypeHelper;
 use Nette\Application\UI\Form;
 use Nette\Forms\Container;
+use Nette\Forms\Controls\TextInput;
 use Nette\Utils\DateTime;
 use Tomaj\Form\Renderer\BootstrapRenderer;
 
 class SubscriptionTypesFormFactory
 {
-    private $subscriptionTypesRepository;
-
-    private $subscriptionTypeItemsRepository;
-
-    private $subscriptionTypeBuilder;
-
-    private $translator;
-
-    private $subscriptionExtensionMethodsRepository;
-
-    private $subscriptionLengthMethodsRepository;
-
-    private $contentAccessRepository;
-
-    private $dataProviderManager;
-
-    private $subscriptionTypeHelper;
-
     public $onSave;
 
     public $onUpdate;
 
     public function __construct(
-        SubscriptionTypesRepository $subscriptionTypesRepository,
-        SubscriptionTypeItemsRepository $subscriptionTypeItemsRepository,
-        SubscriptionTypeBuilder $subscriptionTypeBuilder,
-        SubscriptionExtensionMethodsRepository $subscriptionExtensionMethodsRepository,
-        SubscriptionLengthMethodsRepository $subscriptionLengthMethodsRepository,
-        ContentAccessRepository $contentAccess,
-        Translator $translator,
-        DataProviderManager $dataProviderManager,
-        SubscriptionTypeHelper $subscriptionTypeHelper
+        private SubscriptionTypesRepository $subscriptionTypesRepository,
+        private SubscriptionTypeItemsRepository $subscriptionTypeItemsRepository,
+        private SubscriptionTypeBuilder $subscriptionTypeBuilder,
+        private SubscriptionExtensionMethodsRepository $subscriptionExtensionMethodsRepository,
+        private SubscriptionLengthMethodsRepository $subscriptionLengthMethodsRepository,
+        private ContentAccessRepository $contentAccessRepository,
+        private Translator $translator,
+        private DataProviderManager $dataProviderManager,
+        private SubscriptionTypeHelper $subscriptionTypeHelper
     ) {
-        $this->subscriptionTypesRepository = $subscriptionTypesRepository;
-        $this->subscriptionTypeBuilder = $subscriptionTypeBuilder;
-        $this->subscriptionExtensionMethodsRepository = $subscriptionExtensionMethodsRepository;
-        $this->subscriptionLengthMethodsRepository = $subscriptionLengthMethodsRepository;
-        $this->contentAccessRepository = $contentAccess;
-        $this->translator = $translator;
-        $this->subscriptionTypeItemsRepository = $subscriptionTypeItemsRepository;
-        $this->dataProviderManager = $dataProviderManager;
-        $this->subscriptionTypeHelper = $subscriptionTypeHelper;
     }
 
     /**
@@ -69,7 +43,7 @@ class SubscriptionTypesFormFactory
      * @return Form
      * @throws \Crm\ApplicationModule\DataProvider\DataProviderException
      */
-    public function create($subscriptionTypeId)
+    public function create($subscriptionTypeId): Form
     {
         $defaults = [];
         $subscriptionType = null;
@@ -106,7 +80,10 @@ class SubscriptionTypesFormFactory
 
         $form->addText('code', 'subscriptions.data.subscription_types.fields.code')
             ->setRequired()
-            ->setHtmlAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.code');
+            ->setHtmlAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.code')
+            ->addRule(function (TextInput $control) {
+                return $this->subscriptionTypesRepository->findByCode($control->getValue()) === null;
+            }, 'subscriptions.admin.subscription_types.form.validation.code_duplicate');
 
         $form->addText('user_label', 'subscriptions.data.subscription_types.fields.user_label')
             ->setRequired('subscriptions.data.subscription_types.required.user_label')
@@ -268,10 +245,7 @@ class SubscriptionTypesFormFactory
         $contentAccesses = $this->contentAccessRepository->all();
 
         if (isset($values['subscription_type_id'])) {
-            $subscriptionTypeId = $values['subscription_type_id'];
-            unset($values['subscription_type_id']);
-
-            $subscriptionType = $this->subscriptionTypesRepository->find($subscriptionTypeId);
+            $subscriptionType = $this->subscriptionTypesRepository->find($values['subscription_type_id']);
             $this->subscriptionTypeBuilder->processContentTypes($subscriptionType, (array) $values);
 
             // TODO: remove this once deprecated columns from subscription_type are removed (web, mobile...)
@@ -292,6 +266,7 @@ class SubscriptionTypesFormFactory
             foreach ($providers as $sorting => $provider) {
                 [$form, $values] = $provider->formSucceeded($form, $values);
             }
+            unset($values['subscription_type_id']); // unset after data provider since it might be used there
 
             $this->subscriptionTypesRepository->update($subscriptionType, $values);
 

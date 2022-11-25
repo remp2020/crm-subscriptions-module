@@ -188,6 +188,8 @@ admin:
             name: Názov
             amount: Cena
             vat: DPH
+            validation:
+                code_duplicate: 'Typ predplatného s rovnakým identifikátorom už existuje'
         header:
             back: Späť na zoznam
             edit: Uprav typ predplatného

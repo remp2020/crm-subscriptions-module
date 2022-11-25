@@ -188,6 +188,8 @@ admin:
             name: Name
             amount: Amount
             vat: VAT
+            validation:
+                code_duplicate: 'Subscription type with the same identifier already exists'
         header:
             back: Back to listing
             edit: Edit subscription type
