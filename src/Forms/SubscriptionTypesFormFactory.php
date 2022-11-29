@@ -81,8 +81,12 @@ class SubscriptionTypesFormFactory
         $form->addText('code', 'subscriptions.data.subscription_types.fields.code')
             ->setRequired()
             ->setHtmlAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.code')
-            ->addRule(function (TextInput $control) {
-                return $this->subscriptionTypesRepository->findByCode($control->getValue()) === null;
+            ->addRule(function (TextInput $control) use (&$subscriptionType) {
+                $newValue = $control->getValue();
+                if ($subscriptionType && $newValue === $subscriptionType->code) {
+                    return true;
+                }
+                return $this->subscriptionTypesRepository->findByCode($newValue) === null;
             }, 'subscriptions.admin.subscription_types.form.validation.code_duplicate');
 
         $form->addText('user_label', 'subscriptions.data.subscription_types.fields.user_label')
