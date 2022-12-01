@@ -39,9 +39,9 @@ class SubscriptionTypeItemsRepository extends Repository
         ]);
     }
 
-    public function update(ActiveRow &$row, $data)
+    public function update(ActiveRow &$row, $data, bool $force = false)
     {
-        if (!($this->canBeUpdated($row))) {
+        if (!$force && !$this->canBeUpdated($row)) {
             throw new Exception('Subscription type item ' . $row->id . ' cannot be updated');
         }
 
