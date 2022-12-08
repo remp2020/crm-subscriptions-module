@@ -9,6 +9,7 @@ use Exception;
 use Nette\Caching\Storage;
 use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
+use Nette\Database\Table\GroupedSelection;
 use Nette\Utils\DateTime;
 
 class SubscriptionTypeItemsRepository extends Repository
@@ -49,19 +50,35 @@ class SubscriptionTypeItemsRepository extends Repository
         return parent::update($row, $data);
     }
 
-    final public function exists(ActiveRow $subscriptionType, string $name)
+    final public function exists(ActiveRow $subscriptionType, string $name): int
     {
-        return $this->getTable()->where(['subscription_type_id' => $subscriptionType->id, 'name' => $name])->count('*');
+        return $this->getItemsForSubscriptionType($subscriptionType)
+            ->where('name', $name)
+            ->count('*');
     }
 
     final public function subscriptionTypeItems(ActiveRow $subscriptionType)
     {
-        return $this->getTable()->where(['subscription_type_id' => $subscriptionType->id])->order('sorting ASC');
+        return $this->getItemsForSubscriptionType($subscriptionType)->order('sorting ASC');
+    }
+
+    final public function softDelete(ActiveRow $subscriptionTypeItem): bool
+    {
+        return $this->update($subscriptionTypeItem, [
+            'deleted_at' => new DateTime(),
+            'updated_at' => new DateTime(),
+        ]);
+    }
+
+    final public function getItemsForSubscriptionType(ActiveRow $subscriptionType): GroupedSelection
+    {
+        return $subscriptionType->related('subscription_type_items')
+            ->where('deleted_at', null);
     }
 
     private function getNextSorting(ActiveRow $subscriptionType)
     {
-        $item = $this->getTable()->where(['subscription_type_id' => $subscriptionType->id])->order('sorting DESC')->limit(1)->fetch();
+        $item = $this->getItemsForSubscriptionType($subscriptionType)->order('sorting DESC')->limit(1)->fetch();
         if (!$item) {
             return 100;
         }

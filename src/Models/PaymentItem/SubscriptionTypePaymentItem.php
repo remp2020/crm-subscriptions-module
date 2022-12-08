@@ -16,13 +16,16 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
 
     private $subscriptionTypeId;
 
+    private $subscriptionTypeItemId;
+
     public function __construct(
         int $subscriptionTypeId,
         string $name,
         float $price,
         int $vat,
         int $count = 1,
-        array $meta = []
+        array $meta = [],
+        ?int $subscriptionTypeItemId = null
     ) {
         $this->subscriptionTypeId = $subscriptionTypeId;
         $this->name = $name;
@@ -30,6 +33,7 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
         $this->vat = $vat;
         $this->count = $count;
         $this->meta = $meta;
+        $this->subscriptionTypeItemId = $subscriptionTypeItemId;
     }
 
     /**
@@ -40,7 +44,7 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
     public static function fromSubscriptionType(ActiveRow $subscriptionType, int $count = 1): array
     {
         $rows = [];
-        foreach ($subscriptionType->related('subscription_type_items') as $item) {
+        foreach ($subscriptionType->related('subscription_type_items')->where('deleted_at', null) as $item) {
             $rows[] = static::fromSubscriptionTypeItem($item, $count);
         }
         return $rows;
@@ -53,17 +57,14 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
      */
     public static function fromSubscriptionTypeItem(ActiveRow $subscriptionTypeItem, int $count = 1)
     {
-        $metas = ['subscription_type_item_id' => $subscriptionTypeItem->id];
-        foreach ($subscriptionTypeItem->related('subscription_type_item_meta') as $item) {
-            $metas[$item->key] = $item->value;
-        }
         return new SubscriptionTypePaymentItem(
             $subscriptionTypeItem->subscription_type_id,
             $subscriptionTypeItem->name,
             $subscriptionTypeItem->amount,
             $subscriptionTypeItem->vat,
             $count,
-            $metas
+            $subscriptionTypeItem->related('subscription_type_item_meta')->fetchPairs('key', 'value'),
+            $subscriptionTypeItem->id
         );
     }
 
@@ -82,7 +83,9 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
             $paymentItem->name,
             $paymentItem->amount,
             $paymentItem->vat,
-            $paymentItem->count
+            $paymentItem->count,
+            [],
+            $paymentItem->subscription_type_item_id
         );
     }
 
@@ -90,6 +93,7 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
     {
         return [
             'subscription_type_id' => $this->subscriptionTypeId,
+            'subscription_type_item_id' => $this->subscriptionTypeItemId,
         ];
     }
 

@@ -39,7 +39,10 @@ class SubscriptionTypeItemMetaRepository extends Repository
 
     final public function subscriptionTypeItemsHaveMeta(ActiveRow $subscriptionType): bool
     {
-        $subscriptionTypeItemIds = $subscriptionType->related('subscription_type_items')->fetchPairs(null, 'id');
+        $subscriptionTypeItemIds = $subscriptionType->related('subscription_type_items')
+            ->where('deleted_at', null)
+            ->fetchPairs(null, 'id');
+
         return $this->getTable()->where('subscription_type_item_id', $subscriptionTypeItemIds)->count('*') > 0;
     }
 }

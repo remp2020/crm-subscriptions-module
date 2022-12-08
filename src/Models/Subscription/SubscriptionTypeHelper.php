@@ -3,21 +3,18 @@
 namespace Crm\SubscriptionsModule\Subscription;
 
 use Crm\ApplicationModule\Helpers\PriceHelper;
+use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Nette\Database\Table\ActiveRow;
 
 class SubscriptionTypeHelper
 {
-    private $priceHelper;
-
-    private $subscriptionsRepository;
 
     public function __construct(
-        PriceHelper $priceHelper,
-        SubscriptionsRepository $subscriptionsRepository
+        private PriceHelper $priceHelper,
+        private SubscriptionsRepository $subscriptionsRepository,
+        private SubscriptionTypeItemsRepository $subscriptionTypeItemsRepository
     ) {
-        $this->priceHelper = $priceHelper;
-        $this->subscriptionsRepository = $subscriptionsRepository;
     }
 
     public function getPairs($subscriptionTypes, $allowHtml = false): array
@@ -44,12 +41,13 @@ class SubscriptionTypeHelper
                 'price' => $st->price,
                 'items' => [],
             ];
-            foreach ($st->related('subscription_type_items') as $item) {
+            foreach ($this->subscriptionTypeItemsRepository->getItemsForSubscriptionType($st) as $item) {
                 $subscriptionPairs[$st->id]['items'][] = [
+                    'subscription_type_item_id' => $item->id,
                     'name' => $item->name,
                     'amount' => $item->amount,
                     'vat' => $item->vat,
-                    'meta' => array_merge($item->related('subscription_type_item_meta')->fetchPairs('key', 'value'), ['subscription_type_item_id' => $item->id])
+                    'meta' => $item->related('subscription_type_item_meta')->fetchPairs('key', 'value')
                 ];
             }
         }

@@ -142,7 +142,7 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
     {
         $item = $this->subscriptionTypeItemsRepository->find($itemId);
         $subscriptionTypeId = $item->subscription_type_id;
-        $this->subscriptionTypeItemsRepository->delete($item);
+        $this->subscriptionTypeItemsRepository->softDelete($item);
         $this->flashMessage($this->translator->translate('subscriptions.admin.subscription_type.messages.subscription_type_item_deleted'));
         if ($this->isAjax()) {
             $this->redrawControl('subscriptionTypeItemsSnippet');
