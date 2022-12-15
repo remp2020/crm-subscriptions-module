@@ -9,25 +9,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class TestSeeder implements ISeeder
 {
-    private $subscriptionTypesRepository;
-
-    private $subscriptionTypeBuilder;
+    public const SUBSCRIPTION_TYPE_WEB_MONTH = 'test_web_month';
+    public const SUBSCRIPTION_TYPE_WEB_YEAR = 'test_web_year';
 
     public function __construct(
-        SubscriptionTypesRepository $subscriptionTypesRepository,
-        SubscriptionTypeBuilder $subscriptionTypeBuilder
+        private SubscriptionTypesRepository $subscriptionTypesRepository,
+        private SubscriptionTypeBuilder $subscriptionTypeBuilder
     ) {
-        $this->subscriptionTypesRepository = $subscriptionTypesRepository;
-        $this->subscriptionTypeBuilder = $subscriptionTypeBuilder;
     }
 
     public function seed(OutputInterface $output)
     {
-        $subscriptionTypeCode = 'upgrade_tests_yearly';
-        if (!$this->subscriptionTypesRepository->exists($subscriptionTypeCode)) {
+        if (!$this->subscriptionTypesRepository->exists(self::SUBSCRIPTION_TYPE_WEB_YEAR)) {
             $subscriptionType = $this->subscriptionTypeBuilder->createNew()
                 ->setNameAndUserLabel('Upgrade tests yearly')
-                ->setCode($subscriptionTypeCode)
+                ->setCode(self::SUBSCRIPTION_TYPE_WEB_YEAR)
                 ->setPrice(123.45)
                 ->setLength(365)
                 ->setSorting(20)
@@ -35,16 +31,15 @@ class TestSeeder implements ISeeder
                 ->setVisible(true)
                 ->setContentAccessOption('web')
                 ->save();
-            $output->writeln("  <comment>* subscription type <info>{$subscriptionTypeCode}</info> created</comment>");
+            $output->writeln("  <comment>* subscription type <info> " . self::SUBSCRIPTION_TYPE_WEB_YEAR ." </info> created</comment>");
         } else {
-            $output->writeln("  * subscription type <info>{$subscriptionTypeCode}</info> exists");
+            $output->writeln("  * subscription type <info>" . self::SUBSCRIPTION_TYPE_WEB_YEAR . "</info> exists");
         }
 
-        $subscriptionTypeCode = 'upgrade_tests_monthly';
-        if (!$this->subscriptionTypesRepository->exists($subscriptionTypeCode)) {
+        if (!$this->subscriptionTypesRepository->exists(self::SUBSCRIPTION_TYPE_WEB_MONTH)) {
             $subscriptionType = $this->subscriptionTypeBuilder->createNew()
                 ->setNameAndUserLabel('Upgrade tests yearly')
-                ->setCode($subscriptionTypeCode)
+                ->setCode(self::SUBSCRIPTION_TYPE_WEB_MONTH)
                 ->setPrice(12.34)
                 ->setLength(31)
                 ->setSorting(20)
@@ -52,9 +47,9 @@ class TestSeeder implements ISeeder
                 ->setVisible(true)
                 ->setContentAccessOption('web')
                 ->save();
-            $output->writeln("  <comment>* subscription type <info>{$subscriptionTypeCode}</info> created</comment>");
+            $output->writeln("  <comment>* subscription type <info>" . self::SUBSCRIPTION_TYPE_WEB_MONTH . "</info> created</comment>");
         } else {
-            $output->writeln("  * subscription type <info>{$subscriptionTypeCode}</info> exists");
+            $output->writeln("  * subscription type <info>" . self::SUBSCRIPTION_TYPE_WEB_MONTH . "</info> exists");
         }
     }
 }

@@ -20,17 +20,10 @@ use Nette\Database\Table\ActiveRow;
 
 class SubscriptionShortenedHandlerTest extends DatabaseTestCase
 {
-    /** @var SubscriptionsRepository */
-    private $subscriptionsRepository;
-
-    /** @var SubscriptionTypesRepository */
-    private $subscriptionTypesRepository;
-
-    /** @var UserManager */
-    private $userManager;
-
-    /** @var SubscriptionShortenedHandler */
-    private $subscriptionShortenedHandler;
+    private SubscriptionsRepository $subscriptionsRepository;
+    private SubscriptionTypesRepository $subscriptionTypesRepository;
+    private UserManager $userManager;
+    private SubscriptionShortenedHandler $subscriptionShortenedHandler;
 
     protected function requiredRepositories(): array
     {
@@ -66,10 +59,10 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
     public function testNoAction()
     {
         $user = $this->loadUser('admin@example.com');
-        $baseSubscription = $this->createSubscription($user, 'upgrade_tests_yearly', new \DateTime('2019-01-01'));
+        $baseSubscription = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, new \DateTime('2019-01-01'));
 
         $endTime = new \DateTime('2019-07-01');
-        $upgradedSubscription = $this->createSubscription($user, 'upgrade_tests_monthly', $endTime);
+        $upgradedSubscription = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_MONTH, $endTime);
         $this->subscriptionsRepository->update($baseSubscription, [
             'end_time' => $endTime,
         ]);
@@ -91,11 +84,11 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
     public function testShortFirstHandleMoveOfSecond()
     {
         $user = $this->loadUser('admin@example.com');
-        $subscription1 = $this->createSubscription($user, 'upgrade_tests_yearly', new \DateTime('2019-01-01'));
-        $subscription2 = $this->createSubscription($user, 'upgrade_tests_yearly', $subscription1->end_time);
+        $subscription1 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, new \DateTime('2019-01-01'));
+        $subscription2 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, $subscription1->end_time);
 
         $endTime = new \DateTime('2019-07-01');
-        $upgradedSubscription = $this->createSubscription($user, 'upgrade_tests_monthly', $endTime);
+        $upgradedSubscription = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_MONTH, $endTime);
         $this->subscriptionsRepository->update($subscription1, [
             'end_time' => $endTime,
         ]);
@@ -119,13 +112,13 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
     public function testMutlipleUpgradedSubscriptions()
     {
         $user = $this->loadUser('admin@example.com');
-        $subscription1 = $this->createSubscription($user, 'upgrade_tests_yearly', new \DateTime('2019-01-01'));
-        $subscription2 = $this->createSubscription($user, 'upgrade_tests_yearly', $subscription1->end_time);
+        $subscription1 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, new \DateTime('2019-01-01'));
+        $subscription2 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, $subscription1->end_time);
 
         $endTime = new \DateTime('2019-07-01');
 
-        $upgradedSubscription1= $this->createSubscription($user, 'upgrade_tests_monthly', $endTime);
-        $upgradedSubscription2= $this->createSubscription($user, 'upgrade_tests_monthly', $upgradedSubscription1->end_time);
+        $upgradedSubscription1= $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_MONTH, $endTime);
+        $upgradedSubscription2= $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_MONTH, $upgradedSubscription1->end_time);
 
         $this->subscriptionsRepository->update($subscription1, [
             'end_time' => $endTime,
@@ -153,12 +146,12 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
     public function testShortFirstHandleMoveOfSecondAndThird()
     {
         $user = $this->loadUser('admin@example.com');
-        $subscription1 = $this->createSubscription($user, 'upgrade_tests_yearly', new \DateTime('2019-01-01'));
-        $subscription2 = $this->createSubscription($user, 'upgrade_tests_yearly', $subscription1->end_time);
-        $subscription3 = $this->createSubscription($user, 'upgrade_tests_yearly', $subscription2->end_time);
+        $subscription1 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, new \DateTime('2019-01-01'));
+        $subscription2 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, $subscription1->end_time);
+        $subscription3 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, $subscription2->end_time);
 
         $endTime = new \DateTime('2019-07-01');
-        $upgradedSubscription = $this->createSubscription($user, 'upgrade_tests_monthly', $endTime);
+        $upgradedSubscription = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_MONTH, $endTime);
         $this->subscriptionsRepository->update($subscription1, [
             'end_time' => $endTime,
         ]);
@@ -184,12 +177,12 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
     public function testIgnoreOfParallelSubscription()
     {
         $user = $this->loadUser('admin@example.com');
-        $subscription1 = $this->createSubscription($user, 'upgrade_tests_yearly', new \DateTime('2019-01-01'));
-        $parallelSubscription = $this->createSubscription($user, 'upgrade_tests_yearly', new \DateTime('2019-06-15'), new \DateTime('2019-07-15'));
-        $subscription2 = $this->createSubscription($user, 'upgrade_tests_yearly', $subscription1->end_time);
+        $subscription1 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, new \DateTime('2019-01-01'));
+        $parallelSubscription = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, new \DateTime('2019-06-15'), new \DateTime('2019-07-15'));
+        $subscription2 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, $subscription1->end_time);
 
         $endTime = new \DateTime('2019-07-01');
-        $upgradedSubscription = $this->createSubscription($user, 'upgrade_tests_monthly', $endTime);
+        $upgradedSubscription = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_MONTH, $endTime);
         $this->subscriptionsRepository->update($subscription1, [
             'end_time' => $endTime,
         ]);
@@ -217,11 +210,11 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
         $user1 = $this->loadUser('admin@example.com');
         $user2 = $this->loadUser('user@example.com');
 
-        $subscription1 = $this->createSubscription($user1, 'upgrade_tests_yearly', new \DateTime('2019-01-01'));
-        $subscription2 = $this->createSubscription($user2, 'upgrade_tests_yearly', $subscription1->end_time);
+        $subscription1 = $this->createSubscription($user1, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, new \DateTime('2019-01-01'));
+        $subscription2 = $this->createSubscription($user2, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, $subscription1->end_time);
 
         $endTime = new \DateTime('2019-07-01');
-        $upgradedSubscription = $this->createSubscription($user1, 'upgrade_tests_monthly', $endTime);
+        $upgradedSubscription = $this->createSubscription($user1, TestSeeder::SUBSCRIPTION_TYPE_WEB_MONTH, $endTime);
         $this->subscriptionsRepository->update($subscription1, [
             'end_time' => $endTime,
         ]);
@@ -251,7 +244,7 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
     {
         $user = $this->loadUser('admin@example.com');
 
-        $subscription1 = $this->createSubscription($user, 'upgrade_tests_yearly', new \DateTime('2019-01-01'));
+        $subscription1 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, new \DateTime('2019-01-01'));
         $originalEndTime = $subscription1->end_time;
 
         $endTime = new \DateTime('2019-07-01');
@@ -275,8 +268,8 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
     {
         $user = $this->loadUser('admin@example.com');
 
-        $subscription1 = $this->createSubscription($user, 'upgrade_tests_yearly', new \DateTime('2019-01-01'));
-        $subscription2 = $this->createSubscription($user, 'upgrade_tests_yearly', $subscription1->end_time);
+        $subscription1 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, new \DateTime('2019-01-01'));
+        $subscription2 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, $subscription1->end_time);
 
         $originalEndTime = $subscription1->end_time;
 
@@ -303,10 +296,10 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
     {
         $user = $this->loadUser('admin@example.com');
 
-        $subscription1 = $this->createSubscription($user, 'upgrade_tests_yearly', new \DateTime('2021-01-01'));
-        $subscription2 = $this->createSubscription($user, 'upgrade_tests_yearly', $subscription1->end_time);
-        $subscription3 = $this->createSubscription($user, 'upgrade_tests_monthly', $subscription2->end_time);
-        $subscription4 = $this->createSubscription($user, 'upgrade_tests_monthly', $subscription3->end_time);
+        $subscription1 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, new \DateTime('2021-01-01'));
+        $subscription2 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, $subscription1->end_time);
+        $subscription3 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_MONTH, $subscription2->end_time);
+        $subscription4 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_MONTH, $subscription3->end_time);
 
         $originalEndTime = $subscription2->end_time;
 
@@ -337,14 +330,14 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
     {
         $user = $this->loadUser('admin@example.com');
 
-        $subscription1 = $this->createSubscription($user, 'upgrade_tests_monthly', new \DateTime('2021-01-01'), new \DateTime('2021-02-01'));
-        $subscription2 = $this->createSubscription($user, 'upgrade_tests_monthly', new \DateTime('2021-02-01'), new \DateTime('2021-03-01'));
+        $subscription1 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_MONTH, new \DateTime('2021-01-01'), new \DateTime('2021-02-01'));
+        $subscription2 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_MONTH, new \DateTime('2021-02-01'), new \DateTime('2021-03-01'));
 
         // simulate upgrade before end of subscription 1
         $this->subscriptionsRepository->update($subscription1, [
             'end_time' => new \DateTime('2021-01-31'),
         ]);
-        $subscription3 = $this->createSubscription($user, 'upgrade_tests_monthly', new \DateTime('2021-01-31'), new \DateTime('2021-02-01'));
+        $subscription3 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_MONTH, new \DateTime('2021-01-31'), new \DateTime('2021-02-01'));
 
         // emit the event, that the original subscription was shortened
         $this->subscriptionShortenedHandler->handle(
@@ -369,7 +362,7 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
     {
         $user = $this->loadUser('admin@example.com');
 
-        $subscription1 = $this->createSubscription($user, 'upgrade_tests_yearly', new \DateTime('2021-01-01'), new \DateTime('2021-01-01'));
+        $subscription1 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, new \DateTime('2021-01-01'), new \DateTime('2021-01-01'));
         $originalEndTime = $subscription1->end_time;
         $originalModifiedTime = $subscription1->modified_at;
 
