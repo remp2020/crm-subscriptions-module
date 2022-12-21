@@ -255,7 +255,7 @@ admin:
             tooltip: Length of subscriptions per user
 
     address:
-        cant_delete: 'This address is used in subscription: %subscriptions%|This address is used in subscriptions: %subscriptions%'
+        cant_delete: '{1}This address is used in subscription: %subscriptions%|[2,Inf]This address is used in subscriptions: %subscriptions%'
 
     scenarios:
         subscription_type_is_default:

@@ -248,7 +248,7 @@ admin:
             tooltip: Délka předplatného na uživatele
 
     address:
-        cant_delete: 'Tato adresa se používá při předplatném: %subscriptions%|Tato adresa se používá při předplatných: %subscriptions%'
+        cant_delete: '{1}Tato adresa se používá při předplatném: %subscriptions%|[2,Inf]Tato adresa se používá při předplatných: %subscriptions%'
 
     scenarios:
         subscription_type_is_default:
