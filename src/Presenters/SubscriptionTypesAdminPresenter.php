@@ -70,7 +70,7 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
 
     private function filteredSubscriptionTypes()
     {
-        return $this->subscriptionTypesRepository->all($this->text)->order('sorting ASC');
+        return $this->subscriptionTypesRepository->all()->order('sorting ASC');
     }
 
     public function createComponentAdminFilterForm()
@@ -127,7 +127,7 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
 
     protected function createComponentSubscriptionTypeItemsForm()
     {
-        $form = $this->subscriptionTypeItemsFormFactory->create($this->params['id']);
+        $form = $this->subscriptionTypeItemsFormFactory->create();
         $this->subscriptionTypeItemsFormFactory->onSave = function ($subscriptionTypeItem) {
             $this->flashMessage($this->translator->translate('subscriptions.admin.subscription_types.messages.subscription_type_item_created'));
             $this->redirect('SubscriptionTypesAdmin:Show', $subscriptionTypeItem->subscription_type_id);

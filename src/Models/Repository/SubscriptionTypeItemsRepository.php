@@ -19,8 +19,8 @@ class SubscriptionTypeItemsRepository extends Repository
 
     public function __construct(
         Explorer $database,
+        DataProviderManager $dataProviderManager,
         Storage $cacheStorage = null,
-        DataProviderManager $dataProviderManager
     ) {
         parent::__construct($database, $cacheStorage);
         $this->dataProviderManager = $dataProviderManager;
