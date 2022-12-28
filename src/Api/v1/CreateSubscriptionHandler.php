@@ -4,8 +4,6 @@ namespace Crm\SubscriptionsModule\Api\v1;
 
 use Crm\ApiModule\Api\ApiHandler;
 use Crm\ApiModule\Api\IdempotentHandlerInterface;
-use Crm\ApiModule\Params\InputParam;
-use Crm\ApiModule\Params\ParamsProcessor;
 use Crm\SubscriptionsModule\Repository\SubscriptionMetaRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
@@ -13,49 +11,36 @@ use Crm\UsersModule\Auth\UserManager;
 use Nette\Database\Table\ActiveRow;
 use Nette\Http\Response;
 use Nette\Utils\DateTime;
+use Tomaj\NetteApi\Params\PostInputParam;
 use Tomaj\NetteApi\Response\JsonApiResponse;
 use Tomaj\NetteApi\Response\ResponseInterface;
 
 class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerInterface
 {
-    private $subscriptionsRepository;
-
-    private $subscriptionTypesRepository;
-
-    private $subscriptionMetaRepository;
-
-    private $userManager;
-
     public function __construct(
-        SubscriptionTypesRepository $subscriptionTypesRepository,
-        SubscriptionsRepository $subscriptionsRepository,
-        SubscriptionMetaRepository $subscriptionMetaRepository,
-        UserManager $userManager
+        private SubscriptionTypesRepository $subscriptionTypesRepository,
+        private SubscriptionsRepository $subscriptionsRepository,
+        private SubscriptionMetaRepository $subscriptionMetaRepository,
+        private UserManager $userManager
     ) {
-        $this->subscriptionTypesRepository = $subscriptionTypesRepository;
-        $this->subscriptionsRepository = $subscriptionsRepository;
-        $this->subscriptionMetaRepository = $subscriptionMetaRepository;
-        $this->userManager = $userManager;
+        parent::__construct();
     }
 
     public function params(): array
     {
         return [
-            new InputParam(InputParam::TYPE_POST, 'email', InputParam::REQUIRED),
-            new InputParam(InputParam::TYPE_POST, 'subscription_type_id', InputParam::REQUIRED),
-            new InputParam(InputParam::TYPE_POST, 'is_paid', InputParam::REQUIRED),
-            new InputParam(InputParam::TYPE_POST, 'start_time', InputParam::OPTIONAL),
-            new InputParam(InputParam::TYPE_POST, 'end_time', InputParam::OPTIONAL),
-            new InputParam(InputParam::TYPE_POST, 'type', InputParam::OPTIONAL),
-            new InputParam(InputParam::TYPE_POST, 'note', InputParam::OPTIONAL),
+            (new PostInputParam('email'))->setRequired(),
+            (new PostInputParam('subscription_type_id'))->setRequired(),
+            (new PostInputParam('is_paid'))->setRequired(),
+            (new PostInputParam('start_time')),
+            (new PostInputParam('end_time')),
+            (new PostInputParam('type')),
+            (new PostInputParam('note')),
         ];
     }
 
     public function handle(array $params): ResponseInterface
     {
-        $paramsProcessor = new ParamsProcessor($this->params());
-        $params = $paramsProcessor->getValues();
-
         $subscriptionType = $this->subscriptionTypesRepository->find($params['subscription_type_id']);
         if (!$subscriptionType) {
             $response = new JsonApiResponse(Response::S404_NOT_FOUND, ['status' => 'error', 'message' => 'Subscription type not found']);
