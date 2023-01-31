@@ -70,7 +70,10 @@ class StopSubscriptionWidget extends BaseLazyWidget
             return;
         }
 
-        $this->stopSubscriptionHandler->stopSubscription($subscription);
+        $this->stopSubscriptionHandler->stopSubscription(
+            subscription: $subscription,
+            expiredByAdmin: true,
+        );
 
         $this->getPresenter()->flashMessage($this->translator->translate('subscriptions.admin.stop_subscription_widget.success', ['id' => $subscriptionId]));
         $this->redirect('this');

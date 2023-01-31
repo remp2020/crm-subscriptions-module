@@ -96,7 +96,10 @@ class SubscriptionsUserDataProvider implements UserDataProviderInterface
             ->where('end_time > ?', $now);
 
         foreach ($subscriptions as $subscription) {
-            $this->stopSubscriptionHandler->stopSubscription($subscription);
+            $this->stopSubscriptionHandler->stopSubscription(
+                subscription: $subscription,
+                expiredByAdmin: true,
+            );
         }
     }
 

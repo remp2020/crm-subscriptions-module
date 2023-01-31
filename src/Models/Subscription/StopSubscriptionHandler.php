@@ -29,7 +29,14 @@ class StopSubscriptionHandler
         $this->emitter = $emitter;
     }
 
-    public function stopSubscription(ActiveRow $subscription): void
+    /**
+     * @param ActiveRow $subscription Subscription to expire.
+     * @param bool|null $expiredByAdmin Flag whether the subscription was expired by admin or not. If the information
+     * cannot be reliably provided, feel free to pass null.
+     * @return void
+     * @throws \Exception
+     */
+    public function stopSubscription(ActiveRow $subscription, ?bool $expiredByAdmin = null): void
     {
         $originalEndTime = clone $subscription->end_time;
         $newEndTime = new DateTime();
@@ -38,15 +45,18 @@ class StopSubscriptionHandler
             $newEndTime = $subscription->start_time;
         }
 
-        $note = '[Admin stop] Original end_time ' . $originalEndTime;
-        if (!empty($subscription->note)) {
-            $note = $subscription->note . "\n" . $note;
+        $note = $subscription->note;
+        if ($expiredByAdmin) {
+            $note = '[Admin stop] Original end_time ' . $originalEndTime;
+            if (!empty($subscription->note)) {
+                $note = $subscription->note . "\n" . $note;
+            }
+            $this->subscriptionMetaRepository->setMeta($subscription, self::META_KEY_EXPIRED_BY_ADMIN, $expiredByAdmin);
         }
 
-        $this->subscriptionMetaRepository->setMeta($subscription, self::META_KEY_EXPIRED_BY_ADMIN, true);
         $this->subscriptionsRepository->update($subscription, [
             'end_time' => $newEndTime,
-            'note' => $note
+            'note' => $note,
         ]);
 
         $this->emitter->emit(new SubscriptionShortenedEvent($subscription, $originalEndTime));
