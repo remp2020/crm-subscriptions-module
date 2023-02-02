@@ -274,7 +274,9 @@ class SubscriptionTypesFormFactory
 
             $this->subscriptionTypesRepository->update($subscriptionType, $values);
 
-            $this->subscriptionTypeItemsRepository->subscriptionTypeItems($subscriptionType)->delete();
+            foreach ($this->subscriptionTypeItemsRepository->subscriptionTypeItems($subscriptionType) as $subscriptionTypeItem) {
+                $this->subscriptionTypeItemsRepository->softDelete($subscriptionTypeItem);
+            }
             foreach ($items as $item) {
                 $this->subscriptionTypeItemsRepository->add($subscriptionType, $item['name'], $item['amount'], $item['vat']);
             }
