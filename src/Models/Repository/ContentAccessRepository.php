@@ -43,6 +43,16 @@ class ContentAccessRepository extends Repository
             ->count('*') > 0;
     }
 
+    final public function hasOneOfAccess(ActiveRow $subscriptionType, array $names)
+    {
+        return $this->getDatabase()->table('subscription_type_content_access')
+                ->where([
+                    'subscription_type_id' => $subscriptionType->id,
+                    'content_access.name IN (?)' => $names
+                ])
+                ->count('*') > 0;
+    }
+
     final public function allForSubscriptionType(ActiveRow $subscriptionType): Selection
     {
         return $this->getTable()
