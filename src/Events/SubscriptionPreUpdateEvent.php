@@ -8,20 +8,14 @@ use Nette\Database\Table\ActiveRow;
 
 class SubscriptionPreUpdateEvent extends AbstractEvent implements SubscriptionEventInterface
 {
-    private $subscription;
-
-    private $values;
-
-    private $form;
-
-    public function __construct(ActiveRow $subscription, Form &$form, $values)
-    {
-        $this->subscription = $subscription;
-        $this->values = $values;
-        $this->form = $form;
+    public function __construct(
+        private ActiveRow $subscription,
+        private Form &$form,
+        private $values
+    ) {
     }
 
-    public function getSubscription()
+    public function getSubscription(): ActiveRow
     {
         return $this->subscription;
     }
