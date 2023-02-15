@@ -5,7 +5,7 @@ namespace Crm\SubscriptionsModule\Events;
 use League\Event\AbstractEvent;
 use Nette\Database\Table\ActiveRow;
 
-class SubscriptionMovedEvent extends AbstractEvent
+class SubscriptionMovedEvent extends AbstractEvent implements SubscriptionEventInterface
 {
     private $subscription;
 

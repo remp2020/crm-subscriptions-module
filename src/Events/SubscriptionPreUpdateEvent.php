@@ -6,7 +6,7 @@ use League\Event\AbstractEvent;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
 
-class SubscriptionPreUpdateEvent extends AbstractEvent
+class SubscriptionPreUpdateEvent extends AbstractEvent implements SubscriptionEventInterface
 {
     private $subscription;
 

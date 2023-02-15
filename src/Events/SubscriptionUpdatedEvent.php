@@ -2,7 +2,6 @@
 
 namespace Crm\SubscriptionsModule\Events;
 
-use Crm\UsersModule\User\ISubscriptionGetter;
 use Crm\UsersModule\User\IUserGetter;
 use League\Event\AbstractEvent;
 use Nette\Database\Table\ActiveRow;
@@ -12,7 +11,7 @@ use Nette\Database\Table\ActiveRow;
  * Class SubscriptionUpdatedEvent
  * @package Crm\SubscriptionsModule\Events
  */
-class SubscriptionUpdatedEvent extends AbstractEvent implements IUserGetter, ISubscriptionGetter
+class SubscriptionUpdatedEvent extends AbstractEvent implements IUserGetter, SubscriptionEventInterface
 {
     /** @var ActiveRow  */
     private $subscription;
