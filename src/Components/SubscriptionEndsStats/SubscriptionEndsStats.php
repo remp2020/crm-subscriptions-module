@@ -5,7 +5,6 @@ namespace Crm\SubscriptionsModule\Components;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Nette\Application\UI;
-use Nette\Localization\Translator;
 use Nette\Utils\DateTime;
 
 /**
