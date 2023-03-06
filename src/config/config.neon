@@ -128,7 +128,10 @@ services:
 	lengthMethodFactory:
 		factory: Crm\SubscriptionsModule\Length\LengthMethodFactory
 		setup:
-			- registerExtension('fix_days', Crm\SubscriptionsModule\Length\FixDaysLengthMethod())
+			- registerExtension(
+				Crm\SubscriptionsModule\Length\FixDaysLengthMethod::METHOD_CODE,
+				Crm\SubscriptionsModule\Length\FixDaysLengthMethod()
+			)
 
 	filterLoader:
 		setup:

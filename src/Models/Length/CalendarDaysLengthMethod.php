@@ -7,6 +7,8 @@ use Nette\Database\Table\ActiveRow;
 
 class CalendarDaysLengthMethod implements LengthMethodInterface
 {
+    public const METHOD_CODE = 'calendar_days';
+
     public function getEndTime(DateTime $startTime, ActiveRow $subscriptionType, bool $isExtending): Length
     {
         $length = intval(date('t', $startTime->getTimestamp()));

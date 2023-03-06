@@ -3,6 +3,8 @@
 namespace Crm\SubscriptionsModule\Seeders;
 
 use Crm\ApplicationModule\Seeders\ISeeder;
+use Crm\SubscriptionsModule\Length\CalendarDaysLengthMethod;
+use Crm\SubscriptionsModule\Length\FixDaysLengthMethod;
 use Crm\SubscriptionsModule\Repository\SubscriptionLengthMethodsRepository;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -17,7 +19,7 @@ class SubscriptionLengthMethodSeeder implements ISeeder
 
     public function seed(OutputInterface $output)
     {
-        $method = 'fix_days';
+        $method = FixDaysLengthMethod::METHOD_CODE;
         if (!$this->subscriptionLengthMethodsRepository->exists($method)) {
             $this->subscriptionLengthMethodsRepository->add(
                 $method,
@@ -30,7 +32,7 @@ class SubscriptionLengthMethodSeeder implements ISeeder
             $output->writeln("  * subscription extension method <info>{$method}</info> exists");
         }
 
-        $method = 'calendar_days';
+        $method = CalendarDaysLengthMethod::METHOD_CODE;
         if (!$this->subscriptionLengthMethodsRepository->exists($method)) {
             $this->subscriptionLengthMethodsRepository->add(
                 $method,

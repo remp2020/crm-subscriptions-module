@@ -4,6 +4,7 @@ namespace Crm\SubscriptionsModule\Builder;
 
 use Crm\ApplicationModule\Builder\Builder;
 use Crm\ApplicationModule\Config\ApplicationConfig;
+use Crm\SubscriptionsModule\Length\FixDaysLengthMethod;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemMetaRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
@@ -76,7 +77,7 @@ class SubscriptionTypeBuilder extends Builder
         $this->set('created_at', new \DateTime());
         $this->set('modified_at', new \DateTime());
         $this->set('disable_notifications', false);
-        $this->set('length_method_id', 'fix_days');
+        $this->set('length_method_id', FixDaysLengthMethod::METHOD_CODE);
     }
 
     public function setName($name)

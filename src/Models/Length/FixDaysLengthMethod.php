@@ -7,6 +7,8 @@ use Nette\Database\Table\ActiveRow;
 
 class FixDaysLengthMethod implements LengthMethodInterface
 {
+    public const METHOD_CODE = 'fix_days';
+
     public function getEndTime(DateTime $startTime, ActiveRow $subscriptionType, bool $isExtending = false): Length
     {
         $length = $subscriptionType->length;
