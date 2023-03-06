@@ -32,6 +32,6 @@ class SubscriptionAccessProvider implements ProviderInterface
         if (!$this->accesses) {
             $this->accesses = $this->contentAccessRepository->all()->fetchPairs(null, 'name');
         }
-        return in_array($access, $this->accesses);
+        return in_array($access, $this->accesses, true);
     }
 }

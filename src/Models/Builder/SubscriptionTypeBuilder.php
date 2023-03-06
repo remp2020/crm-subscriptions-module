@@ -262,7 +262,7 @@ class SubscriptionTypeBuilder extends Builder
 
         // content access legacy
         foreach ($contentAccess as $key => $_) {
-            if (in_array($key, ['web', 'print', 'club', 'mobile', 'print_friday', 'ad_free'])) {
+            if (in_array($key, ['web', 'print', 'club', 'mobile', 'print_friday', 'ad_free'], true)) {
                 $this->set($key, 1);
             }
         }

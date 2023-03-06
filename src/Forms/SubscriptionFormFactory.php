@@ -115,7 +115,7 @@ class SubscriptionFormFactory
         }
 
         $subscriptionTypeNames = $this->subscriptionsRepository->activeSubscriptionTypes()->fetchPairs('type', 'type');
-        if ($subscription && !in_array($subscription->type, $subscriptionTypeNames)) {
+        if ($subscription && !in_array($subscription->type, $subscriptionTypeNames, true)) {
             $subscriptionTypeNames[$subscription->type] = $subscription->type;
         }
         $form->addSelect('type', 'subscriptions.data.subscriptions.fields.type', $subscriptionTypeNames);

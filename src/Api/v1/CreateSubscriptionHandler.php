@@ -56,7 +56,7 @@ class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerI
         }
 
         $type = SubscriptionsRepository::TYPE_REGULAR;
-        if (isset($params['type']) && in_array($params['type'], $this->subscriptionsRepository->activeSubscriptionTypes()->fetchPairs('type', 'type'))) {
+        if (isset($params['type']) && in_array($params['type'], $this->subscriptionsRepository->activeSubscriptionTypes()->fetchPairs('type', 'type'), true)) {
             $type = $params['type'];
         }
 

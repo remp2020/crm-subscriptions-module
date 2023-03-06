@@ -196,7 +196,7 @@ class SubscriptionsGeneratorFormFactory
 
                 $stats[self::REGISTRATIONS] += 1;
 
-                if (!in_array(self::NEWLY_REGISTERED, $values->user_groups)) {
+                if (!in_array(self::NEWLY_REGISTERED, $values->user_groups, true)) {
                     $stats[self::SKIPPED] += 1;
                     // we don't want to create subscription for newly registered, halting here
                     continue;
@@ -225,12 +225,12 @@ class SubscriptionsGeneratorFormFactory
             // already registered
             $actualSubscription = $this->subscriptionsRepository->actualUserSubscription($user->id);
 
-            if ($actualSubscription && !in_array(self::ACTIVE, $values->user_groups)) {
+            if ($actualSubscription && !in_array(self::ACTIVE, $values->user_groups, true)) {
                 // we don't want to create subscription for active subscribers, halting here
                 $stats[self::SKIPPED] += 1;
                 continue;
             }
-            if (!$actualSubscription && !in_array(self::INACTIVE, $values->user_groups)) {
+            if (!$actualSubscription && !in_array(self::INACTIVE, $values->user_groups, true)) {
                 // we don't want to create subscription for inactive subscribers, halting here
                 $stats[self::SKIPPED] += 1;
                 continue;
