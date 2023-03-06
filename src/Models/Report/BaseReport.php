@@ -4,6 +4,7 @@ namespace Crm\SubscriptionsModule\Report;
 
 use Nette\Database\Explorer;
 use Nette\Localization\Translator;
+use Nette\Utils\Random;
 
 abstract class BaseReport implements ReportInterface
 {
@@ -19,7 +20,7 @@ abstract class BaseReport implements ReportInterface
     public function __construct($name, Translator $translator)
     {
         $this->name = $name;
-        $this->id = md5(time() . rand(1, 10000) . rand(1000, 1000) . 'hello');
+        $this->id = Random::generate(16);
         $this->translator = $translator;
     }
 
