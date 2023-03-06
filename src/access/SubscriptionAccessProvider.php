@@ -8,18 +8,12 @@ use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 
 class SubscriptionAccessProvider implements ProviderInterface
 {
-    private $subscriptionsRepository;
-
-    private $contentAccessRepository;
-
-    private $accesses = null;
+    private array $accesses;
 
     public function __construct(
-        SubscriptionsRepository $subscriptionsRepository,
-        ContentAccessRepository $contentAccessRepository
+        private SubscriptionsRepository $subscriptionsRepository,
+        private ContentAccessRepository $contentAccessRepository
     ) {
-        $this->subscriptionsRepository = $subscriptionsRepository;
-        $this->contentAccessRepository = $contentAccessRepository;
     }
 
     public function hasAccess($userId, $access)
@@ -29,7 +23,7 @@ class SubscriptionAccessProvider implements ProviderInterface
 
     public function available($access)
     {
-        if (!$this->accesses) {
+        if (!isset($this->accesses)) {
             $this->accesses = $this->contentAccessRepository->all()->fetchPairs(null, 'name');
         }
         return in_array($access, $this->accesses, true);

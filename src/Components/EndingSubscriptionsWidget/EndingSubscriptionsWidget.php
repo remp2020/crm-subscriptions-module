@@ -28,9 +28,6 @@ class EndingSubscriptionsWidget extends BaseLazyWidget
     {
         $widgets = $this->widgetManager->getWidgets('subscriptions.endinglist');
         foreach ($widgets as $sorting => $widget) {
-            if (!($widget instanceof IWidgetLegend)) {
-                throw new \Exception(sprintf("registered widget instance doesn't implement IWidgetLegend: %s", gettype($widget)));
-            }
             if (!$this->getComponent($widget->identifier())) {
                 $this->addComponent($widget, $widget->identifier());
             }

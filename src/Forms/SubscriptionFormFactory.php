@@ -104,6 +104,7 @@ class SubscriptionFormFactory
 
         if (!$subscription) {
             $subscriptionTypeId->addRule(function ($field, ActiveRow $user) {
+                /** @var ?ActiveRow $subscriptionType */
                 $subscriptionType = $this->subscriptionTypesRepository->find($field->value);
                 if (!empty($subscriptionType->limit_per_user) &&
                     $this->subscriptionsRepository->getCount($subscriptionType->id, $user->id) >= $subscriptionType->limit_per_user) {

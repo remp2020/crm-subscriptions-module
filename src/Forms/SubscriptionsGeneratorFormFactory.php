@@ -167,9 +167,7 @@ class SubscriptionsGeneratorFormFactory
             if (!$this->emailValidator->isValid($email)) {
                 $form['emails']->addError(new Message('subscriptions.admin.subscription_generator.errors.invalid_email', ['email' => $email]));
             }
-            if (!empty($email)) {
-                $emails[] = $email;
-            }
+            $emails[] = $email;
         }
 
         $payload = [
