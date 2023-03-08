@@ -44,7 +44,7 @@ class UsersSubscriptionsHandler extends ApiHandler
         $params = $paramsProcessor->getValues();
         $authorizedUsers = $authorization->getAuthorizedUsers();
 
-        $where = ['end_time >= ?' => new DateTime()];
+        $where = ['end_time >= ?' => new DateTime(), 'start_time <= ?' => new DateTime()];
         if (isset($params['show_finished']) && in_array($params['show_finished'], ['1', 'true'])) {
             $where = [];
         }
