@@ -289,6 +289,13 @@ admin:
 
     subscribers_with_missing_address_widget:
         title: Užívatelé bez vyplněné adresy
+        show_list: Zobrazit seznam
+        today: Dnes
+        week: Týden
+        month: Měsíc
+        user: Uživatel
+        variable_symbol: Variabilní symbol
+        created_at: Čas vytvoření předplatného
 
     actual_subscribers_stat_widget:
         title: Aktivní předplatitelé

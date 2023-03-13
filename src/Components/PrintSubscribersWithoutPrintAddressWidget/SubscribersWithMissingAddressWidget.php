@@ -4,9 +4,9 @@ namespace Crm\SubscriptionsModule\Components;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ApplicationModule\Widget\LazyWidgetManager;
+use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\UsersModule\Repository\AddressesRepository;
 use Crm\UsersModule\Repository\UserMetaRepository;
-use Crm\UsersModule\Repository\UsersRepository;
 
 /**
  * This widget fetches users with print subscription without print address
@@ -16,29 +16,19 @@ use Crm\UsersModule\Repository\UsersRepository;
  */
 class SubscribersWithMissingAddressWidget extends BaseLazyWidget
 {
-    private $templateName = 'subscribers_with_missing_address_widget.latte';
+    private string $templateName = 'subscribers_with_missing_address_widget.latte';
 
-    protected $usersRepository;
+    protected array $contentAccessNames = ['print'];
 
-    protected $userMetaRepository;
-
-    protected $addressesRepository;
-
-    protected $contentAccessNames = ['print'];
-
-    protected $addressTypes = ['print'];
+    protected array $addressTypes = ['print'];
 
     public function __construct(
         LazyWidgetManager $lazyWidgetManager,
-        UsersRepository $usersRepository,
-        AddressesRepository $addressesRepository,
-        UserMetaRepository $userMetaRepository
+        private AddressesRepository $addressesRepository,
+        private UserMetaRepository $userMetaRepository,
+        private SubscriptionsRepository $subscriptionsRepository,
     ) {
         parent::__construct($lazyWidgetManager);
-
-        $this->usersRepository = $usersRepository;
-        $this->addressesRepository = $addressesRepository;
-        $this->userMetaRepository = $userMetaRepository;
     }
 
     public function header($id = '')
@@ -63,27 +53,33 @@ class SubscribersWithMissingAddressWidget extends BaseLazyWidget
 
     public function render()
     {
-        $listUsers = $this->usersRepository->getTable()
-            ->where(':subscriptions.start_time <= ?', new \DateTime())
-            ->where(':subscriptions.end_time > ?', new \DateTime())
+        $this->template->today = $this->getSubscriptionsFrom(new \DateTime('today midnight'));
+        $this->template->last7days = $this->getSubscriptionsFrom(new \DateTime('-7 days'));
+        $this->template->last30days = $this->getSubscriptionsFrom(new \DateTime('-30 days'));
+        $this->template->setFile(__DIR__ . '/' . $this->templateName);
+        $this->template->render();
+    }
+
+    private function getSubscriptionsFrom(\DateTime $createdFrom): array
+    {
+        $subscriptions = $this->subscriptionsRepository->getTable()
+            ->where('subscriptions.start_time <= ?', new \DateTime())
+            ->where('subscriptions.end_time > ?', new \DateTime())
+            ->where('subscriptions.created_at > ?', $createdFrom)
             ->where([
-                ':subscriptions.subscription_type:subscription_type_content_access.content_access.name' => $this->contentAccessNames,
-            ]);
+                'subscription_type:subscription_type_content_access.content_access.name' => $this->contentAccessNames,
+            ])
+            ->order('subscriptions.created_at DESC');
 
         $haveAddress = $this->addressesRepository->all()->where(['type' => $this->addressTypes])->select('user_id')->fetchAssoc('user_id=user_id');
         if ($haveAddress) {
-            $listUsers->where('users.id NOT IN (?)', $haveAddress);
+            $subscriptions->where('subscriptions.user_id NOT IN (?)', $haveAddress);
         }
         $haveDisabledNotification = $this->userMetaRepository->usersWithKey('notify_missing_print_address', 0)->select('user_id')->fetchAssoc('user_id=user_id');
         if ($haveDisabledNotification) {
-            $listUsers->where('users.id NOT IN (?)', $haveDisabledNotification);
+            $subscriptions->where('subscriptions.user_id NOT IN (?)', $haveDisabledNotification);
         }
 
-        if (!empty($listUsers)) {
-            $this->template->listUsers = $listUsers;
-
-            $this->template->setFile(__DIR__ . '/' . $this->templateName);
-            $this->template->render();
-        }
+        return $subscriptions->fetchAll();
     }
 }

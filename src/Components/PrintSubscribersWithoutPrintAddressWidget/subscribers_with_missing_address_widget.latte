@@ -1,4 +1,45 @@
-<div n:if="count($listUsers) > 0" class="bs-callout bs-callout-warning">
-    <h4>{_subscriptions.admin.subscribers_with_missing_address_widget.title}</h4>
-    <a n:foreach="$listUsers as $listUser" href="{plink :Users:UsersAdmin:show id => $listUser['id']}">{$listUser['email']}{sep},{/sep}</a>
+<div n:if="count($last30days) > 0" class="bs-callout bs-callout-warning bs-callout-sm bg-warning">
+    {_"subscriptions.admin.subscribers_with_missing_address_widget.title"}:
+    <span class="label label-default">{_"subscriptions.admin.subscribers_with_missing_address_widget.today"}: {count($today)}</span>
+    <span class="label label-default">{_"subscriptions.admin.subscribers_with_missing_address_widget.week"}: {count($last7days)}</span>
+    <span class="label label-default">{_"subscriptions.admin.subscribers_with_missing_address_widget.month"}: {count($last30days)}</span>
+
+    <a class="btn btn-default btn-xs" data-toggle="modal" data-target="#missing-address-users">
+        <i class="fa fa-eye"></i> {_"subscriptions.admin.subscribers_with_missing_address_widget.show_list"}
+    </a>
+</div>
+
+<div class="modal fade" id="missing-address-users">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title">{_"subscriptions.admin.subscribers_with_missing_address_widget.title"}</h3>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>{_"subscriptions.admin.subscribers_with_missing_address_widget.user"}</th>
+                        <th>{_"subscriptions.admin.subscribers_with_missing_address_widget.created_at"}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr n:foreach="$last30days as $subscription">
+                        <td>
+                            <a href="{plink ":Users:UsersAdmin:show" $subscription->user_id}">{$subscription->user->email}</a>
+                        </td>
+                        <td>{$subscription->created_at|userDate}</td>
+                        <td>
+                            <a href="{plink ":Users:AddressAdmin:new" userId => $subscription->user_id}" class="btn btn-xs btn-default"><i class="fa fa-plus"></i> {_users.admin.show.add_address}</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>

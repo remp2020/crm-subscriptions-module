@@ -296,6 +296,13 @@ admin:
 
     subscribers_with_missing_address_widget:
         title: Subscribers with missing address
+        show_list: Show list
+        today: Today
+        week: Last week
+        month: Last month
+        user: User
+        variable_symbol: Variable symbol
+        created_at: Time of subscription
 
     actual_subscribers_stat_widget:
         title: Active Subscribers
