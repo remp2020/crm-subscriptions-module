@@ -108,14 +108,15 @@ class SubscriptionsRepository extends Repository
         Closure $callbackBeforeNewSubscriptionEvent = null
     ) {
         $isExtending = false;
+        // provided $startTime overrides both subscription_types.fixed_start and Extension::getDate()
         if ($startTime === null) {
-            $extension = $this->getSubscriptionExtension($subscriptionType, $user);
-            $startTime = $extension->getDate();
-            $isExtending = $extension->isExtending();
-        }
-
-        if (!$isExtending && $subscriptionType->fixed_start) {
-            $startTime = $subscriptionType->fixed_start;
+            if ($subscriptionType->fixed_start) {
+                $startTime = $subscriptionType->fixed_start >= $this->getNow() ? $subscriptionType->fixed_start : $this->getNow();
+            } else {
+                $extension = $this->getSubscriptionExtension($subscriptionType, $user);
+                $startTime = $extension->getDate();
+                $isExtending = $extension->isExtending();
+            }
         }
 
         $subscriptionLength = $isExtending && $subscriptionType->extending_length ? $subscriptionType->extending_length : $subscriptionType->length;

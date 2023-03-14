@@ -86,6 +86,7 @@ class SubscriptionsRepositoryAddStartTimeEndTimeTest extends DatabaseTestCase
 
         $twoMonthsAgo = $now->modifyClone('-62 days');
         $twoMonthsAgoPlusMonth = $twoMonthsAgo->modifyClone('+' . self::SUBSCRIPTION_LENGTH . 'days');
+        $twoMonthsAgoMinusMonth = $twoMonthsAgo->modifyClone('-' . self::SUBSCRIPTION_LENGTH . 'days');
 
         return [
             'SubscriptionType_NoFixedDates_-_Subscription_NoDates' => [
@@ -233,8 +234,11 @@ class SubscriptionsRepositoryAddStartTimeEndTimeTest extends DatabaseTestCase
                     'fixed_end' => null,
                 ],
                 'expected' => [
-                    'start_time' => $twoMonthsAgo,
-                    'end_time' => $twoMonthsAgoPlusMonth,
+                    // subscription_type.fixed_start is before current datetime
+                    // start datetime is set to current datetime
+                    'start_time' => $now,
+                    // end datetime is calculated by extension method
+                    'end_time' => $nowPlusMonth,
                 ],
             ],
 
@@ -297,8 +301,10 @@ class SubscriptionsRepositoryAddStartTimeEndTimeTest extends DatabaseTestCase
                     'fixed_end' => $twoMonthsAgoPlusMonth,
                 ],
                 'expected' => [
-                    'start_time' => $twoMonthsAgo,
-                    'end_time' => $twoMonthsAgoPlusMonth,
+                    // subscription_type.fixed_start is before current datetime
+                    // start datetime is set to current datetime
+                    'start_time' => $now,
+                    'end_time' => $twoMonthsAgoPlusMonth, // TODO: we problably shouldn't allow end time before subscription's start time
                 ],
             ],
 
@@ -316,8 +322,10 @@ class SubscriptionsRepositoryAddStartTimeEndTimeTest extends DatabaseTestCase
                     'fixed_end' => null,
                 ],
                 'expected' => [
-                    'start_time' => $twoMonthsAgo,
-                    'end_time' => $twoMonthsAgoPlusMonth,
+                    // subscription.start_time is used
+                    // subscription_type.fixed_start is ignored because it is in past
+                    'start_time' => $nextWeek,
+                    'end_time' => $nextWeekPlusMonth,
                 ],
             ],
 
@@ -332,7 +340,9 @@ class SubscriptionsRepositoryAddStartTimeEndTimeTest extends DatabaseTestCase
                     'fixed_end' => null,
                 ],
                 'expected' => [
-                    'start_time' => $twoMonthsAgo,
+                    // subscription_type.fixed_start is ignored because it is in past
+                    // extension sets start datetime to current datetime
+                    'start_time' => $now,
                     'end_time' => $nextWeek,
                 ],
             ],
@@ -380,8 +390,9 @@ class SubscriptionsRepositoryAddStartTimeEndTimeTest extends DatabaseTestCase
                     'fixed_end' => null,
                 ],
                 'expected' => [
-                    'start_time' => $nextWeek,
-                    'end_time' => $nextWeekPlusMonth,
+                    // subscription_type.fixed_start is ignored because subscription.start_time is "overriding parameter"
+                    'start_time' => $twoMonthsAgo,
+                    'end_time' => $twoMonthsAgoPlusMonth,
                 ],
             ],
 
@@ -433,7 +444,6 @@ class SubscriptionsRepositoryAddStartTimeEndTimeTest extends DatabaseTestCase
                 ],
             ],
 
-            // TODO: strange behavior; start time is set from subscription_type's fixed_start but end time is set from subscription's end_time
             'SubscriptionType_BothFixedDatesSetInPast_-_Subscription_BothDatesSet' => [
                 'now' => $now,
                 'subscription' => [
@@ -445,12 +455,13 @@ class SubscriptionsRepositoryAddStartTimeEndTimeTest extends DatabaseTestCase
                     'fixed_end' => $twoMonthsAgoPlusMonth,
                 ],
                 'expected' => [
-                    'start_time' => $twoMonthsAgo,
+                    // subscription_type.fixed_start is ignored because it is in past
+                    // extension sets start datetime to current datetime
+                    'start_time' => $nextWeek,
                     'end_time' => $nextWeekPlusMonth,
                 ],
             ],
 
-            // TODO: strange behavior; start time is set from subscription_type's fixed_start but end time is set from subscription's end_time
             'SubscriptionType_BothFixedDatesSet_-_Subscription_BothDatesSetInPast' => [
                 'now' => $now,
                 'subscription' => [
@@ -462,8 +473,27 @@ class SubscriptionsRepositoryAddStartTimeEndTimeTest extends DatabaseTestCase
                     'fixed_end' => $nextWeekPlusMonth,
                 ],
                 'expected' => [
-                    'start_time' => $nextWeek,
+                    // subscription_type.fixed_start is ignored because subscription.start_time is "overriding parameter"
+                    'start_time' => $twoMonthsAgo,
+                    // subscription_type.fixed_end is ignored because subscription.end_time is "overriding parameter"
                     'end_time' => $twoMonthsAgoPlusMonth,
+                ],
+            ],
+
+            'SubscriptionType_BothFixedDatesSet_-_Subscription_BothDatesSetInPast_EndTimeBeforeStartTime' => [
+                'now' => $now,
+                'subscription' => [
+                    'start_time' => $twoMonthsAgo,
+                    'end_time' => $twoMonthsAgoMinusMonth,
+                ],
+                'subscription_type' => [
+                    'fixed_start' => $nextWeek,
+                    'fixed_end' => $nextWeekPlusMonth,
+                ],
+                'expected' => [
+                    // subscription_type.fixed_start is ignored because subscription.start_time is "overriding parameter"
+                    'start_time' => $twoMonthsAgo,
+                    'end_time' => $twoMonthsAgoMinusMonth, // TODO: we problably shouldn't allow end time before subscription's start time
                 ],
             ],
         ];
