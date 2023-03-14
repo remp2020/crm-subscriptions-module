@@ -18,10 +18,6 @@ class FixDaysLengthMethod implements LengthMethodInterface
         $interval = new \DateInterval("P{$length}D");
         $end = (clone $startTime)->add($interval);
 
-        if ($subscriptionType->fixed_end) {
-            $end = $subscriptionType->fixed_end;
-        }
-
         return new Length($end, $length);
     }
 }

@@ -120,11 +120,21 @@ class SubscriptionsRepository extends Repository
         }
 
         $subscriptionLength = $isExtending && $subscriptionType->extending_length ? $subscriptionType->extending_length : $subscriptionType->length;
+        // provided $endTime overrides both subscription_types.fixed_end and LengthMethodInterface::getEndTime()
         if ($endTime === null) {
-            $lengthMethod = $this->lengthMethodFactory->getExtension($subscriptionType->length_method_id);
-            $length = $lengthMethod->getEndTime($startTime, $subscriptionType, $isExtending);
-            $endTime = $length->getEndTime();
-            $subscriptionLength = $length->getLength();
+            if ($subscriptionType->fixed_end) {
+                $endTime = $subscriptionType->fixed_end >= $startTime ? $subscriptionType->fixed_end : $startTime;
+            } else {
+                $lengthMethod = $this->lengthMethodFactory->getExtension($subscriptionType->length_method_id);
+                $length = $lengthMethod->getEndTime($startTime, $subscriptionType, $isExtending);
+                $endTime = $length->getEndTime();
+                $subscriptionLength = $length->getLength();
+            }
+        }
+
+        // subscription should never end before it starts
+        if ($endTime < $startTime) {
+            $endTime = $startTime;
         }
 
         $internalStatus = $this->getInternalStatus($startTime, $endTime);
