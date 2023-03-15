@@ -104,7 +104,7 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
     {
         $this->subscriptionType = $this->subscriptionTypesRepository->find($id);
         if (!$this->subscriptionType) {
-            $this->flashMessage($this->translator->translate('subscriptions.admin.subscription_types.messages.subscription_type_not_found'));
+            $this->flashMessage($this->translator->translate('subscriptions.admin.subscription_types.messages.subscription_type_not_found'), 'error');
             $this->redirect('default');
         }
         $this->template->type = $this->subscriptionType;
@@ -119,7 +119,7 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
     {
         $this->subscriptionType = $this->subscriptionTypesRepository->find($id);
         if (!$this->subscriptionType) {
-            $this->flashMessage($this->translator->translate('subscriptions.admin.subscription_types.messages.subscription_type_not_found'));
+            $this->flashMessage($this->translator->translate('subscriptions.admin.subscription_types.messages.subscription_type_not_found'), 'error');
             $this->redirect('default');
         }
         $this->template->type = $this->subscriptionType;
@@ -193,11 +193,11 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
     {
         $subscriptionType = $this->subscriptionTypesRepository->find($id);
         if (!$subscriptionType) {
-            $this->flashMessage($this->translator->translate('subscriptions.admin.subscription_types.messages.subscription_type_not_found'));
+            $this->flashMessage($this->translator->translate('subscriptions.admin.subscription_types.messages.subscription_type_not_found'), 'error');
             $this->redirect('default');
         }
         if ($this->subscriptionTypeItemMetaRepository->subscriptionTypeItemsHaveMeta($subscriptionType)) {
-            $this->flashMessage($this->translator->translate('subscriptions.admin.subscription_types.messages.subscription_type_not_editable'));
+            $this->flashMessage($this->translator->translate('subscriptions.admin.subscription_types.messages.subscription_type_not_editable'), 'error');
             $this->redirect('default');
         }
         $this->template->type = $subscriptionType;
