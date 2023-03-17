@@ -6,17 +6,15 @@ use Nette\DI\Container;
 
 class ExtensionMethodFactory
 {
-    /** @var array(ExtensionInterface) */
-    private $extensions = [];
+    /** @var array<string> */
+    private array $extensions = [];
 
-    private $container;
-
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
+    public function __construct(
+        private Container $container
+    ) {
     }
 
-    public function registerExtension($type, string $extensionMethod)
+    public function registerExtension(string $type, string $extensionMethod): void
     {
         if (isset($this->extensions[$type])) {
             throw new \Exception('Trying to register extension with code that is already used: ' . $type);
@@ -25,11 +23,9 @@ class ExtensionMethodFactory
     }
 
     /**
-     * @param string $type
-     * @return ExtensionInterface
      * @throws \Exception
      */
-    public function getExtension($type)
+    public function getExtension(string $type): ExtensionInterface
     {
         if (!isset($this->extensions[$type])) {
             throw new \Exception("Unknown extension type '{$type}'");

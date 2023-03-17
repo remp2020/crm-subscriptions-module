@@ -7,22 +7,25 @@ use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use DateTime;
 use Nette\Database\Table\ActiveRow;
 
+/**
+ * Extends:
+ * - last subscription of same subscription type;
+ * - or actual (current) subscription (of any type);
+ * - or starts immediately.
+ */
 class ExtendSameTypeExtension implements ExtensionInterface
 {
     use NowTrait;
 
-    public const METHOD_CODE = 'extend_same_type';
+    final public const METHOD_CODE = 'extend_same_type';
     public const METHOD_NAME = 'Extend same type';
 
-    private $subscriptionsRepository;
-
     public function __construct(
-        SubscriptionsRepository $subscriptionsRepository
+        private SubscriptionsRepository $subscriptionsRepository
     ) {
-        $this->subscriptionsRepository = $subscriptionsRepository;
     }
 
-    public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType)
+    public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType): Extension
     {
         $lifetimeThreshold = new DateTime('+ 30 years');
         $lastSubscriptionTypeSubscription = $this->subscriptionsRepository->userSubscriptions($user->id)

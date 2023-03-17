@@ -4,9 +4,9 @@ namespace Crm\SubscriptionsModule\Extension;
 
 class Extension
 {
-    private $date;
+    private \DateTime $date;
 
-    private $isExtending;
+    private bool $isExtending;
 
     public function __construct(\DateTime $date, bool $isExtending = false)
     {

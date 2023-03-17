@@ -8,31 +8,24 @@ use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
 
+/**
+ * Extends:
+ * - first subscription with same content accesses;
+ * - or starts immediately.
+ */
 class ExtendSameContentAccess implements ExtensionInterface
 {
     use NowTrait;
 
-    public const METHOD_CODE = 'extend_same_content_access';
+    final public const METHOD_CODE = 'extend_same_content_access';
     public const METHOD_NAME = 'Extend same content access';
 
-    private ContentAccessRepository $contentAccessRepository;
-
-    private SubscriptionsRepository $subscriptionsRepository;
-
     public function __construct(
-        ContentAccessRepository $contentAccessRepository,
-        SubscriptionsRepository $subscriptionsRepository
+        private ContentAccessRepository $contentAccessRepository,
+        private SubscriptionsRepository $subscriptionsRepository
     ) {
-        $this->contentAccessRepository = $contentAccessRepository;
-        $this->subscriptionsRepository = $subscriptionsRepository;
     }
 
-    /**
-     * @param ActiveRow $user
-     * @param ActiveRow $subscriptionType
-     * @return Extension
-     * @throws \Exception
-     */
     public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType): Extension
     {
         $startTimeForSameContentAccess = $this->getStartTimeForSameContentAccess($user, $subscriptionType);
@@ -46,7 +39,7 @@ class ExtendSameContentAccess implements ExtensionInterface
     /**
      * Helper method used to get start time following subscription of same content access.
      *
-     * @return \DateTime|null Returns null if not subscription with same content access was found
+     * @return \DateTime|null Returns null if no subscription with same content access was found.
      */
     public function getStartTimeForSameContentAccess(ActiveRow $user, ActiveRow $subscriptionType): ?\DateTime
     {
