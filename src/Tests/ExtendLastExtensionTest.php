@@ -4,13 +4,14 @@ namespace Crm\SubscriptionsModule\Tests;
 
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
 use Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder;
-use Crm\SubscriptionsModule\Extension\ExtendActualExtension;
+use Crm\SubscriptionsModule\Extension\ExtendLastExtension;
 use Crm\SubscriptionsModule\Repository\SubscriptionExtensionMethodsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionLengthMethodsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeContentAccess;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeNamesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Seeders\ContentAccessSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
@@ -19,11 +20,11 @@ use Crm\UsersModule\Repository\UsersRepository;
 use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
 
-class ExtendActualExtensionTest extends DatabaseTestCase
+class ExtendLastExtensionTest extends DatabaseTestCase
 {
     private SubscriptionsRepository $subscriptionsRepository;
 
-    private ExtendActualExtension $extension;
+    private ExtendLastExtension $extension;
 
     private ActiveRow $user;
 
@@ -31,7 +32,7 @@ class ExtendActualExtensionTest extends DatabaseTestCase
     {
         parent::setUp();
 
-        $this->extension = $this->inject(ExtendActualExtension::class);
+        $this->extension = $this->inject(ExtendLastExtension::class);
         $this->subscriptionsRepository = $this->getRepository(SubscriptionsRepository::class);
         /** @var UserManager $userManager */
         $userManager = $this->inject(UserManager::class);
@@ -66,6 +67,7 @@ class ExtendActualExtensionTest extends DatabaseTestCase
             SubscriptionExtensionMethodsSeeder::class,
             SubscriptionLengthMethodSeeder::class,
             SubscriptionTypeNamesSeeder::class,
+            ContentAccessSeeder::class,
         ];
     }
 
@@ -76,6 +78,26 @@ class ExtendActualExtensionTest extends DatabaseTestCase
 
         $subscriptionTypeRow = $subscriptionTypeBuilder
             ->createNew()
+            // use only seeded accesses Crm\SubscriptionsModule\Seeders\ContentAccessSeeder
+            ->setContentAccessOption('web')
+            ->setNameAndUserLabel(random_int(0, 9999))
+            ->setActive(1)
+            ->setPrice(1)
+            ->setLength(30)
+            ->save();
+
+        return $subscriptionTypeRow;
+    }
+
+    private function getDifferentSubscriptionType()
+    {
+        /** @var SubscriptionTypeBuilder $subscriptionTypeBuilder */
+        $subscriptionTypeBuilder = $this->inject(SubscriptionTypeBuilder::class);
+
+        $subscriptionTypeRow = $subscriptionTypeBuilder
+            ->createNew()
+            // use only seeded accesses Crm\SubscriptionsModule\Seeders\ContentAccessSeeder
+            ->setContentAccessOption('web', 'print')
             ->setNameAndUserLabel(random_int(0, 9999))
             ->setActive(1)
             ->setPrice(1)
@@ -102,7 +124,6 @@ class ExtendActualExtensionTest extends DatabaseTestCase
     {
         $nowDate = DateTime::from('2021-02-01');
         $this->extension->setNow($nowDate);
-        $this->subscriptionsRepository->setNow($nowDate);
 
         $subscriptionType = $this->getSubscriptionType();
 
@@ -112,6 +133,7 @@ class ExtendActualExtensionTest extends DatabaseTestCase
         $this->assertFalse($result->isExtending());
     }
 
+    // same as ExtendActualExtensionTest::testActualSubscription
     public function testActualSubscription()
     {
         $nowDate = DateTime::from('2021-02-01');
@@ -127,6 +149,7 @@ class ExtendActualExtensionTest extends DatabaseTestCase
         $this->assertTrue($result->isExtending());
     }
 
+    // same as ExtendActualExtensionTest::testExpiredSubscription
     public function testExpiredSubscription()
     {
         $nowDate = DateTime::from('2021-02-01');
@@ -142,6 +165,7 @@ class ExtendActualExtensionTest extends DatabaseTestCase
         $this->assertFalse($result->isExtending());
     }
 
+    // different than ExtendActualExtensionTest::testLastActualSubscription
     public function testLastActualSubscription()
     {
         $nowDate = DateTime::from('2021-02-01');
@@ -149,14 +173,46 @@ class ExtendActualExtensionTest extends DatabaseTestCase
         $this->subscriptionsRepository->setNow($nowDate);
 
         $subscriptionType = $this->getSubscriptionType();
+        $subscriptionTypeDifferent = $this->getDifferentSubscriptionType();
         $this->addSubscription($subscriptionType, $nowDate->modifyClone('-5 days'), $nowDate->modifyClone('+25 days'));
-        $this->addSubscription($subscriptionType, $nowDate->modifyClone('-10 days'), $nowDate->modifyClone('+20 days'));
-        // this subscription will be ignored; it is not actual (currently running)
+        $this->addSubscription($subscriptionTypeDifferent, $nowDate->modifyClone('-10 days'), $nowDate->modifyClone('+20 days'));
+        // this subscription will be extended; we ignore gaps and search for last one
         $this->addSubscription($subscriptionType, $nowDate->modifyClone('+180 days'), $nowDate->modifyClone('+210 days'));
 
         $result = $this->extension->getStartTime($this->user, $subscriptionType);
 
-        $this->assertEquals($nowDate->modifyClone('+25 days'), $result->getDate());
+        $this->assertEquals($nowDate->modifyClone('+210 days'), $result->getDate());
+        $this->assertTrue($result->isExtending());
+    }
+
+    public function testFutureSubscription()
+    {
+        $nowDate = DateTime::from('2021-02-01');
+        $this->extension->setNow($nowDate);
+        $this->subscriptionsRepository->setNow($nowDate);
+
+        $subscriptionType = $this->getSubscriptionType();
+        $this->addSubscription($subscriptionType, $nowDate->modifyClone('+180 days'), $nowDate->modifyClone('+210 days'));
+
+        $result = $this->extension->getStartTime($this->user, $subscriptionType);
+
+        $this->assertEquals($nowDate->modifyClone('+210 days'), $result->getDate());
+        $this->assertTrue($result->isExtending());
+    }
+
+    public function testSubscriptionDifferentContentTypes()
+    {
+        $nowDate = DateTime::from('2021-02-01');
+        $this->extension->setNow($nowDate);
+        $this->subscriptionsRepository->setNow($nowDate);
+
+        $subscriptionType = $this->getSubscriptionType();
+        $this->addSubscription($subscriptionType, $nowDate->modifyClone('+180 days'), $nowDate->modifyClone('+210 days'));
+
+        $subscriptionTypeDifferent = $this->getDifferentSubscriptionType();
+        $result = $this->extension->getStartTime($this->user, $subscriptionTypeDifferent);
+
+        $this->assertEquals($nowDate->modifyClone('+210 days'), $result->getDate());
         $this->assertTrue($result->isExtending());
     }
 }

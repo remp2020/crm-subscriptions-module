@@ -4,6 +4,7 @@ namespace Crm\SubscriptionsModule\Seeders;
 
 use Crm\ApplicationModule\Seeders\ISeeder;
 use Crm\SubscriptionsModule\Extension\ExtendActualExtension;
+use Crm\SubscriptionsModule\Extension\ExtendLastExtension;
 use Crm\SubscriptionsModule\Extension\ExtendSameActualExtension;
 use Crm\SubscriptionsModule\Extension\ExtendSameContentAccess;
 use Crm\SubscriptionsModule\Extension\ExtendSameTypeExtension;
@@ -81,6 +82,19 @@ class SubscriptionExtensionMethodsSeeder implements ISeeder
                 ExtendSameContentAccess::METHOD_NAME,
                 'Put new subscription after last subscription of the same content access type or start immediately',
                 130
+            );
+            $output->writeln("  <comment>* subscription extension method <info>{$method}</info> created</comment>");
+        } else {
+            $output->writeln("  * subscription extension method <info>{$method}</info> exists");
+        }
+
+        $method = ExtendLastExtension::METHOD_CODE;
+        if (!$this->subscriptionExtensionMethodsRepository->exists($method)) {
+            $this->subscriptionExtensionMethodsRepository->add(
+                $method,
+                ExtendLastExtension::METHOD_NAME,
+                'Put new subscription after last subscription of user or start immediately',
+                140
             );
             $output->writeln("  <comment>* subscription extension method <info>{$method}</info> created</comment>");
         } else {

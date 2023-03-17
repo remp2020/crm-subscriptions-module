@@ -642,12 +642,13 @@ class SubscriptionsRepository extends Repository
         return $this->all()->where(['address_id' => $addressId]);
     }
 
-    public function lastActiveUserSubscription($userId): Selection
+    public function lastActiveUserSubscription(int $userId): Selection
     {
         return $this->getTable()
             ->where([
                 'user_id = ?' => $userId,
-                'end_time > ?' => new DateTime()
+                'end_time > ?' => $this->getNow(),
+                'end_time != start_time', // ignore cancelled subscriptions
             ])
             ->order('end_time DESC')
             ->limit(1);

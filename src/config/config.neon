@@ -96,6 +96,7 @@ services:
 	- Crm\SubscriptionsModule\Extension\ExtendSameContentAccess
 	- Crm\SubscriptionsModule\Extension\StartNowExtension
 	- Crm\SubscriptionsModule\Extension\ExtendSameTypeExtension
+	- Crm\SubscriptionsModule\Extension\ExtendLastExtension
 	extensionMethodFactory:
 		factory: Crm\SubscriptionsModule\Extension\ExtensionMethodFactory
 		setup:
@@ -118,6 +119,10 @@ services:
 			- registerExtension(
 				Crm\SubscriptionsModule\Extension\ExtendSameContentAccess::METHOD_CODE,
 				Crm\SubscriptionsModule\Extension\ExtendSameContentAccess
+			)
+			- registerExtension(
+				Crm\SubscriptionsModule\Extension\ExtendLastExtension::METHOD_CODE,
+				Crm\SubscriptionsModule\Extension\ExtendLastExtension
 			)
 
 	lengthMethodFactory:
