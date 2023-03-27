@@ -78,6 +78,16 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
         $form = $this->adminFilterFormFactory->create();
         $form->setDefaults($this->adminFilterFormData->getFormValues());
 
+        $form->onRender[] = static function () use ($form) {
+            $collapseGroup = $form->getGroup('collapse');
+            foreach ($collapseGroup?->getControls() ?? [] as $control) {
+                if (!empty($control->getValue())) {
+                    $collapseGroup->setOption('container', 'div class="collapse in"');
+                    break;
+                }
+            }
+        };
+
         $this->adminFilterFormFactory->onFilter = function (array $values) {
             $this->redirect($this->action, ['formData' => array_map(function ($item) {
                 return $item ?: null;
