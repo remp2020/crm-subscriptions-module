@@ -15,7 +15,7 @@ class ExtendSameActualExtension implements ExtensionInterface
 {
     use NowTrait;
 
-    final public const METHOD_CODE = 'extend_same_actual';
+    public const METHOD_CODE = 'extend_same_actual';
     public const METHOD_NAME = 'Extend same actual';
 
     public function __construct(

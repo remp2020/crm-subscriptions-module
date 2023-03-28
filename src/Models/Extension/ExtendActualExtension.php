@@ -15,7 +15,7 @@ class ExtendActualExtension implements ExtensionInterface
 {
     use NowTrait;
 
-    final public const METHOD_CODE = 'extend_actual';
+    public const METHOD_CODE = 'extend_actual';
     public const METHOD_NAME = 'Extend actual';
 
     public function __construct(
