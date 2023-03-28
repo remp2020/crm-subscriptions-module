@@ -17,7 +17,7 @@ class ExtendSameTypeExtension implements ExtensionInterface
 {
     use NowTrait;
 
-    final public const METHOD_CODE = 'extend_same_type';
+    public const METHOD_CODE = 'extend_same_type';
     public const METHOD_NAME = 'Extend same type';
 
     public function __construct(

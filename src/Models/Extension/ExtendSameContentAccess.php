@@ -17,7 +17,7 @@ class ExtendSameContentAccess implements ExtensionInterface
 {
     use NowTrait;
 
-    final public const METHOD_CODE = 'extend_same_content_access';
+    public const METHOD_CODE = 'extend_same_content_access';
     public const METHOD_NAME = 'Extend same content access';
 
     public function __construct(

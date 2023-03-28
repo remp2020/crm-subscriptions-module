@@ -15,8 +15,8 @@ class ExtendLastExtension implements ExtensionInterface
 {
     use NowTrait;
 
-    final public const METHOD_CODE = 'extend_last_subscription';
-    final public const METHOD_NAME = 'Extend last subscription';
+    public const METHOD_CODE = 'extend_last_subscription';
+    public const METHOD_NAME = 'Extend last subscription';
 
     public function __construct(
         private SubscriptionsRepository $subscriptionsRepository
