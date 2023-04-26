@@ -187,6 +187,54 @@ Response:
 }
 ```
 
+---
+
+#### POST `/api/v1/subscriptions/update`
+
+Update subscription based on sent parameters.
+
+##### *Headers:*
+
+| Name | Value | Required | Description |
+| --- | --- | --- | --- |
+| Authorization | Bearer *String* | yes | Bearer token. |
+
+##### *Params:*
+
+| Name                 | Value     | Required | Description |
+|----------------------|-----------|----------| --- |
+| id                   | *String*  | yes      | Email of existing user. |
+| subscription_type_id | *String*  | no       | ID of subscription type to use. List of all subscription types is available at `/subscriptions/subscription-types-admin`. |
+| is_paid              | *Boolean* | no       | The identification of paid subscriptions. |
+| start_time           | *String*  | no       | RFC3339 formatted start time. If not present, subscription will start immediately. |
+| end_time             | *String*  | no       | RFC3339 formatted end time. If not present, end time will set based on subscription type. |
+| type                 | *String*  | no       | Type of subscription - values allowed: `regular`, `free`, `donation`, `gift`, `special`, `upgrade`, `prepaid`. If not provided, defaults to `regular`. |
+
+
+##### *Example:*
+
+```shell
+curl -X POST \
+  http://crm.press/api/v1/subscriptions/update \
+  -H 'Authorization: Bearer XXX' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -d 'id=12345&subscription_type_id=73&is_paid=true'
+```
+
+Response:
+
+```json5
+{
+    "status": "ok",
+    "message": "Subscription updated",
+    "subscriptions": {
+        "id": 628893, // string; ID of subscription 
+        "start_time": "2019-03-08T13:35:05+01:00", // String; RFC3339 formatted start time of subscription
+        "end_time": "2019-05-09T13:35:05+02:00" // String; RFC3339 formatted end time of subscription
+    }
+}
+```
+
 ## Components
 
 **ActualSubscribersRegistrationSourceStatsWidget**

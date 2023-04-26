@@ -59,6 +59,7 @@ services:
 	- Crm\SubscriptionsModule\Hermes\GenerateSubscriptionHandler
 	- Crm\SubscriptionsModule\Api\v1\CreateSubscriptionHandler
 	- Crm\SubscriptionsModule\Api\v1\ListContentAccessHandler
+	- Crm\SubscriptionsModule\Api\v1\UpdateSubscriptionHandler
 	- Crm\SubscriptionsModule\User\SubscriptionsUserDataProvider
 	- Crm\SubscriptionsModule\Segment\ActiveSubscriptionCriteria
 	- Crm\SubscriptionsModule\Segment\UserActiveSubscriptionCriteria

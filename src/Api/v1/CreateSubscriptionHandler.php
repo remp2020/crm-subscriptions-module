@@ -102,8 +102,12 @@ class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerI
             'message' => 'Subscription created',
             'subscriptions' => [
                 'id' => $subscription->id,
+                'subscription_type_id' => $subscription->subscription_type_id,
+                'is_paid' => $subscription->is_paid,
                 'start_time' => $subscription->start_time->format('c'),
                 'end_time' => $subscription->end_time->format('c'),
+                'type' => $subscription->type,
+                'note' => $subscription->note,
             ],
         ]);
         return $response;
