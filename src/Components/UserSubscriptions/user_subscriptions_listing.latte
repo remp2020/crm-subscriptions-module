@@ -77,7 +77,7 @@
         </td>
         <td class="text-muted">
           {$subscription->created_at|userDate}
-          <small n:if="$subscription->created_at != $subscription->modified_at">(changed {$subscription->modified_at|userDate})</small>
+          <small n:if="$subscription->created_at != $subscription->modified_at">({_subscriptions.admin.user_subscriptions.changed} {$subscription->modified_at|userDate})</small>
         </td>
         <td>
           {var $payment = $subscription->related('payments')->limit(1)->fetch()}
@@ -90,10 +90,30 @@
           </small>
         </td>
         <td>
-          <a href="{plink :Subscriptions:SubscriptionsAdmin:edit $subscription->id, userId => $subscription->user_id}" class="btn btn-sm btn-primary" title="{_system.edit}">
-            <i class="fa fa-edit"></i> {_system.edit}
+          <a href="{plink :Subscriptions:SubscriptionsAdmin:show $subscription->id}" class="btn btn-sm btn-info"
+             title="{_system.show}" data-toggle="tooltip" data-placement="top">
+            <i class="fa fa-eye"></i>
           </a>
+          <a href="{plink :Subscriptions:SubscriptionsAdmin:edit $subscription->id, userId => $subscription->user_id}"
+             class="btn btn-sm btn-primary"
+             title="{_system.edit}" data-toggle="tooltip" data-placement="top">
+            <i class="fa fa-edit"></i>
+          </a>
+
+          <div class="btn-group" style="margin-bottom: 2px">
+            <button type="button" class="btn btn-default btn-sm dropdown-toggle"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    title="{_system.more_actions}" data-toggle-second="tooltip" data-placement="top">
+              <i class="fa fa-ellipsis-h"></i>
+            </button>
+
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+              {control simpleWidget 'subscriptions.admin.user_subscriptions_listing.action.menu', $subscription}
+            </ul>
+          </div>
+
           {control simpleWidget 'subscriptions.admin.user_subscriptions_listing.action', $subscription}
+
         </td>
       </tr>
     </tbody>
@@ -101,3 +121,8 @@
 {/if}
 
 <a href="{plink :Subscriptions:SubscriptionsAdmin:New $id}" class="btn btn-default"><i class="fa fa-magic"></i> {_subscriptions.admin.user_subscriptions.new_subscription}</a>
+
+<script>
+  // hacking tooltip for dropdown menu; otherwise dropdown menu has slow native title tooltip with delay
+  $('[data-toggle-second="tooltip"]').tooltip();
+</script>

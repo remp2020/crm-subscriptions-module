@@ -139,6 +139,10 @@ admin:
             header: Edit subscription
             back: back to user
 
+        show:
+            header: Subscription
+            back: back to user
+
         messages:
             subscription_created: Subscription was created.
             subscription_updated: Subscription was updated.
@@ -344,6 +348,7 @@ admin:
             duplicate: Meta key with same key already exists.
 
     stop_subscription_widget:
+        header: Subscription
         button_label: Stop subscription
         no_subscription: 'Subscription with ID %id% not found.'
         success: 'Subscription with ID %id% has been stopped.'

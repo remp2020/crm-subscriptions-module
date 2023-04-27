@@ -1,5 +1,8 @@
 <div style="margin-bottom: 2px">
-   <a class="btn btn-default btn-sm" href="{plink :Subscriptions:SubscriptionsAdmin:edit $payment->subscription_id, $payment->user_id}">
+  <a class="btn btn-info btn-sm" href="{plink :Subscriptions:SubscriptionsAdmin:show $payment->subscription_id}" title="{_subscriptions.admin.subscription_button.show}">
+    <i class="fa fa-eye"></i>
+  </a>
+   <a class="btn btn-default btn-sm" href="{plink :Subscriptions:SubscriptionsAdmin:edit $payment->subscription_id, $payment->user_id}" title="{_subscriptions.admin.subscription_button.title}">
        <i class="fa fa-edit"></i> {_subscriptions.admin.subscription_button.title}
    </a>
 </div>

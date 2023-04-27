@@ -10,14 +10,26 @@ use Nette\Application\BadRequestException;
 
 class SubscriptionsAdminPresenter extends AdminPresenter
 {
-    /** @var SubscriptionsRepository @inject */
-    public $subscriptionsRepository;
+    /** @inject */
+    public SubscriptionsRepository $subscriptionsRepository;
 
-    /** @var UsersRepository @inject */
-    public $usersRepository;
+    /** @inject */
+    public UsersRepository $usersRepository;
 
-    /** @var SubscriptionFormFactory @inject */
-    public $factory;
+    /** @inject */
+    public SubscriptionFormFactory $subscriptionFormFactory;
+
+    /**
+     * @admin-access-level read
+     */
+    public function renderShow($id)
+    {
+        $subscription = $this->subscriptionsRepository->find($id);
+        if (!$subscription) {
+            throw new BadRequestException();
+        }
+        $this->template->subscription = $subscription;
+    }
 
     /**
      * @admin-access-level write
@@ -65,14 +77,14 @@ class SubscriptionsAdminPresenter extends AdminPresenter
             throw new BadRequestException();
         }
 
-        $form = $this->factory->create($user, $id);
+        $form = $this->subscriptionFormFactory->create($user, $id);
 
         $presenter = $this;
-        $this->factory->onSave = function ($subscription) use ($presenter) {
+        $this->subscriptionFormFactory->onSave = function ($subscription) use ($presenter) {
             $presenter->flashMessage($this->translator->translate('subscriptions.admin.subscriptions.messages.subscription_created'));
             $presenter->redirect(':Users:UsersAdmin:Show', $subscription->user->id);
         };
-        $this->factory->onUpdate = function ($subscription) use ($presenter) {
+        $this->subscriptionFormFactory->onUpdate = function ($subscription) use ($presenter) {
             $presenter->flashMessage($this->translator->translate('subscriptions.admin.subscriptions.messages.subscription_updated'));
             $presenter->redirect(':Users:UsersAdmin:Show', $subscription->user->id);
         };

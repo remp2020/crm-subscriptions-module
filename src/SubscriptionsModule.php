@@ -189,7 +189,7 @@ class SubscriptionsModule extends CrmModule
             \Crm\SubscriptionsModule\Components\UsersAbusiveAdditionalWidget::class
         );
         $widgetManager->registerWidget(
-            'subscriptions.admin.user_subscriptions_listing.action',
+            'subscriptions.admin.user_subscriptions_listing.action.menu',
             \Crm\SubscriptionsModule\Components\StopSubscriptionWidget::class
         );
     }

@@ -139,6 +139,10 @@ admin:
             header: Uprav předplatné
             back: zpět na uživatele
 
+        show:
+            header: Předplatné
+            back: zpět na uživatele
+
         messages:
             subscription_created: Předplatné bylo vytvořeno.
             subscription_updated: Předplatné bylo upraveno.
@@ -344,6 +348,7 @@ admin:
             duplicate: Meta se stejným klíčem již existuje.
 
     stop_subscription_widget:
+        header: Předplatné
         button_label: Zastavit předplatné
         no_subscription: 'Předplatné s ID %id% se nenašlo.'
         success: 'Předplatné s ID %id% bylo zastaveno.'
