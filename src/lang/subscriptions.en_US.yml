@@ -290,7 +290,9 @@ admin:
         gift_header: Gift subscriptions
 
     subscription_button:
-        title: Edit subscription
+        header: Subscription
+        edit: Edit subscription
+        show: Show subscription
 
     actual_subscription_label:
         actual: Actual

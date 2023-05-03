@@ -223,7 +223,7 @@ admin:
         gift_header: Előfizetések ajándékozása
 
     subscription_button:
-        title: Előfizetés szerkesztése
+        edit: Előfizetés szerkesztése
 
     actual_subscription_label:
         actual: Aktuális

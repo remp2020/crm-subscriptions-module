@@ -115,7 +115,7 @@ class SubscriptionsModule extends CrmModule
             100
         );
         $widgetManager->registerWidget(
-            'admin.payments.listing.action',
+            'admin.payments.listing.action.menu',
             \Crm\SubscriptionsModule\Components\SubscriptionButton::class,
             6000
         );

@@ -291,7 +291,8 @@ admin:
         gift_header: Darované predplatné
 
     subscription_button:
-        title: Upraviť predplatné
+        header: Predplatné
+        edit: Upraviť predplatné
         show: Zobraziť predplatné
 
     actual_subscription_label:

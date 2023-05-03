@@ -83,7 +83,7 @@
           {var $payment = $subscription->related('payments')->limit(1)->fetch()}
           <small class="text-muted">
             {if $payment}
-              #{$payment->id}
+              <a href="{plink :Payments:PaymentsAdmin:show $payment->id}">#{$payment->id}</a>
             {else}
               n/a
             {/if}

@@ -290,7 +290,9 @@ admin:
         gift_header: Darované předplatné
 
     subscription_button:
-        title: Upravit předplatné
+        header: Předplatné
+        edit: Upravit předplatné
+        show: Zobrazit předplatné
 
     actual_subscription_label:
         actual: Aktuální
