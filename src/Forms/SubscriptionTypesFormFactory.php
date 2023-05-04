@@ -180,7 +180,8 @@ class SubscriptionTypesFormFactory
         $form->addCheckbox('visible', 'subscriptions.data.subscription_types.fields.visible');
         $form->addCheckbox('disable_notifications', 'subscriptions.data.subscription_types.fields.disable_notifications');
 
-        $form->addtext('sorting', 'subscriptions.data.subscription_types.fields.sorting');
+        $form->addText('sorting', 'subscriptions.data.subscription_types.fields.sorting')
+            ->setDefaultValue(10);
 
         /** @var SubscriptionTypeFormProviderInterface[] $providers */
         $providers = $this->dataProviderManager->getProviders('subscriptions.dataprovider.subscription_type_form', SubscriptionTypeFormProviderInterface::class);
