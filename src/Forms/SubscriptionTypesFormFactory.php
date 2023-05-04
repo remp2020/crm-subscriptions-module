@@ -301,7 +301,8 @@ class SubscriptionTypesFormFactory
                 ->setCode($values['code'])
                 ->setAskAddress($values['ask_address'])
                 ->setDisabledNotifications($values['disable_notifications'])
-                ->setRecurrentChargeBefore($values['recurrent_charge_before']);
+                ->setRecurrentChargeBefore($values['recurrent_charge_before'])
+                ->setNextSubscriptionTypeId($values['next_subscription_type_id']);
 
             $contentAccesses = $this->contentAccessRepository->all();
             $contentAccessValues = [];
