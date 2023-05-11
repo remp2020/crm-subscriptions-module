@@ -23,6 +23,7 @@ use Crm\SubscriptionsModule\DataProvider\FilterAbusiveUserFormDataProvider;
 use Crm\SubscriptionsModule\DataProvider\SubscriptionsClaimUserDataProvider;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Scenarios\ContentAccessCriteria;
+use Crm\SubscriptionsModule\Scenarios\FirstSubscriptionInPeriodCriteria;
 use Crm\SubscriptionsModule\Scenarios\HasDisabledNotificationsCriteria;
 use Crm\SubscriptionsModule\Scenarios\HasLaterEndingSubscriptionCriteria;
 use Crm\SubscriptionsModule\Scenarios\IsExpiredByAdminCriteria;
@@ -278,6 +279,7 @@ class SubscriptionsModule extends CrmModule
         $scenariosCriteriaStorage->register('subscription', SubscriptionTypeLengthCriteria::KEY, $this->getInstance(SubscriptionTypeLengthCriteria::class));
         $scenariosCriteriaStorage->register('subscription', HasLaterEndingSubscriptionCriteria::KEY, $this->getInstance(HasLaterEndingSubscriptionCriteria::class));
         $scenariosCriteriaStorage->register('subscription', IsExpiredByAdminCriteria::KEY, $this->getInstance(IsExpiredByAdminCriteria::class));
+        $scenariosCriteriaStorage->register('subscription', FirstSubscriptionInPeriodCriteria::KEY, $this->getInstance(FirstSubscriptionInPeriodCriteria::class));
     }
 
     public function registerSegmentCriteria(CriteriaStorage $criteriaStorage)

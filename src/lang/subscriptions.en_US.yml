@@ -264,6 +264,9 @@ admin:
             label: 'The subscription has another later ending subcription'
         is_expired_by_admin:
             label: 'Expired by admin'
+        first_subscription_in_period:
+            label: "First subscription in period"
+            unit: "Number of days"
 
     actual_user_subscriptions:
         header: Subscription

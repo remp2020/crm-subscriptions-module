@@ -257,6 +257,9 @@ admin:
             label: 'Má další předplatné končící později'
         is_expired_by_admin:
             label: 'Ukončeno adminem'
+        first_subscription_in_period:
+            label: "První předplatné za zvolené období"
+            unit: "Počet dní"
 
     actual_user_subscriptions:
         header: Předplatné
