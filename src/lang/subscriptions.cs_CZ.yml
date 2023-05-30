@@ -60,7 +60,9 @@ data:
             ask_address: Vyžádej adresu
             disable_notifications: Vypnuté notifikace
             extension_method_id: Způsob prodloužení předplatného
+            length_method_id: Způsob výpočtu délky předplatného
             recurrent_charge_before: "Realizace následující platby (počet hodin před vypršením)"
+            subscription_type_items: Položky předplatného
             items: Položky
         required:
             name: Název je povinný
@@ -78,6 +80,7 @@ data:
             next_subscription_type_id: ID
             length: například 31
             extending_length: například 35
+            fixed_start: například 3.4.2020
             fixed_end: například 3.5.2020
             price: například 325
         description:
@@ -167,6 +170,10 @@ admin:
             subscription_type_created: Typ předplatného byl vytvořen.
             subscription_type_updated: Typ předplatného byl upraven.
             subscription_type_not_found: Typ předplatného se nepodařilo nalézt.
+            subscription_type_item_created: Položka předplatného byla vytvořena.
+            subscription_type_item_deleted: Položka předplatného byla vymazána.
+            subscription_types_wrong_amount: 'Nesedí částka za položky s částkou předplatného. Rozdíl <strong>%price%</strong>.'
+            no_subscription_type_items: Žádné položky k předplatnému zatím nebyly vytvořeny.
             subscription_type_not_editable: 'Typ předplatného nelze upravovat, protože obsahuje metadata.'
         save: Uložit typ předplatného
         form:
@@ -357,6 +364,23 @@ admin:
         submit: Filtrovat
         cancel_filter: Zrušit filtr
         more: Více možností
+
+measurements:
+    active_subscriptions:
+        title: "Aktivní předplatné"
+        description: "Počet aktivních předplatných ve vybraných dnech. Počítá všechny aktivní předplatné, bez ohledu na uživatele."
+    active_subscribers:
+        title: "Aktivní uživatelé"
+        description: "Počet unikátních uživatelů s aktivním předplatným."
+    active_paying_subscribers:
+        title: "Aktivní platící uživatelé"
+        description: "Počet unikátních uživatelů s aktivním placeným předplatným."
+    started_subscriptions:
+        title: "Zahájené předplatné"
+        description: "Počet zahájených předplatných za vybrané období."
+    ended_subscriptions:
+        title: "Skončené předplatné"
+        description: "Počet skončených předplatných za vybrané období."
 
 data_provider:
     delete:
