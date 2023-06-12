@@ -3,6 +3,8 @@
 namespace Crm\SubscriptionsModule\Repository;
 
 use Crm\ApplicationModule\Repository;
+use Nette\Caching\Storage;
+use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 use Nette\Utils\DateTime;
@@ -10,6 +12,14 @@ use Nette\Utils\DateTime;
 class ContentAccessRepository extends Repository
 {
     protected $tableName = 'content_access';
+
+    public function __construct(
+        private SubscriptionTypeContentAccessRepository $subscriptionTypeContentAccessRepository,
+        Explorer $database,
+        Storage $cacheStorage = null
+    ) {
+        parent::__construct($database, $cacheStorage);
+    }
 
     final public function all(): Selection
     {
@@ -64,19 +74,20 @@ class ContentAccessRepository extends Repository
 
     final public function addAccess(ActiveRow $subscriptionType, $name)
     {
-        $this->getDatabase()->table('subscription_type_content_access')->insert([
-            'subscription_type_id' => $subscriptionType->id,
-            'content_access_id' => $this->getId($name),
-            'created_at' => new DateTime(),
-        ]);
+        $contentAccess = $this->getByName($name);
+        $this->subscriptionTypeContentAccessRepository->add(
+            subscriptionType: $subscriptionType,
+            contentAccess: $contentAccess,
+        );
     }
 
     final public function removeAccess(ActiveRow $subscriptionType, $name)
     {
-        $this->getDatabase()->table('subscription_type_content_access')->where([
-            'subscription_type_id' => $subscriptionType->id,
-            'content_access_id' => $this->getId($name),
-        ])->delete();
+        $contentAccess = $this->getByName($name);
+        $this->subscriptionTypeContentAccessRepository->remove(
+            subscriptionType: $subscriptionType,
+            contentAccess: $contentAccess,
+        );
     }
 
     final public function getId($name)

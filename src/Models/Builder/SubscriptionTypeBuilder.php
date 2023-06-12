@@ -4,28 +4,22 @@ namespace Crm\SubscriptionsModule\Builder;
 
 use Crm\ApplicationModule\Builder\Builder;
 use Crm\ApplicationModule\Config\ApplicationConfig;
+use Crm\SubscriptionsModule\Events\SubscriptionTypeCreatedEvent;
 use Crm\SubscriptionsModule\Length\FixDaysLengthMethod;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemMetaRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
+use League\Event\Emitter;
 use Nette\Database\Explorer;
 use Nette\Utils\DateTime;
 
 class SubscriptionTypeBuilder extends Builder
 {
-    private $applicationConfig;
-
     protected $tableName = 'subscription_types';
 
     protected $metaTableName = 'subscription_types_meta';
 
     private $subscriptionTypeItemsTable = 'subscription_type_items';
-
-    private $contentAccessRepository;
-
-    private $subscriptionTypesRepository;
-
-    private $subscriptionTypeItemMetaRepository;
 
     private $metaItems = [];
 
@@ -33,16 +27,13 @@ class SubscriptionTypeBuilder extends Builder
 
     public function __construct(
         Explorer $database,
-        ApplicationConfig $applicationConfig,
-        ContentAccessRepository $contentAccessRepository,
-        SubscriptionTypeItemMetaRepository $subscriptionTypeItemMetaRepository,
-        SubscriptionTypesRepository $subscriptionTypesRepository
+        private Emitter $emitter,
+        private ApplicationConfig $applicationConfig,
+        private ContentAccessRepository $contentAccessRepository,
+        private SubscriptionTypeItemMetaRepository $subscriptionTypeItemMetaRepository,
+        private SubscriptionTypesRepository $subscriptionTypesRepository
     ) {
         parent::__construct($database);
-        $this->applicationConfig = $applicationConfig;
-        $this->contentAccessRepository = $contentAccessRepository;
-        $this->subscriptionTypesRepository = $subscriptionTypesRepository;
-        $this->subscriptionTypeItemMetaRepository = $subscriptionTypeItemMetaRepository;
     }
 
     public function isValid()
@@ -247,11 +238,11 @@ class SubscriptionTypeBuilder extends Builder
         $access = $this->contentAccessRepository->all()->fetchPairs('name', 'name');
 
         foreach ($access as $key) {
-            if (isset($values[$key])) {
-                if (!$this->contentAccessRepository->hasAccess($subscriptionType, $key)) {
-                    $this->contentAccessRepository->addAccess($subscriptionType, $key);
-                }
-            } else {
+            $hasAccess = $this->contentAccessRepository->hasAccess($subscriptionType, $key);
+            if (!$hasAccess && isset($values[$key])) {
+                $this->contentAccessRepository->addAccess($subscriptionType, $key);
+            }
+            if ($hasAccess && !isset($values[$key])) {
                 $this->contentAccessRepository->removeAccess($subscriptionType, $key);
             }
         }
@@ -269,6 +260,7 @@ class SubscriptionTypeBuilder extends Builder
         }
 
         $subscriptionType = parent::store($tableName);
+
         $this->processContentTypes($subscriptionType, $contentAccess);
 
         if (count($this->subscriptionTypeItems)) {
@@ -310,6 +302,8 @@ class SubscriptionTypeBuilder extends Builder
                 'updated_at' => new DateTime(),
             ]);
         }
+
+        $this->emitter->emit(new SubscriptionTypeCreatedEvent($subscriptionType));
 
         return $subscriptionType;
     }
