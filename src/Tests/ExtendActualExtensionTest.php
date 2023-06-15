@@ -7,7 +7,7 @@ use Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder;
 use Crm\SubscriptionsModule\Extension\ExtendActualExtension;
 use Crm\SubscriptionsModule\Repository\SubscriptionExtensionMethodsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionLengthMethodsRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypeContentAccess;
+use Crm\SubscriptionsModule\Repository\SubscriptionTypeContentAccessRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeNamesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
@@ -51,7 +51,7 @@ class ExtendActualExtensionTest extends DatabaseTestCase
     {
         return [
             SubscriptionsRepository::class,
-            SubscriptionTypeContentAccess::class,
+            SubscriptionTypeContentAccessRepository::class,
             SubscriptionTypesRepository::class,
             SubscriptionTypeNamesRepository::class,
             SubscriptionExtensionMethodsRepository::class,

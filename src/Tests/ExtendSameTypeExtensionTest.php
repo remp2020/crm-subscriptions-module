@@ -8,7 +8,7 @@ use Crm\SubscriptionsModule\Extension\ExtendSameTypeExtension;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionExtensionMethodsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionLengthMethodsRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypeContentAccess;
+use Crm\SubscriptionsModule\Repository\SubscriptionTypeContentAccessRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeNamesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
@@ -54,7 +54,7 @@ class ExtendSameTypeExtensionTest extends DatabaseTestCase
         return [
             ContentAccessRepository::class,
             SubscriptionsRepository::class,
-            SubscriptionTypeContentAccess::class,
+            SubscriptionTypeContentAccessRepository::class,
             SubscriptionTypesRepository::class,
             SubscriptionTypeNamesRepository::class,
             SubscriptionExtensionMethodsRepository::class,
