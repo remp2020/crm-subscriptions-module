@@ -7,6 +7,7 @@ use Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Scenarios\FirstSubscriptionInPeriodCriteria;
+use Crm\SubscriptionsModule\Seeders\ContentAccessSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
@@ -31,20 +32,29 @@ class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
             SubscriptionExtensionMethodsSeeder::class,
             SubscriptionLengthMethodSeeder::class,
             SubscriptionTypeNamesSeeder::class,
+            ContentAccessSeeder::class,
         ];
     }
 
     /**
-     * @dataProvider dataProviderForTestDonationAmountCriteria
+     * @dataProvider dataProviderForFirstSubscriptionInPeriodCriteria
      */
     public function testFirstSubscriptionInPeriodCriteria(
         string $currentStartTime,
+        array $currentContentAccesses,
         ?string $previousStartTime,
+        array $previousContentAccesses,
         mixed $intervalDays,
+        array $contentAccesses,
         bool $expectedValue,
         ?\Exception $expectedException = null
     ) {
-        [$subscriptionSelection, $subscriptionRow] = $this->prepareData($previousStartTime, $currentStartTime);
+        [$subscriptionSelection, $subscriptionRow] = $this->prepareData(
+            $currentStartTime,
+            $currentContentAccesses,
+            $previousStartTime,
+            $previousContentAccesses,
+        );
 
         $criteria = $this->inject(FirstSubscriptionInPeriodCriteria::class);
         $values = (object)['selection' => $intervalDays];
@@ -53,7 +63,13 @@ class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
             $this->expectExceptionObject($expectedException);
         }
 
-        $criteria->addConditions($subscriptionSelection, [FirstSubscriptionInPeriodCriteria::KEY => $values], $subscriptionRow);
+        $conditions = [FirstSubscriptionInPeriodCriteria::PERIOD_KEY => $values];
+
+        if (!empty($contentAccesses)) {
+            $conditions[FirstSubscriptionInPeriodCriteria::CONTENT_ACCESS_KEY] = (object)['selection' => $contentAccesses];
+        }
+
+        $criteria->addConditions($subscriptionSelection, $conditions, $subscriptionRow);
 
         if ($expectedValue) {
             $this->assertNotNull($subscriptionSelection->fetch());
@@ -63,46 +79,103 @@ class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
     }
 
 
-    public function dataProviderForTestDonationAmountCriteria(): array
+    public function dataProviderForFirstSubscriptionInPeriodCriteria(): array
     {
         return [
             'SingleSubscription_ShouldBeTrue' => [
                 'currentStartTime' => 'now',
+                'currentContentAccesses' => ['web'],
                 'previousStartTime' => null,
+                'previousContentAccesses' => [],
                 'intervalDays' => 50,
+                'contentAccesses' => [],
                 'expectedValue' => true,
             ],
             'PreviousSubscriptionWithinPeriod_ShouldBeFalse' => [
                 'currentStartTime' => 'now',
+                'currentContentAccesses' => ['web'],
                 'previousStartTime' => '-20 days',
+                'previousContentAccesses' => ['web'],
                 'intervalDays' => 50,
+                'contentAccesses' => [],
                 'expectedValue' => false,
             ],
             'PreviousSubscriptionOutsidePeriod_ShouldBeTrue' => [
                 'currentStartTime' => 'now',
+                'currentContentAccesses' => ['web'],
                 'previousStartTime' => '-100 days',
+                'previousContentAccesses' => ['web'],
                 'intervalDays' => 50,
+                'contentAccesses' => [],
                 'expectedValue' => true,
             ],
             'Fail_ValueIsNegative' => [
                 'currentStartTime' => 'now',
+                'currentContentAccesses' => ['web'],
                 'previousStartTime' => null,
+                'previousContentAccesses' => [],
                 'intervalDays' => -10,
+                'contentAccesses' => [],
                 'expectedValue' => false,
                 'expectedException' => new \Exception("Provided value [-10] for number of days is not valid positive integer."),
             ],
             'Fail_ValueIsString' => [
                 'currentStartTime' => 'now',
+                'currentContentAccesses' => ['web'],
                 'previousStartTime' => null,
+                'previousContentAccesses' => [],
                 'intervalDays' => 'random_string',
+                'contentAccesses' => [],
                 'expectedValue' => false,
                 'expectedException' => new \Exception("Provided value [random_string] for number of days is not valid positive integer."),
+            ],
+
+            // with content access filter
+            'ContentAccessFilter_SingleSubscription_ShouldBeTrue' => [
+                'currentStartTime' => 'now',
+                'currentContentAccesses' => ['web'],
+                'previousStartTime' => null,
+                'previousContentAccesses' => [],
+                'intervalDays' => 50,
+                'contentAccesses' => ['web'],
+                'expectedValue' => true,
+            ],
+            'ContentAccessFilter_PreviousSubscriptionWithinPeriod_SameContentAccess_ShouldBeFalse' => [
+                'currentStartTime' => 'now',
+                'currentContentAccesses' => ['web'],
+                'previousStartTime' => '-20 days',
+                'previousContentAccesses' => ['web'],
+                'intervalDays' => 50,
+                'contentAccesses' => ['web'],
+                'expectedValue' => false,
+            ],
+            'ContentAccessFilter_PreviousSubscriptionWithinPeriod_DifferentContentAccess_ShouldBeTrue' => [
+                'currentStartTime' => 'now',
+                'currentContentAccesses' => ['web', 'print'],
+                'previousStartTime' => '-20 days',
+                'previousContentAccesses' => ['web'],
+                'intervalDays' => 50,
+                'contentAccesses' => ['print'],
+                'expectedValue' => true,
+            ],
+            'ContentAccessFilter_CurrentNotMatchingContentAccessSelection_ShouldBeFalse' => [
+                'currentStartTime' => 'now',
+                'currentContentAccesses' => ['web', 'print'],
+                'previousStartTime' => '-20 days',
+                'previousContentAccesses' => ['web'],
+                'intervalDays' => 50,
+                'contentAccesses' => ['mobile'],
+                'expectedValue' => false,
             ],
         ];
     }
 
-    private function prepareData(?string $previousStartTime, string $currentStartTime)
-    {
+    private function prepareData(
+        string $currentStartTime,
+        array $currentContentAccess,
+        ?string $previousStartTime,
+        array $previousContentAccess,
+    ) {
         /** @var UserManager $userManager */
         $userManager = $this->inject(UserManager::class);
         $userRow = $userManager->addNewUser('test@test.sk');
@@ -110,10 +183,19 @@ class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
         /** @var SubscriptionTypeBuilder $subscriptionTypeBuilder */
         $subscriptionTypeBuilder = $this->inject(SubscriptionTypeBuilder::class);
         $subscriptionTypeRow = $subscriptionTypeBuilder->createNew()
-            ->setNameAndUserLabel('test')
             ->setLength(10)
             ->setPrice(1)
             ->setActive(1)
+        ;
+
+        $previousSubscriptionTypeRow = clone($subscriptionTypeRow)
+            ->setContentAccessOption(...$previousContentAccess)
+            ->setNameAndUserLabel('test previous')
+            ->save();
+
+        $currentSubscriptionTypeRow = clone($subscriptionTypeRow)
+            ->setNameAndUserLabel('test current')
+            ->setContentAccessOption(...$currentContentAccess)
             ->save();
 
         /** @var SubscriptionsRepository $subscriptionsRepository */
@@ -121,7 +203,7 @@ class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
 
         if ($previousStartTime) {
             $subscriptionsRepository->add(
-                subscriptionType: $subscriptionTypeRow,
+                subscriptionType: $previousSubscriptionTypeRow,
                 isRecurrent: false,
                 isPaid: false,
                 user: $userRow,
@@ -129,7 +211,7 @@ class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
             );
         }
         $subscriptionRow = $subscriptionsRepository->add(
-            subscriptionType: $subscriptionTypeRow,
+            subscriptionType: $currentSubscriptionTypeRow,
             isRecurrent: false,
             isPaid: false,
             user: $userRow,

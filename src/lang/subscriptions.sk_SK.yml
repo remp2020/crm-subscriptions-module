@@ -265,8 +265,11 @@ admin:
         is_expired_by_admin:
             label: 'Ukončené adminom'
         first_subscription_in_period:
-            label: "Prvé predplatné za zvolené obdobie"
-            unit: "Počet dní"
+            period:
+                label: "Prvé predplatné za zvolené obdobie"
+                unit: "Počet dní"
+            content_access:
+                label: 'Prístup k obsahu (môže byť prázdne, ak hľadáme prvé predplatné akéhokoľvek prístupu)'
 
     actual_user_subscriptions:
         header: Predplatné
