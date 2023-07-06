@@ -292,6 +292,9 @@ class SubscriptionsRepository extends Repository
         switch ($subscription->internal_status) {
             case self::INTERNAL_STATUS_ACTIVE:
                 $this->emitter->emit(new SubscriptionStartsEvent($subscription));
+                $this->hermesEmitter->emit(new HermesMessage('subscription-starts', [
+                    'subscription_id' => $subscription->id,
+                ]));
                 break;
             case self::INTERNAL_STATUS_AFTER_END:
                 $this->emitter->emit(new SubscriptionEndsEvent($subscription));
