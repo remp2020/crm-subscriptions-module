@@ -62,12 +62,12 @@ class SubscriptionTypeItemsRepository extends Repository
         return $this->getItemsForSubscriptionType($subscriptionType)->order('sorting ASC');
     }
 
-    final public function softDelete(ActiveRow $subscriptionTypeItem): bool
+    final public function softDelete(ActiveRow $subscriptionTypeItem, bool $force = false): bool
     {
         return $this->update($subscriptionTypeItem, [
             'deleted_at' => new DateTime(),
             'updated_at' => new DateTime(),
-        ]);
+        ], $force);
     }
 
     final public function getItemsForSubscriptionType(ActiveRow $subscriptionType): GroupedSelection
