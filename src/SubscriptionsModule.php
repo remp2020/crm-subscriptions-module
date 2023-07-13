@@ -354,7 +354,7 @@ class SubscriptionsModule extends CrmModule
         $eventsStorage->register('new_subscription', Events\NewSubscriptionEvent::class, true);
         $eventsStorage->register('subscription_pre_update', Events\SubscriptionPreUpdateEvent::class);
         $eventsStorage->register('subscription_updated', Events\SubscriptionUpdatedEvent::class);
-        $eventsStorage->register('subscription_starts', Events\SubscriptionStartsEvent::class);
+        $eventsStorage->register('subscription_starts', Events\SubscriptionStartsEvent::class, true);
         $eventsStorage->register('subscription_ends', Events\SubscriptionEndsEvent::class, true);
     }
 
