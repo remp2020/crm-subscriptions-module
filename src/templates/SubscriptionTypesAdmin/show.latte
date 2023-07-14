@@ -43,6 +43,12 @@
           <span class="label label-default">{_subscriptions.data.subscription_types.values.hidden}</span>
         {/if}
       </li>
+      <li class="list-group-item">
+        <b>{_subscriptions.data.subscription_types.fields.tag}:</b>
+        {foreach $type->related('subscription_type_tags') as $tag}
+          <span class="label label-default">{$tag->tag}</span>
+        {/foreach}
+      </li>
       <li n:if="$type->ask_address" class="list-group-item">
         <span class="label label-default">{_subscriptions.data.subscription_types.fields.ask_address}</span>
       </li>

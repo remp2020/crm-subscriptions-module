@@ -3,6 +3,7 @@
 namespace Crm\SubscriptionsModule\Forms;
 
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
+use Crm\SubscriptionsModule\Repository\SubscriptionTypeTagsRepository;
 use Nette\Application\UI\Form;
 use Nette\Localization\Translator;
 use Tomaj\Form\Renderer\BootstrapRenderer;
@@ -15,7 +16,8 @@ class AdminFilterFormFactory
 
     public function __construct(
         private Translator $translator,
-        private ContentAccessRepository $contentAccessRepository
+        private ContentAccessRepository $contentAccessRepository,
+        private SubscriptionTypeTagsRepository $subscriptionTypeTagsRepository,
     ) {
     }
 
@@ -32,6 +34,12 @@ class AdminFilterFormFactory
         $form->addText('name', 'subscriptions.admin.admin_filter_form.name.label');
         $form->addText('code', 'subscriptions.admin.admin_filter_form.code.label');
         $form->addMultiSelect('content_access', 'subscriptions.admin.admin_filter_form.content_access.label', $contentAccessPairs)
+            ->getControlPrototype()->addAttributes(['class' => 'select2']);
+
+        $tags = $this->subscriptionTypeTagsRepository
+            ->tagsSortedByOccurrences();
+
+        $form->addMultiSelect('tag', 'subscriptions.admin.admin_filter_form.tag.label', $tags)
             ->getControlPrototype()->addAttributes(['class' => 'select2']);
 
         $collapseGroup = $form->addGroup('collapse')

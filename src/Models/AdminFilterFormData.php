@@ -2,6 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Models;
 
+use Crm\SubscriptionsModule\Repository\SubscriptionTypeTagsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Nette\Database\Table\Selection;
 
@@ -10,7 +11,8 @@ class AdminFilterFormData
     private array $formData;
 
     public function __construct(
-        private SubscriptionTypesRepository $subscriptionTypesRepository
+        private SubscriptionTypesRepository $subscriptionTypesRepository,
+        private SubscriptionTypeTagsRepository $subscriptionTypeTagsRepository,
     ) {
     }
 
@@ -62,6 +64,19 @@ class AdminFilterFormData
             $subscriptionTypes->where('subscription_types.default = ?', $this->getDefault());
         }
 
+        if ($this->getTags()) {
+            $tagsTable = $this->subscriptionTypeTagsRepository->getTable();
+
+            // Get every id that has all the tags we want to filter for
+            $filteredIds = $tagsTable
+                ->select('subscription_type_id')
+                ->where('tag', $this->getTags())
+                ->group('subscription_type_id')
+                ->having('COUNT(DISTINCT tag) = ?', count($this->getTags()));
+
+            $subscriptionTypes->where('subscription_types.id', $filteredIds);
+        }
+
         return $subscriptionTypes;
     }
 
@@ -76,6 +91,7 @@ class AdminFilterFormData
             'price_to' => $this->getPriceTo(),
             'length_from' => $this->getLengthFrom(),
             'length_to' => $this->getLengthTo(),
+            'tag' => $this->getTags(),
         ];
     }
 
@@ -117,5 +133,10 @@ class AdminFilterFormData
     private function getLengthTo(): ?float
     {
         return $this->formData['length_to'] ?? null;
+    }
+
+    private function getTags(): ?array
+    {
+        return $this->formData['tag'] ?? null;
     }
 }

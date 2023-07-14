@@ -11,6 +11,7 @@ use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionExtensionMethodsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionLengthMethodsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemsRepository;
+use Crm\SubscriptionsModule\Repository\SubscriptionTypeTagsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Subscription\SubscriptionTypeHelper;
 use Nette\Application\UI\Form;
@@ -32,6 +33,7 @@ class SubscriptionTypesFormFactory
         private SubscriptionExtensionMethodsRepository $subscriptionExtensionMethodsRepository,
         private SubscriptionLengthMethodsRepository $subscriptionLengthMethodsRepository,
         private ContentAccessRepository $contentAccessRepository,
+        private SubscriptionTypeTagsRepository $subscriptionTypeTagsRepository,
         private Translator $translator,
         private DataProviderManager $dataProviderManager,
         private SubscriptionTypeHelper $subscriptionTypeHelper
@@ -183,6 +185,21 @@ class SubscriptionTypesFormFactory
         $form->addText('sorting', 'subscriptions.data.subscription_types.fields.sorting')
             ->setDefaultValue(10);
 
+        $sortedByOccurrences = $this->subscriptionTypeTagsRepository
+            ->tagsSortedByOccurrences();
+
+        $setTags = $this->subscriptionTypeTagsRepository->all()
+            ->where(['subscription_type_id' => $subscriptionTypeId])
+            ->fetchPairs('tag', 'tag');
+
+        $tagMultiSelect = $form->addMultiSelect('tags', 'subscriptions.data.subscription_types.fields.tag', $sortedByOccurrences)
+            ->checkDefaultValue(false)
+            ->setDefaultValue($setTags)
+            ->getControlPrototype()->addAttributes([
+                'class' => 'select2',
+                'tags' => 'true',
+            ]);
+
         /** @var SubscriptionTypeFormProviderInterface[] $providers */
         $providers = $this->dataProviderManager->getProviders('subscriptions.dataprovider.subscription_type_form', SubscriptionTypeFormProviderInterface::class);
         foreach ($providers as $sorting => $provider) {
@@ -200,11 +217,17 @@ class SubscriptionTypesFormFactory
 
         $form->setDefaults($defaults);
 
-        $form->onValidate[] = [$this, 'validateItemsAmount'];
+        $form->onValidate[] = [$this, 'validateForm'];
 
         $form->onSuccess[] = [$this, 'formSucceeded'];
 
         return $form;
+    }
+
+    public function validateForm(Form $form, $b)
+    {
+        $this->validateItemsAmount($form);
+        $this->validateTagText($form);
     }
 
     public function validateItemsAmount(Form $form)
@@ -221,7 +244,19 @@ class SubscriptionTypesFormFactory
         }
     }
 
-    public function formSucceeded($form, $values)
+    public function validateTagText(Form $form)
+    {
+        // The database currently uses a varchar(255) so we need to check that the string doesn't grow too long
+        $tags = $form->getComponent('tags')->getRawValue();
+        foreach ($tags as $tag) {
+            $tagLen = mb_strlen($tag, 'utf8');
+            if ($tagLen > 255) {
+                $form->addError('subscriptions.admin.subscription_type_items.tag_len_error');
+            };
+        }
+    }
+
+    public function formSucceeded(Form $form, $values)
     {
         if ($values['limit_per_user'] === '') {
             $values['limit_per_user'] = null;
@@ -246,6 +281,13 @@ class SubscriptionTypesFormFactory
         if ($values['extending_length'] === '') {
             $values['extending_length'] = null;
         }
+
+        // Nette checks if the selected items were originally present in the multi select and if not removes them.
+        // In this case, we want to ignore this safety check
+        $tags = $form->getComponent('tags')->getRawValue();
+        // We have to remove the tags from the $values variable,
+        // or this function attempts to insert the tags array into the database
+        unset($values['tags']);
 
         $contentAccesses = $this->contentAccessRepository->all();
 
@@ -281,6 +323,8 @@ class SubscriptionTypesFormFactory
             foreach ($items as $item) {
                 $this->subscriptionTypeItemsRepository->add($subscriptionType, $item['name'], $item['amount'], $item['vat']);
             }
+
+            $this->subscriptionTypeTagsRepository->setTagsForSubscriptionType($subscriptionType, $tags);
 
             $this->onUpdate->__invoke($subscriptionType);
         } else {
@@ -333,6 +377,7 @@ class SubscriptionTypesFormFactory
                 $form['name']->addError(implode("\n", $this->subscriptionTypeBuilder->getErrors()));
             } else {
                 $this->subscriptionTypeBuilder->processContentTypes($subscriptionType, (array) $values);
+                $this->subscriptionTypeTagsRepository->setTagsForSubscriptionType($subscriptionType->id, $tags);
                 $this->onSave->__invoke($subscriptionType);
             }
         }

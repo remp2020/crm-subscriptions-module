@@ -14,6 +14,7 @@ services:
 	subscriptionTypesMetaRepository: Crm\SubscriptionsModule\Repository\SubscriptionTypesMetaRepository
 	contentAccessRepository: Crm\SubscriptionsModule\Repository\ContentAccessRepository
 	subscriptionTypeItemMetaRepository: Crm\SubscriptionsModule\Repository\SubscriptionTypeItemMetaRepository
+	subscriptionTypeTagsRepository: Crm\SubscriptionsModule\Repository\SubscriptionTypeTagsRepository
 
 	measurementManager:
 		setup:

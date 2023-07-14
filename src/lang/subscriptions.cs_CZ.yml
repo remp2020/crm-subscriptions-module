@@ -64,6 +64,7 @@ data:
             recurrent_charge_before: "Realizace následující platby (počet hodin před vypršením)"
             subscription_type_items: Položky předplatného
             items: Položky
+            tag: Tagy
         required:
             name: Název je povinný
             length: "Délka (ve dnech) je povinná"
@@ -203,6 +204,7 @@ admin:
         remove: Odstranit položku
         vat: DPH
         sum_error: Součet cen položek předplatného musí být rovný ceně typu předplatného.
+        tag_len_error: Tag nemůže být delší než 255 znaků.
 
     subscription_generator:
         form:
@@ -364,6 +366,8 @@ admin:
             label: Délka do (včetně)
         default:
             label: Pouze základní (default)
+        tag:
+            label: Tagy
         submit: Filtrovat
         cancel_filter: Zrušit filtr
         more: Více možností

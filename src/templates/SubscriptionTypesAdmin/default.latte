@@ -32,6 +32,7 @@
           <th>{_'subscriptions.data.subscription_types.fields.content'}</th>
           <th>{_'subscriptions.data.subscription_types.fields.active'}</th>
           <th>{_'subscriptions.data.subscription_types.fields.visible'}</th>
+          <th>{_'subscriptions.data.subscription_types.fields.tag'}</th>
           <th>{_'system.actions'}</th>
         </tr>
       </thead>
@@ -81,6 +82,11 @@
             <span n:if="$type->visible" class="label label-success">{_'subscriptions.data.subscription_types.values.visible'}</span>
             <span n:if="!$type->visible" class="label label-default">{_'subscriptions.data.subscription_types.values.hidden'}</span>
           </td>
+          <td>
+            {foreach $type->related('subscription_type_tags') as $tag}
+              <span class="label label-default">{$tag->tag}</span>
+            {/foreach}
+          </td>
           <td style="white-space: nowrap">
             <p class="text-nowrap">
               <a n:href="SubscriptionTypesAdmin:Show $type->id" class="btn btn-sm btn-info" title="{_'system.show'}"><i class="fa fa-eye"></i> </a>
@@ -103,7 +109,9 @@
         <th>{_'subscriptions.data.subscription_types.fields.content'}</th>
         <th>{_'subscriptions.data.subscription_types.fields.active'}</th>
         <th>{_'subscriptions.data.subscription_types.fields.visible'}</th>
+        <th>{_'subscriptions.data.subscription_types.fields.tag'}</th>
         <th>{_'system.actions'}</th>
+
       </tr>
       </thead>
       <tbody>
@@ -141,6 +149,11 @@
         <td>
           <span n:if="$type->visible" class="label label-success">{_'subscriptions.data.subscription_types.values.visible'}</span>
           <span n:if="!$type->visible" class="label label-default">{_'subscriptions.data.subscription_types.values.hidden'}</span>
+        </td>
+        <td>
+          {foreach $type->related('subscription_type_tags') as $tag}
+            <span class="label label-default">{$tag->tag}</span>
+          {/foreach}
         </td>
         <td style="white-space: nowrap">
           <p class="text-nowrap">

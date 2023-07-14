@@ -64,6 +64,7 @@ data:
             recurrent_charge_before: "Recurrent charge before (hours)"
             subscription_type_items: Subscripton items
             items: Items
+            tag: Tags
         required:
             name: Name is required
             length: "Length (in days) is required"
@@ -203,6 +204,7 @@ admin:
         remove: Remove item
         vat: VAT
         sum_error: The sum of subscription item prices must be equal to the subscription type price.
+        tag_len_error: A tag can't have more than 255 characters.
 
     subscription_generator:
         form:
@@ -364,6 +366,8 @@ admin:
             label: Length from (inclusive)
         default:
             label: Only default
+        tag:
+            label: Tags
         submit: Filter
         cancel_filter: Cancel filter
         more: More options
