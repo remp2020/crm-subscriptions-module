@@ -124,7 +124,9 @@ Response:
             "code": "web_year", // String; subscription code (slug)
             "access": [ // Array: list of all types of content subscription includes
                 "web" // String; name of the content type
-            ]
+            ],
+            "name": "Web year subscription type",
+            "user_label": "Web year",
         },
         {
             "start_at": "2019-03-05T00:00:00+01:00",
@@ -133,7 +135,9 @@ Response:
             "access": [
                 "web",
                 "mobile"
-            ]
+            ],
+            "name": "Web year subscription type with mobile access",
+            "user_label": "Web & Mobile",
         }
     ]
 }

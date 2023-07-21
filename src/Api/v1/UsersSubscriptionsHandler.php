@@ -87,6 +87,8 @@ class UsersSubscriptionsHandler extends ApiHandler
             'end_at' => $subscription->end_time->format('c'),
             'code' => $subscriptionType->code,
             'access' => $access,
+            'name' => $subscriptionType->name,
+            'label' => $subscriptionType->user_label,
         ];
     }
 }
