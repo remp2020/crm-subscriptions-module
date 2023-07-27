@@ -10,11 +10,11 @@ class SubscriptionTypeTagsRepository extends Repository
 {
     protected $tableName = 'subscription_type_tags';
 
-    final public function add(ActiveRow $subscriptionType, string $tag_name): void
+    final public function add(ActiveRow $subscriptionType, string $tagName): void
     {
         $this->insert([
                 'subscription_type_id' => $subscriptionType->id,
-                'tag' => $tag_name
+                'tag' => $tagName
             ]);
     }
 
