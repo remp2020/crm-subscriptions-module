@@ -377,7 +377,7 @@ class SubscriptionTypesFormFactory
                 $form['name']->addError(implode("\n", $this->subscriptionTypeBuilder->getErrors()));
             } else {
                 $this->subscriptionTypeBuilder->processContentTypes($subscriptionType, (array) $values);
-                $this->subscriptionTypeTagsRepository->setTagsForSubscriptionType($subscriptionType->id, $tags);
+                $this->subscriptionTypeTagsRepository->setTagsForSubscriptionType($subscriptionType, $tags);
                 $this->onSave->__invoke($subscriptionType);
             }
         }
