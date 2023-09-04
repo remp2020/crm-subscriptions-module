@@ -2,9 +2,9 @@
 
 namespace Crm\SubscriptionsModule\Repository;
 
-use Crm\ApplicationModule\ActiveRow;
 use Crm\ApplicationModule\Repository;
 use Crm\ApplicationModule\Selection;
+use Nette\Database\Table\ActiveRow;
 
 class SubscriptionTypeTagsRepository extends Repository
 {
