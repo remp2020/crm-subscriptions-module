@@ -78,10 +78,14 @@ class FirstSubscriptionInPeriodCriteria implements ScenariosCriteriaInterface
                 ->alias('previous_subscriptions.subscription_type', 'previous_subscription_type')
                 ->alias('previous_subscription_type:subscription_type_content_access', 'previous_subscription_type_content_access')
                 ->alias('previous_subscription_type_content_access.content_access', 'previous_subscription_type_content_access_content_access')
-                ->whereOr([
-                    'previous_subscriptions.id IS NULL',
-                    'previous_subscription_type_content_access_content_access.name NOT IN (?)' => $paramValues[self::CONTENT_ACCESS_KEY]->selection
-            ]);
+                // whereOr() doesn't transform array of content accesses correctly to SQL (without implode). Using where() bypasses that issue
+                ->where(
+                    '(
+                        previous_subscriptions.id IS NULL
+                        OR previous_subscription_type_content_access_content_access.name NOT IN (?)
+                    )',
+                    $paramValues[self::CONTENT_ACCESS_KEY]->selection,
+                );
         }
 
         return true;

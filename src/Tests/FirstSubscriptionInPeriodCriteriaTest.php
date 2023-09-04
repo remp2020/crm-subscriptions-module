@@ -167,6 +167,53 @@ class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
                 'contentAccesses' => ['mobile'],
                 'expectedValue' => false,
             ],
+
+            // multiple content accesses
+            'ContentAccessFilter_TwoContentAccesses_SingleSubscription_ShouldBeTrue' => [
+                'currentStartTime' => 'now',
+                'currentContentAccesses' => ['web', 'print'],
+                'previousStartTime' => null,
+                'previousContentAccesses' => [],
+                'intervalDays' => 50,
+                'contentAccesses' => ['web', 'print'],
+                'expectedValue' => true,
+            ],
+            'ContentAccessFilter_TwoContentAccesses_PreviousSubscriptionWithinPeriod_SameContentAccess_ShouldBeFalse' => [
+                'currentStartTime' => 'now',
+                'currentContentAccesses' => ['web', 'print'],
+                'previousStartTime' => '-20 days',
+                'previousContentAccesses' => ['web', 'print'],
+                'intervalDays' => 50,
+                'contentAccesses' => ['web', 'print'],
+                'expectedValue' => false,
+            ],
+            'ContentAccessFilter_TwoContentAccesses_PreviousSubscriptionWithinPeriod_DifferentContentAccess_ShouldBeTrue' => [
+                'currentStartTime' => 'now',
+                'currentContentAccesses' => ['web', 'print'],
+                'previousStartTime' => '-20 days',
+                'previousContentAccesses' => ['web', 'mobile'],
+                'intervalDays' => 50,
+                'contentAccesses' => ['print'],
+                'expectedValue' => true,
+            ],
+            'ContentAccessFilter_TwoContentAccesses_PreviousSubscriptionWithinPeriod_DifferentContentAccess_2_ShouldBeTrue' => [
+                'currentStartTime' => 'now',
+                'currentContentAccesses' => ['web', 'print'],
+                'previousStartTime' => '-20 days',
+                'previousContentAccesses' => ['web', 'mobile'],
+                'intervalDays' => 50,
+                'contentAccesses' => ['web', 'print'],
+                'expectedValue' => true,
+            ],
+            'ContentAccessFilter_TwoContentAccesses_CurrentNotMatchingContentAccessSelection_ShouldBeFalse' => [
+                'currentStartTime' => 'now',
+                'currentContentAccesses' => ['web', 'print'],
+                'previousStartTime' => '-20 days',
+                'previousContentAccesses' => ['web', 'mobile'],
+                'intervalDays' => 50,
+                'contentAccesses' => ['club'],
+                'expectedValue' => false,
+            ],
         ];
     }
 
