@@ -142,6 +142,8 @@ admin:
         show:
             header: Předplatné
             back: zpět na uživatele
+            subscription_meta:
+                header: Meta
 
         messages:
             subscription_created: Předplatné bylo vytvořeno.

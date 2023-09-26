@@ -143,6 +143,8 @@ admin:
         show:
             header: Predplatné
             back: späť na používateľa
+            subscription_meta:
+                header: Meta
 
         messages:
             subscription_created: Predplatné bolo vytvorené.

@@ -142,6 +142,8 @@ admin:
         show:
             header: Subscription
             back: back to user
+            subscription_meta:
+                header: Meta
 
         messages:
             subscription_created: Subscription was created.

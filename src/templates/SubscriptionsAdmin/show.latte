@@ -1,17 +1,22 @@
 {block #title}[#{$subscription->id}] {_subscriptions.admin.subscriptions.show.header}{/block}
 
 {block #head}
-<style>
-  .label {
+  <style>
+    .label {
       vertical-align: middle;
-  }
+    }
 
-  .note-formated {
+    .note-formated {
       display:inline-block;
       white-space: pre-line;
       vertical-align: top;
-  }
-</style>
+    }
+
+    /* fix useless margin of header in right column */
+    .right-column > h3.page-header:first-of-type {
+      margin-top: 12px;
+    }
+  </style>
 {/block}
 
 {block #content}
@@ -92,7 +97,17 @@
   </div>
 
   <!-- right column -->
-  <div class="col-md-6">
+  <div class="col-md-6 right-column">
+    {if $subscription->related('subscriptions_meta')->count('*') > 0}
+    <h3 class="page-header">{_subscriptions.admin.subscriptions.show.subscription_meta.header}</h3>
+    <ul class="list-group">
+      <li n:foreach="$subscription->related('subscriptions_meta') as $subscriptionMeta" class="list-group-item">
+        {$subscriptionMeta->key}:
+        <code class="muted">{$subscriptionMeta->value}</code>
+      </li>
+    </ul>
+    {/if}
+
     {control simpleWidget 'admin.subscriptions.show.right', $subscription}
   </div>
 
