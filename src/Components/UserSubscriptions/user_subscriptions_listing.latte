@@ -37,6 +37,9 @@
                   </div>
                   <div class="modal-body">
                     <b>
+                      {if $address->company_name}
+                        {$address->company_name}
+                      {/if}
                       {if $address->first_name}
                         {$address->first_name}
                       {/if}
@@ -45,13 +48,14 @@
                       {/if}
                     </b>
                     <br>
-                    {$address->phone_number}
-                    <br>
                     {$address->address} {$address->number}
                     <br>
-                    {$address->zip} {$address->city}<br>
+                    {$address->zip} {$address->city}
                     {if $address->country_id}
-                      {$address->country->name}
+                      <br>{$address->country->name}
+                    {/if}
+                    {if $address->phone_number}
+                      <br>{$address->phone_number}
                     {/if}
                   </div>
                   <div class="modal-footer">
