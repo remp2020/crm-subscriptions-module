@@ -38,7 +38,6 @@ use Crm\SubscriptionsModule\Seeders\MeasurementsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
-use League\Event\Emitter;
 use Nette\Application\Routers\RouteList;
 use Nette\DI\Container;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -194,24 +193,24 @@ class SubscriptionsModule extends CrmModule
         );
     }
 
-    public function registerEventHandlers(Emitter $emitter)
+    public function registerLazyEventHandlers(\Crm\ApplicationModule\Event\LazyEventEmitter $emitter)
     {
         $emitter->addListener(
             \Crm\SubscriptionsModule\Events\NewSubscriptionEvent::class,
-            $this->getInstance(\Crm\UsersModule\Events\RefreshUserDataTokenHandler::class),
+            \Crm\UsersModule\Events\RefreshUserDataTokenHandler::class,
             600
         );
         $emitter->addListener(
             \Crm\SubscriptionsModule\Events\SubscriptionUpdatedEvent::class,
-            $this->getInstance(\Crm\UsersModule\Events\RefreshUserDataTokenHandler::class)
+            \Crm\UsersModule\Events\RefreshUserDataTokenHandler::class
         );
         $emitter->addListener(
             \Crm\UsersModule\Events\AddressRemovedEvent::class,
-            $this->getInstance(\Crm\SubscriptionsModule\Events\AddressRemovedHandler::class)
+            \Crm\SubscriptionsModule\Events\AddressRemovedHandler::class
         );
         $emitter->addListener(
             \Crm\SubscriptionsModule\Events\SubscriptionShortenedEvent::class,
-            $this->getInstance(\Crm\SubscriptionsModule\Events\SubscriptionShortenedHandler::class)
+            \Crm\SubscriptionsModule\Events\SubscriptionShortenedHandler::class
         );
     }
 
