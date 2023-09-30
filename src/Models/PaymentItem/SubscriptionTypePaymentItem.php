@@ -39,7 +39,7 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
     /**
      * @param ActiveRow $subscriptionType
      * @param int $count
-     * @return static[]
+     * @return SubscriptionTypePaymentItem[]
      */
     public static function fromSubscriptionType(ActiveRow $subscriptionType, int $count = 1): array
     {
@@ -53,9 +53,8 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
     /**
      * @param ActiveRow $subscriptionTypeItem
      * @param int $count
-     * @return static
      */
-    public static function fromSubscriptionTypeItem(ActiveRow $subscriptionTypeItem, int $count = 1)
+    public static function fromSubscriptionTypeItem(ActiveRow $subscriptionTypeItem, int $count = 1): SubscriptionTypePaymentItem
     {
         return new SubscriptionTypePaymentItem(
             $subscriptionTypeItem->subscription_type_id,
