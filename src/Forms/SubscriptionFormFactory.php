@@ -148,6 +148,7 @@ class SubscriptionFormFactory
             $form->addHidden('subscription_id', $subscriptionId);
         }
 
+        /** @var SubscriptionFormDataProviderInterface[] $providers */
         $providers = $this->dataProviderManager->getProviders(
             SubscriptionFormDataProviderInterface::PATH,
             SubscriptionFormDataProviderInterface::class
