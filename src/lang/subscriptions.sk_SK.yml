@@ -291,6 +291,7 @@ admin:
         no_subscription: "Tento používateľ nemá žiadne predplatné."
         new_subscription: Pridaj nové predplatné manuálne
         gift_header: Darované predplatné
+        changed: Zmenené
 
     subscription_button:
         header: Predplatné

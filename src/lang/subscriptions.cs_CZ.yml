@@ -290,6 +290,7 @@ admin:
         no_subscription: Tento uživatel nemá žádné předplatné.
         new_subscription: Přidej nové předplatné manuálně
         gift_header: Darované předplatné
+        changed: Změněno
 
     subscription_button:
         header: Předplatné

@@ -290,6 +290,7 @@ admin:
         no_subscription: "This user doesn't have any subscriptions."
         new_subscription: Create new subscription manualy
         gift_header: Gift subscriptions
+        changed: Changed
 
     subscription_button:
         header: Subscription
