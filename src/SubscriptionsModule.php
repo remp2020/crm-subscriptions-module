@@ -198,19 +198,18 @@ class SubscriptionsModule extends CrmModule
         $emitter->addListener(
             \Crm\SubscriptionsModule\Events\NewSubscriptionEvent::class,
             \Crm\UsersModule\Events\RefreshUserDataTokenHandler::class,
-            600
         );
         $emitter->addListener(
             \Crm\SubscriptionsModule\Events\SubscriptionUpdatedEvent::class,
-            \Crm\UsersModule\Events\RefreshUserDataTokenHandler::class
+            \Crm\UsersModule\Events\RefreshUserDataTokenHandler::class,
         );
         $emitter->addListener(
             \Crm\UsersModule\Events\AddressRemovedEvent::class,
-            \Crm\SubscriptionsModule\Events\AddressRemovedHandler::class
+            \Crm\SubscriptionsModule\Events\AddressRemovedHandler::class,
         );
         $emitter->addListener(
             \Crm\SubscriptionsModule\Events\SubscriptionShortenedEvent::class,
-            \Crm\SubscriptionsModule\Events\SubscriptionShortenedHandler::class
+            \Crm\SubscriptionsModule\Events\SubscriptionShortenedHandler::class,
         );
     }
 
