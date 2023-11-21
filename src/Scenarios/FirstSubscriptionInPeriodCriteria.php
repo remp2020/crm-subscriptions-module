@@ -8,6 +8,7 @@ use Crm\ApplicationModule\Criteria\ScenarioParams\NumberParam;
 use Crm\ApplicationModule\Criteria\ScenarioParams\StringLabeledArrayParam;
 use Crm\ApplicationModule\Criteria\ScenariosCriteriaInterface;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
+use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 
@@ -21,6 +22,7 @@ class FirstSubscriptionInPeriodCriteria implements ScenariosCriteriaInterface
     public function __construct(
         private ContentAccessRepository $contentAccessRepository,
         private Translator $translator,
+        private SubscriptionTypesRepository $subscriptionTypesRepository,
     ) {
     }
 
@@ -51,42 +53,49 @@ class FirstSubscriptionInPeriodCriteria implements ScenariosCriteriaInterface
             throw new \Exception("Provided value [{$paramValues[self::PERIOD_KEY]->selection}] for number of days is not valid positive integer.");
         }
 
+        // if content access filter was not used,
+        // check only if previous subscription (of any content access) exists within provided period
+        // (it shouldn't exist)
+        if (!isset($paramValues[self::CONTENT_ACCESS_KEY]->selection)) {
+            $selection
+                ->alias(".user:subscriptions(user)", "previous_subscriptions")
+                ->joinWhere(
+                    "previous_subscriptions",
+                    "previous_subscriptions.user_id = subscriptions.user_id
+                AND previous_subscriptions.start_time < subscriptions.start_time
+                AND previous_subscriptions.start_time > NOW() - INTERVAL ? DAY",
+                    $intervalDays
+                )
+                ->where('previous_subscriptions.id IS NULL');
+
+            return true;
+        }
+
+        $matchedSubscriptionTypes = $this->subscriptionTypesRepository->getTable()
+            ->select('subscription_types.id')
+            ->where(
+                ':subscription_type_content_access.content_access.name IN (?)',
+                $paramValues[self::CONTENT_ACCESS_KEY]->selection
+            );
+
+        // otherwise check if previous subscription with provided content access exists within period
+        // and current subscription has to contain provided content access
         $selection
             ->alias(".user:subscriptions(user)", "previous_subscriptions")
             ->joinWhere(
                 "previous_subscriptions",
                 "previous_subscriptions.user_id = subscriptions.user_id
-                AND previous_subscriptions.start_time < subscriptions.start_time
-                AND previous_subscriptions.start_time > NOW() - INTERVAL ? DAY",
-                $intervalDays
-            );
-
-        // if content access filter was not used,
-        // check only if previous subscription (of any content access) exists within provided period
-        if (!isset($paramValues[self::CONTENT_ACCESS_KEY]->selection)) {
-            $selection->where('previous_subscriptions.id IS NULL');
-        } else {
-            // otherwise check if previous subscription exists within period
-            // and if it does, content access cannot be one of provided accesses
-            // and current subscription has to contain provided content access
-            $selection
-                ->where(
-                    'subscription_type:subscription_type_content_access.content_access.name IN (?)',
-                    $paramValues[self::CONTENT_ACCESS_KEY]->selection,
-                );
-            $selection
-                ->alias('previous_subscriptions.subscription_type', 'previous_subscription_type')
-                ->alias('previous_subscription_type:subscription_type_content_access', 'previous_subscription_type_content_access')
-                ->alias('previous_subscription_type_content_access.content_access', 'previous_subscription_type_content_access_content_access')
-                // whereOr() doesn't transform array of content accesses correctly to SQL (without implode). Using where() bypasses that issue
-                ->where(
-                    '(
-                        previous_subscriptions.id IS NULL
-                        OR previous_subscription_type_content_access_content_access.name NOT IN (?)
-                    )',
-                    $paramValues[self::CONTENT_ACCESS_KEY]->selection,
-                );
-        }
+                    AND previous_subscriptions.start_time < subscriptions.start_time
+                    AND previous_subscriptions.start_time > NOW() - INTERVAL ? DAY
+                    AND previous_subscriptions.subscription_type_id IN (?)",
+                $intervalDays,
+                $matchedSubscriptionTypes,
+            )
+            ->where(
+                'subscription_type:subscription_type_content_access.content_access.name IN (?)',
+                $paramValues[self::CONTENT_ACCESS_KEY]->selection,
+            )
+            ->where('previous_subscriptions.id IS NULL');
 
         return true;
     }

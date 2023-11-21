@@ -4,6 +4,9 @@ namespace Crm\SubscriptionsModule\Tests;
 
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
 use Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder;
+use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
+use Crm\SubscriptionsModule\Repository\SubscriptionTypeContentAccessRepository;
+use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Scenarios\FirstSubscriptionInPeriodCriteria;
@@ -13,6 +16,7 @@ use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
 use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Repository\UsersRepository;
+use Nette\Database\Table\Selection;
 use Nette\Utils\DateTime;
 
 class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
@@ -20,6 +24,9 @@ class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
     protected function requiredRepositories(): array
     {
         return [
+            ContentAccessRepository::class,
+            SubscriptionTypeContentAccessRepository::class,
+            SubscriptionTypeItemsRepository::class,
             SubscriptionTypesRepository::class,
             SubscriptionsRepository::class,
             UsersRepository::class,
@@ -36,6 +43,18 @@ class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
         ];
     }
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // we need 4th content access for proper test (rest is seeded by ContentAccessSeeder)
+        $contentAccessRepository = $this->getRepository(ContentAccessRepository::class);
+        $name = 'club';
+        if (!$contentAccessRepository->exists($name)) {
+            $contentAccessRepository->add($name, 'Club access', 'label label-danger', 400);
+        }
+    }
+
     /**
      * @dataProvider dataProviderForFirstSubscriptionInPeriodCriteria
      */
@@ -49,6 +68,7 @@ class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
         bool $expectedValue,
         ?\Exception $expectedException = null
     ) {
+        /** @var Selection $subscriptionSelection */
         [$subscriptionSelection, $subscriptionRow] = $this->prepareData(
             $currentStartTime,
             $currentContentAccesses,
@@ -56,6 +76,7 @@ class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
             $previousContentAccesses,
         );
 
+        /** @var FirstSubscriptionInPeriodCriteria $criteria */
         $criteria = $this->inject(FirstSubscriptionInPeriodCriteria::class);
         $values = (object)['selection' => $intervalDays];
 
@@ -167,6 +188,15 @@ class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
                 'contentAccesses' => ['mobile'],
                 'expectedValue' => false,
             ],
+            'ContentAccessFilter_CurrentNotMatchingContentAccessSelection_PreviousIsMatching_ShouldBeFalse' => [
+                'currentStartTime' => 'now',
+                'currentContentAccesses' => ['web', 'print'],
+                'previousStartTime' => '-20 days',
+                'previousContentAccesses' => ['web', 'mobile'],
+                'intervalDays' => 50,
+                'contentAccesses' => ['mobile'],
+                'expectedValue' => false,
+            ],
 
             // multiple content accesses
             'ContentAccessFilter_TwoContentAccesses_SingleSubscription_ShouldBeTrue' => [
@@ -184,7 +214,7 @@ class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
                 'previousStartTime' => '-20 days',
                 'previousContentAccesses' => ['web', 'print'],
                 'intervalDays' => 50,
-                'contentAccesses' => ['web', 'print'],
+                'contentAccesses' => ['web', 'print'], // matched both web and print on both subscriptions; will be false
                 'expectedValue' => false,
             ],
             'ContentAccessFilter_TwoContentAccesses_PreviousSubscriptionWithinPeriod_DifferentContentAccess_ShouldBeTrue' => [
@@ -193,17 +223,17 @@ class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
                 'previousStartTime' => '-20 days',
                 'previousContentAccesses' => ['web', 'mobile'],
                 'intervalDays' => 50,
-                'contentAccesses' => ['print'],
+                'contentAccesses' => ['print'], // matched in current but no previous; will be true
                 'expectedValue' => true,
             ],
-            'ContentAccessFilter_TwoContentAccesses_PreviousSubscriptionWithinPeriod_DifferentContentAccess_2_ShouldBeTrue' => [
+            'ContentAccessFilter_TwoContentAccesses_PreviousSubscriptionWithinPeriod_DifferentContentAccess_2ContentAccesses_ShouldBeFalse' => [
                 'currentStartTime' => 'now',
                 'currentContentAccesses' => ['web', 'print'],
                 'previousStartTime' => '-20 days',
                 'previousContentAccesses' => ['web', 'mobile'],
                 'intervalDays' => 50,
-                'contentAccesses' => ['web', 'print'],
-                'expectedValue' => true,
+                'contentAccesses' => ['web', 'print'], // matched web on previous; will be false
+                'expectedValue' => false,
             ],
             'ContentAccessFilter_TwoContentAccesses_CurrentNotMatchingContentAccessSelection_ShouldBeFalse' => [
                 'currentStartTime' => 'now',
@@ -211,7 +241,16 @@ class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
                 'previousStartTime' => '-20 days',
                 'previousContentAccesses' => ['web', 'mobile'],
                 'intervalDays' => 50,
-                'contentAccesses' => ['club'],
+                'contentAccesses' => ['club'], // not matched in current
+                'expectedValue' => false,
+            ],
+            'ContentAccessFilter_TwoContentAccesses_CurrentNotMatchingContentAccessSelection_ButPreviousIsMatching_ShouldBeFalse' => [
+                'currentStartTime' => 'now',
+                'currentContentAccesses' => ['web', 'print'],
+                'previousStartTime' => '-20 days',
+                'previousContentAccesses' => ['web', 'club'],
+                'intervalDays' => 50,
+                'contentAccesses' => ['club'], // not matched in current
                 'expectedValue' => false,
             ],
         ];
