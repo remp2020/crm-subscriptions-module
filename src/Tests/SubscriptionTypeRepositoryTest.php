@@ -9,10 +9,14 @@ use Crm\SubscriptionsModule\Events\ContentAccessUnassignedEvent;
 use Crm\SubscriptionsModule\Events\SubscriptionTypeCreatedEvent;
 use Crm\SubscriptionsModule\Events\SubscriptionTypeUpdatedEvent;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
+use Crm\SubscriptionsModule\Repository\SubscriptionExtensionMethodsRepository;
+use Crm\SubscriptionsModule\Repository\SubscriptionLengthMethodsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeContentAccessRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Seeders\ContentAccessSeeder;
+use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;
+use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
 use League\Event\AbstractListener;
 use League\Event\Emitter;
 
@@ -26,6 +30,8 @@ class SubscriptionTypeRepositoryTest extends DatabaseTestCase
     protected function requiredRepositories(): array
     {
         return [
+            SubscriptionExtensionMethodsRepository::class,
+            SubscriptionLengthMethodsRepository::class,
             SubscriptionTypesRepository::class,
             SubscriptionTypeItemsRepository::class,
             SubscriptionTypeContentAccessRepository::class,
@@ -36,6 +42,8 @@ class SubscriptionTypeRepositoryTest extends DatabaseTestCase
     protected function requiredSeeders(): array
     {
         return [
+            SubscriptionExtensionMethodsSeeder::class,
+            SubscriptionLengthMethodSeeder::class,
             ContentAccessSeeder::class
         ];
     }

@@ -4,6 +4,7 @@ namespace Crm\SubscriptionsModule\Tests;
 
 use Crm\ApplicationModule\DataProvider\DataProviderException;
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
+use Crm\ContentModule\Seeders\LockTypesSeeder;
 use Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder;
 use Crm\SubscriptionsModule\DataProvider\SubscriptionsClaimUserDataProvider;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemsRepository;
@@ -57,6 +58,7 @@ class SubscriptionsClaimUserDataProviderTest extends DatabaseTestCase
             SubscriptionExtensionMethodsSeeder::class,
             SubscriptionLengthMethodSeeder::class,
             SubscriptionTypeNamesSeeder::class,
+            LockTypesSeeder::class,
         ];
     }
 
