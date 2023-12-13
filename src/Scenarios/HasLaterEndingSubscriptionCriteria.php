@@ -32,10 +32,11 @@ class HasLaterEndingSubscriptionCriteria implements ScenariosCriteriaInterface
 
         if ($values->selection) {
             $selection->alias(".user:subscriptions(user)", "s")
-                ->where("s.end_time > subscriptions.end_time AND s.id");
+                ->where("s.end_time > subscriptions.end_time AND s.id")
+                ->where("s.start_time != s.end_time");
         } else {
             $selection->alias(".user:subscriptions(user)", "s")
-                ->joinWhere("s", "s.end_time > subscriptions.end_time")
+                ->joinWhere("s", "s.end_time > subscriptions.end_time AND s.start_time != s.end_time")
                 ->where("s.id IS NULL");
         }
 

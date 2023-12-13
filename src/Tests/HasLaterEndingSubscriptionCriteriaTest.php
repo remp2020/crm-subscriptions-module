@@ -82,15 +82,55 @@ class HasLaterEndingSubscriptionCriteriaTest extends DatabaseTestCase
                 'second' => null,
                 'result' => false,
             ],
+            'with following stopped subscription' => [
+                'first' => ['-28 days', '+2 days'],
+                'second' => ['+2 days', '+2 days'],
+                'result' => false,
+            ],
+            'with stopped subscription gap' => [
+                'first' => ['-28 days', '+2 days'],
+                'second' => ['+5 days', '+5 days'],
+                'result' => false,
+            ],
             'NEGATION: with following subscription' => [
                 'first' => ['-28 days', '+2 days'],
                 'second' => ['+2 days', '+32 days'],
                 'result' => false,
                 'negation' => true,
             ],
-            'NEGATION: no next subscription' => [
+            'NEGATION: with overlapping subscription' => [
+                'first' => ['-20 days', '+10 days'],
+                'second' => ['-5 days', '+25 days'],
+                'result' => false,
+                'negation' => true,
+            ],
+            'NEGATION: with next subscription, 10 day gap' => [
+                'first' => ['-28 days', '+2 days'],
+                'second' => ['+12 days', '+42 days'],
+                'result' => false,
+                'negation' => true,
+            ],
+            'NEGATION: with following subscription, tested subscription already ended' => [
                 'first' => ['-600 seconds', '-599 seconds'],
+                'second' => ['-500 seconds', '+30 days'],
+                'result' => false,
+                'negation' => true,
+            ],
+            'NEGATION: no next subscription' => [
+                'first' => ['-28 days', '+2 days'],
                 'second' => null,
+                'result' => true,
+                'negation' => true,
+            ],
+            'NEGATION: with following stopped subscription' => [
+                'first' => ['-28 days', '+2 days'],
+                'second' => ['+2 days', '+2 days'],
+                'result' => true,
+                'negation' => true,
+            ],
+            'NEGATION: with stopped subscription gap' => [
+                'first' => ['-28 days', '+2 days'],
+                'second' => ['+5 days', '+5 days'],
                 'result' => true,
                 'negation' => true,
             ],
