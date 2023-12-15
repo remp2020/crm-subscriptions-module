@@ -14,6 +14,7 @@ use Crm\SubscriptionsModule\Seeders\ContentAccessSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
 use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Repository\UsersRepository;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ContentAccessCriteriaTest extends DatabaseTestCase
 {
@@ -37,7 +38,7 @@ class ContentAccessCriteriaTest extends DatabaseTestCase
         ];
     }
 
-    public function dataProviderForTestSubscriptionHasContentAccessCriteria(): array
+    public static function dataProviderForTestSubscriptionHasContentAccessCriteria(): array
     {
         return [
             'MatchingContentAccess_ShouldReturnTrue' => [
@@ -80,9 +81,7 @@ class ContentAccessCriteriaTest extends DatabaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderForTestSubscriptionHasContentAccessCriteria
-     */
+    #[DataProvider('dataProviderForTestSubscriptionHasContentAccessCriteria')]
     public function testSubscriptionHasContentAccessCriteria($hasContentAccess, $testedContentAccess, $expectedResult)
     {
         [$subscriptionSelection, $subscriptionRow] = $this->prepareData($hasContentAccess);

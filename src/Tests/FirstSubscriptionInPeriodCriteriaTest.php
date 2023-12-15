@@ -18,6 +18,7 @@ use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Repository\UsersRepository;
 use Nette\Database\Table\Selection;
 use Nette\Utils\DateTime;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
 {
@@ -55,9 +56,7 @@ class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
         }
     }
 
-    /**
-     * @dataProvider dataProviderForFirstSubscriptionInPeriodCriteria
-     */
+    #[DataProvider('dataProviderForFirstSubscriptionInPeriodCriteria')]
     public function testFirstSubscriptionInPeriodCriteria(
         string $currentStartTime,
         array $currentContentAccesses,
@@ -100,7 +99,7 @@ class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
     }
 
 
-    public function dataProviderForFirstSubscriptionInPeriodCriteria(): array
+    public static function dataProviderForFirstSubscriptionInPeriodCriteria(): array
     {
         return [
             'SingleSubscription_ShouldBeTrue' => [

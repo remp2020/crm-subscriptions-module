@@ -19,6 +19,7 @@ use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Repository\UsersRepository;
 use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class HasLaterEndingSubscriptionCriteriaTest extends DatabaseTestCase
 {
@@ -54,7 +55,7 @@ class HasLaterEndingSubscriptionCriteriaTest extends DatabaseTestCase
         ];
     }
 
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         return [
             'with following subscription' => [
@@ -137,9 +138,7 @@ class HasLaterEndingSubscriptionCriteriaTest extends DatabaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testScenarios(array $first, ?array $second, bool $result, bool $negation = false): void
     {
         /**

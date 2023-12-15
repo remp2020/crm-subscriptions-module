@@ -22,6 +22,7 @@ use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Repository\UsersRepository;
 use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class SubscriptionsRepositoryAddStartTimeEndTimeTest extends DatabaseTestCase
 {
@@ -75,7 +76,7 @@ class SubscriptionsRepositoryAddStartTimeEndTimeTest extends DatabaseTestCase
         parent::tearDown();
     }
 
-    public function dataProviderDates(): array
+    public static function dataProviderDates(): array
     {
         // setting now as different time than current NOW so we catch issue if some class works with different NOW than tests
         $now = (new DateTime())->modify('-3 days');
@@ -517,9 +518,7 @@ class SubscriptionsRepositoryAddStartTimeEndTimeTest extends DatabaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderDates
-     */
+    #[DataProvider('dataProviderDates')]
     public function testAdd(DateTime $now, array $subscriptionDates, array $subscriptionTypeDates, array $expectedDates)
     {
         // set same now for both subscription repository and extension

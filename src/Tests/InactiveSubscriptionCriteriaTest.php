@@ -17,6 +17,7 @@ use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Repository\UsersRepository;
 use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class InactiveSubscriptionCriteriaTest extends DatabaseTestCase
 {
@@ -61,9 +62,7 @@ class InactiveSubscriptionCriteriaTest extends DatabaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderForTestCriteria
-     */
+    #[DataProvider('dataProviderForTestCriteria')]
     public function testCriteria($startTime, $endTime, $interval, $negation, $result)
     {
         $this->prepareData('user@example.com', $startTime, $endTime);
@@ -97,7 +96,7 @@ class InactiveSubscriptionCriteriaTest extends DatabaseTestCase
         $this->assertEquals((int) $result, $segment->totalCount());
     }
 
-    public function dataProviderForTestCriteria(): array
+    public static function dataProviderForTestCriteria(): array
     {
         return [
             '--====--NOW++++++++' => [

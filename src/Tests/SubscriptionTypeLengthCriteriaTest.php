@@ -12,6 +12,7 @@ use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
 use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Repository\UsersRepository;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class SubscriptionTypeLengthCriteriaTest extends DatabaseTestCase
 {
@@ -43,9 +44,7 @@ class SubscriptionTypeLengthCriteriaTest extends DatabaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderForTestCriteria
-     */
+    #[DataProvider('dataProviderForTestCriteria')]
     public function testCriteria($subscriptionTypeLength, $criteriaOperator, $criteriaLength, $shouldFetch)
     {
         [$selection, $subscriptionRow] = $this->prepareData('user@example.com', $subscriptionTypeLength);
@@ -60,7 +59,7 @@ class SubscriptionTypeLengthCriteriaTest extends DatabaseTestCase
         }
     }
 
-    public function dataProviderForTestCriteria(): array
+    public static function dataProviderForTestCriteria(): array
     {
         return [
             [10, '=', 10, true],
