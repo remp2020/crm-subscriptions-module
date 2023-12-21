@@ -7,38 +7,40 @@ use Crm\SubscriptionsModule\Components\SubscriptionEndsStatsFactoryInterface;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Nette\Application\Attributes\Persistent;
 use Nette\Application\UI\Form;
+use Nette\DI\Attributes\Inject;
 use Nette\Utils\DateTime;
 use Tomaj\Form\Renderer\BootstrapRenderer;
 
 class SubscriptionsEndsPresenter extends AdminPresenter
 {
-    /** @var SubscriptionsRepository @inject */
-    public $subscriptionsRepository;
+    #[Inject]
+    public SubscriptionsRepository $subscriptionsRepository;
 
-    /** @var SubscriptionTypesRepository @inject */
-    public $subscriptionTypesRepository;
+    #[Inject]
+    public SubscriptionTypesRepository $subscriptionTypesRepository;
 
-    /** @var ContentAccessRepository @inject */
-    public $contentAccessRepository;
+    #[Inject]
+    public ContentAccessRepository $contentAccessRepository;
 
-    /** @persistent */
+    #[Persistent]
     public $startTime;
 
-    /** @persistent */
+    #[Persistent]
     public $endTime;
 
-    /** @persistent */
+    #[Persistent]
     public $withoutNext;
 
-    /** @persistent */
+    #[Persistent]
     public $withoutRecurrent;
 
-    /** @persistent */
+    #[Persistent]
     public $freeSubscriptions;
 
-    /** @persistent */
-    public $contentAccessTypes = [];
+    #[Persistent]
+    public array $contentAccessTypes = [];
 
     public function startup()
     {

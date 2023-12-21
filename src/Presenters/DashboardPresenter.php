@@ -17,21 +17,23 @@ use Crm\SubscriptionsModule\Measurements\ActivePayingSubscribersMeasurement;
 use Crm\SubscriptionsModule\Measurements\ActiveSubscribersMeasurement;
 use Crm\SubscriptionsModule\Measurements\ActiveSubscriptionsMeasurement;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
+use Nette\Application\Attributes\Persistent;
+use Nette\DI\Attributes\Inject;
 use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
 
 class DashboardPresenter extends AdminPresenter
 {
-    /** @inject */
+    #[Inject]
     public DataProviderManager $dataProviderManager;
 
-    /** @inject */
+    #[Inject]
     public ContentAccessRepository $contentAccessRepository;
 
-    /** @persistent */
+    #[Persistent]
     public $dateFrom;
 
-    /** @persistent */
+    #[Persistent]
     public $dateTo;
 
     public function startup()

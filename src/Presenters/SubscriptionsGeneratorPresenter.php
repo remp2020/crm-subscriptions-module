@@ -4,11 +4,12 @@ namespace Crm\SubscriptionsModule\Presenters;
 
 use Crm\AdminModule\Presenters\AdminPresenter;
 use Crm\SubscriptionsModule\Forms\SubscriptionsGeneratorFormFactory;
+use Nette\DI\Attributes\Inject;
 
 class SubscriptionsGeneratorPresenter extends AdminPresenter
 {
-    /** @var SubscriptionsGeneratorFormFactory @inject */
-    public $subscriptionsGeneratorFormFactory;
+    #[Inject]
+    public SubscriptionsGeneratorFormFactory $subscriptionsGeneratorFormFactory;
 
     /**
      * @admin-access-level read

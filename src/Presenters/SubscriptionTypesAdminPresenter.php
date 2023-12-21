@@ -16,10 +16,11 @@ use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemMetaRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesMetaRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
+use Nette\Application\Attributes\Persistent;
 
 class SubscriptionTypesAdminPresenter extends AdminPresenter
 {
-    /** @persistent */
+    #[Persistent]
     public $formData = [];
 
     private $subscriptionType;

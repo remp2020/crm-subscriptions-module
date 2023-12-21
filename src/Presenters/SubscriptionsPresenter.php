@@ -7,8 +7,7 @@ use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 
 class SubscriptionsPresenter extends FrontendPresenter
 {
-    /** @var SubscriptionsRepository */
-    public $subscriptionsRepository;
+    public SubscriptionsRepository $subscriptionsRepository;
 
     public function __construct(SubscriptionsRepository $subscriptionsRepository)
     {

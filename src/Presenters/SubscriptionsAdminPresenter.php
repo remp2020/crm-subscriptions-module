@@ -7,16 +7,17 @@ use Crm\SubscriptionsModule\Forms\SubscriptionFormFactory;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\UsersModule\Repository\UsersRepository;
 use Nette\Application\BadRequestException;
+use Nette\DI\Attributes\Inject;
 
 class SubscriptionsAdminPresenter extends AdminPresenter
 {
-    /** @inject */
+    #[Inject]
     public SubscriptionsRepository $subscriptionsRepository;
 
-    /** @inject */
+    #[Inject]
     public UsersRepository $usersRepository;
 
-    /** @inject */
+    #[Inject]
     public SubscriptionFormFactory $subscriptionFormFactory;
 
     /**
