@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Api\v1;
 
-use Crm\ApiModule\Api\ApiHandler;
+use Crm\ApiModule\Models\Api\ApiHandler;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Nette\Http\IResponse;

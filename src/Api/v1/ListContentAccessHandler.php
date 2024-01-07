@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Api\v1;
 
-use Crm\ApiModule\Api\ApiHandler;
+use Crm\ApiModule\Models\Api\ApiHandler;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
 use Nette\Http\Response;
 use Tomaj\NetteApi\Response\JsonApiResponse;

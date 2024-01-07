@@ -2,9 +2,9 @@
 
 namespace Crm\SubscriptionsModule\Api\v1;
 
-use Crm\ApiModule\Api\ApiHandler;
-use Crm\ApiModule\Params\InputParam;
-use Crm\ApiModule\Params\ParamsProcessor;
+use Crm\ApiModule\Models\Api\ApiHandler;
+use Crm\ApiModule\Models\Params\InputParam;
+use Crm\ApiModule\Models\Params\ParamsProcessor;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\UsersModule\Auth\UsersApiAuthorizationInterface;
 use Nette\Http\Response;
