@@ -382,6 +382,14 @@ admin:
         cancel_filter: Cancel filter
         more: More options
 
+    subscription_ends_suppression_widget:
+        resume_notifications: Resume notifications
+        suppress_notifications: Suppress notifications
+        no_subscription: 'Subscription with ID %id% not found.'
+        suppressed: 'Notifications suppressed for subscription with ID %id%.'
+        resumed: 'Notifications resumed for subscription with ID %id%.'
+        tooltip: 'Prevents "subscription ends" scenarios from running.'
+
 measurements:
     active_subscriptions:
         title: "Active subscriptions"

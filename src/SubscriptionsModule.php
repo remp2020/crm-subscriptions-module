@@ -189,7 +189,8 @@ class SubscriptionsModule extends CrmModule
         );
         $widgetManager->registerWidget(
             'subscriptions.admin.user_subscriptions_listing.action.menu',
-            \Crm\SubscriptionsModule\Components\StopSubscriptionWidget::class
+            \Crm\SubscriptionsModule\Components\StopSubscriptionWidget::class,
+            10 // set priority to ensure widget renders first in action menu, adds menu items header
         );
     }
 

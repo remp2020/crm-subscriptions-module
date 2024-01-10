@@ -383,6 +383,14 @@ admin:
         cancel_filter: Zrušiť filter
         more: Viac možností
 
+    subscription_ends_suppression_widget:
+        resume_notifications: Obnoviť notifikácie
+        suppress_notifications: Zastaviť notifikácie
+        no_subscription: 'Predplatné s ID %id% sa nenašlo.'
+        suppressed: 'Notifikácie k predplatnému s ID %id% boli zastavené.'
+        resumed: 'Notifikácie k predplatnému s ID %id% boli obnovené.'
+        tooltip: 'Zabráni spusteniu "subscription ends" scenárov.'
+
 measurements:
     active_subscriptions:
         title: "Aktívne predplatné"

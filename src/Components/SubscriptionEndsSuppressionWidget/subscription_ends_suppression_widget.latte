@@ -1,0 +1,17 @@
+<li role="menuitem">
+
+  <a n:if="$hasSuppressedNotifications" n:href="toggleNotifications! $subscription->id, false">
+    <i class="fa fa-play-circle"></i> {_subscriptions.admin.subscription_ends_suppression_widget.resume_notifications}
+  </a>
+
+  <a id="suppress-notifications-link" n:if="!$hasSuppressedNotifications" n:href="toggleNotifications! $subscription->id, true">
+    <i class="fa fa-stop-circle"></i> {_subscriptions.admin.subscription_ends_suppression_widget.suppress_notifications}
+    <i class="fa fa-question-circle" data-toggle="tooltip" data-original-title={_subscriptions.admin.subscription_ends_suppression_widget.tooltip}></i>
+  </a>
+</li>
+
+<style>
+    #suppress-notifications-link .tooltip-inner {
+        max-width: none;
+    }
+</style>

@@ -382,6 +382,14 @@ admin:
         cancel_filter: Zrušit filtr
         more: Více možností
 
+    subscription_ends_suppression_widget:
+        resume_notifications: Obnovit notifikace
+        suppress_notifications: Zastavit notifikace
+        no_subscription: 'Předplatné s ID %id% se nenašlo.'
+        suppressed: 'Notifikace k předplatnému s ID %id% byly zastaveny.'
+        resumed: 'Notifikace k předplatnému s ID %id% byly obnoveny.'
+        tooltip: 'Zabrání spuštění "subscription ends" scénářů.'
+
 measurements:
     active_subscriptions:
         title: "Aktivní předplatné"
