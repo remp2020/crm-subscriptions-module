@@ -4,6 +4,7 @@ namespace Crm\SubscriptionsModule;
 
 use Contributte\Translation\Translator;
 use Crm\ApiModule\Api\ApiRoutersContainerInterface;
+use Crm\ApiModule\Authorization\BearerTokenAuthorization;
 use Crm\ApiModule\Router\ApiIdentifier;
 use Crm\ApiModule\Router\ApiRoute;
 use Crm\ApplicationModule\Access\AccessManager;
@@ -13,14 +14,50 @@ use Crm\ApplicationModule\Criteria\ScenariosCriteriaStorage;
 use Crm\ApplicationModule\CrmModule;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Event\EventsStorage;
+use Crm\ApplicationModule\Event\LazyEventEmitter;
 use Crm\ApplicationModule\Menu\MenuContainerInterface;
 use Crm\ApplicationModule\Menu\MenuItem;
 use Crm\ApplicationModule\SeederManager;
 use Crm\ApplicationModule\User\UserDataRegistrator;
 use Crm\ApplicationModule\Widget\LazyWidgetManagerInterface;
+use Crm\SubscriptionsModule\Access\SubscriptionAccessProvider;
+use Crm\SubscriptionsModule\Api\v1\CreateSubscriptionHandler;
+use Crm\SubscriptionsModule\Api\v1\ListContentAccessHandler;
+use Crm\SubscriptionsModule\Api\v1\UpdateSubscriptionHandler;
+use Crm\SubscriptionsModule\Api\v1\UsersSubscriptionsHandler;
+use Crm\SubscriptionsModule\Commands\ChangeSubscriptionsStateCommand;
+use Crm\SubscriptionsModule\Components\ActualSubscribersRegistrationSourceStatsWidget;
+use Crm\SubscriptionsModule\Components\ActualSubscribersStatWidget;
+use Crm\SubscriptionsModule\Components\ActualUserSubscriptions;
+use Crm\SubscriptionsModule\Components\EndingSubscriptionsWidget;
+use Crm\SubscriptionsModule\Components\MonthSubscriptionsSmallBarGraphWidget;
+use Crm\SubscriptionsModule\Components\MonthSubscriptionsStatWidget;
+use Crm\SubscriptionsModule\Components\MonthToDateSubscriptionsStatWidget;
+use Crm\SubscriptionsModule\Components\RenewedSubscriptionsEndingWithinPeriodWidget;
+use Crm\SubscriptionsModule\Components\StopSubscriptionWidget;
+use Crm\SubscriptionsModule\Components\SubscribersWithMissingAddressWidget;
+use Crm\SubscriptionsModule\Components\SubscriptionButton;
+use Crm\SubscriptionsModule\Components\SubscriptionsEndingWithinPeriodWidget;
+use Crm\SubscriptionsModule\Components\TodaySubscriptionsStatWidget;
+use Crm\SubscriptionsModule\Components\TotalSubscriptionsStatWidget;
+use Crm\SubscriptionsModule\Components\UserSubscriptionInfoWidget;
+use Crm\SubscriptionsModule\Components\UserSubscriptionsListing;
+use Crm\SubscriptionsModule\Components\UsersAbusiveAdditionalWidget;
 use Crm\SubscriptionsModule\DataProvider\CanDeleteAddressDataProvider;
 use Crm\SubscriptionsModule\DataProvider\FilterAbusiveUserFormDataProvider;
+use Crm\SubscriptionsModule\DataProvider\FilterUserActionLogsFormDataProvider;
+use Crm\SubscriptionsModule\DataProvider\FilterUserActionLogsSelectionDataProvider;
+use Crm\SubscriptionsModule\DataProvider\FilterUsersFormDataProvider;
 use Crm\SubscriptionsModule\DataProvider\SubscriptionsClaimUserDataProvider;
+use Crm\SubscriptionsModule\Events\AddressRemovedHandler;
+use Crm\SubscriptionsModule\Events\NewSubscriptionEvent;
+use Crm\SubscriptionsModule\Events\SubscriptionEndsEvent;
+use Crm\SubscriptionsModule\Events\SubscriptionPreUpdateEvent;
+use Crm\SubscriptionsModule\Events\SubscriptionShortenedEvent;
+use Crm\SubscriptionsModule\Events\SubscriptionShortenedHandler;
+use Crm\SubscriptionsModule\Events\SubscriptionStartsEvent;
+use Crm\SubscriptionsModule\Events\SubscriptionUpdatedEvent;
+use Crm\SubscriptionsModule\Hermes\GenerateSubscriptionHandler;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Scenarios\ContentAccessCriteria;
 use Crm\SubscriptionsModule\Scenarios\FirstSubscriptionInPeriodCriteria;
@@ -38,6 +75,13 @@ use Crm\SubscriptionsModule\Seeders\MeasurementsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
+use Crm\SubscriptionsModule\Segment\ActiveSubscriptionCriteria;
+use Crm\SubscriptionsModule\Segment\InactiveSubscriptionCriteria;
+use Crm\SubscriptionsModule\Segment\UserActiveSubscriptionCriteria;
+use Crm\SubscriptionsModule\User\SubscriptionsUserDataProvider;
+use Crm\UsersModule\Auth\UserTokenAuthorization;
+use Crm\UsersModule\Events\AddressRemovedEvent;
+use Crm\UsersModule\Events\RefreshUserDataTokenHandler;
 use Nette\Application\Routers\RouteList;
 use Nette\DI\Container;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -110,107 +154,107 @@ class SubscriptionsModule extends CrmModule
     {
         $widgetManager->registerWidget(
             'admin.user.detail.bottom',
-            \Crm\SubscriptionsModule\Components\UserSubscriptionsListing::class,
+            UserSubscriptionsListing::class,
             100
         );
         $widgetManager->registerWidget(
             'admin.payments.listing.action.menu',
-            \Crm\SubscriptionsModule\Components\SubscriptionButton::class,
+            SubscriptionButton::class,
             6000
         );
         $widgetManager->registerWidget(
             'admin.user.detail.box',
-            \Crm\SubscriptionsModule\Components\ActualUserSubscriptions::class,
+            ActualUserSubscriptions::class,
             300
         );
         $widgetManager->registerWidget(
             'dashboard.singlestat.totals',
-            \Crm\SubscriptionsModule\Components\TotalSubscriptionsStatWidget::class,
+            TotalSubscriptionsStatWidget::class,
             600
         );
         $widgetManager->registerWidget(
             'dashboard.singlestat.actuals.subscribers',
-            \Crm\SubscriptionsModule\Components\ActualSubscribersStatWidget::class,
+            ActualSubscribersStatWidget::class,
             700
         );
         $widgetManager->registerWidget(
             'dashboard.stats.actuals.subscribers.source',
-            \Crm\SubscriptionsModule\Components\ActualSubscribersRegistrationSourceStatsWidget::class,
+            ActualSubscribersRegistrationSourceStatsWidget::class,
             700
         );
         $widgetManager->registerWidget(
             'dashboard.singlestat.today',
-            \Crm\SubscriptionsModule\Components\TodaySubscriptionsStatWidget::class,
+            TodaySubscriptionsStatWidget::class,
             500
         );
         $widgetManager->registerWidget(
             'dashboard.singlestat.month',
-            \Crm\SubscriptionsModule\Components\MonthSubscriptionsStatWidget::class,
+            MonthSubscriptionsStatWidget::class,
             600
         );
         $widgetManager->registerWidget(
             'dashboard.singlestat.mtd',
-            \Crm\SubscriptionsModule\Components\MonthToDateSubscriptionsStatWidget::class,
+            MonthToDateSubscriptionsStatWidget::class,
             600
         );
         $widgetManager->registerWidget(
             'dashboard.bottom',
-            \Crm\SubscriptionsModule\Components\EndingSubscriptionsWidget::class,
+            EndingSubscriptionsWidget::class,
             100
         );
         $widgetManager->registerWidget(
             'subscriptions.endinglist',
-            \Crm\SubscriptionsModule\Components\SubscriptionsEndingWithinPeriodWidget::class,
+            SubscriptionsEndingWithinPeriodWidget::class,
             500
         );
         $widgetManager->registerWidget(
             'subscriptions.endinglist',
-            \Crm\SubscriptionsModule\Components\RenewedSubscriptionsEndingWithinPeriodWidget::class,
+            RenewedSubscriptionsEndingWithinPeriodWidget::class,
             600
         );
         $widgetManager->registerWidget(
             'admin.users.header',
-            \Crm\SubscriptionsModule\Components\MonthSubscriptionsSmallBarGraphWidget::class,
+            MonthSubscriptionsSmallBarGraphWidget::class,
             600
         );
         $widgetManager->registerWidget(
             'admin.user.list.emailcolumn',
-            \Crm\SubscriptionsModule\Components\UserSubscriptionInfoWidget::class,
+            UserSubscriptionInfoWidget::class,
             600
         );
         $widgetManager->registerWidget(
             'admin.payments.top',
-            \Crm\SubscriptionsModule\Components\SubscribersWithMissingAddressWidget::class,
+            SubscribersWithMissingAddressWidget::class,
             2000
         );
         $widgetManager->registerWidget(
             'admin.user.abusive.additional',
-            \Crm\SubscriptionsModule\Components\UsersAbusiveAdditionalWidget::class
+            UsersAbusiveAdditionalWidget::class
         );
         $widgetManager->registerWidget(
             'subscriptions.admin.user_subscriptions_listing.action.menu',
-            \Crm\SubscriptionsModule\Components\StopSubscriptionWidget::class,
+            StopSubscriptionWidget::class,
             10 // set priority to ensure widget renders first in action menu, adds menu items header
         );
     }
 
-    public function registerLazyEventHandlers(\Crm\ApplicationModule\Event\LazyEventEmitter $emitter)
+    public function registerLazyEventHandlers(LazyEventEmitter $emitter)
     {
         $emitter->addListener(
-            \Crm\SubscriptionsModule\Events\NewSubscriptionEvent::class,
-            \Crm\UsersModule\Events\RefreshUserDataTokenHandler::class,
+            NewSubscriptionEvent::class,
+            RefreshUserDataTokenHandler::class,
         );
         $emitter->addListener(
-            \Crm\SubscriptionsModule\Events\SubscriptionUpdatedEvent::class,
-            \Crm\UsersModule\Events\RefreshUserDataTokenHandler::class,
+            SubscriptionUpdatedEvent::class,
+            RefreshUserDataTokenHandler::class,
         );
         $emitter->addListener(
-            \Crm\UsersModule\Events\AddressRemovedEvent::class,
-            \Crm\SubscriptionsModule\Events\AddressRemovedHandler::class,
+            AddressRemovedEvent::class,
+            AddressRemovedHandler::class,
         );
         $emitter->addListener(
-            \Crm\SubscriptionsModule\Events\SubscriptionShortenedEvent::class,
-            \Crm\SubscriptionsModule\Events\SubscriptionShortenedHandler::class,
+            SubscriptionShortenedEvent::class,
+            SubscriptionShortenedHandler::class,
         );
     }
 
@@ -218,13 +262,13 @@ class SubscriptionsModule extends CrmModule
     {
         $dispatcher->registerHandler(
             'generate-subscription',
-            $this->getInstance(\Crm\SubscriptionsModule\Hermes\GenerateSubscriptionHandler::class)
+            $this->getInstance(GenerateSubscriptionHandler::class)
         );
     }
 
     public function registerCommands(CommandsContainerInterface $commandsContainer)
     {
-        $commandsContainer->registerCommand($this->getInstance(\Crm\SubscriptionsModule\Commands\ChangeSubscriptionsStateCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(ChangeSubscriptionsStateCommand::class));
     }
 
     public function registerApiCalls(ApiRoutersContainerInterface $apiRoutersContainer)
@@ -232,39 +276,39 @@ class SubscriptionsModule extends CrmModule
         $apiRoutersContainer->attachRouter(
             new ApiRoute(
                 new ApiIdentifier('1', 'users', 'subscriptions'),
-                \Crm\SubscriptionsModule\Api\v1\UsersSubscriptionsHandler::class,
-                \Crm\UsersModule\Auth\UserTokenAuthorization::class
+                UsersSubscriptionsHandler::class,
+                UserTokenAuthorization::class
             )
         );
 
         $apiRoutersContainer->attachRouter(
             new ApiRoute(
                 new ApiIdentifier('1', 'subscriptions', 'create'),
-                \Crm\SubscriptionsModule\Api\v1\CreateSubscriptionHandler::class,
-                \Crm\ApiModule\Authorization\BearerTokenAuthorization::class
+                CreateSubscriptionHandler::class,
+                BearerTokenAuthorization::class
             )
         );
 
         $apiRoutersContainer->attachRouter(
             new ApiRoute(
                 new ApiIdentifier('1', 'content-access', 'list'),
-                \Crm\SubscriptionsModule\Api\v1\ListContentAccessHandler::class,
-                \Crm\ApiModule\Authorization\BearerTokenAuthorization::class
+                ListContentAccessHandler::class,
+                BearerTokenAuthorization::class
             )
         );
 
         $apiRoutersContainer->attachRouter(
             new ApiRoute(
                 new ApiIdentifier('1', 'subscriptions', 'update'),
-                \Crm\SubscriptionsModule\Api\v1\UpdateSubscriptionHandler::class,
-                \Crm\ApiModule\Authorization\BearerTokenAuthorization::class
+                UpdateSubscriptionHandler::class,
+                BearerTokenAuthorization::class
             )
         );
     }
 
     public function registerUserData(UserDataRegistrator $dataRegistrator)
     {
-        $dataRegistrator->addUserDataProvider($this->getInstance(\Crm\SubscriptionsModule\User\SubscriptionsUserDataProvider::class));
+        $dataRegistrator->addUserDataProvider($this->getInstance(SubscriptionsUserDataProvider::class));
     }
 
     public function registerScenariosCriteria(ScenariosCriteriaStorage $scenariosCriteriaStorage)
@@ -283,10 +327,10 @@ class SubscriptionsModule extends CrmModule
 
     public function registerSegmentCriteria(CriteriaStorage $criteriaStorage)
     {
-        $criteriaStorage->register('users', 'users_active_subscription', $this->getInstance(\Crm\SubscriptionsModule\Segment\UserActiveSubscriptionCriteria::class));
-        $criteriaStorage->register('subscriptions', 'subscriptions_active_subscription', $this->getInstance(\Crm\SubscriptionsModule\Segment\ActiveSubscriptionCriteria::class));
+        $criteriaStorage->register('users', 'users_active_subscription', $this->getInstance(UserActiveSubscriptionCriteria::class));
+        $criteriaStorage->register('subscriptions', 'subscriptions_active_subscription', $this->getInstance(ActiveSubscriptionCriteria::class));
 
-        $criteriaStorage->register('users', 'users_inactive_subscription', $this->getInstance(\Crm\SubscriptionsModule\Segment\InactiveSubscriptionCriteria::class));
+        $criteriaStorage->register('users', 'users_inactive_subscription', $this->getInstance(InactiveSubscriptionCriteria::class));
 
         $criteriaStorage->setDefaultFields('subscriptions', ['id']);
         $criteriaStorage->setFields('subscriptions', [
@@ -317,22 +361,22 @@ class SubscriptionsModule extends CrmModule
 
     public function registerAccessProvider(AccessManager $accessManager)
     {
-        $accessManager->addAccessProvider($this->getInstance(\Crm\SubscriptionsModule\Access\SubscriptionAccessProvider::class));
+        $accessManager->addAccessProvider($this->getInstance(SubscriptionAccessProvider::class));
     }
 
     public function registerDataProviders(DataProviderManager $dataProviderManager)
     {
         $dataProviderManager->registerDataProvider(
             'users.dataprovider.users_filter_form',
-            $this->getInstance(\Crm\SubscriptionsModule\DataProvider\FilterUsersFormDataProvider::class)
+            $this->getInstance(FilterUsersFormDataProvider::class)
         );
         $dataProviderManager->registerDataProvider(
             'users.dataprovider.filter_user_actions_log_selection',
-            $this->getInstance(\Crm\SubscriptionsModule\DataProvider\FilterUserActionLogsSelectionDataProvider::class)
+            $this->getInstance(FilterUserActionLogsSelectionDataProvider::class)
         );
         $dataProviderManager->registerDataProvider(
             'users.dataprovider.filter_user_actions_log_form',
-            $this->getInstance(\Crm\SubscriptionsModule\DataProvider\FilterUserActionLogsFormDataProvider::class)
+            $this->getInstance(FilterUserActionLogsFormDataProvider::class)
         );
         $dataProviderManager->registerDataProvider(
             'users.dataprovider.address.can_delete',
@@ -350,11 +394,11 @@ class SubscriptionsModule extends CrmModule
 
     public function registerEvents(EventsStorage $eventsStorage)
     {
-        $eventsStorage->register('new_subscription', Events\NewSubscriptionEvent::class, true);
-        $eventsStorage->register('subscription_pre_update', Events\SubscriptionPreUpdateEvent::class);
-        $eventsStorage->register('subscription_updated', Events\SubscriptionUpdatedEvent::class);
-        $eventsStorage->register('subscription_starts', Events\SubscriptionStartsEvent::class, true);
-        $eventsStorage->register('subscription_ends', Events\SubscriptionEndsEvent::class, true);
+        $eventsStorage->register('new_subscription', NewSubscriptionEvent::class, true);
+        $eventsStorage->register('subscription_pre_update', SubscriptionPreUpdateEvent::class);
+        $eventsStorage->register('subscription_updated', SubscriptionUpdatedEvent::class);
+        $eventsStorage->register('subscription_starts', SubscriptionStartsEvent::class, true);
+        $eventsStorage->register('subscription_ends', SubscriptionEndsEvent::class, true);
     }
 
     public function cache(OutputInterface $output, array $tags = [])

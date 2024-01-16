@@ -4,6 +4,7 @@ namespace Crm\SubscriptionsModule\Forms;
 
 use Contributte\FormMultiplier\Multiplier;
 use Contributte\Translation\Translator;
+use Crm\ApplicationModule\DataProvider\DataProviderException;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder;
 use Crm\SubscriptionsModule\DataProvider\SubscriptionTypeFormProviderInterface;
@@ -43,7 +44,7 @@ class SubscriptionTypesFormFactory
     /**
      * @param $subscriptionTypeId
      * @return Form
-     * @throws \Crm\ApplicationModule\DataProvider\DataProviderException
+     * @throws DataProviderException
      */
     public function create($subscriptionTypeId): Form
     {

@@ -353,7 +353,7 @@ class SubscriptionsRepository extends Repository
 
     /**
      * @param int $userId
-     * @return \Nette\Database\Table\Selection
+     * @return Selection
      */
     final public function userSubscriptions($userId): Selection
     {
@@ -364,7 +364,7 @@ class SubscriptionsRepository extends Repository
 
     /**
      * @param int $userId
-     * @return \Nette\Database\Table\Selection
+     * @return Selection
      */
     final public function userSubscription($userId)
     {
@@ -373,7 +373,7 @@ class SubscriptionsRepository extends Repository
 
     /**
      * @param int $userId
-     * @return \Nette\Database\Table\Selection
+     * @return Selection
      */
     final public function userMobileSubscriptions($userId)
     {
@@ -382,7 +382,7 @@ class SubscriptionsRepository extends Repository
 
     /**
      * @param int $userId
-     * @return \Nette\Database\Table\ActiveRow
+     * @return ActiveRow
      */
     final public function actualUserSubscription($userId)
     {
@@ -425,7 +425,7 @@ class SubscriptionsRepository extends Repository
 
     /**
      * @param $date
-     * @return \Nette\Database\Table\Selection
+     * @return Selection
      */
     final public function actualSubscriptions(DateTime $date = null)
     {

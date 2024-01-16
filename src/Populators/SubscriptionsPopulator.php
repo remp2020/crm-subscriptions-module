@@ -3,11 +3,12 @@
 namespace Crm\SubscriptionsModule\Populator;
 
 use Crm\ApplicationModule\Populator\AbstractPopulator;
+use Symfony\Component\Console\Helper\ProgressBar;
 
 class SubscriptionsPopulator extends AbstractPopulator
 {
     /**
-     * @param \Symfony\Component\Console\Helper\ProgressBar $progressBar
+     * @param ProgressBar $progressBar
      */
     public function seed($progressBar)
     {

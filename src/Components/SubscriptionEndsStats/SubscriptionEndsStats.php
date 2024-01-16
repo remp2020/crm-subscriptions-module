@@ -4,7 +4,7 @@ namespace Crm\SubscriptionsModule\Components;
 
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
-use Nette\Application\UI;
+use Nette\Application\UI\Control;
 use Nette\Utils\DateTime;
 
 /**
@@ -13,7 +13,7 @@ use Nette\Utils\DateTime;
  *
  * @package Crm\SubscriptionsModule\Components
  */
-class SubscriptionEndsStats extends UI\Control
+class SubscriptionEndsStats extends Control
 {
     private $templateName = 'subscription_end_stats.latte';
 

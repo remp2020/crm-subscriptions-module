@@ -13,6 +13,7 @@ use Crm\SubscriptionsModule\Seeders\ContentAccessSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
+use Crm\SubscriptionsModule\Segment\InactiveSubscriptionCriteria;
 use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Repository\UsersRepository;
 use Nette\Database\Table\ActiveRow;
@@ -40,7 +41,7 @@ class InactiveSubscriptionCriteriaTest extends DatabaseTestCase
         $criteriaStorage->register(
             'users',
             self::CRITERIA_KEY,
-            $this->inject(\Crm\SubscriptionsModule\Segment\InactiveSubscriptionCriteria::class)
+            $this->inject(InactiveSubscriptionCriteria::class)
         );
     }
 
