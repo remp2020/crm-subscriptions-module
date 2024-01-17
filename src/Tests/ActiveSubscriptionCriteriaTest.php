@@ -4,9 +4,9 @@ namespace Crm\SubscriptionsModule\Tests;
 
 use Crm\ApplicationModule\Criteria\CriteriaStorage;
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
-use Crm\SegmentModule\Criteria\Generator;
-use Crm\SegmentModule\Segment;
-use Crm\SegmentModule\SegmentQuery;
+use Crm\SegmentModule\Models\Criteria\Generator;
+use Crm\SegmentModule\Models\Segment;
+use Crm\SegmentModule\Models\SegmentQuery;
 use Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Seeders\ContentAccessSeeder;

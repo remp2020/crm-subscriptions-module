@@ -3,12 +3,12 @@
 namespace Crm\SubscriptionsModule\Segment;
 
 use Crm\ApplicationModule\Criteria\CriteriaInterface;
-use Crm\SegmentModule\Criteria\Fields;
-use Crm\SegmentModule\Params\BooleanParam;
-use Crm\SegmentModule\Params\DateTimeParam;
-use Crm\SegmentModule\Params\NumberArrayParam;
-use Crm\SegmentModule\Params\ParamsBag;
-use Crm\SegmentModule\Params\StringArrayParam;
+use Crm\SegmentModule\Models\Criteria\Fields;
+use Crm\SegmentModule\Models\Params\BooleanParam;
+use Crm\SegmentModule\Models\Params\DateTimeParam;
+use Crm\SegmentModule\Models\Params\NumberArrayParam;
+use Crm\SegmentModule\Models\Params\ParamsBag;
+use Crm\SegmentModule\Models\Params\StringArrayParam;
 use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;

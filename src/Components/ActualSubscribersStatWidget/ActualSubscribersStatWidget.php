@@ -4,7 +4,7 @@ namespace Crm\SubscriptionsModule\Components;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ApplicationModule\Widget\LazyWidgetManager;
-use Crm\SegmentModule\Repository\SegmentsRepository;
+use Crm\SegmentModule\Repositories\SegmentsRepository;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 
 /**
