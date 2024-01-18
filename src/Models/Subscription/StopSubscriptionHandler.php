@@ -3,8 +3,8 @@
 namespace Crm\SubscriptionsModule\Models\Subscription;
 
 use Crm\SubscriptionsModule\Events\SubscriptionShortenedEvent;
-use Crm\SubscriptionsModule\Repository\SubscriptionMetaRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionMetaRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use DateTime;
 use League\Event\Emitter;
 use Nette\Database\Table\ActiveRow;

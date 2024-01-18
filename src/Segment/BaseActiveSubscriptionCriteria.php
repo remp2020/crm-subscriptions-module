@@ -9,9 +9,9 @@ use Crm\SegmentModule\Models\Params\DateTimeParam;
 use Crm\SegmentModule\Models\Params\NumberArrayParam;
 use Crm\SegmentModule\Models\Params\ParamsBag;
 use Crm\SegmentModule\Models\Params\StringArrayParam;
-use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\ContentAccessRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 
 abstract class BaseActiveSubscriptionCriteria implements CriteriaInterface
 {

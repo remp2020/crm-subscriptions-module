@@ -4,7 +4,7 @@ namespace Crm\SubscriptionsModule\Presenters;
 
 use Crm\AdminModule\Presenters\AdminPresenter;
 use Crm\SubscriptionsModule\Forms\SubscriptionFormFactory;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\Repository\UsersRepository;
 use Nette\Application\BadRequestException;
 use Nette\DI\Attributes\Inject;

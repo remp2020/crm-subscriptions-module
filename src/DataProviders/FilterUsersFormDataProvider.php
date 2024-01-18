@@ -4,8 +4,8 @@ namespace Crm\SubscriptionsModule\DataProviders;
 
 use Crm\ApplicationModule\DataProvider\DataProviderException;
 use Crm\ApplicationModule\NowTrait;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
-use Crm\SubscriptionsModule\Subscription\SubscriptionTypeHelper;
+use Crm\SubscriptionsModule\Models\Subscription\SubscriptionTypeHelper;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Crm\UsersModule\DataProvider\FilterUsersFormDataProviderInterface;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\Selection;

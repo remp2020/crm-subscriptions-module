@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Models\Subscription;
 
-use Crm\SubscriptionsModule\Repository\SubscriptionMetaRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionMetaRepository;
 use Nette\Database\Table\ActiveRow;
 
 class SubscriptionEndsSuppressionManager

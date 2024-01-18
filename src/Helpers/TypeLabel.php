@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Helpers;
 
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Nette\Utils\Html;
 
 class TypeLabel

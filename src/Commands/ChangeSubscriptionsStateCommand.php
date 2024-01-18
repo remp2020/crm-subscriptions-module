@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Commands;
 
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use League\Event\Emitter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

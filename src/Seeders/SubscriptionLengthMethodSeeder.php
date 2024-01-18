@@ -3,9 +3,9 @@
 namespace Crm\SubscriptionsModule\Seeders;
 
 use Crm\ApplicationModule\Seeders\ISeeder;
-use Crm\SubscriptionsModule\Length\CalendarDaysLengthMethod;
-use Crm\SubscriptionsModule\Length\FixDaysLengthMethod;
-use Crm\SubscriptionsModule\Repository\SubscriptionLengthMethodsRepository;
+use Crm\SubscriptionsModule\Models\Length\CalendarDaysLengthMethod;
+use Crm\SubscriptionsModule\Models\Length\FixDaysLengthMethod;
+use Crm\SubscriptionsModule\Repositories\SubscriptionLengthMethodsRepository;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class SubscriptionLengthMethodSeeder implements ISeeder

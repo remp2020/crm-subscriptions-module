@@ -3,8 +3,8 @@
 namespace Crm\SubscriptionsModule\Models\Subscription;
 
 use Crm\ApplicationModule\Helpers\PriceHelper;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemsRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypeItemsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Nette\Database\Table\ActiveRow;
 
 class SubscriptionTypeHelper

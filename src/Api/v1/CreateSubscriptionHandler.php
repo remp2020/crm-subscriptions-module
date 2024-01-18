@@ -4,9 +4,9 @@ namespace Crm\SubscriptionsModule\Api\v1;
 
 use Crm\ApiModule\Models\Api\ApiHandler;
 use Crm\ApiModule\Models\Api\IdempotentHandlerInterface;
-use Crm\SubscriptionsModule\Repository\SubscriptionMetaRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionMetaRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\Auth\UserManager;
 use Nette\Database\Table\ActiveRow;
 use Nette\Http\Response;

@@ -11,11 +11,11 @@ use Crm\SubscriptionsModule\Forms\SubscriptionTypeItemsFormFactory;
 use Crm\SubscriptionsModule\Forms\SubscriptionTypeMetaFormFactory;
 use Crm\SubscriptionsModule\Forms\SubscriptionTypesFormFactory;
 use Crm\SubscriptionsModule\Models\AdminFilterFormData;
-use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemMetaRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemsRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesMetaRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
+use Crm\SubscriptionsModule\Repositories\ContentAccessRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypeItemMetaRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypeItemsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypesMetaRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Nette\Application\Attributes\Persistent;
 
 class SubscriptionTypesAdminPresenter extends AdminPresenter

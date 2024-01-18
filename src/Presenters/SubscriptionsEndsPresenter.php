@@ -3,10 +3,10 @@
 namespace Crm\SubscriptionsModule\Presenters;
 
 use Crm\AdminModule\Presenters\AdminPresenter;
-use Crm\SubscriptionsModule\Components\SubscriptionEndsStatsFactoryInterface;
-use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Components\SubscriptionEndsStats\SubscriptionEndsStatsFactoryInterface;
+use Crm\SubscriptionsModule\Repositories\ContentAccessRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Nette\Application\Attributes\Persistent;
 use Nette\Application\UI\Form;
 use Nette\DI\Attributes\Inject;

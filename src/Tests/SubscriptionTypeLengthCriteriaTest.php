@@ -3,8 +3,8 @@
 namespace Crm\SubscriptionsModule\Tests;
 
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
-use Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Models\Builder\SubscriptionTypeBuilder;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Scenarios\SubscriptionTypeLengthCriteria;
 use Crm\SubscriptionsModule\Seeders\ContentAccessSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;

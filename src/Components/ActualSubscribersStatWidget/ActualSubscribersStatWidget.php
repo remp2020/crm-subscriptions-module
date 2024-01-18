@@ -5,7 +5,7 @@ namespace Crm\SubscriptionsModule\Components\ActualSubscribersStatWidget;
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ApplicationModule\Widget\LazyWidgetManager;
 use Crm\SegmentModule\Repositories\SegmentsRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 
 /**
  * This simple widget fetches actual subscribers count and renders

@@ -3,7 +3,7 @@
 namespace Crm\SubscriptionsModule\DataProviders;
 
 use Crm\ApplicationModule\DataProvider\DataProviderException;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Crm\UsersModule\DataProvider\FilterUserActionLogsFormDataProviderInterface;
 use Crm\UsersModule\Repository\UserActionsLogRepository;
 use Nette\Application\UI\Form;

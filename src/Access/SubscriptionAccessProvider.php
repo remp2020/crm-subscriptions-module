@@ -3,8 +3,8 @@
 namespace Crm\SubscriptionsModule\Access;
 
 use Crm\ApplicationModule\Access\ProviderInterface;
-use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\ContentAccessRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 
 class SubscriptionAccessProvider implements ProviderInterface
 {

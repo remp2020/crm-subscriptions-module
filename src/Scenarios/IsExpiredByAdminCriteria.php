@@ -5,7 +5,7 @@ namespace Crm\SubscriptionsModule\Scenarios;
 use Contributte\Translation\Translator;
 use Crm\ApplicationModule\Criteria\ScenarioParams\BooleanParam;
 use Crm\ApplicationModule\Criteria\ScenariosCriteriaInterface;
-use Crm\SubscriptionsModule\Subscription\StopSubscriptionHandler;
+use Crm\SubscriptionsModule\Models\Subscription\StopSubscriptionHandler;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 

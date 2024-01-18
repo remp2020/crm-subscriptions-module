@@ -3,13 +3,13 @@
 namespace Crm\SubscriptionsModule\Seeders;
 
 use Crm\ApplicationModule\Seeders\ISeeder;
-use Crm\SubscriptionsModule\Extension\ExtendActualExtension;
-use Crm\SubscriptionsModule\Extension\ExtendLastExtension;
-use Crm\SubscriptionsModule\Extension\ExtendSameActualExtension;
-use Crm\SubscriptionsModule\Extension\ExtendSameContentAccess;
-use Crm\SubscriptionsModule\Extension\ExtendSameTypeExtension;
-use Crm\SubscriptionsModule\Extension\StartNowExtension;
-use Crm\SubscriptionsModule\Repository\SubscriptionExtensionMethodsRepository;
+use Crm\SubscriptionsModule\Models\Extension\ExtendActualExtension;
+use Crm\SubscriptionsModule\Models\Extension\ExtendLastExtension;
+use Crm\SubscriptionsModule\Models\Extension\ExtendSameActualExtension;
+use Crm\SubscriptionsModule\Models\Extension\ExtendSameContentAccess;
+use Crm\SubscriptionsModule\Models\Extension\ExtendSameTypeExtension;
+use Crm\SubscriptionsModule\Models\Extension\StartNowExtension;
+use Crm\SubscriptionsModule\Repositories\SubscriptionExtensionMethodsRepository;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class SubscriptionExtensionMethodsSeeder implements ISeeder

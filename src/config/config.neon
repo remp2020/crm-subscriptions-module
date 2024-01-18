@@ -3,18 +3,18 @@ services:
 		setup:
 			- addModule(Crm\SubscriptionsModule\SubscriptionsModule())
 
-	subscriptionTypesRepository: Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository
-	subscriptionsRepository: Crm\SubscriptionsModule\Repository\SubscriptionsRepository
-	subscriptionMetaRepository: Crm\SubscriptionsModule\Repository\SubscriptionMetaRepository
-	subscriptionExtensionMethodsRepository: Crm\SubscriptionsModule\Repository\SubscriptionExtensionMethodsRepository
-	subscriptionTypeNamesRepository: Crm\SubscriptionsModule\Repository\SubscriptionTypeNamesRepository
-	subscriptionLengthMethodsRepository: Crm\SubscriptionsModule\Repository\SubscriptionLengthMethodsRepository
-	subscriptionTypeItemsRepository: Crm\SubscriptionsModule\Repository\SubscriptionTypeItemsRepository
-	subscriptionTypeContentAccessRepository: Crm\SubscriptionsModule\Repository\SubscriptionTypeContentAccessRepository
-	subscriptionTypesMetaRepository: Crm\SubscriptionsModule\Repository\SubscriptionTypesMetaRepository
-	contentAccessRepository: Crm\SubscriptionsModule\Repository\ContentAccessRepository
-	subscriptionTypeItemMetaRepository: Crm\SubscriptionsModule\Repository\SubscriptionTypeItemMetaRepository
-	subscriptionTypeTagsRepository: Crm\SubscriptionsModule\Repository\SubscriptionTypeTagsRepository
+	subscriptionTypesRepository: Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository
+	subscriptionsRepository: Crm\SubscriptionsModule\Repositories\SubscriptionsRepository
+	subscriptionMetaRepository: Crm\SubscriptionsModule\Repositories\SubscriptionMetaRepository
+	subscriptionExtensionMethodsRepository: Crm\SubscriptionsModule\Repositories\SubscriptionExtensionMethodsRepository
+	subscriptionTypeNamesRepository: Crm\SubscriptionsModule\Repositories\SubscriptionTypeNamesRepository
+	subscriptionLengthMethodsRepository: Crm\SubscriptionsModule\Repositories\SubscriptionLengthMethodsRepository
+	subscriptionTypeItemsRepository: Crm\SubscriptionsModule\Repositories\SubscriptionTypeItemsRepository
+	subscriptionTypeContentAccessRepository: Crm\SubscriptionsModule\Repositories\SubscriptionTypeContentAccessRepository
+	subscriptionTypesMetaRepository: Crm\SubscriptionsModule\Repositories\SubscriptionTypesMetaRepository
+	contentAccessRepository: Crm\SubscriptionsModule\Repositories\ContentAccessRepository
+	subscriptionTypeItemMetaRepository: Crm\SubscriptionsModule\Repositories\SubscriptionTypeItemMetaRepository
+	subscriptionTypeTagsRepository: Crm\SubscriptionsModule\Repositories\SubscriptionTypeTagsRepository
 
 	measurementManager:
 		setup:
@@ -24,45 +24,45 @@ services:
 		    - register(Crm\SubscriptionsModule\Measurements\StartedSubscriptionsMeasurement())
 		    - register(Crm\SubscriptionsModule\Measurements\EndedSubscriptionsMeasurement())
 
-	- Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder
+	- Crm\SubscriptionsModule\Models\Builder\SubscriptionTypeBuilder
 	- Crm\SubscriptionsModule\Forms\SubscriptionTypesFormFactory
 	- Crm\SubscriptionsModule\Forms\SubscriptionFormFactory
 	- Crm\SubscriptionsModule\Forms\SubscriptionsGeneratorFormFactory
 	- Crm\SubscriptionsModule\Forms\SubscriptionTypeItemsFormFactory
 	- Crm\SubscriptionsModule\Forms\SubscriptionTypeMetaFormFactory
 	- Crm\SubscriptionsModule\Forms\AdminFilterFormFactory
-	- Crm\SubscriptionsModule\Generator\SubscriptionsGenerator
-	- Crm\SubscriptionsModule\Components\SubscriptionButton
-	- Crm\SubscriptionsModule\Components\ActualUserSubscriptions
-	- Crm\SubscriptionsModule\Components\ActualSubscribersRegistrationSourceStatsWidget
-	- Crm\SubscriptionsModule\Components\TotalSubscriptionsStatWidget
-	- Crm\SubscriptionsModule\Components\ActualSubscribersStatWidget
-	- Crm\SubscriptionsModule\Components\TodaySubscriptionsStatWidget
-	- Crm\SubscriptionsModule\Components\MonthSubscriptionsStatWidget
-	- Crm\SubscriptionsModule\Components\MonthToDateSubscriptionsStatWidget
+	- Crm\SubscriptionsModule\Models\Generator\SubscriptionsGenerator
+	- Crm\SubscriptionsModule\Components\SubscriptionButton\SubscriptionButton
+	- Crm\SubscriptionsModule\Components\ActualUserSubscriptions\ActualUserSubscriptions
+	- Crm\SubscriptionsModule\Components\ActualSubscribersRegistrationSourceStatsWidget\ActualSubscribersRegistrationSourceStatsWidget
+	- Crm\SubscriptionsModule\Components\TotalSubscriptionsStatWidget\TotalSubscriptionsStatWidget
+	- Crm\SubscriptionsModule\Components\ActualSubscribersStatWidget\ActualSubscribersStatWidget
+	- Crm\SubscriptionsModule\Components\TodaySubscriptionsStatWidget\TodaySubscriptionsStatWidget
+	- Crm\SubscriptionsModule\Components\MonthSubscriptionsStatWidget\MonthSubscriptionsStatWidget
+	- Crm\SubscriptionsModule\Components\MonthToDateSubscriptionsStatWidget\MonthToDateSubscriptionsStatWidget
 	subscribersWithMissingAddressWidget:
-		factory: Crm\SubscriptionsModule\Components\SubscribersWithMissingAddressWidget
+		factory: Crm\SubscriptionsModule\Components\PrintSubscribersWithoutPrintAddressWidget\PrintSubscribersWithoutPrintAddressWidget
 	usersAbusiveAdditionalWidget:
-		factory: Crm\SubscriptionsModule\Components\UsersAbusiveAdditionalWidget
-	- Crm\SubscriptionsModule\Components\EndingSubscriptionsWidget
-	- Crm\SubscriptionsModule\Components\RenewedSubscriptionsEndingWithinPeriodWidget
-	- Crm\SubscriptionsModule\Components\SubscriptionsEndingWithinPeriodWidget
-	- Crm\SubscriptionsModule\Components\MonthSubscriptionsSmallBarGraphWidget
-	- Crm\SubscriptionsModule\Components\UserSubscriptionInfoWidget
-	- Crm\SubscriptionsModule\Components\UserSubscriptionsListing
-	- Crm\SubscriptionsModule\Components\SubscriptionEndsStatsFactoryInterface
-	- Crm\SubscriptionsModule\Components\StopSubscriptionWidget
-	- Crm\SubscriptionsModule\Components\SubscriptionEndsSuppressionWidget
+		factory: Crm\SubscriptionsModule\Components\UsersAbusiveAdditionalWidget\UsersAbusiveAdditionalWidget
+	- Crm\SubscriptionsModule\Components\EndingSubscriptionsWidget\EndingSubscriptionsWidget
+	- Crm\SubscriptionsModule\Components\RenewedSubscriptionsEndingWithinPeriodWidget\RenewedSubscriptionsEndingWithinPeriodWidget
+	- Crm\SubscriptionsModule\Components\SubscriptionsEndingWithinPeriodWidget\SubscriptionsEndingWithinPeriodWidget
+	- Crm\SubscriptionsModule\Components\MonthSubscriptionsSmallBarGraphWidget\MonthSubscriptionsSmallBarGraphWidget
+	- Crm\SubscriptionsModule\Components\UserSubscriptionInfoWidget\UserSubscriptionInfoWidget
+	- Crm\SubscriptionsModule\Components\UserSubscriptionsListing\UserSubscriptionsListing
+	- Crm\SubscriptionsModule\Components\SubscriptionEndsStats\SubscriptionEndsStatsFactoryInterface
+	- Crm\SubscriptionsModule\Components\StopSubscriptionWidget\StopSubscriptionWidget
+	- Crm\SubscriptionsModule\Components\SubscriptionEndsSuppressionWidget\SubscriptionEndsSuppressionWidget
 	- Crm\SubscriptionsModule\Commands\ChangeSubscriptionsStateCommand
 	- Crm\SubscriptionsModule\Api\v1\UsersSubscriptionsHandler
-	- Crm\SubscriptionsModule\Subscription\ActualUserSubscription
+	- Crm\SubscriptionsModule\Models\Subscription\ActualUserSubscription
 	- Crm\SubscriptionsModule\Events\AddressRemovedHandler
 	- Crm\SubscriptionsModule\Events\SubscriptionShortenedHandler
 	- Crm\SubscriptionsModule\Hermes\GenerateSubscriptionHandler
 	- Crm\SubscriptionsModule\Api\v1\CreateSubscriptionHandler
 	- Crm\SubscriptionsModule\Api\v1\ListContentAccessHandler
 	- Crm\SubscriptionsModule\Api\v1\UpdateSubscriptionHandler
-	- Crm\SubscriptionsModule\User\SubscriptionsUserDataProvider
+	- Crm\SubscriptionsModule\DataProviders\SubscriptionsUserDataProvider
 	- Crm\SubscriptionsModule\Segment\ActiveSubscriptionCriteria
 	- Crm\SubscriptionsModule\Segment\UserActiveSubscriptionCriteria
 	- Crm\SubscriptionsModule\Segment\InactiveSubscriptionCriteria
@@ -84,58 +84,58 @@ services:
 	- Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder
 	- Crm\SubscriptionsModule\Seeders\TestSeeder
 	- Crm\SubscriptionsModule\Access\SubscriptionAccessProvider
-	- Crm\SubscriptionsModule\DataProvider\FilterUsersFormDataProvider
-	- Crm\SubscriptionsModule\DataProvider\FilterUserActionLogsSelectionDataProvider
-	- Crm\SubscriptionsModule\DataProvider\FilterUserActionLogsFormDataProvider
-	- Crm\SubscriptionsModule\DataProvider\CanDeleteAddressDataProvider
-	- Crm\SubscriptionsModule\DataProvider\FilterAbusiveUserFormDataProvider
-	- Crm\SubscriptionsModule\DataProvider\SubscriptionsClaimUserDataProvider
-	- Crm\SubscriptionsModule\Subscription\SubscriptionTypeHelper
-	- Crm\SubscriptionsModule\Subscription\StopSubscriptionHandler
-	- Crm\SubscriptionsModule\Subscription\SubscriptionEndsSuppressionManager
+	- Crm\SubscriptionsModule\DataProviders\FilterUsersFormDataProvider
+	- Crm\SubscriptionsModule\DataProviders\FilterUserActionLogsSelectionDataProvider
+	- Crm\SubscriptionsModule\DataProviders\FilterUserActionLogsFormDataProvider
+	- Crm\SubscriptionsModule\DataProviders\CanDeleteAddressDataProvider
+	- Crm\SubscriptionsModule\DataProviders\FilterAbusiveUserFormDataProvider
+	- Crm\SubscriptionsModule\DataProviders\SubscriptionsClaimUserDataProvider
+	- Crm\SubscriptionsModule\Models\Subscription\SubscriptionTypeHelper
+	- Crm\SubscriptionsModule\Models\Subscription\StopSubscriptionHandler
+	- Crm\SubscriptionsModule\Models\Subscription\SubscriptionEndsSuppressionManager
 
 	- Crm\SubscriptionsModule\Models\AdminFilterFormData
 
-	- Crm\SubscriptionsModule\Extension\ExtendActualExtension
-	- Crm\SubscriptionsModule\Extension\ExtendSameActualExtension
-	- Crm\SubscriptionsModule\Extension\ExtendSameContentAccess
-	- Crm\SubscriptionsModule\Extension\StartNowExtension
-	- Crm\SubscriptionsModule\Extension\ExtendSameTypeExtension
-	- Crm\SubscriptionsModule\Extension\ExtendLastExtension
+	- Crm\SubscriptionsModule\Models\Extension\ExtendActualExtension
+	- Crm\SubscriptionsModule\Models\Extension\ExtendSameActualExtension
+	- Crm\SubscriptionsModule\Models\Extension\ExtendSameContentAccess
+	- Crm\SubscriptionsModule\Models\Extension\StartNowExtension
+	- Crm\SubscriptionsModule\Models\Extension\ExtendSameTypeExtension
+	- Crm\SubscriptionsModule\Models\Extension\ExtendLastExtension
 	extensionMethodFactory:
-		factory: Crm\SubscriptionsModule\Extension\ExtensionMethodFactory
+		factory: Crm\SubscriptionsModule\Models\Extension\ExtensionMethodFactory
 		setup:
 			- registerExtension(
-				Crm\SubscriptionsModule\Extension\ExtendActualExtension::METHOD_CODE,
-				Crm\SubscriptionsModule\Extension\ExtendActualExtension
+				Crm\SubscriptionsModule\Models\Extension\ExtendActualExtension::METHOD_CODE,
+				Crm\SubscriptionsModule\Models\Extension\ExtendActualExtension
 			)
 			- registerExtension(
-				Crm\SubscriptionsModule\Extension\ExtendSameActualExtension::METHOD_CODE,
-				Crm\SubscriptionsModule\Extension\ExtendSameActualExtension
+				Crm\SubscriptionsModule\Models\Extension\ExtendSameActualExtension::METHOD_CODE,
+				Crm\SubscriptionsModule\Models\Extension\ExtendSameActualExtension
 			)
 			- registerExtension(
-				Crm\SubscriptionsModule\Extension\StartNowExtension::METHOD_CODE,
-				Crm\SubscriptionsModule\Extension\StartNowExtension
+				Crm\SubscriptionsModule\Models\Extension\StartNowExtension::METHOD_CODE,
+				Crm\SubscriptionsModule\Models\Extension\StartNowExtension
 			)
 			- registerExtension(
-				Crm\SubscriptionsModule\Extension\ExtendSameTypeExtension::METHOD_CODE,
-				Crm\SubscriptionsModule\Extension\ExtendSameTypeExtension
+				Crm\SubscriptionsModule\Models\Extension\ExtendSameTypeExtension::METHOD_CODE,
+				Crm\SubscriptionsModule\Models\Extension\ExtendSameTypeExtension
 			)
 			- registerExtension(
-				Crm\SubscriptionsModule\Extension\ExtendSameContentAccess::METHOD_CODE,
-				Crm\SubscriptionsModule\Extension\ExtendSameContentAccess
+				Crm\SubscriptionsModule\Models\Extension\ExtendSameContentAccess::METHOD_CODE,
+				Crm\SubscriptionsModule\Models\Extension\ExtendSameContentAccess
 			)
 			- registerExtension(
-				Crm\SubscriptionsModule\Extension\ExtendLastExtension::METHOD_CODE,
-				Crm\SubscriptionsModule\Extension\ExtendLastExtension
+				Crm\SubscriptionsModule\Models\Extension\ExtendLastExtension::METHOD_CODE,
+				Crm\SubscriptionsModule\Models\Extension\ExtendLastExtension
 			)
 
 	lengthMethodFactory:
-		factory: Crm\SubscriptionsModule\Length\LengthMethodFactory
+		factory: Crm\SubscriptionsModule\Models\Length\LengthMethodFactory
 		setup:
 			- registerExtension(
-				Crm\SubscriptionsModule\Length\FixDaysLengthMethod::METHOD_CODE,
-				Crm\SubscriptionsModule\Length\FixDaysLengthMethod()
+				Crm\SubscriptionsModule\Models\Length\FixDaysLengthMethod::METHOD_CODE,
+				Crm\SubscriptionsModule\Models\Length\FixDaysLengthMethod()
 			)
 
 	filterLoader:

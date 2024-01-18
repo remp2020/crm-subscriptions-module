@@ -2,8 +2,8 @@
 
 namespace Crm\SubscriptionsModule\Forms;
 
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesMetaRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypesMetaRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\UniqueConstraintViolationException;

@@ -4,7 +4,7 @@ namespace Crm\SubscriptionsModule\Scenarios;
 
 use Crm\ApplicationModule\Criteria\ScenarioParams\StringLabeledArrayParam;
 use Crm\ApplicationModule\Criteria\ScenariosCriteriaInterface;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 

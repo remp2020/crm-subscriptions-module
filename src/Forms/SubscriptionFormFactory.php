@@ -4,12 +4,12 @@ namespace Crm\SubscriptionsModule\Forms;
 
 use Contributte\Translation\Translator;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
-use Crm\SubscriptionsModule\DataProvider\SubscriptionFormDataProviderInterface;
+use Crm\SubscriptionsModule\DataProviders\SubscriptionFormDataProviderInterface;
 use Crm\SubscriptionsModule\Events\SubscriptionPreUpdateEvent;
-use Crm\SubscriptionsModule\Length\LengthMethodFactory;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
-use Crm\SubscriptionsModule\Subscription\SubscriptionTypeHelper;
+use Crm\SubscriptionsModule\Models\Length\LengthMethodFactory;
+use Crm\SubscriptionsModule\Models\Subscription\SubscriptionTypeHelper;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\Repository\AddressesRepository;
 use Crm\UsersModule\Repository\UsersRepository;
 use League\Event\Emitter;

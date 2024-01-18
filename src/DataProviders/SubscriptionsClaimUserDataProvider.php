@@ -3,7 +3,7 @@
 namespace Crm\SubscriptionsModule\DataProviders;
 
 use Crm\ApplicationModule\DataProvider\DataProviderException;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\User\ClaimUserDataProviderInterface;
 
 class SubscriptionsClaimUserDataProvider implements ClaimUserDataProviderInterface

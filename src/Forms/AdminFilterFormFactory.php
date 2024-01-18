@@ -2,8 +2,8 @@
 
 namespace Crm\SubscriptionsModule\Forms;
 
-use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypeTagsRepository;
+use Crm\SubscriptionsModule\Repositories\ContentAccessRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypeTagsRepository;
 use Nette\Application\UI\Form;
 use Nette\Localization\Translator;
 use Tomaj\Form\Renderer\BootstrapRenderer;

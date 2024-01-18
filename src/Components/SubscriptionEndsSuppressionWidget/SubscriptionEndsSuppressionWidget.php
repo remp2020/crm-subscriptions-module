@@ -5,8 +5,8 @@ namespace Crm\SubscriptionsModule\Components\SubscriptionEndsSuppressionWidget;
 use Crm\ApplicationModule\ActiveRow;
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ApplicationModule\Widget\LazyWidgetManager;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
-use Crm\SubscriptionsModule\Subscription\SubscriptionEndsSuppressionManager;
+use Crm\SubscriptionsModule\Models\Subscription\SubscriptionEndsSuppressionManager;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Nette\Localization\Translator;
 
 class SubscriptionEndsSuppressionWidget extends BaseLazyWidget

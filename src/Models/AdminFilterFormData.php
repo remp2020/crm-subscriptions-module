@@ -2,8 +2,8 @@
 
 namespace Crm\SubscriptionsModule\Models;
 
-use Crm\SubscriptionsModule\Repository\SubscriptionTypeTagsRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypeTagsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Nette\Database\Table\Selection;
 
 class AdminFilterFormData

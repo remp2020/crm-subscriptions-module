@@ -3,15 +3,15 @@
 namespace Crm\SubscriptionsModule\Tests;
 
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
-use Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder;
-use Crm\SubscriptionsModule\Repository\SubscriptionMetaRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Models\Builder\SubscriptionTypeBuilder;
+use Crm\SubscriptionsModule\Models\Subscription\StopSubscriptionHandler;
+use Crm\SubscriptionsModule\Repositories\SubscriptionMetaRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Scenarios\IsExpiredByAdminCriteria;
 use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
-use Crm\SubscriptionsModule\Subscription\StopSubscriptionHandler;
 use Crm\UsersModule\Auth\UserManager;
 use Crm\UsersModule\Repository\UsersRepository;
 

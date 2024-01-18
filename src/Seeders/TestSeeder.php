@@ -3,8 +3,8 @@
 namespace Crm\SubscriptionsModule\Seeders;
 
 use Crm\ApplicationModule\Seeders\ISeeder;
-use Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
+use Crm\SubscriptionsModule\Models\Builder\SubscriptionTypeBuilder;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class TestSeeder implements ISeeder

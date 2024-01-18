@@ -2,8 +2,8 @@
 
 namespace Crm\SubscriptionsModule\Components\SubscriptionEndsStats;
 
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Nette\Application\UI\Control;
 use Nette\Utils\DateTime;
 

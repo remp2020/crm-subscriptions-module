@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Events;
 
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\Events\IAddressEvent;
 use League\Event\AbstractListener;
 use League\Event\EventInterface;

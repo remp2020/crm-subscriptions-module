@@ -4,12 +4,12 @@ namespace Crm\SubscriptionsModule\Tests;
 
 use Crm\ApplicationModule\Selection;
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
-use Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder;
-use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionExtensionMethodsRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionLengthMethodsRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypeNamesRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Models\Builder\SubscriptionTypeBuilder;
+use Crm\SubscriptionsModule\Repositories\ContentAccessRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionExtensionMethodsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionLengthMethodsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypeNamesRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\SubscriptionsModule\Scenarios\HasLaterEndingSubscriptionCriteria;
 use Crm\SubscriptionsModule\Seeders\ContentAccessSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;

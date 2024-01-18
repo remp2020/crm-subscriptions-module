@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Models\Subscription;
 
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Nette\Security\User;
 
 class ActualUserSubscription

@@ -4,9 +4,9 @@ namespace Crm\SubscriptionsModule\DataProviders;
 
 use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
 use Crm\ApplicationModule\User\UserDataProviderInterface;
-use Crm\SubscriptionsModule\Model\Config;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
-use Crm\SubscriptionsModule\Subscription\StopSubscriptionHandler;
+use Crm\SubscriptionsModule\Models\Config;
+use Crm\SubscriptionsModule\Models\Subscription\StopSubscriptionHandler;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Nette\Localization\Translator;
 use Nette\Utils\DateTime;
 use Tracy\Debugger;

@@ -4,7 +4,7 @@ namespace Crm\SubscriptionsModule\Components\PrintSubscribersWithoutPrintAddress
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ApplicationModule\Widget\LazyWidgetManager;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\Repository\AddressesRepository;
 use Crm\UsersModule\Repository\UserMetaRepository;
 

@@ -3,7 +3,7 @@
 namespace Crm\SubscriptionsModule\Presenters;
 
 use Crm\ApplicationModule\Presenters\FrontendPresenter;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 
 class SubscriptionsPresenter extends FrontendPresenter
 {

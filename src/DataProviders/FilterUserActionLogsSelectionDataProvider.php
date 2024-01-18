@@ -4,7 +4,7 @@ namespace Crm\SubscriptionsModule\DataProviders;
 
 use Crm\ApplicationModule\DataProvider\DataProviderException;
 use Crm\ApplicationModule\Selection;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Crm\UsersModule\DataProvider\FilterUserActionLogsDataProviderInterface;
 
 class FilterUserActionLogsSelectionDataProvider implements FilterUserActionLogsDataProviderInterface

@@ -3,17 +3,17 @@
 namespace Crm\SubscriptionsModule\Tests;
 
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
-use Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder;
 use Crm\SubscriptionsModule\Events\ContentAccessAssignedEvent;
 use Crm\SubscriptionsModule\Events\ContentAccessUnassignedEvent;
 use Crm\SubscriptionsModule\Events\SubscriptionTypeCreatedEvent;
 use Crm\SubscriptionsModule\Events\SubscriptionTypeUpdatedEvent;
-use Crm\SubscriptionsModule\Repository\ContentAccessRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionExtensionMethodsRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionLengthMethodsRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypeContentAccessRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemsRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
+use Crm\SubscriptionsModule\Models\Builder\SubscriptionTypeBuilder;
+use Crm\SubscriptionsModule\Repositories\ContentAccessRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionExtensionMethodsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionLengthMethodsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypeContentAccessRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypeItemsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Seeders\ContentAccessSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;

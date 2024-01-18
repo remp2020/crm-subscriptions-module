@@ -9,7 +9,7 @@ use Crm\ApplicationModule\Config\Repository\ConfigCategoriesRepository;
 use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
 use Crm\ApplicationModule\Seeders\ConfigsTrait;
 use Crm\ApplicationModule\Seeders\ISeeder;
-use Crm\SubscriptionsModule\Model\Config;
+use Crm\SubscriptionsModule\Models\Config;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ConfigSeeder implements ISeeder

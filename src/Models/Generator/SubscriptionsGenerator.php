@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Models\Generator;
 
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use League\Event\Emitter;
 
 class SubscriptionsGenerator

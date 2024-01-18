@@ -3,8 +3,8 @@
 namespace Crm\SubscriptionsModule\Api\v1;
 
 use Crm\ApiModule\Models\Api\ApiHandler;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Nette\Http\IResponse;
 use Nette\Utils\DateTime;
 use Tomaj\NetteApi\Params\PostInputParam;

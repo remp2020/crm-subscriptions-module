@@ -5,7 +5,7 @@ namespace Crm\SubscriptionsModule\Api\v1;
 use Crm\ApiModule\Models\Api\ApiHandler;
 use Crm\ApiModule\Models\Params\InputParam;
 use Crm\ApiModule\Models\Params\ParamsProcessor;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\Auth\UsersApiAuthorizationInterface;
 use Nette\Http\Response;
 use Nette\Utils\DateTime;

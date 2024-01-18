@@ -2,9 +2,9 @@
 
 namespace Crm\SubscriptionsModule\Hermes;
 
-use Crm\SubscriptionsModule\Generator\SubscriptionsGenerator;
-use Crm\SubscriptionsModule\Generator\SubscriptionsParams;
-use Crm\SubscriptionsModule\Repository\SubscriptionTypesRepository;
+use Crm\SubscriptionsModule\Models\Generator\SubscriptionsGenerator;
+use Crm\SubscriptionsModule\Models\Generator\SubscriptionsParams;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Crm\UsersModule\Auth\UserManager;
 use Nette\Utils\DateTime;
 use Tomaj\Hermes\Handler\HandlerInterface;

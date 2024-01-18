@@ -4,8 +4,8 @@ namespace Crm\SubscriptionsModule\Components\StopSubscriptionWidget;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ApplicationModule\Widget\LazyWidgetManager;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
-use Crm\SubscriptionsModule\Subscription\StopSubscriptionHandler;
+use Crm\SubscriptionsModule\Models\Subscription\StopSubscriptionHandler;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use DateTime;
 use Nette\Database\Table\ActiveRow;
 use Nette\Localization\Translator;
