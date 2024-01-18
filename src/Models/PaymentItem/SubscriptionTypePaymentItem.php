@@ -2,8 +2,8 @@
 
 namespace Crm\SubscriptionsModule\Models\PaymentItem;
 
-use Crm\PaymentsModule\PaymentItem\PaymentItemInterface;
-use Crm\PaymentsModule\PaymentItem\PaymentItemTrait;
+use Crm\PaymentsModule\Models\PaymentItem\PaymentItemInterface;
+use Crm\PaymentsModule\Models\PaymentItem\PaymentItemTrait;
 use Nette\Database\Table\ActiveRow;
 
 class SubscriptionTypePaymentItem implements PaymentItemInterface
