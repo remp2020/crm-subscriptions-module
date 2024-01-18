@@ -1,13 +1,13 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Repository;
+namespace Crm\SubscriptionsModule\Repositories;
 
 use Crm\ApplicationModule\Repository;
 use Nette\Utils\DateTime;
 
-class SubscriptionExtensionMethodsRepository extends Repository
+class SubscriptionLengthMethodsRepository extends Repository
 {
-    protected $tableName = 'subscription_extension_methods';
+    protected $tableName = 'subscription_length_methods';
 
     final public function all()
     {

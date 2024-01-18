@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Generator;
+namespace Crm\SubscriptionsModule\Models\Generator;
 
 use DateTime;
 use Nette\Database\Table\ActiveRow;

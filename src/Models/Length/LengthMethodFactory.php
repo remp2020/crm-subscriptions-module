@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Length;
+namespace Crm\SubscriptionsModule\Models\Length;
 
 class LengthMethodFactory
 {

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Crm\SubscriptionsModule\DataProvider;
+namespace Crm\SubscriptionsModule\DataProviders;
 
 use Crm\ApplicationModule\DataProvider\DataProviderInterface;
 use Nette\Application\UI\Form;

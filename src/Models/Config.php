@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Model;
+namespace Crm\SubscriptionsModule\Models;
 
 class Config
 {

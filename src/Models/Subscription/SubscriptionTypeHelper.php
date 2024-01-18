@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Subscription;
+namespace Crm\SubscriptionsModule\Models\Subscription;
 
 use Crm\ApplicationModule\Helpers\PriceHelper;
 use Crm\SubscriptionsModule\Repository\SubscriptionTypeItemsRepository;

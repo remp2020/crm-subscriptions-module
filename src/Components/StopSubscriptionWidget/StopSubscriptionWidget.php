@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Components;
+namespace Crm\SubscriptionsModule\Components\StopSubscriptionWidget;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ApplicationModule\Widget\LazyWidgetManager;

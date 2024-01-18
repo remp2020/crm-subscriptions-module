@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Populator;
+namespace Crm\SubscriptionsModule\Populators;
 
 use Crm\ApplicationModule\Populator\AbstractPopulator;
 use Symfony\Component\Console\Helper\ProgressBar;

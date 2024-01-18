@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Components;
+namespace Crm\SubscriptionsModule\Components\SubscriptionEndsStats;
 
 interface SubscriptionEndsStatsFactoryInterface
 {

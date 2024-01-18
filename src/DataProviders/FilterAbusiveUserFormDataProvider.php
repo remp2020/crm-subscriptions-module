@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\DataProvider;
+namespace Crm\SubscriptionsModule\DataProviders;
 
 use Crm\ApplicationModule\DataProvider\DataProviderException;
 use Crm\ApplicationModule\Selection;

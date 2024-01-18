@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Components;
+namespace Crm\SubscriptionsModule\Components\MonthSubscriptionsSmallBarGraphWidget;
 
 use Crm\ApplicationModule\Components\Graphs\SmallBarGraphControlFactoryInterface;
 use Crm\ApplicationModule\Graphs\Criteria;

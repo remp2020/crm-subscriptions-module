@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Repository;
+namespace Crm\SubscriptionsModule\Repositories;
 
 use Crm\ApplicationModule\Repository;
 use Nette\Caching\Storage;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Repository;
+namespace Crm\SubscriptionsModule\Repositories;
 
 use Closure;
 use Crm\ApplicationModule\Cache\CacheRepository;

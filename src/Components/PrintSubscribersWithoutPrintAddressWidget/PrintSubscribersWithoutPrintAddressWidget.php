@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Components;
+namespace Crm\SubscriptionsModule\Components\PrintSubscribersWithoutPrintAddressWidget;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ApplicationModule\Widget\LazyWidgetManager;
@@ -14,9 +14,9 @@ use Crm\UsersModule\Repository\UserMetaRepository;
  *
  * @package Crm\SubscriptionsModule\Components
  */
-class SubscribersWithMissingAddressWidget extends BaseLazyWidget
+class PrintSubscribersWithoutPrintAddressWidget extends BaseLazyWidget
 {
-    private string $templateName = 'subscribers_with_missing_address_widget.latte';
+    private string $templateName = 'print_subscribers_without_print_address_widget.latte';
 
     protected array $contentAccessNames = ['print'];
 

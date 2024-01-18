@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Report;
+namespace Crm\SubscriptionsModule\Models\Report;
 
 use Nette\Database\Explorer;
 use Nette\Localization\Translator;

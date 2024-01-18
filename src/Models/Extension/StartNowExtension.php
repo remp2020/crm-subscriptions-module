@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Extension;
+namespace Crm\SubscriptionsModule\Models\Extension;
 
 use Crm\ApplicationModule\NowTrait;
 use Nette\Database\Table\ActiveRow;

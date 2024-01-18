@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Components;
+namespace Crm\SubscriptionsModule\Components\ActualSubscribersRegistrationSourceStatsWidget;
 
 use Crm\ApplicationModule\Components\Graphs\GoogleBarGraphControlFactoryInterface;
 use Crm\ApplicationModule\Widget\BaseLazyWidget;

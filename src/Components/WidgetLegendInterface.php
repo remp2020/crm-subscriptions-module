@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Components;
 
-interface IWidgetLegend
+interface WidgetLegendInterface
 {
     public function legend(): string;
 }

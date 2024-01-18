@@ -1,10 +1,11 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Components;
+namespace Crm\SubscriptionsModule\Components\SubscriptionsEndingWithinPeriodWidget;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ApplicationModule\Widget\LazyWidgetManager;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Components\WidgetLegendInterface;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Nette\Localization\Translator;
 use Nette\Utils\DateTime;
 
@@ -14,7 +15,7 @@ use Nette\Utils\DateTime;
  *
  * @package Crm\SubscriptionsModule\Components
  */
-class SubscriptionsEndingWithinPeriodWidget extends BaseLazyWidget implements IWidgetLegend
+class SubscriptionsEndingWithinPeriodWidget extends BaseLazyWidget implements WidgetLegendInterface
 {
     private $templateName = 'subscriptions_ending_within_period_widget.latte';
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Generator;
+namespace Crm\SubscriptionsModule\Models\Generator;
 
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use League\Event\Emitter;

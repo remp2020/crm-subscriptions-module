@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\PaymentItem;
+namespace Crm\SubscriptionsModule\Models\PaymentItem;
 
 use Crm\PaymentsModule\PaymentItem\PaymentItemInterface;
 use Crm\PaymentsModule\PaymentItem\PaymentItemTrait;

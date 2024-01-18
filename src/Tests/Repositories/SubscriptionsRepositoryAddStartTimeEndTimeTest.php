@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Crm\SubscriptionsModule\Tests;
+namespace Crm\SubscriptionsModule\Tests\Repositories;
 
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
 use Crm\SubscriptionsModule\Builder\SubscriptionTypeBuilder;

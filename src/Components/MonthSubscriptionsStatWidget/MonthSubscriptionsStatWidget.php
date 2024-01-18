@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Components;
+namespace Crm\SubscriptionsModule\Components\MonthSubscriptionsStatWidget;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ApplicationModule\Widget\LazyWidgetManager;
@@ -8,15 +8,14 @@ use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Nette\Utils\DateTime;
 
 /**
- * This widget fetches subscriptions created from start of month to date
- * and last months same value.
- * Renders simple line with both lines.
+ * This widget fetches subscriptions created in this month
+ * and last month and renders simple line with both lines.
  *
  * @package Crm\SubscriptionsModule\Components
  */
-class MonthToDateSubscriptionsStatWidget extends BaseLazyWidget
+class MonthSubscriptionsStatWidget extends BaseLazyWidget
 {
-    private $templateName = 'month_to_date_subscriptions_stat_widget.latte';
+    private $templateName = 'month_subscriptions_stat_widget.latte';
 
     private $subscriptionsRepository;
 
@@ -30,7 +29,7 @@ class MonthToDateSubscriptionsStatWidget extends BaseLazyWidget
 
     public function identifier()
     {
-        return 'monthtodatesubscriptionsstatwidget';
+        return 'monthsubscriptionsstatwidget';
     }
 
     public function render()
@@ -39,9 +38,9 @@ class MonthToDateSubscriptionsStatWidget extends BaseLazyWidget
             DateTime::from(date('Y-m')),
             new DateTime()
         )->count('*');
-        $this->template->lastMonthDaySubscriptions = $this->subscriptionsRepository->subscriptionsCreatedBetween(
-            DateTime::from('first day of last month 00:00'),
-            DateTime::from('-1 month')
+        $this->template->lastMonthSubscriptions = $this->subscriptionsRepository->subscriptionsCreatedBetween(
+            DateTime::from('first day of -1 month 00:00'),
+            DateTime::from(date('Y-m'))
         )->count('*');
         $this->template->setFile(__DIR__ . DIRECTORY_SEPARATOR . $this->templateName);
         $this->template->render();

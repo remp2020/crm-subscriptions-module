@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Components;
+namespace Crm\SubscriptionsModule\Components\SubscriptionEndsSuppressionWidget;
 
 use Crm\ApplicationModule\ActiveRow;
 use Crm\ApplicationModule\Widget\BaseLazyWidget;

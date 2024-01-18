@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Builder;
+namespace Crm\SubscriptionsModule\Models\Builder;
 
 use Crm\ApplicationModule\Builder\Builder;
 use Crm\ApplicationModule\Config\ApplicationConfig;

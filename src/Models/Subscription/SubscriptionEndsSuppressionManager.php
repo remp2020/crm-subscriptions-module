@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\SubscriptionsModule\Subscription;
+namespace Crm\SubscriptionsModule\Models\Subscription;
 
 use Crm\SubscriptionsModule\Repository\SubscriptionMetaRepository;
 use Nette\Database\Table\ActiveRow;
