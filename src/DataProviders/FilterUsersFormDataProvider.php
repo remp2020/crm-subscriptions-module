@@ -6,7 +6,7 @@ use Crm\ApplicationModule\DataProvider\DataProviderException;
 use Crm\ApplicationModule\NowTrait;
 use Crm\SubscriptionsModule\Models\Subscription\SubscriptionTypeHelper;
 use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
-use Crm\UsersModule\DataProvider\FilterUsersFormDataProviderInterface;
+use Crm\UsersModule\DataProviders\FilterUsersFormDataProviderInterface;
 use Nette\Application\UI\Form;
 use Nette\Database\Table\Selection;
 use Nette\Localization\Translator;

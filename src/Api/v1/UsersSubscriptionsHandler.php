@@ -6,7 +6,7 @@ use Crm\ApiModule\Models\Api\ApiHandler;
 use Crm\ApiModule\Models\Params\InputParam;
 use Crm\ApiModule\Models\Params\ParamsProcessor;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
-use Crm\UsersModule\Auth\UsersApiAuthorizationInterface;
+use Crm\UsersModule\Models\Auth\UsersApiAuthorizationInterface;
 use Nette\Http\Response;
 use Nette\Utils\DateTime;
 use Tomaj\NetteApi\Response\JsonApiResponse;

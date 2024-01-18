@@ -5,8 +5,8 @@ namespace Crm\SubscriptionsModule\Components\PrintSubscribersWithoutPrintAddress
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 use Crm\ApplicationModule\Widget\LazyWidgetManager;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
-use Crm\UsersModule\Repository\AddressesRepository;
-use Crm\UsersModule\Repository\UserMetaRepository;
+use Crm\UsersModule\Repositories\AddressesRepository;
+use Crm\UsersModule\Repositories\UserMetaRepository;
 
 /**
  * This widget fetches users with print subscription without print address

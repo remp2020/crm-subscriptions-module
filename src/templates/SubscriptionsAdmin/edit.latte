@@ -12,7 +12,7 @@
           [{$user->id}]
         </small>
       	{$user|userLabel}
-		    <span n:if="$user->role === \Crm\UsersModule\Repository\UsersRepository::ROLE_ADMIN" class="label label-warning">admin</span>
+		    <span n:if="$user->role === \Crm\UsersModule\Repositories\UsersRepository::ROLE_ADMIN" class="label label-warning">admin</span>
       </h1>
     </div>
   </div>

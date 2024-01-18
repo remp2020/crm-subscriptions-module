@@ -18,8 +18,8 @@ use Crm\SubscriptionsModule\Seeders\ContentAccessSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
-use Crm\UsersModule\Auth\UserManager;
-use Crm\UsersModule\Repository\UsersRepository;
+use Crm\UsersModule\Models\Auth\UserManager;
+use Crm\UsersModule\Repositories\UsersRepository;
 use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -62,7 +62,6 @@ class SubscriptionsRepositoryAddStartTimeEndTimeTest extends DatabaseTestCase
 
         $this->subscriptionsRepository = $this->getRepository(SubscriptionsRepository::class);
         $this->extension = $this->inject(ExtendSameContentAccess::class); // will be needed to update setNow()
-
         /** @var UserManager $userManager */
         $userManager = $this->inject(UserManager::class);
         $this->user = $userManager->addNewUser('test@example.com');
