@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Models\Extension;
 
-use Crm\ApplicationModule\NowTrait;
+use Crm\ApplicationModule\Models\NowTrait;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Nette\Database\Table\ActiveRow;
 

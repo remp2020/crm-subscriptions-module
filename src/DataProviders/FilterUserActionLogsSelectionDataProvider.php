@@ -2,8 +2,8 @@
 
 namespace Crm\SubscriptionsModule\DataProviders;
 
-use Crm\ApplicationModule\DataProvider\DataProviderException;
-use Crm\ApplicationModule\Selection;
+use Crm\ApplicationModule\Models\DataProvider\DataProviderException;
+use Crm\ApplicationModule\Models\Database\Selection;
 use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Crm\UsersModule\DataProviders\FilterUserActionLogsDataProviderInterface;
 

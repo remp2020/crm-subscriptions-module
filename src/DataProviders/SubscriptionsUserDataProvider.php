@@ -2,8 +2,8 @@
 
 namespace Crm\SubscriptionsModule\DataProviders;
 
-use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
-use Crm\ApplicationModule\User\UserDataProviderInterface;
+use Crm\ApplicationModule\Models\User\UserDataProviderInterface;
+use Crm\ApplicationModule\Repositories\ConfigsRepository;
 use Crm\SubscriptionsModule\Models\Config;
 use Crm\SubscriptionsModule\Models\Subscription\StopSubscriptionHandler;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;

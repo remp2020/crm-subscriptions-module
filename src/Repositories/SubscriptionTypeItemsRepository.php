@@ -2,8 +2,8 @@
 
 namespace Crm\SubscriptionsModule\Repositories;
 
-use Crm\ApplicationModule\DataProvider\DataProviderManager;
-use Crm\ApplicationModule\Repository;
+use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
+use Crm\ApplicationModule\Models\Database\Repository;
 use Crm\SubscriptionsModule\DataProviders\CanUpdateSubscriptionTypeItemDataProviderInterface;
 use Exception;
 use Nette\Caching\Storage;

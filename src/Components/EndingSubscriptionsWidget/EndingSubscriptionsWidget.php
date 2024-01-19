@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Components\EndingSubscriptionsWidget;
 
-use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Models\Widget\BaseLazyWidget;
 
 /**
  * This widget fetches all widgets from `subscriptions.endinglist` namespace

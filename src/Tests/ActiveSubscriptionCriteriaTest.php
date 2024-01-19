@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Tests;
 
-use Crm\ApplicationModule\Criteria\CriteriaStorage;
+use Crm\ApplicationModule\Models\Criteria\CriteriaStorage;
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
 use Crm\SegmentModule\Models\Criteria\Generator;
 use Crm\SegmentModule\Models\Segment;

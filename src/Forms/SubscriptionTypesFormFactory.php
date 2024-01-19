@@ -4,8 +4,8 @@ namespace Crm\SubscriptionsModule\Forms;
 
 use Contributte\FormMultiplier\Multiplier;
 use Contributte\Translation\Translator;
-use Crm\ApplicationModule\DataProvider\DataProviderException;
-use Crm\ApplicationModule\DataProvider\DataProviderManager;
+use Crm\ApplicationModule\Models\DataProvider\DataProviderException;
+use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
 use Crm\SubscriptionsModule\DataProviders\SubscriptionTypeFormProviderInterface;
 use Crm\SubscriptionsModule\Models\Builder\SubscriptionTypeBuilder;
 use Crm\SubscriptionsModule\Models\Subscription\SubscriptionTypeHelper;

@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Crm\SubscriptionsModule\Scenarios;
 
 use Contributte\Translation\Translator;
-use Crm\ApplicationModule\Criteria\ScenarioParams\NumberParam;
-use Crm\ApplicationModule\Criteria\ScenarioParams\StringLabeledArrayParam;
-use Crm\ApplicationModule\Criteria\ScenariosCriteriaInterface;
+use Crm\ApplicationModule\Models\Criteria\ScenarioParams\NumberParam;
+use Crm\ApplicationModule\Models\Criteria\ScenarioParams\StringLabeledArrayParam;
+use Crm\ApplicationModule\Models\Criteria\ScenariosCriteriaInterface;
 use Crm\SubscriptionsModule\Repositories\ContentAccessRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Nette\Database\Table\ActiveRow;

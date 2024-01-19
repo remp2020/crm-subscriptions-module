@@ -2,8 +2,8 @@
 
 namespace Crm\SubscriptionsModule\Repositories;
 
-use Crm\ApplicationModule\Repository;
-use Crm\ApplicationModule\Repository\AuditLogRepository;
+use Crm\ApplicationModule\Models\Database\Repository;
+use Crm\ApplicationModule\Repositories\AuditLogRepository;
 use Crm\SubscriptionsModule\Events\SubscriptionTypeUpdatedEvent;
 use League\Event\Emitter;
 use Nette\Database\Explorer;

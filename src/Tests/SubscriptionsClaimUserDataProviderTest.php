@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Tests;
 
-use Crm\ApplicationModule\DataProvider\DataProviderException;
+use Crm\ApplicationModule\Models\DataProvider\DataProviderException;
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
 use Crm\ContentModule\Seeders\LockTypesSeeder;
 use Crm\SubscriptionsModule\DataProviders\SubscriptionsClaimUserDataProvider;

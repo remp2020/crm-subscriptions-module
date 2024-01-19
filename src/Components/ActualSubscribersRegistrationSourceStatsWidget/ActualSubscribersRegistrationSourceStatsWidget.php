@@ -2,9 +2,9 @@
 
 namespace Crm\SubscriptionsModule\Components\ActualSubscribersRegistrationSourceStatsWidget;
 
-use Crm\ApplicationModule\Components\Graphs\GoogleBarGraphControlFactoryInterface;
-use Crm\ApplicationModule\Widget\BaseLazyWidget;
-use Crm\ApplicationModule\Widget\LazyWidgetManager;
+use Crm\ApplicationModule\Components\Graphs\GoogleBarGraph\GoogleBarGraphControlFactoryInterface;
+use Crm\ApplicationModule\Models\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Models\Widget\LazyWidgetManager;
 use Nette\Database\Explorer;
 use Nette\Localization\Translator;
 

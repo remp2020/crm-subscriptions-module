@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\DataProviders;
 
-use Crm\ApplicationModule\DataProvider\DataProviderException;
+use Crm\ApplicationModule\Models\DataProvider\DataProviderException;
 use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Crm\UsersModule\DataProviders\FilterUserActionLogsFormDataProviderInterface;
 use Crm\UsersModule\Repositories\UserActionsLogRepository;

@@ -2,9 +2,9 @@
 
 namespace Crm\SubscriptionsModule\Components\SubscriptionEndsSuppressionWidget;
 
-use Crm\ApplicationModule\ActiveRow;
-use Crm\ApplicationModule\Widget\BaseLazyWidget;
-use Crm\ApplicationModule\Widget\LazyWidgetManager;
+use Crm\ApplicationModule\Models\Database\ActiveRow;
+use Crm\ApplicationModule\Models\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Models\Widget\LazyWidgetManager;
 use Crm\SubscriptionsModule\Models\Subscription\SubscriptionEndsSuppressionManager;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Nette\Localization\Translator;

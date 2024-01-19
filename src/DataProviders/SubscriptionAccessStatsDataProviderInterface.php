@@ -2,8 +2,8 @@
 
 namespace Crm\SubscriptionsModule\DataProviders;
 
-use Crm\ApplicationModule\DataProvider\DataProviderInterface;
-use Crm\ApplicationModule\Graphs\GraphDataItem;
+use Crm\ApplicationModule\Models\DataProvider\DataProviderInterface;
+use Crm\ApplicationModule\Models\Graphs\GraphDataItem;
 
 interface SubscriptionAccessStatsDataProviderInterface extends DataProviderInterface
 {

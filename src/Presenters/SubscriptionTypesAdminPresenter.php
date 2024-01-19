@@ -3,9 +3,9 @@
 namespace Crm\SubscriptionsModule\Presenters;
 
 use Crm\AdminModule\Presenters\AdminPresenter;
-use Crm\ApplicationModule\Components\Graphs\GoogleLineGraphGroupControlFactoryInterface;
-use Crm\ApplicationModule\Graphs\Criteria;
-use Crm\ApplicationModule\Graphs\GraphDataItem;
+use Crm\ApplicationModule\Components\Graphs\GoogleLineGraphGroup\GoogleLineGraphGroupControlFactoryInterface;
+use Crm\ApplicationModule\Models\Graphs\Criteria;
+use Crm\ApplicationModule\Models\Graphs\GraphDataItem;
 use Crm\SubscriptionsModule\Forms\AdminFilterFormFactory;
 use Crm\SubscriptionsModule\Forms\SubscriptionTypeItemsFormFactory;
 use Crm\SubscriptionsModule\Forms\SubscriptionTypeMetaFormFactory;

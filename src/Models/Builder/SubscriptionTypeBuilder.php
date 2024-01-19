@@ -3,7 +3,7 @@
 namespace Crm\SubscriptionsModule\Models\Builder;
 
 use Crm\ApplicationModule\Builder\Builder;
-use Crm\ApplicationModule\Config\ApplicationConfig;
+use Crm\ApplicationModule\Models\Config\ApplicationConfig;
 use Crm\SubscriptionsModule\Events\SubscriptionTypeCreatedEvent;
 use Crm\SubscriptionsModule\Models\Length\FixDaysLengthMethod;
 use Crm\SubscriptionsModule\Repositories\ContentAccessRepository;

@@ -3,7 +3,7 @@
 namespace Crm\SubscriptionsModule\Forms;
 
 use Contributte\Translation\Translator;
-use Crm\ApplicationModule\DataProvider\DataProviderManager;
+use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
 use Crm\SubscriptionsModule\DataProviders\SubscriptionFormDataProviderInterface;
 use Crm\SubscriptionsModule\Events\SubscriptionPreUpdateEvent;
 use Crm\SubscriptionsModule\Models\Length\LengthMethodFactory;

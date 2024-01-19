@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Components\UserSubscriptionInfoWidget;
 
-use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Models\Widget\BaseLazyWidget;
 
 /**
  * This widget displays info about user's actual subscriptions or

@@ -3,11 +3,11 @@
 namespace Crm\SubscriptionsModule\Repositories;
 
 use Closure;
-use Crm\ApplicationModule\Cache\CacheRepository;
 use Crm\ApplicationModule\Hermes\HermesMessage;
-use Crm\ApplicationModule\NowTrait;
-use Crm\ApplicationModule\Repository;
-use Crm\ApplicationModule\Repository\AuditLogRepository;
+use Crm\ApplicationModule\Models\Database\Repository;
+use Crm\ApplicationModule\Models\NowTrait;
+use Crm\ApplicationModule\Repositories\AuditLogRepository;
+use Crm\ApplicationModule\Repositories\CacheRepository;
 use Crm\SubscriptionsModule\Events\NewSubscriptionEvent;
 use Crm\SubscriptionsModule\Events\SubscriptionEndsEvent;
 use Crm\SubscriptionsModule\Events\SubscriptionMovedEvent;
@@ -626,7 +626,7 @@ class SubscriptionsRepository extends Repository
     /**
      * @param DateTime $startTime
      * @param DateTime $endTime
-     * @return \Crm\ApplicationModule\Selection
+     * @return \Crm\ApplicationModule\Models\Database\Selection
      */
     final public function renewedSubscriptionsEndingBetween(DateTime $startTime, DateTime $endTime)
     {

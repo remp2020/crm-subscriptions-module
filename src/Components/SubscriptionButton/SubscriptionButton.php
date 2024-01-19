@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Components\SubscriptionButton;
 
-use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Models\Widget\BaseLazyWidget;
 
 /**
  * This widgets renders subscription edit link for specific payment.

@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Tests;
 
-use Crm\ApplicationModule\Selection;
+use Crm\ApplicationModule\Models\Database\Selection;
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
 use Crm\SubscriptionsModule\Models\Builder\SubscriptionTypeBuilder;
 use Crm\SubscriptionsModule\Repositories\ContentAccessRepository;

@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Repositories;
 
-use Crm\ApplicationModule\Repository;
+use Crm\ApplicationModule\Models\Database\Repository;
 use Crm\SubscriptionsModule\Events\ContentAccessAssignedEvent;
 use Crm\SubscriptionsModule\Events\ContentAccessUnassignedEvent;
 use League\Event\Emitter;

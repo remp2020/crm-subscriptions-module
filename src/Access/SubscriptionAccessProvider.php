@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Access;
 
-use Crm\ApplicationModule\Access\ProviderInterface;
+use Crm\ApplicationModule\Models\Access\ProviderInterface;
 use Crm\SubscriptionsModule\Repositories\ContentAccessRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 

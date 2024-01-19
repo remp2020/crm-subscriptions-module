@@ -2,8 +2,8 @@
 
 namespace Crm\SubscriptionsModule\Components\SubscriptionsEndingWithinPeriodWidget;
 
-use Crm\ApplicationModule\Widget\BaseLazyWidget;
-use Crm\ApplicationModule\Widget\LazyWidgetManager;
+use Crm\ApplicationModule\Models\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Models\Widget\LazyWidgetManager;
 use Crm\SubscriptionsModule\Components\WidgetLegendInterface;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Nette\Localization\Translator;

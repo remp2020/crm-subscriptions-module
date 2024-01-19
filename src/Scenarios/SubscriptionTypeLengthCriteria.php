@@ -2,8 +2,8 @@
 
 namespace Crm\SubscriptionsModule\Scenarios;
 
-use Crm\ApplicationModule\Criteria\ScenarioParams\NumberParam;
-use Crm\ApplicationModule\Criteria\ScenariosCriteriaInterface;
+use Crm\ApplicationModule\Models\Criteria\ScenarioParams\NumberParam;
+use Crm\ApplicationModule\Models\Criteria\ScenariosCriteriaInterface;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 use Nette\Utils\Json;
