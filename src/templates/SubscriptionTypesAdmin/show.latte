@@ -25,7 +25,7 @@
       <li class="list-group-item"><b>{_subscriptions.data.subscription_types.fields.price}:</b> {$type->price|price}</li>
       <li class="list-group-item"><b>{_subscriptions.data.subscription_types.fields.limit_per_user}:</b> {$type->limit_per_user}</li>
       <li class="list-group-item"><b>{_subscriptions.data.subscription_types.fields.recurrent_charge_before}:</b> {if $type->recurrent_charge_before}{$type->recurrent_charge_before} hours{else}<small>--</small>{/if}</li>
-      <li class="list-group-item"><b>{_subscriptions.data.subscription_types.fields.next_subscription_type_id}:</b> {if $type->next_subscription_type_id}<a n:href="show $type->next_subscription_type_id">{$type->next_subscription_type->name}</a>{else}<small>--</small>{/if}</li>
+      <li class="list-group-item"><b>{_subscriptions.data.subscription_types.fields.subscription_type_after_trial, [trial_periods => $type->trial_periods]}:</b> {if $type->next_subscription_type_id}<a n:href="show $type->next_subscription_type_id">{$type->next_subscription_type->name}</a>{else}<small>--</small>{/if}</li>
       <li class="list-group-item"><b>{_subscriptions.data.subscription_types.fields.content}:</b> {$type|typeContent|noescape}</li>
       <li class="list-group-item">
         <b>{_subscriptions.data.subscription_types.fields.active}:</b>

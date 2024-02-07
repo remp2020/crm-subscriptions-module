@@ -106,7 +106,6 @@ class SubscriptionTypesFormFactory
             ->addRule(Form::FLOAT, 'subscriptions.admin.subscription_types.form.number')
             ->setHtmlAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.price');
 
-
         $types = $this->subscriptionTypeHelper->getPairs($this->subscriptionTypesRepository->all(), true);
         $subscriptionTypeSelect = $form->addSelect(
             'next_subscription_type_id',
@@ -114,6 +113,11 @@ class SubscriptionTypesFormFactory
             $types
         )->setPrompt("--");
         $subscriptionTypeSelect->getControlPrototype()->addAttributes(['class' => 'select2']);
+
+        $form->addText('trial_periods', 'subscriptions.data.subscription_types.fields.trial_periods')
+            ->setRequired('subscriptions.data.subscription_types.required.trial_periods')
+            ->addRule(Form::INTEGER, 'subscriptions.admin.subscription_types.form.number')
+            ->setOption('description', 'subscriptions.data.subscription_types.description.trial_periods');
 
         $form->addGroup('subscriptions.admin.subscription_types.form.groups.items');
 

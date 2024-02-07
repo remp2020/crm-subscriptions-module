@@ -37,7 +37,9 @@ data:
         fields:
             name: Name
             code: Identifier
+            subscription_type_after_trial: Subscription after %trial_periods% periods
             next_subscription_type_id: Next subscription
+            trial_periods: Trial periods
             price: Price
             length: "Length (days)"
             extending_length: "Length (days) when continue subscription"
@@ -85,8 +87,9 @@ data:
             fixed_end: for example 3.5.2020
             price: "for example 12.99"
         description:
-            name: Internal name visible in administration
-            user_label: "Subscription name visibile by users in their profile"
+            name: Internal name visible in administration.
+            user_label: "Subscription name visibile by users in their profile."
+            trial_periods: Number of renewals (periods) after which the next subscription is applied.
         values:
             active: Active
             inactive: Inactive

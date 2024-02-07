@@ -42,11 +42,15 @@
           <td>
             <div>
               <a n:href="SubscriptionTypesAdmin:Show $type->id">{$type->name}</a>
+              <span n:if="$type->default" class="label label-default">Default</span>
+
               <small n:if="$type->next_subscription_type_id">
-                <i data-toggle="tooltip" data-placement="top" title="" class="fa fa-arrow-circle-right" data-original-title="{_'subscriptions.data.subscription_types.fields.next_subscription_type_id'}"></i>
+
+                <br>
+                <i data-toggle="tooltip" data-placement="top" class="fa fa-arrow-circle-right" title="{_'subscriptions.data.subscription_types.fields.subscription_type_after_trial', [trial_periods => $type->trial_periods]}"></i>
                 <a n:href="SubscriptionTypesAdmin:Show $type->next_subscription_type_id">{$type->next_subscription->name} ({$type->next_subscription->price|price})</a>
               </small>
-              <span n:if="$type->default" class="label label-default">Default</span>
+
             </div>
             <div>
               <code class="muted"><small>{$type->code}</small></code>
