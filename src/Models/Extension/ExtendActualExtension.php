@@ -23,7 +23,7 @@ class ExtendActualExtension implements ExtensionInterface
     ) {
     }
 
-    public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType): Extension
+    public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType, ?ActiveRow $address = null): Extension
     {
         $actualSubscription = $this->subscriptionsRepository->actualUserSubscription($user->id);
         if ($actualSubscription) {

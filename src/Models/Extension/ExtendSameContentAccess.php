@@ -26,7 +26,7 @@ class ExtendSameContentAccess implements ExtensionInterface
     ) {
     }
 
-    public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType): Extension
+    public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType, ?ActiveRow $address = null): Extension
     {
         $startTimeForSameContentAccess = $this->getStartTimeForSameContentAccess($user, $subscriptionType);
         if ($startTimeForSameContentAccess !== null) {

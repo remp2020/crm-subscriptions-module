@@ -15,7 +15,7 @@ class StartNowExtension implements ExtensionInterface
     public const METHOD_CODE = 'start_now';
     public const METHOD_NAME = 'Start now';
 
-    public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType): Extension
+    public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType, ?ActiveRow $address = null): Extension
     {
         return new Extension($this->getNow());
     }

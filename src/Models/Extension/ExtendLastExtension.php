@@ -23,7 +23,7 @@ class ExtendLastExtension implements ExtensionInterface
     ) {
     }
 
-    public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType): Extension
+    public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType, ?ActiveRow $address = null): Extension
     {
         $lastSubscription = $this->subscriptionsRepository->lastActiveUserSubscription($user->id)->fetch();
         if ($lastSubscription) {

@@ -25,7 +25,7 @@ class ExtendSameTypeExtension implements ExtensionInterface
     ) {
     }
 
-    public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType): Extension
+    public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType, ?ActiveRow $address = null): Extension
     {
         $lifetimeThreshold = new DateTime('+ 30 years');
         $lastSubscriptionTypeSubscription = $this->subscriptionsRepository->userSubscriptions($user->id)
