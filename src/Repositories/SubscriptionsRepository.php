@@ -113,7 +113,7 @@ class SubscriptionsRepository extends Repository
             if ($subscriptionType->fixed_start) {
                 $startTime = $subscriptionType->fixed_start >= $this->getNow() ? $subscriptionType->fixed_start : $this->getNow();
             } else {
-                $extension = $this->getSubscriptionExtension($subscriptionType, $user);
+                $extension = $this->getSubscriptionExtension($subscriptionType, $user, $address);
                 $startTime = $extension->getDate();
                 $isExtending = $extension->isExtending();
             }
@@ -311,10 +311,10 @@ class SubscriptionsRepository extends Repository
         return $this->update($subscription, []);
     }
 
-    final public function getSubscriptionExtension($subscriptionType, $user): Extension
+    final public function getSubscriptionExtension($subscriptionType, $user, $address = null): Extension
     {
         $extensionMethod = $this->extensionMethodFactory->getExtension($subscriptionType->extension_method_id);
-        return $extensionMethod->getStartTime($user, $subscriptionType);
+        return $extensionMethod->getStartTime($user, $subscriptionType, $address);
     }
 
     final public function all()
