@@ -7,19 +7,16 @@ use League\Event\AbstractEvent;
 use Nette\Database\Table\ActiveRow;
 
 /**
- * Event emitted in case of subscription's basic parameters (start_time, end_time, subscription_type_id, user_id) update
+ * Event emitted in case of subscription's basic parameters update
+ * (listed in SubscriptionsRepository::update - $eventTriggeringParams)
+ *
  * Class SubscriptionUpdatedEvent
  * @package Crm\SubscriptionsModule\Events
  */
 class SubscriptionUpdatedEvent extends AbstractEvent implements IUserGetter, SubscriptionEventInterface
 {
-    /** @var ActiveRow  */
-    private $subscription;
-
-
-    public function __construct(ActiveRow $subscription)
+    public function __construct(private ActiveRow $subscription)
     {
-        $this->subscription = $subscription;
     }
 
     public function getSubscription(): ActiveRow

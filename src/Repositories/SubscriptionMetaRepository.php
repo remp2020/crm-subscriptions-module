@@ -23,7 +23,7 @@ class SubscriptionMetaRepository extends Repository
         ]);
     }
 
-    final public function getMeta(ActiveRow $subscription, string $key): Selection
+    final public function getMeta(ActiveRow $subscription, string|array $key): Selection
     {
         return $this->getTable()->where(['subscription_id' => $subscription->id, 'key' => $key]);
     }

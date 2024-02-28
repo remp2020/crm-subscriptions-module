@@ -201,7 +201,7 @@ class SubscriptionsRepository extends Repository
         }
 
         // Check if one of the basic parameters is updated
-        $eventTriggeringParams = ['start_time', 'end_time', 'subscription_type_id', 'user_id'];
+        $eventTriggeringParams = ['start_time', 'end_time', 'subscription_type_id', 'user_id', 'address_id'];
         $fireUpdateEvent = false;
         foreach ($eventTriggeringParams as $param) {
             if (isset($data[$param]) && $data[$param] != $row->$param) {
