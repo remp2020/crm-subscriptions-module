@@ -229,9 +229,14 @@ class SubscriptionTypesFormFactory
         return $form;
     }
 
-    public function validateForm(Form $form, $b)
+    public function validateForm(Form $form)
     {
-        $this->validateItemsAmount($form);
+        $validationScope = $form->isSubmitted()->getValidationScope() ?? [$form['items']];
+        $isItemsValidationRequested = in_array($form['items'], $validationScope, true);
+        if ($isItemsValidationRequested) {
+            $this->validateItemsAmount($form);
+        }
+
         $this->validateTagText($form);
     }
 
