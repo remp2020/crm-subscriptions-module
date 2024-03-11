@@ -1,5 +1,8 @@
-<li role="menuitem">
+<li class="menuitem-header" data-dropdown-section="{_subscriptions.admin.stop_subscription_widget.header}">
+  {_subscriptions.admin.stop_subscription_widget.header}
+</li>
 
+<li role="menuitem">
   <a n:if="$hasSuppressedNotifications" n:href="toggleNotifications! $subscription->id, false">
     <i class="fa fa-play-circle"></i> {_subscriptions.admin.subscription_ends_suppression_widget.resume_notifications}
   </a>

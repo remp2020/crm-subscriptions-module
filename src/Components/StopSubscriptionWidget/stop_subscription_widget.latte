@@ -1,4 +1,6 @@
-<li class="menuitem-header">{_subscriptions.admin.stop_subscription_widget.header}</li>
+<li class="menuitem-header" data-dropdown-section="{_subscriptions.admin.stop_subscription_widget.header}">
+    {_subscriptions.admin.stop_subscription_widget.header}
+</li>
 <li role="menuitem">
   <a n:href="stopSubscription! $subscription->id"
      data-confirm="{_subscriptions.admin.stop_subscription_widget.stop_confirm, ['id' => $subscription->id, 'email' => $subscription->user->email]}"
