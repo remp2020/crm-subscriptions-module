@@ -34,7 +34,6 @@ class StopSubscriptionHandler
      * @param bool|null $expiredByAdmin Flag whether the subscription was expired by admin or not. If the information
      * cannot be reliably provided, feel free to pass null.
      * @return void
-     * @throws \Exception
      */
     public function stopSubscription(ActiveRow $subscription, ?bool $expiredByAdmin = null): void
     {
