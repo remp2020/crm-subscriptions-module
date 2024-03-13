@@ -177,6 +177,11 @@ class SubscriptionTypeBuilder extends Builder
         return $this->setNextSubscriptionTypeId($subscriptionType->id);
     }
 
+    public function setTrialPeriods($trialPeriods)
+    {
+        return $this->set('trial_periods', $trialPeriods);
+    }
+
     public function setLimitPerUser($limitPerUser)
     {
         return $this->set('limit_per_user', $limitPerUser);
