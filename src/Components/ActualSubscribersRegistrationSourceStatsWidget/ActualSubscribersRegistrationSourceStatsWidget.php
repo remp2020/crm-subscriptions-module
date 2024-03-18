@@ -48,6 +48,7 @@ class ActualSubscribersRegistrationSourceStatsWidget extends BaseLazyWidget
     {
         $this->getPresenter()->getSession()->close();
         $control = $this->factory->create();
+        $control->setGraphTitle($this->translator->translate('dashboard.users.active_sub_registrations.title'));
 
         $results = $this->database->table('subscriptions')
             ->where('subscriptions.start_time < ?', $this->database::literal('NOW()'))
