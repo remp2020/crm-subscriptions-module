@@ -315,10 +315,10 @@ class SubscriptionTypeBuilder extends Builder
             ]);
         }
 
-        $this->subscriptionTypeTagsRepository->setTagsForSubscriptionType(
-            $subscriptionType,
-            $this->getOption('tags') ?? []
-        );
+        $subscriptionTags = $this->getOption('tags') ?? [];
+        foreach ($subscriptionTags as $tag) {
+            $this->subscriptionTypeTagsRepository->add($subscriptionType, $tag);
+        }
 
         $this->emitter->emit(new SubscriptionTypeCreatedEvent($subscriptionType));
 
