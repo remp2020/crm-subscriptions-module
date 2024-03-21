@@ -8,6 +8,7 @@ use Crm\SubscriptionsModule\Events\SubscriptionTypeCreatedEvent;
 use Crm\SubscriptionsModule\Models\Length\FixDaysLengthMethod;
 use Crm\SubscriptionsModule\Repositories\ContentAccessRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionTypeItemMetaRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypeTagsRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use League\Event\Emitter;
 use Nette\Database\Explorer;
@@ -31,7 +32,8 @@ class SubscriptionTypeBuilder extends Builder
         private ApplicationConfig $applicationConfig,
         private ContentAccessRepository $contentAccessRepository,
         private SubscriptionTypeItemMetaRepository $subscriptionTypeItemMetaRepository,
-        private SubscriptionTypesRepository $subscriptionTypesRepository
+        private SubscriptionTypesRepository $subscriptionTypesRepository,
+        private SubscriptionTypeTagsRepository $subscriptionTypeTagsRepository,
     ) {
         parent::__construct($database);
     }
@@ -146,6 +148,11 @@ class SubscriptionTypeBuilder extends Builder
     public function setContentAccessOption(...$contentAccess)
     {
         return $this->setOption('content_access', array_fill_keys($contentAccess, 1));
+    }
+
+    public function setTags(...$tags)
+    {
+        return $this->setOption('tags', $tags);
     }
 
     public function setDefault($default)
@@ -307,6 +314,11 @@ class SubscriptionTypeBuilder extends Builder
                 'updated_at' => new DateTime(),
             ]);
         }
+
+        $this->subscriptionTypeTagsRepository->setTagsForSubscriptionType(
+            $subscriptionType,
+            $this->getOption('tags') ?? []
+        );
 
         $this->emitter->emit(new SubscriptionTypeCreatedEvent($subscriptionType));
 

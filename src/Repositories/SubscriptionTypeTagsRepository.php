@@ -13,9 +13,9 @@ class SubscriptionTypeTagsRepository extends Repository
     final public function add(ActiveRow $subscriptionType, string $tagName): void
     {
         $this->insert([
-                'subscription_type_id' => $subscriptionType->id,
-                'tag' => $tagName
-            ]);
+            'subscription_type_id' => $subscriptionType->id,
+            'tag' => $tagName
+        ]);
     }
 
     /**
