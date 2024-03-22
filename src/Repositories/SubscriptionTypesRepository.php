@@ -67,13 +67,20 @@ class SubscriptionTypesRepository extends Repository
         return $this->getTable()->where('code', $code)->fetch();
     }
 
-    final public function findDefaultForContentAccess(string ...$contentAccess)
+    final public function findDefaultForLengthAndContentAccesses(int $length, string ...$contentAccess)
     {
         return $this->getTable()
             ->where([
                 'default' => true,
+                'length' => $length,
                 ':subscription_type_content_access.content_access.name' => $contentAccess,
+                'subscription_types.id NOT IN' => $this->getTable()
+                    ->select('subscription_types.id AS sub_id')
+                    ->where(':subscription_type_content_access.content_access.name NOT IN ?', $contentAccess)
+                    ->group('subscription_types.id')
             ])
+            ->group('subscription_types.id')
+            ->having('COUNT(:subscription_type_content_access.id) = ?', count($contentAccess))
             ->order('price')
             ->fetch();
     }
