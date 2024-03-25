@@ -42,7 +42,7 @@ class SubscriptionsAdminPresenter extends AdminPresenter
             throw new BadRequestException();
         }
         $this->template->subscription = $subscription;
-        $this->template->user = $subscription->user;
+        $this->template->dbUser = $subscription->user;
     }
 
     /**
@@ -54,7 +54,7 @@ class SubscriptionsAdminPresenter extends AdminPresenter
         if (!$user) {
             throw new BadRequestException();
         }
-        $this->template->user = $user;
+        $this->template->dbUser = $user;
     }
 
     public function createComponentSubscriptionForm()
