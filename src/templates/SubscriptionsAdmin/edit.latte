@@ -1,18 +1,18 @@
-{block #title}{_subscriptions.admin.subscriptions.edit.header, [name => "{$dbUser->first_name} {$dbUser->last_name}"]}{/block}
+{block #title}{_subscriptions.admin.subscriptions.edit.header, [name => "{$userRow->first_name} {$userRow->last_name}"]}{/block}
 
 {block #content}
 
 <div class="row">
   <div class="col-md-12">
-    <a n:href=":Users:UsersAdmin:Show $dbUser->id"><i class="fa fa-angle-left"></i> {_subscriptions.admin.subscriptions.edit.back}</a>
+    <a n:href=":Users:UsersAdmin:Show $userRow->id"><i class="fa fa-angle-left"></i> {_subscriptions.admin.subscriptions.edit.back}</a>
     <div class="page-header">
       <h1>
         <small>
           {_subscriptions.admin.subscriptions.edit.header}:
-          [{$dbUser->id}]
+          [{$userRow->id}]
         </small>
-      	{$dbUser|userLabel}
-		    <span n:if="$dbUser->role === \Crm\UsersModule\Repositories\UsersRepository::ROLE_ADMIN" class="label label-warning">admin</span>
+      	{$userRow|userLabel}
+		    <span n:if="$userRow->role === \Crm\UsersModule\Repositories\UsersRepository::ROLE_ADMIN" class="label label-warning">admin</span>
       </h1>
     </div>
   </div>
