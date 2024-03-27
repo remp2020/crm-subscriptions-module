@@ -62,7 +62,7 @@ class SubscriptionTypesRepository extends Repository
         return $this->getTable()->where('code', $code)->count('*') > 0;
     }
 
-    final public function findByCode($code)
+    final public function findByCode($code): ?ActiveRow
     {
         return $this->getTable()->where('code', $code)->fetch();
     }

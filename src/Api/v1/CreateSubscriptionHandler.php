@@ -9,6 +9,7 @@ use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\Models\Auth\UserManager;
 use Nette\Database\Table\ActiveRow;
+use Nette\Http\IResponse;
 use Nette\Http\Response;
 use Nette\Utils\DateTime;
 use Tomaj\NetteApi\Params\PostInputParam;
@@ -30,7 +31,8 @@ class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerI
     {
         return [
             (new PostInputParam('email'))->setRequired(),
-            (new PostInputParam('subscription_type_id'))->setRequired(),
+            (new PostInputParam('subscription_type_id')),
+            (new PostInputParam('subscription_type_code')),
             (new PostInputParam('is_paid'))->setRequired(),
             (new PostInputParam('start_time')),
             (new PostInputParam('end_time')),
@@ -41,9 +43,22 @@ class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerI
 
     public function handle(array $params): ResponseInterface
     {
-        $subscriptionType = $this->subscriptionTypesRepository->find($params['subscription_type_id']);
+        $result = $this->validateSubscriptionTypeInput($params);
+        if ($result instanceof JsonApiResponse) {
+            return $result;
+        }
+
+        $subscriptionType = null;
+        if (isset($params['subscription_type_id'])) {
+            $subscriptionType = $this->subscriptionTypesRepository->find($params['subscription_type_id']);
+        }
+
+        if (!$subscriptionType && isset($params['subscription_type_code'])) {
+            $subscriptionType = $this->subscriptionTypesRepository->findByCode($params['subscription_type_code']);
+        }
+
         if (!$subscriptionType) {
-            $response = new JsonApiResponse(Response::S404_NOT_FOUND, ['status' => 'error', 'message' => 'Subscription type not found']);
+            $response = new JsonApiResponse(IResponse::S404_NotFound, ['status' => 'error', 'message' => 'Subscription type not found']);
             return $response;
         }
 
@@ -51,7 +66,7 @@ class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerI
 
         if (!empty($subscriptionType->limit_per_user) &&
             $this->subscriptionsRepository->getCount($subscriptionType->id, $user->id) >= $subscriptionType->limit_per_user) {
-            $response = new JsonApiResponse(Response::S400_BAD_REQUEST, ['status' => 'error', 'message' => 'Limit per user reached']);
+            $response = new JsonApiResponse(IResponse::S400_BadRequest, ['status' => 'error', 'message' => 'Limit per user reached']);
             return $response;
         }
 
@@ -111,5 +126,25 @@ class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerI
             ],
         ]);
         return $response;
+    }
+
+    private function validateSubscriptionTypeInput($params)
+    {
+        if (isset($params['subscription_type_id']) || isset($params['subscription_type_code'])) {
+            return true;
+        }
+
+        return new JsonApiResponse(IResponse::S400_BadRequest, [
+            'status' => 'error',
+            'code' => 'invalid_input',
+            'errors' => [
+                'subscription_type_id' => [
+                    'Field is required if subscription_type_code is not present'
+                ],
+                'subscription_type_code' => [
+                    'Field is required if subscription_type_id is not present'
+                ]
+            ]
+        ]);
     }
 }

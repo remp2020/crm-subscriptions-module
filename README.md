@@ -157,15 +157,15 @@ Creates new subscription for given user and returns new instance.
 
 ##### *Params:*
 
-| Name | Value | Required | Description |
-| --- |---| --- | --- |
-| email | *String* | yes | Email of existing user. |
-| subscription_type_id | *String* | yes | ID of subscription type to use. List of all subscription types is available at `/subscriptions/subscription-types-admin`. |
-| is_paid | *Boolean* | yes | The identification of paid subscriptions. |
-| start_time | *String* | no | RFC3339 formatted start time. If not present, subscription will start immediately. |
-| end_time | *String* | no | RFC3339 formatted end time. If not present, end time will set based on subscription type. |
-| type | *String* | yes | Type of subscription - values allowed: `regular`, `free`, `donation`, `gift`, `special`, `upgrade`, `prepaid`. If not provided, defaults to `regular`. |
-
+| Name                   | Value     | Required | Description                                                                                                                                                                                           |
+|------------------------|-----------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| email                  | *String*  | yes      | Email of existing user.                                                                                                                                                                               |
+| subscription_type_id   | *String*  | no       | ID of subscription type to use. List of all subscription types is available at `/subscriptions/subscription-types-admin`. Either `subscription_type_id` or `subscription_type_code` must be filled.   |
+| subscription_type_code | *String*  | no       | Code of subscription type to use. List of all subscription types is available at `/subscriptions/subscription-types-admin`. Either `subscription_type_id` or `subscription_type_code` must be filled. |
+| is_paid                | *Boolean* | yes      | The identification of paid subscriptions.                                                                                                                                                             |
+| start_time             | *String*  | no       | RFC3339 formatted start time. If not present, subscription will start immediately.                                                                                                                    |
+| end_time               | *String*  | no       | RFC3339 formatted end time. If not present, end time will set based on subscription type.                                                                                                             |
+| type                   | *String*  | yes      | Type of subscription - values allowed: `regular`, `free`, `donation`, `gift`, `special`, `upgrade`, `prepaid`. If not provided, defaults to `regular`.                                                |
 
 ##### *Example:*
 
