@@ -393,6 +393,12 @@ admin:
         resumed: 'Notifications resumed for subscription with ID %id%.'
         tooltip: 'Prevents "subscription ends" scenarios from running.'
 
+    user_subscription_address_widget:
+        address: "Address"
+        edit_address: "Edit address"
+        close: "Close"
+        delivery_address: "Delivery address"
+
 measurements:
     active_subscriptions:
         title: "Active subscriptions"

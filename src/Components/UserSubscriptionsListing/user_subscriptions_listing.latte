@@ -26,48 +26,6 @@
           <span n:if="$subscription->start_time < new \DateTime() && $subscription->end_time > new \DateTime()" class="label label-success">Aktuálne</span>
           <small n:if="$subscription->next_subscription_id"><i class="fa fa-level-up-alt"></i> #{$subscription->next_subscription_id}</small>
 
-          {if $subscription->address_id}
-            {var $address = $subscription->address}
-            <div id="address-{$subscription->id}-{$address->id}" class="modal fade" tabindex="-1" role="dialog">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Dodacia adresa #{$address->id}</h4>
-                  </div>
-                  <div class="modal-body">
-                    <b>
-                      {if $address->company_name}
-                        {$address->company_name}
-                      {/if}
-                      {if $address->first_name}
-                        {$address->first_name}
-                      {/if}
-                      {if $address->last_name}
-                        {$address->last_name}
-                      {/if}
-                    </b>
-                    <br>
-                    {$address->address} {$address->number}
-                    <br>
-                    {$address->zip} {$address->city}
-                    {if $address->country_id}
-                      <br>{$address->country->name}
-                    {/if}
-                    {if $address->phone_number}
-                      <br>{$address->phone_number}
-                    {/if}
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <a href="{plink :Users:AddressAdmin:edit $address->id}" type="button" class="btn btn-primary">Uprav adresu</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#address-{$subscription->id}-{$address->id}">Adresa #{$address->id}</a>
-          {/if}
-
           {control simpleWidget 'subscriptions.admin.user_subscriptions_listing.subscription', $subscription}
 
         </td>

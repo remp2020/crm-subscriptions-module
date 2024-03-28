@@ -40,6 +40,7 @@ use Crm\SubscriptionsModule\Components\SubscriptionButton\SubscriptionButton;
 use Crm\SubscriptionsModule\Components\SubscriptionsEndingWithinPeriodWidget\SubscriptionsEndingWithinPeriodWidget;
 use Crm\SubscriptionsModule\Components\TodaySubscriptionsStatWidget\TodaySubscriptionsStatWidget;
 use Crm\SubscriptionsModule\Components\TotalSubscriptionsStatWidget\TotalSubscriptionsStatWidget;
+use Crm\SubscriptionsModule\Components\UserSubscriptionAddressWidget\UserSubscriptionAddressWidget;
 use Crm\SubscriptionsModule\Components\UserSubscriptionInfoWidget\UserSubscriptionInfoWidget;
 use Crm\SubscriptionsModule\Components\UserSubscriptionsListing\UserSubscriptionsListing;
 use Crm\SubscriptionsModule\Components\UsersAbusiveAdditionalWidget\UsersAbusiveAdditionalWidget;
@@ -235,6 +236,12 @@ class SubscriptionsModule extends CrmModule
             'subscriptions.admin.user_subscriptions_listing.action.menu',
             StopSubscriptionWidget::class,
             10 // set priority to ensure widget renders first in action menu, adds menu items header
+        );
+
+        $widgetManager->registerWidget(
+            'subscriptions.admin.user_subscriptions_listing.subscription',
+            UserSubscriptionAddressWidget::class,
+            1, // set priority to ensure the widget is rendered first
         );
     }
 

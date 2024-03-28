@@ -394,6 +394,12 @@ admin:
         resumed: 'Notifikácie k predplatnému s ID %id% boli obnovené.'
         tooltip: 'Zabráni spusteniu "subscription ends" scenárov.'
 
+    user_subscription_address_widget:
+        address: "Adresa"
+        edit_address: "Uprav adresu"
+        close: "Zavrieť"
+        delivery_address: "Dodacia adresa"
+
 measurements:
     active_subscriptions:
         title: "Aktívne predplatné"
