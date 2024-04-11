@@ -175,7 +175,7 @@ class SubscriptionFormFactory
             $values['end_time'] = null;
         }
 
-        if ($values['end_time'] && strtotime($values['end_time']) <= strtotime($values['start_time'])) {
+        if ($values['end_time'] && strtotime($values['end_time']) < strtotime($values['start_time'])) {
             $form['end_time']->addError($this->translator->translate('subscriptions.data.subscriptions.errors.end_time_before_start_time'));
             return;
         }
