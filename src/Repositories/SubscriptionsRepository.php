@@ -688,4 +688,14 @@ class SubscriptionsRepository extends Repository
         $this->emitter->emit(new SubscriptionMovedEvent($subscription, $originalStartTime, $originalEndTime));
         return $subscription;
     }
+
+    public function subscriptionIsActiveOrInFuture(ActiveRow $subscription): bool
+    {
+        return $this->getTable()
+            ->where([
+                'id' => $subscription->id,
+                'end_time > ?' => $this->getNow(),
+                'end_time != start_time', // ignore cancelled subscriptions
+            ])->count('*') > 0;
+    }
 }
