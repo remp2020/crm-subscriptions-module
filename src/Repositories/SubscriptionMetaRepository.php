@@ -50,7 +50,7 @@ class SubscriptionMetaRepository extends Repository
         }
     }
 
-    final public function getMetaValue(ActiveRow $subscription, string $key): string
+    final public function getMetaValue(ActiveRow $subscription, string $key): ?string
     {
         return $this->getTable()->where(['subscription_id' => $subscription->id, 'key' => $key])->fetchField('value');
     }
