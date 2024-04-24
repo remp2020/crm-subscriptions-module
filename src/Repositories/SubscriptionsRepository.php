@@ -332,22 +332,20 @@ class SubscriptionsRepository extends Repository
         return $this->database->table('subscription_type_names')->where(['is_active' => true])->order('sorting');
     }
 
-    final public function hasUserSubscriptionType($userId, $subscriptionTypesCode, DateTime $after = null, int $count = null)
+    final public function hasUserSubscriptionType($userId, $subscriptionTypeCode, DateTime $startTime = null, DateTime $endTime = null): bool
     {
-        $subscription_type = $this->database->table('subscription_types')
-            ->where('code = ?', $subscriptionTypesCode)->fetch();
         $where = [
             'user_id' => $userId,
-            'subscription_type_id' => $subscription_type->id
+            'subscription_type.code' => $subscriptionTypeCode
         ];
-        if ($count !== null) {
-            if ($count >= $this->getTable()->where($where)->count('*')) {
-                return false;
-            }
+
+        if ($startTime) {
+            $where['start_time <= ?'] = $startTime;
         }
-        if ($after) {
-            $where['end_time > ?'] = $after;
+        if ($endTime) {
+            $where['end_time >= ?'] = $endTime;
         }
+
         return $this->getTable()->where($where)->count('*') > 0;
     }
 
