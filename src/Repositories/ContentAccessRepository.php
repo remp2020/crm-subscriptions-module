@@ -104,7 +104,7 @@ class ContentAccessRepository extends Repository
     final public function usersWithAccessActiveBetween($contentAccess, DateTime $startTime, DateTime $endTime)
     {
         return $this->database->table('users')
-            ->where(':subscriptions.subscription_type:subscription_type_content_access.id = ?', $contentAccess->id)
+            ->where(':subscriptions.subscription_type:subscription_type_content_access.content_access_id = ?', $contentAccess->id)
             ->where(':access_tokens.last_used_at > ?', $startTime)
             ->where(':access_tokens.last_used_at < ?', $endTime)
             ->where('users.active = ?', true)
