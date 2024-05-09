@@ -3,15 +3,21 @@
 namespace Crm\SubscriptionsModule\Scenarios;
 
 use Crm\ApplicationModule\Models\Criteria\ScenarioConditionModelInterface;
+use Crm\ApplicationModule\Models\Criteria\ScenarioConditionModelRequirementsInterface;
 use Crm\ApplicationModule\Models\Database\Selection;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Exception;
 
-class SubscriptionScenarioConditionModel implements ScenarioConditionModelInterface
+class SubscriptionScenarioConditionModel implements ScenarioConditionModelInterface, ScenarioConditionModelRequirementsInterface
 {
     public function __construct(
         private readonly SubscriptionsRepository $subscriptionsRepository,
     ) {
+    }
+
+    public function getInputParams(): array
+    {
+        return ['subscription_id'];
     }
 
     public function getItemQuery($scenarioJobParameters): Selection
