@@ -10,7 +10,7 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
 {
     use PaymentItemTrait;
 
-    const TYPE = 'subscription_type';
+    public const TYPE = 'subscription_type';
 
     private $meta;
 
@@ -74,16 +74,18 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
      */
     public static function fromPaymentItem(ActiveRow $paymentItem)
     {
-        if ($paymentItem->type != self::TYPE) {
+        if ($paymentItem->type !== self::TYPE) {
             throw new \Exception("Can not load SubscriptionTypePaymentItem from payment item of different type. Got [{$paymentItem->type}]");
         }
+        $meta = $paymentItem->related('payment_item_meta')->fetchPairs('key', 'value');
+
         return new SubscriptionTypePaymentItem(
             $paymentItem->subscription_type_id,
             $paymentItem->name,
             $paymentItem->amount,
             $paymentItem->vat,
             $paymentItem->count,
-            [],
+            $meta,
             $paymentItem->subscription_type_item_id
         );
     }
