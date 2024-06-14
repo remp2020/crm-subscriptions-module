@@ -4,10 +4,10 @@ namespace Crm\SubscriptionsModule\Forms;
 
 use Contributte\Translation\Translator;
 use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
+use Crm\PaymentsModule\Forms\Controls\SubscriptionTypesSelectItemsBuilder;
 use Crm\SubscriptionsModule\DataProviders\SubscriptionFormDataProviderInterface;
 use Crm\SubscriptionsModule\Events\SubscriptionPreUpdateEvent;
 use Crm\SubscriptionsModule\Models\Length\LengthMethodFactory;
-use Crm\SubscriptionsModule\Models\Subscription\SubscriptionTypeHelper;
 use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\Repositories\AddressesRepository;
@@ -20,52 +20,21 @@ use Tomaj\Form\Renderer\BootstrapRenderer;
 
 class SubscriptionFormFactory
 {
-    private $dataProviderManager;
-
-    private $subscriptionsRepository;
-
-    private $subscriptionTypesRepository;
-
-    private $usersRepository;
-
-    private $addressesRepository;
-
-    private $lengthMethodFactory;
-
-    private $translator;
-
-    private $emitter;
-
-    private $hermesEmitter;
-
-    private $subscriptionTypeHelper;
-
     public $onSave;
 
     public $onUpdate;
 
     public function __construct(
-        DataProviderManager $dataProviderManager,
-        SubscriptionsRepository $subscriptionsRepository,
-        SubscriptionTypesRepository $subscriptionTypesRepository,
-        UsersRepository $usersRepository,
-        AddressesRepository $addressesRepository,
-        LengthMethodFactory $lengthMethodFactory,
-        Translator $translator,
-        Emitter $emitter,
-        \Tomaj\Hermes\Emitter $hermesEmitter,
-        SubscriptionTypeHelper $subscriptionTypeHelper
+        private readonly DataProviderManager $dataProviderManager,
+        private readonly SubscriptionsRepository $subscriptionsRepository,
+        private readonly SubscriptionTypesRepository $subscriptionTypesRepository,
+        private readonly UsersRepository $usersRepository,
+        private readonly AddressesRepository $addressesRepository,
+        private readonly LengthMethodFactory $lengthMethodFactory,
+        private readonly Translator $translator,
+        private readonly Emitter $emitter,
+        private readonly SubscriptionTypesSelectItemsBuilder $subscriptionTypesSelectItemsBuilder,
     ) {
-        $this->dataProviderManager = $dataProviderManager;
-        $this->subscriptionsRepository = $subscriptionsRepository;
-        $this->subscriptionTypesRepository = $subscriptionTypesRepository;
-        $this->usersRepository = $usersRepository;
-        $this->addressesRepository = $addressesRepository;
-        $this->lengthMethodFactory = $lengthMethodFactory;
-        $this->translator = $translator;
-        $this->emitter = $emitter;
-        $this->hermesEmitter = $hermesEmitter;
-        $this->subscriptionTypeHelper = $subscriptionTypeHelper;
     }
 
     /**
@@ -86,19 +55,11 @@ class SubscriptionFormFactory
         $form->setTranslator($this->translator);
         $form->addProtection();
 
-        $active = $subscriptionTypePairs = $this->subscriptionTypeHelper->getPairs(
-            $this->subscriptionTypesRepository->all()->where(['active' => true]),
-            true
-        );
-        $noActive = $subscriptionTypePairs = $this->subscriptionTypeHelper->getPairs(
-            $this->subscriptionTypesRepository->all()->where(['active' => false]),
-            true
-        );
-
+        $subscriptionTypes = $this->subscriptionTypesRepository->all()->fetchAll();
         $subscriptionTypeId = $form->addSelect(
             'subscription_type_id',
             'subscriptions.data.subscriptions.fields.subscription_type',
-            $active + [0 => '--'] + $noActive
+            $this->subscriptionTypesSelectItemsBuilder->buildWithDescription($subscriptionTypes)
         )->setRequired();
         $subscriptionTypeId->getControlPrototype()->addAttributes(['class' => 'select2']);
 

@@ -4,7 +4,7 @@ namespace Crm\SubscriptionsModule\DataProviders;
 
 use Crm\ApplicationModule\Models\DataProvider\DataProviderException;
 use Crm\ApplicationModule\Models\NowTrait;
-use Crm\SubscriptionsModule\Models\Subscription\SubscriptionTypeHelper;
+use Crm\PaymentsModule\Forms\Controls\SubscriptionTypesSelectItemsBuilder;
 use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Crm\UsersModule\DataProviders\FilterUsersFormDataProviderInterface;
 use Nette\Application\UI\Form;
@@ -15,20 +15,11 @@ class FilterUsersFormDataProvider implements FilterUsersFormDataProviderInterfac
 {
     use NowTrait;
 
-    private $subscriptionTypesRepository;
-
-    private $translator;
-
-    private $subscriptionTypeHelper;
-
     public function __construct(
-        SubscriptionTypesRepository $subscriptionTypesRepository,
-        Translator $translator,
-        SubscriptionTypeHelper $subscriptionTypeHelper
+        private readonly SubscriptionTypesRepository $subscriptionTypesRepository,
+        private readonly Translator $translator,
+        private readonly SubscriptionTypesSelectItemsBuilder $subscriptionTypesSelectItemsBuilder,
     ) {
-        $this->subscriptionTypesRepository = $subscriptionTypesRepository;
-        $this->translator = $translator;
-        $this->subscriptionTypeHelper = $subscriptionTypeHelper;
     }
 
     public function provide(array $params): Form
@@ -50,9 +41,12 @@ class FilterUsersFormDataProvider implements FilterUsersFormDataProviderInterfac
         $form = $params['form'];
         $formData = $params['formData'];
 
-        $subscriptionTypePairs = $this->subscriptionTypeHelper->getPairs($this->subscriptionTypesRepository->all(), true);
-        $subscriptionType = $form->addSelect('subscription_type', $this->translator->translate('subscriptions.admin.filter_users.subscription_type'), $subscriptionTypePairs)
-            ->setPrompt('--');
+        $subscriptionTypes = $this->subscriptionTypesRepository->all()->fetchAll();
+        $subscriptionType = $form->addSelect(
+            'subscription_type',
+            $this->translator->translate('subscriptions.admin.filter_users.subscription_type'),
+            $this->subscriptionTypesSelectItemsBuilder->buildWithDescription($subscriptionTypes)
+        )->setPrompt('--');
         $subscriptionType->getControlPrototype()->addAttributes(['class' => 'select2']);
 
         $form->addCheckbox('actual_subscription', $this->translator->translate('subscriptions.admin.filter_users.actual_subscription'));

@@ -6,9 +6,9 @@ use Contributte\FormMultiplier\Multiplier;
 use Contributte\Translation\Translator;
 use Crm\ApplicationModule\Models\DataProvider\DataProviderException;
 use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
+use Crm\PaymentsModule\Forms\Controls\SubscriptionTypesSelectItemsBuilder;
 use Crm\SubscriptionsModule\DataProviders\SubscriptionTypeFormProviderInterface;
 use Crm\SubscriptionsModule\Models\Builder\SubscriptionTypeBuilder;
-use Crm\SubscriptionsModule\Models\Subscription\SubscriptionTypeHelper;
 use Crm\SubscriptionsModule\Repositories\ContentAccessRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionExtensionMethodsRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionLengthMethodsRepository;
@@ -28,16 +28,16 @@ class SubscriptionTypesFormFactory
     public $onUpdate;
 
     public function __construct(
-        private SubscriptionTypesRepository $subscriptionTypesRepository,
-        private SubscriptionTypeItemsRepository $subscriptionTypeItemsRepository,
-        private SubscriptionTypeBuilder $subscriptionTypeBuilder,
-        private SubscriptionExtensionMethodsRepository $subscriptionExtensionMethodsRepository,
-        private SubscriptionLengthMethodsRepository $subscriptionLengthMethodsRepository,
-        private ContentAccessRepository $contentAccessRepository,
-        private SubscriptionTypeTagsRepository $subscriptionTypeTagsRepository,
-        private Translator $translator,
-        private DataProviderManager $dataProviderManager,
-        private SubscriptionTypeHelper $subscriptionTypeHelper
+        private readonly SubscriptionTypesRepository $subscriptionTypesRepository,
+        private readonly SubscriptionTypeItemsRepository $subscriptionTypeItemsRepository,
+        private readonly SubscriptionTypeBuilder $subscriptionTypeBuilder,
+        private readonly SubscriptionExtensionMethodsRepository $subscriptionExtensionMethodsRepository,
+        private readonly SubscriptionLengthMethodsRepository $subscriptionLengthMethodsRepository,
+        private readonly ContentAccessRepository $contentAccessRepository,
+        private readonly SubscriptionTypeTagsRepository $subscriptionTypeTagsRepository,
+        private readonly Translator $translator,
+        private readonly DataProviderManager $dataProviderManager,
+        private readonly SubscriptionTypesSelectItemsBuilder $subscriptionTypesSelectItemsBuilder
     ) {
     }
 
@@ -106,11 +106,11 @@ class SubscriptionTypesFormFactory
             ->addRule(Form::FLOAT, 'subscriptions.admin.subscription_types.form.number')
             ->setHtmlAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.price');
 
-        $types = $this->subscriptionTypeHelper->getPairs($this->subscriptionTypesRepository->all(), true);
+        $subscriptionTypes = $this->subscriptionTypesRepository->all()->fetchAll();
         $subscriptionTypeSelect = $form->addSelect(
             'next_subscription_type_id',
             'subscriptions.data.subscription_types.fields.next_subscription_type_id',
-            $types
+            $this->subscriptionTypesSelectItemsBuilder->buildWithDescription($subscriptionTypes)
         )->setPrompt("--");
         $subscriptionTypeSelect->getControlPrototype()->addAttributes(['class' => 'select2']);
 

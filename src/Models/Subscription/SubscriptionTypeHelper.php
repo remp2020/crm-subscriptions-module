@@ -17,6 +17,9 @@ class SubscriptionTypeHelper
     ) {
     }
 
+    /**
+     * @deprecated Use `SubscriptionTypesSelectItemsBuilder::buildWithDescription` instead
+     */
     public function getPairs($subscriptionTypes, $allowHtml = false): array
     {
         $subscriptionTypePairs = [];

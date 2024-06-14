@@ -5,7 +5,7 @@ namespace Crm\SubscriptionsModule\Forms;
 use Contributte\Translation\Translator;
 use Contributte\Translation\Wrappers\Message;
 use Crm\ApplicationModule\Hermes\HermesMessage;
-use Crm\SubscriptionsModule\Models\Subscription\SubscriptionTypeHelper;
+use Crm\PaymentsModule\Forms\Controls\SubscriptionTypesSelectItemsBuilder;
 use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\Models\Auth\UserManager;
@@ -24,40 +24,19 @@ class SubscriptionsGeneratorFormFactory
     const ACTIVE = 'active';
     const SKIPPED = 'skipped';
 
-    private $userManager;
-
-    private $subscriptionTypesRepository;
-
-    private $translator;
-
-    private $subscriptionsRepository;
-
-    private $emailValidator;
-
-    private $emitter;
-
-    private $subscriptionTypeHelper;
-
     public $onSubmit;
 
     public $onCreate;
 
     public function __construct(
-        UserManager $userManager,
-        SubscriptionTypesRepository $subscriptionTypesRepository,
-        Translator $translator,
-        SubscriptionsRepository $subscriptionsRepository,
-        EmailValidator $emailValidator,
-        Emitter $emitter,
-        SubscriptionTypeHelper $subscriptionTypeHelper
+        private readonly UserManager $userManager,
+        private readonly SubscriptionTypesRepository $subscriptionTypesRepository,
+        private readonly Translator $translator,
+        private readonly SubscriptionsRepository $subscriptionsRepository,
+        private readonly EmailValidator $emailValidator,
+        private readonly Emitter $emitter,
+        private readonly SubscriptionTypesSelectItemsBuilder $subscriptionTypesSelectItemsBuilder,
     ) {
-        $this->userManager = $userManager;
-        $this->subscriptionTypesRepository = $subscriptionTypesRepository;
-        $this->translator = $translator;
-        $this->subscriptionsRepository = $subscriptionsRepository;
-        $this->emailValidator = $emailValidator;
-        $this->emitter = $emitter;
-        $this->subscriptionTypeHelper = $subscriptionTypeHelper;
     }
 
     /**
@@ -82,8 +61,12 @@ class SubscriptionsGeneratorFormFactory
 
         $form->addGroup('subscriptions.menu.subscriptions');
 
-        $subscriptionTypePairs = $this->subscriptionTypeHelper->getPairs($this->subscriptionTypesRepository->getAllActive(), true);
-        $subscriptionType = $form->addSelect('subscription_type', 'subscriptions.admin.subscription_generator.field.subscription_type', $subscriptionTypePairs)
+        $subscriptionTypes = $this->subscriptionTypesRepository->getAllActive()->fetchAll();
+        $subscriptionType = $form->addSelect(
+            'subscription_type',
+            'subscriptions.admin.subscription_generator.field.subscription_type',
+            $this->subscriptionTypesSelectItemsBuilder->buildWithDescription($subscriptionTypes)
+        )
             ->setPrompt("subscriptions.admin.subscription_generator.prompt.subscription_type")
             ->setRequired("subscriptions.admin.subscription_generator.required.subscription_type");
         $subscriptionType->getControlPrototype()->addAttributes(['class' => 'select2']);
