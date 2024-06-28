@@ -109,7 +109,7 @@ class SubscriptionTypePaymentItem implements PaymentItemInterface
         return $this;
     }
 
-    public function forceVat(int $vat): self
+    public function forceVat(int $vat): static
     {
         $this->vat = $vat;
         return $this;
