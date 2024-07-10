@@ -281,6 +281,8 @@ admin:
                 unit: "Number of days"
             content_access:
                 label: "Content access (can be empty when looking for first subscription of any content access)"
+        is_consecutive_subscription:
+            label: 'Is consecutive subscription'
 
     actual_user_subscriptions:
         header: Subscription

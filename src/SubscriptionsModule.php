@@ -65,6 +65,7 @@ use Crm\SubscriptionsModule\Scenarios\ContentAccessCriteria;
 use Crm\SubscriptionsModule\Scenarios\FirstSubscriptionInPeriodCriteria;
 use Crm\SubscriptionsModule\Scenarios\HasDisabledNotificationsCriteria;
 use Crm\SubscriptionsModule\Scenarios\HasLaterEndingSubscriptionCriteria;
+use Crm\SubscriptionsModule\Scenarios\IsConsecutiveSubscriptionCriteria;
 use Crm\SubscriptionsModule\Scenarios\IsExpiredByAdminCriteria;
 use Crm\SubscriptionsModule\Scenarios\IsRecurrentCriteria;
 use Crm\SubscriptionsModule\Scenarios\SubscriptionScenarioConditionModel;
@@ -331,6 +332,7 @@ class SubscriptionsModule extends CrmModule
         $scenariosCriteriaStorage->register('subscription', HasLaterEndingSubscriptionCriteria::KEY, $this->getInstance(HasLaterEndingSubscriptionCriteria::class));
         $scenariosCriteriaStorage->register('subscription', IsExpiredByAdminCriteria::KEY, $this->getInstance(IsExpiredByAdminCriteria::class));
         $scenariosCriteriaStorage->register('subscription', FirstSubscriptionInPeriodCriteria::KEY, $this->getInstance(FirstSubscriptionInPeriodCriteria::class));
+        $scenariosCriteriaStorage->register('subscription', IsConsecutiveSubscriptionCriteria::KEY, $this->getInstance(IsConsecutiveSubscriptionCriteria::class));
 
         $scenariosCriteriaStorage->registerConditionModel(
             'subscription',

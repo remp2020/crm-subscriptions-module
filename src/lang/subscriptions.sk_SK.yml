@@ -282,6 +282,8 @@ admin:
                 unit: "Počet dní"
             content_access:
                 label: 'Prístup k obsahu (môže byť prázdne, ak hľadáme prvé predplatné akéhokoľvek prístupu)'
+        is_consecutive_subscription:
+            label: 'Je nadväzujúce predplatné'
 
     actual_user_subscriptions:
         header: Predplatné

@@ -78,6 +78,7 @@ services:
 	- Crm\SubscriptionsModule\Scenarios\IsExpiredByAdminCriteria
 	- Crm\SubscriptionsModule\Scenarios\FirstSubscriptionInPeriodCriteria
 	- Crm\SubscriptionsModule\Scenarios\SubscriptionScenarioConditionModel
+	- Crm\SubscriptionsModule\Scenarios\IsConsecutiveSubscriptionCriteria
 	- Crm\SubscriptionsModule\Seeders\ConfigSeeder
 	- Crm\SubscriptionsModule\Seeders\ContentAccessSeeder
 	- Crm\SubscriptionsModule\Seeders\MeasurementsSeeder
