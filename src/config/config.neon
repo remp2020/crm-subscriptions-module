@@ -105,6 +105,9 @@ services:
 	- Crm\SubscriptionsModule\Models\Extension\StartNowExtension
 	- Crm\SubscriptionsModule\Models\Extension\ExtendSameTypeExtension
 	- Crm\SubscriptionsModule\Models\Extension\ExtendLastExtension
+	paymentItemContainerFactory:
+		setup:
+			- registerPaymentItemType(Crm\SubscriptionsModule\Models\PaymentItem\SubscriptionTypePaymentItem)
 	extensionMethodFactory:
 		factory: Crm\SubscriptionsModule\Models\Extension\ExtensionMethodFactory
 		setup:
