@@ -37,6 +37,7 @@ use Crm\SubscriptionsModule\Components\PrintSubscribersWithoutPrintAddressWidget
 use Crm\SubscriptionsModule\Components\RenewedSubscriptionsEndingWithinPeriodWidget\RenewedSubscriptionsEndingWithinPeriodWidget;
 use Crm\SubscriptionsModule\Components\StopSubscriptionWidget\StopSubscriptionWidget;
 use Crm\SubscriptionsModule\Components\SubscriptionButton\SubscriptionButton;
+use Crm\SubscriptionsModule\Components\SubscriptionTransferWidget\SubscriptionTransferWidget;
 use Crm\SubscriptionsModule\Components\SubscriptionsEndingWithinPeriodWidget\SubscriptionsEndingWithinPeriodWidget;
 use Crm\SubscriptionsModule\Components\TodaySubscriptionsStatWidget\TodaySubscriptionsStatWidget;
 use Crm\SubscriptionsModule\Components\TotalSubscriptionsStatWidget\TotalSubscriptionsStatWidget;
@@ -49,6 +50,7 @@ use Crm\SubscriptionsModule\DataProviders\FilterAbusiveUserFormDataProvider;
 use Crm\SubscriptionsModule\DataProviders\FilterUserActionLogsFormDataProvider;
 use Crm\SubscriptionsModule\DataProviders\FilterUserActionLogsSelectionDataProvider;
 use Crm\SubscriptionsModule\DataProviders\FilterUsersFormDataProvider;
+use Crm\SubscriptionsModule\DataProviders\SubscriptionTransferDataProvider;
 use Crm\SubscriptionsModule\DataProviders\SubscriptionsClaimUserDataProvider;
 use Crm\SubscriptionsModule\DataProviders\SubscriptionsUserDataProvider;
 use Crm\SubscriptionsModule\Events\AddressRemovedHandler;
@@ -241,6 +243,11 @@ class SubscriptionsModule extends CrmModule
         );
 
         $widgetManager->registerWidget(
+            'subscriptions.admin.user_subscriptions_listing.action.menu',
+            SubscriptionTransferWidget::class,
+        );
+
+        $widgetManager->registerWidget(
             'subscriptions.admin.user_subscriptions_listing.subscription',
             UserSubscriptionAddressWidget::class,
             1, // set priority to ensure the widget is rendered first
@@ -404,6 +411,11 @@ class SubscriptionsModule extends CrmModule
         $dataProviderManager->registerDataProvider(
             'users.dataprovider.claim_unclaimed_user',
             $this->getInstance(SubscriptionsClaimUserDataProvider::class)
+        );
+        $dataProviderManager->registerDataProvider(
+            'subscriptions.dataprovider.transfer',
+            $this->getInstance(SubscriptionTransferDataProvider::class),
+            priority: 1000, // priority is set due to manipulation with address and unlinking it from subscription
         );
     }
 

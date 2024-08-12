@@ -155,6 +155,24 @@ admin:
         stats:
             title: Statistiky předplatného
 
+    subscriptions_transfer:
+        header: Přesunout předplatné
+        back_to_user: zpět na uživatele
+
+        select_user:
+            user: Uživatel
+            user_placeholder: Vyberte uživatele na kterého si přejete přesunout vybrané předplatné (podle ID nebo e-mailu)
+            continue_to_summary_button: Pokračovat na sumář
+
+        summary:
+            subscription: Informace o přesouvaném předplatném
+            transfer_subscription_button: Přesunout předplatné
+            transfer_complete_message: Předplatné bylo úspěšně přesunuto
+            subscription_will_be_transfered_to_user_with_these_subscriptions: bude převedeno na uživatele s těmito aktuálními předplatnými
+            subscription_conflicts_notice: Případné konflikty se stávajícími předplatnými nebudou vyřešeny automaticky.
+            no_actual_subscriptions: Žádné aktivní předplatné
+            not_transferable_subscription_error: Předplatné nelze přesonout.
+
     subscriptions_ends:
         default:
             title: Končící předplatné
@@ -363,6 +381,10 @@ admin:
         no_subscription: 'Předplatné s ID %id% se nenašlo.'
         success: 'Předplatné s ID %id% bylo zastaveno.'
         stop_confirm: "Opravdu chcete zastavit předplatné ID: %id% pro uživatele %email%?"
+
+    transfer_subscription_widget:
+        header: Předplatné
+        button_label: Přesunout předplatné
 
     admin_filter_form:
         name:

@@ -1,0 +1,82 @@
+{block #title}[#{$subscription->id}] {_subscriptions.admin.subscriptions_transfer.header}{/block}
+
+{block #content}
+<div class="row">
+  <div class="col-md-12">
+    <a n:href=":Users:UsersAdmin:Show $subscription->user->id">
+      <i class="fa fa-angle-left"></i> {_subscriptions.admin.subscriptions_transfer.back_to_user}
+    </a>
+
+    <div class="page-header">
+      <h1>
+        <small>[#{$subscription->id}]</small>
+        {_subscriptions.admin.subscriptions_transfer.header}
+      </h1>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 col-lg-3 col-lg-push-7">
+    {control simpleWidget 'admin.subscriptions.transfer.summary.right', [
+      'subscription' => $subscription,
+      'userToTransferTo' => $userToTransferTo,
+    ]}
+  </div>
+
+  <div class="col-xs-12 col-lg-6 col-lg-offset-1 col-lg-pull-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">{_subscriptions.admin.subscriptions_transfer.summary.subscription}</div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>{_subscriptions.menu.subscriptions}</th>
+            <th>{_subscriptions.data.subscriptions.fields.type}</th>
+            <th>{_subscriptions.data.subscription_types.fields.content}</th>
+            <th>{_subscriptions.data.subscriptions.fields.start_time}</th>
+            <th>{_subscriptions.data.subscriptions.fields.end_time}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="active">
+            <td>{$subscription->subscription_type->user_label}</td>
+            <td>{$subscription->type|typeLabel|noescape}</td>
+            <td>{$subscription->subscription_type|typeContent|noescape}</td>
+            <td>{$subscription->start_time|localizedDate:true}</td>
+            <td>{$subscription->end_time|localizedDate:true}</td>
+          </tr>
+
+          <tr>
+            <td colspan="5" class="text-center"><br>
+              <strong>&darr; {_subscriptions.admin.subscriptions_transfer.summary.subscription_will_be_transfered_to_user_with_these_subscriptions}: &darr;</strong><br>
+              <i class="fa fa-warning"></i> {_subscriptions.admin.subscriptions_transfer.summary.subscription_conflicts_notice}<br>
+            <br></td>
+          </tr>
+
+          {foreach $actualSubscriptions as $actualSubscription}
+            <tr class="active">
+              <td>{$actualSubscription->subscription_type->user_label}</td>
+              <td>{$actualSubscription->type|typeLabel|noescape}</td>
+              <td>{$actualSubscription->subscription_type|typeContent|noescape}</td>
+              <td>{$actualSubscription->start_time|localizedDate:true}</td>
+              <td>{$actualSubscription->end_time|localizedDate:true}</td>
+            </tr>
+          {else}
+            <tr class="active">
+              <td colspan="5" class="text-center">
+                <strong>{_subscriptions.admin.subscriptions_transfer.summary.no_actual_subscriptions}</strong>
+              </td>
+            </tr>
+          {/foreach}
+        </tbody>
+      </table>
+    </div>
+
+    {control simpleWidget 'admin.subscriptions.transfer.summary.content', [
+      'subscription' => $subscription,
+      'userToTransferTo' => $userToTransferTo,
+    ]}
+
+    {control transferConfirmation}
+  </div>
+</div>

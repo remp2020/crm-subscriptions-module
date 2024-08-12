@@ -145,6 +145,24 @@ admin:
         stats:
             title: Előfizetési statisztikák
 
+    subscriptions_transfer:
+        header: Előfizetés áthelyezése
+        back_to_user: vissza a felhasználóhoz
+
+        select_user:
+            user: Felhasználó
+            user_placeholder: Válassza ki azt a felhasználót, akire át szeretné helyezni a kiválasztott előfizetést (keresés azonosító vagy e-mail alapján)
+            continue_to_summary_button: Tovább az összefoglalóhoz
+
+        summary:
+            subscription: Információ az átadott előfizetésről
+            transfer_subscription_button: Előfizetés átvitele
+            transfer_complete_message: Az előfizetés átvitele sikeresen megtörtént
+            subscription_will_be_transfered_to_user_with_these_subscriptions: átkerül a felhasználóhoz ezekkel a jelenlegi előfizetésekkel
+            subscription_conflicts_notice: A meglévő előfizetésekkel fennálló ütközések nem oldódnak fel automatikusan.
+            no_actual_subscriptions: Nincs tényleges előfizetés.
+            not_transferable_subscription_error: Az előfizetés nem ruházható át.
+
     subscriptions_ends:
         default:
             title: Lejáró előfizetések
@@ -245,6 +263,10 @@ admin:
     actual_subscribers_stat_widget:
         title: Aktív előfizetők
         help: "Egyedi előfizetők, fizető és nem fizető."
+
+    transfer_subscription_widget:
+        header: Feliratkozás
+        button_label: Előfizetés áthelyezése
 
 data_provider:
     delete:

@@ -1,0 +1,23 @@
+{block #title}[#{$subscription->id}] {_subscriptions.admin.subscriptions_transfer.header}{/block}
+
+{block #content}
+<div class="row">
+  <div class="col-md-12">
+    <a n:href=":Users:UsersAdmin:Show $subscription->user->id">
+      <i class="fa fa-angle-left"></i> {_subscriptions.admin.subscriptions_transfer.back_to_user}
+    </a>
+
+    <div class="page-header">
+      <h1>
+        <small>[#{$subscription->id}]</small>
+        {_subscriptions.admin.subscriptions_transfer.header}
+      </h1>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        {control userSelect}
+    </div>
+</div>

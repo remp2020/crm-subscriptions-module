@@ -155,6 +155,24 @@ admin:
         stats:
             title: Subscription stats
 
+    subscriptions_transfer:
+        header: Transfer subscription
+        back_to_user: back to user
+
+        select_user:
+            user: User
+            user_placeholder: Select the user to whom you wish to transfer the selected subscription (by ID or email)
+            continue_to_summary_button: Continue to summary
+
+        summary:
+            subscription: Transferring subscription information
+            transfer_subscription_button: Transfer subscription
+            transfer_complete_message: Subscription was successfully transferred
+            subscription_will_be_transfered_to_user_with_these_subscriptions: will be transferred to the user with these current subscriptions
+            subscription_conflicts_notice: Any conflicts with existing subscriptions will not be resolved automatically.
+            no_actual_subscriptions: No actual subscriptions.
+            not_transferable_subscription_error: The subscription cannot be transferred.
+
     subscriptions_ends:
         default:
             title: Ending subscriptions
@@ -363,6 +381,10 @@ admin:
         no_subscription: 'Subscription with ID %id% not found.'
         success: 'Subscription with ID %id% has been stopped.'
         stop_confirm: "Are you sure you want to stop subscription ID: %id% for user %email%?"
+
+    transfer_subscription_widget:
+        header: Subscription
+        button_label: Transfer subscription
 
     admin_filter_form:
         name:
