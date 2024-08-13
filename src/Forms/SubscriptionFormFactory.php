@@ -10,6 +10,7 @@ use Crm\SubscriptionsModule\Events\SubscriptionPreUpdateEvent;
 use Crm\SubscriptionsModule\Models\Length\LengthMethodFactory;
 use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
+use Crm\UsersModule\Models\Address\AddressesLister;
 use Crm\UsersModule\Repositories\AddressesRepository;
 use Crm\UsersModule\Repositories\UsersRepository;
 use League\Event\Emitter;
@@ -34,6 +35,7 @@ class SubscriptionFormFactory
         private readonly Translator $translator,
         private readonly Emitter $emitter,
         private readonly SubscriptionTypesSelectItemsBuilder $subscriptionTypesSelectItemsBuilder,
+        private readonly AddressesLister $addressesLister,
     ) {
     }
 
@@ -101,7 +103,7 @@ class SubscriptionFormFactory
             ->getControlPrototype()
             ->addAttributes(['class' => 'autosize']);
 
-        $form->addSelect('address_id', 'subscriptions.data.subscriptions.fields.address_id', $this->addressesRepository->addressesSelect($user, false))
+        $form->addSelect('address_id', 'subscriptions.data.subscriptions.fields.address_id', $this->addressesLister->addressesForSelect($user))
             ->setPrompt('--');
 
         $form->addHidden('user_id', $user->id);
