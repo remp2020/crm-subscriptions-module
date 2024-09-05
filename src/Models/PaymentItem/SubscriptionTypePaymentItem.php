@@ -16,7 +16,7 @@ final class SubscriptionTypePaymentItem implements PaymentItemInterface
         private int $subscriptionTypeId,
         string $name,
         float $price,
-        int $vat,
+        float $vat,
         int $count = 1,
         array $meta = [],
         private ?int $subscriptionTypeItemId = null,

@@ -27,7 +27,7 @@ class SubscriptionTypeItemsRepository extends Repository
         $this->dataProviderManager = $dataProviderManager;
     }
 
-    final public function add(ActiveRow $subscriptionType, string $name, float $amount, int $vat, int $sorting = null)
+    final public function add(ActiveRow $subscriptionType, string $name, float $amount, float $vat, int $sorting = null)
     {
         return $this->getTable()->insert([
             'subscription_type_id' => $subscriptionType->id,
