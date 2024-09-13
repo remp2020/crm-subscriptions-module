@@ -488,7 +488,7 @@ class SubscriptionsRepository extends Repository
         ])->group('user_id');
     }
 
-    final public function subscriptionsEndBetween(DateTime $endTimeFrom, DateTime $endTimeTo, $withNextSubscription = null)
+    final public function subscriptionsEndBetween(DateTime $endTimeFrom, DateTime $endTimeTo, $withNextSubscription = null): Selection
     {
         $where = [
             'subscriptions.end_time >=' => $endTimeFrom,
