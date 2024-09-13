@@ -25,6 +25,10 @@ class SubscriptionsPresenter extends FrontendPresenter
             ->where('subscriptions.end_time > subscriptions.start_time');
     }
 
+    /**
+     * Will be DEPRECATED in 4.0 - No longer supported way of rendering sales funnels
+     * @see crm-salesfunnel-module/README.md#iframe-deprecation-in-sales-funnels
+     */
     public function renderNew($funnel = null)
     {
         if ($funnel === null) {
