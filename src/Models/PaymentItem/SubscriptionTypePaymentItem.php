@@ -92,6 +92,12 @@ final class SubscriptionTypePaymentItem implements PaymentItemInterface
         return $this;
     }
 
+    public function forceCount(int $count): self
+    {
+        $this->count = $count;
+        return $this;
+    }
+
     public function data(): array
     {
         return [
