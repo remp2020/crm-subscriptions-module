@@ -77,7 +77,7 @@
           </td>
           <td n:class="round($itemSum, 2) !== round($type->price, 2) ? alert-danger">{$type->price|price}</td>
           <td>{$type->length}</td>
-          <td>{$type|typeContent|noescape}</td>
+          <td>{$type|typeContent}</td>
           <td>
           	<span n:if="$type->active" class="label label-success">{_'subscriptions.data.subscription_types.values.active'}</span>
             <span n:if="!$type->active" class="label label-default">{_'subscriptions.data.subscription_types.values.hidden'}</span>
@@ -145,7 +145,7 @@
         </td>
         <td>{$type->price|price}</td>
         <td>{$type->length}</td>
-        <td>{$type|typeContent|noescape}</td>
+        <td>{$type|typeContent}</td>
         <td>
           <span n:if="$type->active" class="label label-success">{_'subscriptions.data.subscription_types.values.active'}</span>
           <span n:if="!$type->active" class="label label-default">{_'subscriptions.data.subscription_types.values.hidden'}</span>

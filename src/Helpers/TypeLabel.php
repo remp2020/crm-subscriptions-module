@@ -3,12 +3,16 @@
 namespace Crm\SubscriptionsModule\Helpers;
 
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
+use Latte\ContentType;
+use Latte\Runtime\FilterInfo;
 use Nette\Utils\Html;
 
 class TypeLabel
 {
-    public function process($type)
+    public function process(FilterInfo $filterInfo, $type)
     {
+        $filterInfo->contentType = ContentType::Html;
+
         if ($type == SubscriptionsRepository::TYPE_REGULAR) {
             return Html::el('span', ['class' => 'label label-success'])->setText($type);
         }

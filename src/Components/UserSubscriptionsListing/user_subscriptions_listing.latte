@@ -29,7 +29,7 @@
           {control simpleWidget 'subscriptions.admin.user_subscriptions_listing.subscription', $subscription}
 
         </td>
-        <td>{$subscription->subscription_type|typeContent|noescape}</td>
+        <td>{$subscription->subscription_type|typeContent}</td>
         <td>
           {$subscription->start_time|userDate}
         </td>

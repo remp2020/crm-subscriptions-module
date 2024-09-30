@@ -2,7 +2,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">{_subscriptions.admin.subscription_end_stats.subscription_types}</div>
         <ul class="list-group">
-            <li n:foreach="$typesCounts as $type" class="list-group-item">{$type['type']->name} {$type['type']|typeContent|noescape} <span class="badge">{$type['per']}%</span> <span class="badge">{$type['count']}</span></li>
+            <li n:foreach="$typesCounts as $type" class="list-group-item">{$type['type']->name} {$type['type']|typeContent} <span class="badge">{$type['per']}%</span> <span class="badge">{$type['count']}</span></li>
         </ul>
     </div>
 </div>

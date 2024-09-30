@@ -22,7 +22,7 @@
       <tbody>
         <tr n:foreach="$subscriptions as $subscription">
           <td>
-            {$subscription->subscription_type|typeContent|noescape}
+            {$subscription->subscription_type|typeContent}
             {$subscription->subscription_type->user_label}
           </td>
           <td>

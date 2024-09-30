@@ -40,8 +40,8 @@
         <tbody>
           <tr class="active">
             <td>{$subscription->subscription_type->user_label}</td>
-            <td>{$subscription->type|typeLabel|noescape}</td>
-            <td>{$subscription->subscription_type|typeContent|noescape}</td>
+            <td>{$subscription->type|typeLabel}</td>
+            <td>{$subscription->subscription_type|typeContent}</td>
             <td>{$subscription->start_time|localizedDate:true}</td>
             <td>{$subscription->end_time|localizedDate:true}</td>
           </tr>
@@ -56,8 +56,8 @@
           {foreach $actualSubscriptions as $actualSubscription}
             <tr class="active">
               <td>{$actualSubscription->subscription_type->user_label}</td>
-              <td>{$actualSubscription->type|typeLabel|noescape}</td>
-              <td>{$actualSubscription->subscription_type|typeContent|noescape}</td>
+              <td>{$actualSubscription->type|typeLabel}</td>
+              <td>{$actualSubscription->subscription_type|typeContent}</td>
               <td>{$actualSubscription->start_time|localizedDate:true}</td>
               <td>{$actualSubscription->end_time|localizedDate:true}</td>
             </tr>
