@@ -110,6 +110,7 @@ services:
 	- Crm\SubscriptionsModule\Models\Extension\StartNowExtension
 	- Crm\SubscriptionsModule\Models\Extension\ExtendSameTypeExtension
 	- Crm\SubscriptionsModule\Models\Extension\ExtendLastExtension
+	- Crm\SubscriptionsModule\Models\Extension\ExtendLastExtensionFactory
 	paymentItemContainerFactory:
 		setup:
 			- registerPaymentItemType(Crm\SubscriptionsModule\Models\PaymentItem\SubscriptionTypePaymentItem)

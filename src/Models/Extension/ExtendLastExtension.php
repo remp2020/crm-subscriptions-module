@@ -18,14 +18,29 @@ class ExtendLastExtension implements ExtensionInterface
     public const METHOD_CODE = 'extend_last_subscription';
     public const METHOD_NAME = 'Extend last subscription';
 
+    private ?array $ignoreSubscriptionsWithContentAccess = null;
+
+
     public function __construct(
         private SubscriptionsRepository $subscriptionsRepository
     ) {
     }
 
+    public function setIgnoreSubscriptionsWithContentAccess(...$contentAccessNames): void
+    {
+        $this->ignoreSubscriptionsWithContentAccess = $contentAccessNames;
+    }
+
     public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType, ?ActiveRow $address = null): Extension
     {
-        $lastSubscription = $this->subscriptionsRepository->lastActiveUserSubscription($user->id)->fetch();
+        $q = $this->subscriptionsRepository->lastActiveUserSubscription($user->id);
+        if ($this->ignoreSubscriptionsWithContentAccess) {
+            $q->where(
+                'subscription_type:subscription_type_content_access.content_access.name NOT IN (?)',
+                $this->ignoreSubscriptionsWithContentAccess
+            );
+        }
+        $lastSubscription = $q->fetch();
         if ($lastSubscription) {
             return new Extension($lastSubscription->end_time, true);
         }
