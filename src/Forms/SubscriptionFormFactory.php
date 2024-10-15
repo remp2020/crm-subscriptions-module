@@ -57,7 +57,12 @@ class SubscriptionFormFactory
         $form->setTranslator($this->translator);
         $form->addProtection();
 
-        $subscriptionTypes = $this->subscriptionTypesRepository->all()->fetchAll();
+        $subscriptionTypes = $this->subscriptionTypesRepository->getAllActive()->fetchAll();
+
+        if ($subscription && !$subscription->subscription_type->active) {
+            $subscriptionTypes = [$subscription->subscription_type, ...$subscriptionTypes];
+        }
+
         $subscriptionTypeId = $form->addSelect(
             'subscription_type_id',
             'subscriptions.data.subscriptions.fields.subscription_type',
