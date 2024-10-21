@@ -269,7 +269,7 @@ class SubscriptionsRepository extends Repository
 
     private function getInternalStatus(DateTime $startTime, DateTime $endTime): string
     {
-        $now = new DateTime();
+        $now = $this->getNow();
 
         if ($startTime <= $now and $endTime > $now) {
             return self::INTERNAL_STATUS_ACTIVE;
@@ -450,7 +450,7 @@ class SubscriptionsRepository extends Repository
     {
         return $this->getTable()->where([
             'subscription_type:subscription_type_content_access.content_access.name' => $contentAccess,
-            'end_time > ?' => new DateTime(),
+            'end_time > ?' => $this->getNow(),
         ])->order('end_time DESC');
     }
 
