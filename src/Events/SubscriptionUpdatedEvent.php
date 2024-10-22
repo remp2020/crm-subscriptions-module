@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Crm\SubscriptionsModule\Events;
 
-use Crm\UsersModule\Models\User\IUserGetter;
+use Crm\UsersModule\Events\UserEventInterface;
 use League\Event\AbstractEvent;
 use Nette\Database\Table\ActiveRow;
 
@@ -13,10 +15,11 @@ use Nette\Database\Table\ActiveRow;
  * Class SubscriptionUpdatedEvent
  * @package Crm\SubscriptionsModule\Events
  */
-class SubscriptionUpdatedEvent extends AbstractEvent implements IUserGetter, SubscriptionEventInterface
+class SubscriptionUpdatedEvent extends AbstractEvent implements UserEventInterface, SubscriptionEventInterface
 {
-    public function __construct(private ActiveRow $subscription)
-    {
+    public function __construct(
+        private ActiveRow $subscription,
+    ) {
     }
 
     public function getSubscription(): ActiveRow
@@ -24,8 +27,8 @@ class SubscriptionUpdatedEvent extends AbstractEvent implements IUserGetter, Sub
         return $this->subscription;
     }
 
-    public function getUserId(): int
+    public function getUser(): ActiveRow
     {
-        return $this->subscription->user_id;
+        return $this->subscription->user;
     }
 }
