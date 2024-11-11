@@ -86,12 +86,6 @@ final class SubscriptionTypePaymentItem implements PaymentItemInterface
         return $this;
     }
 
-    public function forcePrice(float $price): self
-    {
-        $this->price = $price;
-        return $this;
-    }
-
     public function forceCount(int $count): self
     {
         $this->count = $count;
