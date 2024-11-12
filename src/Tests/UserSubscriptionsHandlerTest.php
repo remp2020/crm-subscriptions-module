@@ -14,8 +14,6 @@ use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
 use Crm\UsersModule\Models\Auth\UserManager;
 use Crm\UsersModule\Repositories\AccessTokensRepository;
-use Crm\UsersModule\Repositories\AddressTypesRepository;
-use Crm\UsersModule\Repositories\AddressesRepository;
 use Crm\UsersModule\Repositories\UsersRepository;
 use Crm\UsersModule\Tests\TestUserTokenAuthorization;
 use Nette\Database\Table\ActiveRow;
@@ -25,9 +23,6 @@ class UserSubscriptionsHandlerTest extends DatabaseTestCase
 {
     use ApiTestTrait;
 
-    private AddressesRepository $addressesRepository;
-    private UserManager $userManager;
-    private AddressTypesRepository $addressTypesRepository;
     private UsersSubscriptionsHandler $apiHandler;
 
     /** @var SubscriptionsRepository */

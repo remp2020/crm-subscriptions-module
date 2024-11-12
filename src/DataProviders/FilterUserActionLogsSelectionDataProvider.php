@@ -4,19 +4,10 @@ namespace Crm\SubscriptionsModule\DataProviders;
 
 use Crm\ApplicationModule\Models\DataProvider\DataProviderException;
 use Crm\ApplicationModule\Models\Database\Selection;
-use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Crm\UsersModule\DataProviders\FilterUserActionLogsDataProviderInterface;
 
 class FilterUserActionLogsSelectionDataProvider implements FilterUserActionLogsDataProviderInterface
 {
-    private $subscriptionTypesRepository;
-
-    public function __construct(
-        SubscriptionTypesRepository $subscriptionTypesRepository
-    ) {
-        $this->subscriptionTypesRepository = $subscriptionTypesRepository;
-    }
-
     public function provide(array $params): Selection
     {
         if (!isset($params['selection'])) {

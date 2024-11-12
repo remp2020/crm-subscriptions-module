@@ -3,7 +3,6 @@
 namespace Crm\SubscriptionsModule\Commands;
 
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
-use League\Event\Emitter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,14 +12,10 @@ class ChangeSubscriptionsStateCommand extends Command
     /** @var SubscriptionsRepository  */
     private $subscriptionsRepository;
 
-    /** @var Emitter */
-    private $emitter;
-
-    public function __construct(SubscriptionsRepository $subscriptionsRepository, Emitter $emitter)
+    public function __construct(SubscriptionsRepository $subscriptionsRepository)
     {
         parent::__construct();
         $this->subscriptionsRepository = $subscriptionsRepository;
-        $this->emitter = $emitter;
     }
 
     /**

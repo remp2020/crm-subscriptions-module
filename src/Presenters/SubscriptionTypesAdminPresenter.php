@@ -69,11 +69,6 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
         $this->template->totalSubscriptionTypes = $subscriptionTypes->count();
     }
 
-    private function filteredSubscriptionTypes()
-    {
-        return $this->subscriptionTypesRepository->all()->order('sorting ASC');
-    }
-
     public function createComponentAdminFilterForm()
     {
         $form = $this->adminFilterFormFactory->create();

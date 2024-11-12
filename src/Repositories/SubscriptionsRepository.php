@@ -380,9 +380,8 @@ class SubscriptionsRepository extends Repository
 
     /**
      * @param int $userId
-     * @return ActiveRow
      */
-    final public function actualUserSubscription($userId)
+    final public function actualUserSubscription($userId): ?ActiveRow
     {
         return $this->getTable()->where([
             'user_id' => $userId,
