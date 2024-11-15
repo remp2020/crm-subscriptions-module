@@ -10,7 +10,6 @@ use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\Repositories\UsersRepository;
 use Exception;
 use Nette\Application\UI\Form;
-use Nette\Database\Connection;
 use Nette\Utils\ArrayHash;
 use Tomaj\Form\Renderer\BootstrapVerticalRenderer;
 
@@ -29,7 +28,6 @@ class SubscriptionTransferConfirmationFormFactory
         private readonly SubscriptionsRepository $subscriptionsRepository,
         private readonly UsersRepository $usersRepository,
         private readonly Translator $translator,
-        private readonly Connection $connection,
     ) {
     }
 
@@ -118,7 +116,7 @@ class SubscriptionTransferConfirmationFormFactory
             throw new Exception('User needs to transfer subscription to another user.');
         }
 
-        $this->connection->transaction(function () use ($providers, $subscription, $userToTransferTo, $values) {
+        $this->usersRepository->getTransaction()->wrap(function () use ($providers, $subscription, $userToTransferTo, $values) {
             foreach ($providers as $provider) {
                 $provider->transfer($subscription, $userToTransferTo, $values);
             }

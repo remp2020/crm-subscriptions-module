@@ -43,7 +43,7 @@ class SubscriptionTypeTagsRepository extends Repository
 
     final public function setTagsForSubscriptionType(ActiveRow $subscriptionType, array $tags): void
     {
-        $this->database->transaction(function () use ($tags, $subscriptionType) {
+        $this->getTransaction()->wrap(function () use ($tags, $subscriptionType) {
             $this->removeTagsForSubscriptionType($subscriptionType);
             foreach ($tags as $tag) {
                 $this->insert([
