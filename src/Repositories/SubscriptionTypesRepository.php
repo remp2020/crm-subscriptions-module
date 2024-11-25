@@ -69,19 +69,28 @@ class SubscriptionTypesRepository extends Repository
 
     final public function findDefaultForLengthAndContentAccesses(int $length, string ...$contentAccess)
     {
-        return $this->getTable()
+        $selection = $this->getTable()
             ->where([
                 'default' => true,
                 'length' => $length,
                 ':subscription_type_content_access.content_access.name' => $contentAccess,
-                'subscription_types.id NOT IN' => $this->getTable()
-                    ->select('subscription_types.id AS sub_id')
-                    ->where(':subscription_type_content_access.content_access.name NOT IN ?', $contentAccess)
-                    ->group('subscription_types.id')
             ])
             ->group('subscription_types.id')
             ->having('COUNT(:subscription_type_content_access.id) = ?', count($contentAccess))
-            ->order('price')
-            ->fetch();
+            ->order('price');
+
+        // If there are subscription types with content access A/B and A/B/C, and we only require default for A/B,
+        // this matches every subscription type with extra content access ("C") and excludes it from the query later.
+        $excludedSubscriptionTypes = $this->getTable()
+            ->select('subscription_types.id AS id')
+            ->where(':subscription_type_content_access.content_access.name NOT IN (?)', $contentAccess)
+            ->group('subscription_types.id')
+            ->fetchAll();
+
+        if (count($excludedSubscriptionTypes)) {
+            $selection->where(['subscription_types.id NOT IN' => $excludedSubscriptionTypes]);
+        }
+
+        return $selection->fetch();
     }
 }
