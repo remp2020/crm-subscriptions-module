@@ -5,7 +5,9 @@ namespace Crm\SubscriptionsModule\Repositories;
 use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Models\Database\Repository;
 use Crm\SubscriptionsModule\DataProviders\CanUpdateSubscriptionTypeItemDataProviderInterface;
+use Crm\SubscriptionsModule\Events\SubscriptionTypeItemUpdatedEvent;
 use Exception;
+use League\Event\Emitter;
 use Nette\Caching\Storage;
 use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
@@ -16,15 +18,13 @@ class SubscriptionTypeItemsRepository extends Repository
 {
     protected $tableName = 'subscription_type_items';
 
-    private $dataProviderManager;
-
     public function __construct(
         Explorer $database,
-        DataProviderManager $dataProviderManager,
+        private DataProviderManager $dataProviderManager,
+        private Emitter $emitter,
         Storage $cacheStorage = null,
     ) {
         parent::__construct($database, $cacheStorage);
-        $this->dataProviderManager = $dataProviderManager;
     }
 
     final public function add(ActiveRow $subscriptionType, string $name, float $amount, float $vat, int $sorting = null)
@@ -47,7 +47,11 @@ class SubscriptionTypeItemsRepository extends Repository
         }
 
         $data['updated_at'] = new DateTime();
-        return parent::update($row, $data);
+        $result = parent::update($row, $data);
+
+        $this->emitter->emit(new SubscriptionTypeItemUpdatedEvent($row));
+
+        return $result;
     }
 
     final public function exists(ActiveRow $subscriptionType, string $name): int
