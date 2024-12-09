@@ -63,9 +63,13 @@ class PrintSubscribersWithoutPrintAddressWidget extends BaseLazyWidget
     private function getSubscriptionsFrom(\DateTime $createdFrom): array
     {
         $subscriptions = $this->subscriptionsRepository->getTable()
+            // within active subscription
             ->where('subscriptions.start_time <= ?', new \DateTime())
             ->where('subscriptions.end_time > ?', new \DateTime())
-            ->where('subscriptions.created_at > ?', $createdFrom)
+
+            // segment from subscription start time
+            ->where('subscriptions.start_time > ?', $createdFrom)
+
             ->where([
                 'subscription_type:subscription_type_content_access.content_access.name' => $this->contentAccessNames,
             ])
