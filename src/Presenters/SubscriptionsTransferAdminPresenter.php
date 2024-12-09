@@ -3,6 +3,7 @@
 namespace Crm\SubscriptionsModule\Presenters;
 
 use Crm\AdminModule\Presenters\AdminPresenter;
+use Crm\PaymentsModule\Repositories\PaymentsRepository;
 use Crm\SubscriptionsModule\Forms\SubscriptionTransferConfirmationFormFactory;
 use Crm\SubscriptionsModule\Forms\SubscriptionTransferUserSelectFormFactory;
 use Crm\SubscriptionsModule\Models\SubscriptionTransfer\UserSearch;
@@ -17,6 +18,7 @@ class SubscriptionsTransferAdminPresenter extends AdminPresenter
 {
     public function __construct(
         private readonly SubscriptionsRepository $subscriptionsRepository,
+        private readonly PaymentsRepository $paymentsRepository,
         private readonly UsersRepository $usersRepository,
         private readonly UserSearch $userSearch,
         private readonly SubscriptionTransferUserSelectFormFactory $subscriptionTransferUserSelectFormFactory,
@@ -69,9 +71,11 @@ class SubscriptionsTransferAdminPresenter extends AdminPresenter
             ), httpCode: IResponse::S404_NotFound);
         }
 
+        $payment = $this->paymentsRepository->subscriptionPayment($subscription);
         $actualSubscriptions = $this->subscriptionsRepository->actualUserSubscriptions($userToTransferTo->id);
 
         $this->template->subscription = $subscription;
+        $this->template->payment = $payment;
         $this->template->userToTransferTo = $userToTransferTo;
         $this->template->actualSubscriptions = $actualSubscriptions;
     }
