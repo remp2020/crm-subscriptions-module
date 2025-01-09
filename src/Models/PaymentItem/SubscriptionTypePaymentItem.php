@@ -92,6 +92,12 @@ final class SubscriptionTypePaymentItem implements PaymentItemInterface
         return $this;
     }
 
+    public function forceMeta(array $meta): self
+    {
+        $this->meta = $meta;
+        return $this;
+    }
+
     public function data(): array
     {
         return [
