@@ -16,17 +16,4 @@
 
 <hr/>
 
-<div class="row">
-    <div class="col-md-12">
-        {control googleSubscriptionsEndGraph}
-    </div>
-</div>
-
-<div class="row">
-    {control subscriptionEndsStats}
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <a n:href=":Subscriptions:SubscriptionsEnds:default withoutNext => 1, withoutRecurrent => 1" target="_blank" class="btn btn-default">Detail</a>
-    </div>
-</div>
+{control simpleWidget 'admin.subscriptions.dashboard.endings.content'}

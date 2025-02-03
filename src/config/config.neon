@@ -57,6 +57,15 @@ services:
 	- Crm\SubscriptionsModule\Components\StopSubscriptionWidget\StopSubscriptionWidget
 	- Crm\SubscriptionsModule\Components\SubscriptionTransferWidget\SubscriptionTransferWidget
 	- Crm\SubscriptionsModule\Components\SubscriptionEndsSuppressionWidget\SubscriptionEndsSuppressionWidget
+	- Crm\SubscriptionsModule\Components\SubscriptionsFlowGraphWidget\SubscriptionsFlowGraphWidget
+	- Crm\SubscriptionsModule\Components\SubscriptionsRecurrencyStatsGraphWidget\SubscriptionsRecurrencyStatsGraphWidget
+	- Crm\SubscriptionsModule\Components\SubscriptionsLengthStatsGraphWidget\SubscriptionsLengthStatsGraphWidget
+	- Crm\SubscriptionsModule\Components\SubscriptionsStatsGraphWidget\SubscriptionsStatsGraphWidget
+	- Crm\SubscriptionsModule\Components\NewSubscriptionsStatsGraphWidget\NewSubscriptionsStatsGraphWidget
+	- Crm\SubscriptionsModule\Components\SubscriptionsGraphWidget\SubscriptionsGraphWidget
+	- Crm\SubscriptionsModule\Components\AccessStatsGraphWidget\AccessStatsGraphWidget
+	- Crm\SubscriptionsModule\Components\SubscriptionsEndGraphWidget\SubscriptionsEndGraphWidget
+	- Crm\SubscriptionsModule\Components\SubscriptionEndsStatsWidget\SubscriptionEndsStatsWidget
 	- Crm\SubscriptionsModule\Commands\ChangeSubscriptionsStateCommand
 	- Crm\SubscriptionsModule\Api\v1\UsersSubscriptionsHandler
 	- Crm\SubscriptionsModule\Models\Subscription\ActualUserSubscription

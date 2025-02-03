@@ -1,1 +1,12 @@
-{}
+components:
+    subscriptions_stats_graph_widget:
+        title: Gekaufte Abos nach Aboart
+        tooltip: Anzahl der gekauften Abonnements nach Abonnementtyp
+
+    new_subscriptions_stats_graph_widget:
+        title: Neu gekaufte Abos nach Aboart
+        tooltip: Anzahl neu gekaufter Abos nach Aboart (ohne automatische Verlängerungen)
+
+    access_stats_graph_widget:
+        title: Abonnementaufschlüsselung nach Zugriffsebene
+        tooltip: Zeigt die Anzahl der aktiven Nutzer:innen mit einem Abonnement mit einer bestimmten Leseberechtigung an

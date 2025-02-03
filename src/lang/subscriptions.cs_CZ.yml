@@ -130,6 +130,31 @@ frontend:
         active_with_next: Vaše předplatné s přístupem %access_actual% skončí <strong>%end_time%</strong> a pokračovat bude předplatné s přístupem %access_next%.
         extend: Prodloužit předplatné
 
+components:
+    subscriptions_recurrency_stats_graph_widget:
+        recurrent_subscribers: Rekurentní předplatitelé
+        nonrecurrent_subscribers: Nerekurentní předplatitelé
+        title: Rekurentnost předplatitelů
+        tooltip: Počet platících rekurentních a nerekurentních předplatitelů
+
+    subscriptions_length_stats_graph_widget:
+        days: dní
+        and_more_days: a více dní
+        title: Délka předplatného
+        tooltip: Délka předplatného na uživatele
+
+    subscriptions_stats_graph_widget:
+        title: Zakoupené předplatné
+        tooltip: Počet zakoupených předplatných podle typu předplatného
+
+    new_subscriptions_stats_graph_widget:
+        title: Nově zakoupené předplatné
+        tooltip: "Počet nově zakoupených předplatných podle typu předplatného (bez automatického obnovení)"
+
+    access_stats_graph_widget:
+        title: Rozdělení předplatného podle úrovně přístupu
+        tooltip: Zobrazuje počet aktivních uživatelů s předplatným s daným přístupem
+
 admin:
     subscriptions:
         new:
@@ -270,18 +295,6 @@ admin:
             inactive: "Vytváříme %count% předplatných pro již registrované uživatele bez předplatného."
             active: "Vytváříme %count% předplatných pro aktivní předplatitele."
             skipped: "Nevytváříme %count% předplatných, protože uživatelé nesplňují zvolené podmínky"
-
-    dashboard:
-        subscriptions_recurrency:
-            recurrent_subscribers: Rekurentní předplatitelé
-            nonrecurrent_subscribers: Nerekurentní předplatitelé
-            title: Rekurentnost předplatitelů
-            tooltip: Počet platících rekurentních a nerekurentních předplatitelů
-        subscriptions_length:
-            days: dní
-            and_more_days: a více dní
-            title: Délka předplatného
-            tooltip: Délka předplatného na uživatele
 
     address:
         cant_delete: '{1}Tato adresa se používá při předplatném: %subscriptions%|[2,Inf]Tato adresa se používá při předplatných: %subscriptions%'

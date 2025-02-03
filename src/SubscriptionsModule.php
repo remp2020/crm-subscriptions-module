@@ -26,6 +26,7 @@ use Crm\SubscriptionsModule\Api\v1\ListContentAccessHandler;
 use Crm\SubscriptionsModule\Api\v1\UpdateSubscriptionHandler;
 use Crm\SubscriptionsModule\Api\v1\UsersSubscriptionsHandler;
 use Crm\SubscriptionsModule\Commands\ChangeSubscriptionsStateCommand;
+use Crm\SubscriptionsModule\Components\AccessStatsGraphWidget\AccessStatsGraphWidget;
 use Crm\SubscriptionsModule\Components\ActualSubscribersRegistrationSourceStatsWidget\ActualSubscribersRegistrationSourceStatsWidget;
 use Crm\SubscriptionsModule\Components\ActualSubscribersStatWidget\ActualSubscribersStatWidget;
 use Crm\SubscriptionsModule\Components\ActualUserSubscriptions\ActualUserSubscriptions;
@@ -33,12 +34,20 @@ use Crm\SubscriptionsModule\Components\EndingSubscriptionsWidget\EndingSubscript
 use Crm\SubscriptionsModule\Components\MonthSubscriptionsSmallBarGraphWidget\MonthSubscriptionsSmallBarGraphWidget;
 use Crm\SubscriptionsModule\Components\MonthSubscriptionsStatWidget\MonthSubscriptionsStatWidget;
 use Crm\SubscriptionsModule\Components\MonthToDateSubscriptionsStatWidget\MonthToDateSubscriptionsStatWidget;
+use Crm\SubscriptionsModule\Components\NewSubscriptionsStatsGraphWidget\NewSubscriptionsStatsGraphWidget;
 use Crm\SubscriptionsModule\Components\PrintSubscribersWithoutPrintAddressWidget\PrintSubscribersWithoutPrintAddressWidget;
 use Crm\SubscriptionsModule\Components\RenewedSubscriptionsEndingWithinPeriodWidget\RenewedSubscriptionsEndingWithinPeriodWidget;
 use Crm\SubscriptionsModule\Components\StopSubscriptionWidget\StopSubscriptionWidget;
 use Crm\SubscriptionsModule\Components\SubscriptionButton\SubscriptionButton;
+use Crm\SubscriptionsModule\Components\SubscriptionEndsStatsWidget\SubscriptionEndsStatsWidget;
 use Crm\SubscriptionsModule\Components\SubscriptionTransferWidget\SubscriptionTransferWidget;
+use Crm\SubscriptionsModule\Components\SubscriptionsEndGraphWidget\SubscriptionsEndGraphWidget;
 use Crm\SubscriptionsModule\Components\SubscriptionsEndingWithinPeriodWidget\SubscriptionsEndingWithinPeriodWidget;
+use Crm\SubscriptionsModule\Components\SubscriptionsFlowGraphWidget\SubscriptionsFlowGraphWidget;
+use Crm\SubscriptionsModule\Components\SubscriptionsGraphWidget\SubscriptionsGraphWidget;
+use Crm\SubscriptionsModule\Components\SubscriptionsLengthStatsGraphWidget\SubscriptionsLengthStatsGraphWidget;
+use Crm\SubscriptionsModule\Components\SubscriptionsRecurrencyStatsGraphWidget\SubscriptionsRecurrencyStatsGraphWidget;
+use Crm\SubscriptionsModule\Components\SubscriptionsStatsGraphWidget\SubscriptionsStatsGraphWidget;
 use Crm\SubscriptionsModule\Components\TodaySubscriptionsStatWidget\TodaySubscriptionsStatWidget;
 use Crm\SubscriptionsModule\Components\TotalSubscriptionsStatWidget\TotalSubscriptionsStatWidget;
 use Crm\SubscriptionsModule\Components\UserSubscriptionAddressWidget\UserSubscriptionAddressWidget;
@@ -251,6 +260,62 @@ class SubscriptionsModule extends CrmModule
             'subscriptions.admin.user_subscriptions_listing.subscription',
             UserSubscriptionAddressWidget::class,
             1, // set priority to ensure the widget is rendered first
+        );
+
+        // Graphs
+
+        $widgetManager->registerWidget(
+            'admin.subscriptions.dashboard.content',
+            SubscriptionsFlowGraphWidget::class,
+            priority: 100
+        );
+
+        $widgetManager->registerWidget(
+            'admin.subscriptions.dashboard.content',
+            SubscriptionsGraphWidget::class,
+            priority: 200
+        );
+
+        $widgetManager->registerWidget(
+            'admin.subscriptions.dashboard.content',
+            SubscriptionsStatsGraphWidget::class,
+            priority: 300
+        );
+
+        $widgetManager->registerWidget(
+            'admin.subscriptions.dashboard.content',
+            SubscriptionsRecurrencyStatsGraphWidget::class,
+            priority: 400
+        );
+
+        $widgetManager->registerWidget(
+            'admin.subscriptions.dashboard.content',
+            SubscriptionsLengthStatsGraphWidget::class,
+            priority: 500
+        );
+
+        $widgetManager->registerWidget(
+            'admin.subscriptions.dashboard.content',
+            NewSubscriptionsStatsGraphWidget::class,
+            priority: 600
+        );
+
+        $widgetManager->registerWidget(
+            'admin.subscriptions.dashboard.content',
+            AccessStatsGraphWidget::class,
+            priority: 700
+        );
+
+        $widgetManager->registerWidget(
+            'admin.subscriptions.dashboard.endings.content',
+            SubscriptionsEndGraphWidget::class,
+            priority: 100
+        );
+
+        $widgetManager->registerWidget(
+            'admin.subscriptions.dashboard.endings.content',
+            SubscriptionEndsStatsWidget::class,
+            priority: 200
         );
     }
 

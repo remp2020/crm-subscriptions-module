@@ -130,6 +130,31 @@ frontend:
         active_with_next: Your subscription %access_actual% access will end at <strong>%end_time%</strong> and subscription with access %access_next% will continue.
         extend: Renew subscription
 
+components:
+    subscriptions_recurrency_stats_graph_widget:
+        recurrent_subscribers: Recurrent subscribers
+        nonrecurrent_subscribers: Non-reccurent subscribers
+        title: Recurrent subscribers
+        tooltip: "Number of paying subscribers with recurrent and non-recurrent subscription"
+
+    subscriptions_length_stats_graph_widget:
+        days: days
+        and_more_days: and more days
+        title: Length of subscriptions
+        tooltip: Length of subscriptions per user
+
+    subscriptions_stats_graph_widget:
+        title: Purchased subscriptions by type
+        tooltip: The numbers are cumulative via all the subscription types that are being sold within given period of time
+
+    new_subscriptions_stats_graph_widget:
+        title: Newly purchased subscriptions by type
+        tooltip: Count of Newly purchased subscriptions by type (without automatic renewals)
+
+    access_stats_graph_widget:
+        title: Subscription access
+        tooltip: Actual subscribers with selected access
+
 admin:
     subscriptions:
         new:
@@ -270,18 +295,6 @@ admin:
             inactive: "We are generating %count% subscription for existing users without an active subscription."
             active: "We are generating %count% subscriptions for existing users with an active subscription."
             skipped: "We have skipped generation of subscription for %count% users, as they don't match the selected criteria for subscription"
-
-    dashboard:
-        subscriptions_recurrency:
-            recurrent_subscribers: Recurrent subscribers
-            nonrecurrent_subscribers: Non-reccurent subscribers
-            title: Recurrent subscribers
-            tooltip: "Number of paying subscribers with recurrent and non-recurrent subscription"
-        subscriptions_length:
-            days: days
-            and_more_days: and more days
-            title: Length of subscriptions
-            tooltip: Length of subscriptions per user
 
     address:
         cant_delete: '{1}This address is used in subscription: %subscriptions%|[2,Inf]This address is used in subscriptions: %subscriptions%'
