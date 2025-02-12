@@ -28,6 +28,14 @@ class SubscriptionTypesMetaRepository extends Repository
         return $this->getTable()->where(['key' => $key]);
     }
 
+    final public function getByKeyAndValue(string $key, $value): Selection
+    {
+        return $this->getTable()->where([
+            'key' => $key,
+            'value' => $value,
+        ]);
+    }
+
     final public function getMeta(ActiveRow $subscriptionType, string $key): Selection
     {
         return $subscriptionType->related('subscription_types_meta')->where(['key' => $key]);
