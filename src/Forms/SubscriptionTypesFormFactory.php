@@ -2,10 +2,10 @@
 
 namespace Crm\SubscriptionsModule\Forms;
 
-use Contributte\FormMultiplier\Multiplier;
 use Contributte\Translation\Translator;
 use Crm\ApplicationModule\Models\DataProvider\DataProviderException;
 use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
+use Crm\ApplicationModule\UI\Form;
 use Crm\PaymentsModule\Forms\Controls\SubscriptionTypesSelectItemsBuilder;
 use Crm\SubscriptionsModule\DataProviders\SubscriptionTypeFormProviderInterface;
 use Crm\SubscriptionsModule\Models\Builder\SubscriptionTypeBuilder;
@@ -15,7 +15,6 @@ use Crm\SubscriptionsModule\Repositories\SubscriptionLengthMethodsRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionTypeItemsRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionTypeTagsRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
-use Nette\Application\UI\Form;
 use Nette\Forms\Container;
 use Nette\Forms\Controls\TextInput;
 use Nette\Utils\DateTime;
@@ -43,7 +42,6 @@ class SubscriptionTypesFormFactory
 
     /**
      * @param $subscriptionTypeId
-     * @return Form
      * @throws DataProviderException
      */
     public function create($subscriptionTypeId): Form
@@ -121,7 +119,6 @@ class SubscriptionTypesFormFactory
 
         $form->addGroup('subscriptions.admin.subscription_types.form.groups.items');
 
-        /** @var Multiplier $items */
         $items = $form->addMultiplier('items', function (Container $container, \Nette\Forms\Form $form) {
             $container->addText('name', 'subscriptions.admin.subscription_types.form.name')
                 ->setRequired('subscriptions.admin.subscription_types.form.required')
