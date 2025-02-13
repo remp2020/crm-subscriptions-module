@@ -4,7 +4,7 @@
 namespace Crm\SubscriptionsModule\DataProviders;
 
 use Crm\ApplicationModule\Models\DataProvider\DataProviderInterface;
-use Nette\Application\UI\Form;
+use Crm\ApplicationModule\UI\Form;
 
 interface SubscriptionFormDataProviderInterface extends DataProviderInterface
 {

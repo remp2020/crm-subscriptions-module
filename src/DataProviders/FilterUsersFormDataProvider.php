@@ -4,10 +4,10 @@ namespace Crm\SubscriptionsModule\DataProviders;
 
 use Crm\ApplicationModule\Models\DataProvider\DataProviderException;
 use Crm\ApplicationModule\Models\NowTrait;
+use Crm\ApplicationModule\UI\Form;
 use Crm\PaymentsModule\Forms\Controls\SubscriptionTypesSelectItemsBuilder;
 use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Crm\UsersModule\DataProviders\FilterUsersFormDataProviderInterface;
-use Nette\Application\UI\Form;
 use Nette\Database\Table\Selection;
 use Nette\Localization\Translator;
 

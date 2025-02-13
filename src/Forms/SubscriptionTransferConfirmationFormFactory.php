@@ -5,11 +5,11 @@ namespace Crm\SubscriptionsModule\Forms;
 use Contributte\Translation\Translator;
 use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Models\Database\ActiveRow;
+use Crm\ApplicationModule\UI\Form;
 use Crm\SubscriptionsModule\DataProviders\SubscriptionTransferDataProviderInterface;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\Repositories\UsersRepository;
 use Exception;
-use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 use Tomaj\Form\Renderer\BootstrapVerticalRenderer;
 

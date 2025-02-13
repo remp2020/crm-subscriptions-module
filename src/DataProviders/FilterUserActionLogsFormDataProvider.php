@@ -3,10 +3,10 @@
 namespace Crm\SubscriptionsModule\DataProviders;
 
 use Crm\ApplicationModule\Models\DataProvider\DataProviderException;
+use Crm\ApplicationModule\UI\Form;
 use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Crm\UsersModule\DataProviders\FilterUserActionLogsFormDataProviderInterface;
 use Crm\UsersModule\Repositories\UserActionsLogRepository;
-use Nette\Application\UI\Form;
 
 class FilterUserActionLogsFormDataProvider implements FilterUserActionLogsFormDataProviderInterface
 {

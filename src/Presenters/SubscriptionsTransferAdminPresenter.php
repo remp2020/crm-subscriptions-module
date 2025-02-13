@@ -3,6 +3,7 @@
 namespace Crm\SubscriptionsModule\Presenters;
 
 use Crm\AdminModule\Presenters\AdminPresenter;
+use Crm\ApplicationModule\UI\Form;
 use Crm\PaymentsModule\Repositories\PaymentsRepository;
 use Crm\SubscriptionsModule\Forms\SubscriptionTransferConfirmationFormFactory;
 use Crm\SubscriptionsModule\Forms\SubscriptionTransferUserSelectFormFactory;
@@ -10,7 +11,6 @@ use Crm\SubscriptionsModule\Models\SubscriptionTransfer\UserSearch;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\Repositories\UsersRepository;
 use Nette\Application\BadRequestException;
-use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
 use Nette\Http\IResponse;
 

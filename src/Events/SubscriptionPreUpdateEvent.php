@@ -2,8 +2,8 @@
 
 namespace Crm\SubscriptionsModule\Events;
 
+use Crm\ApplicationModule\UI\Form;
 use League\Event\AbstractEvent;
-use Nette\Application\UI\Form;
 use Nette\Database\Table\ActiveRow;
 
 class SubscriptionPreUpdateEvent extends AbstractEvent implements SubscriptionEventInterface

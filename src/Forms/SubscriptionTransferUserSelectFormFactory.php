@@ -3,7 +3,7 @@
 namespace Crm\SubscriptionsModule\Forms;
 
 use Contributte\Translation\Translator;
-use Nette\Application\UI\Form;
+use Crm\ApplicationModule\UI\Form;
 use Nette\Forms\Controls\SelectBox;
 use Tomaj\Form\Renderer\BootstrapRenderer;
 

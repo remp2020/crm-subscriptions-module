@@ -4,8 +4,8 @@ namespace Crm\SubscriptionsModule\DataProviders;
 
 use Crm\ApplicationModule\Models\DataProvider\DataProviderException;
 use Crm\ApplicationModule\Models\Database\Selection;
+use Crm\ApplicationModule\UI\Form;
 use Crm\UsersModule\DataProviders\FilterAbusiveUserFormDataProviderInterface;
-use Nette\Application\UI\Form;
 use Nette\Utils\DateTime;
 
 class FilterAbusiveUserFormDataProvider implements FilterAbusiveUserFormDataProviderInterface
