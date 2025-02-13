@@ -4,7 +4,7 @@ namespace Crm\SubscriptionsModule\Models\Length;
 
 class LengthMethodFactory
 {
-    /** @var array(LengthMethodInterface) */
+    /** @var LengthMethodInterface[] */
     private $lengthMethods = [];
 
     public function registerExtension($type, LengthMethodInterface $lengthMethod)
