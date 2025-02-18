@@ -86,7 +86,10 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
 
         $this->adminFilterFormFactory->onFilter = function (array $values) {
             $this->redirect($this->action, ['formData' => array_map(function ($item) {
-                return $item ?: null;
+                if ($item === '' || $item === []) {
+                    return null;
+                }
+                return $item;
             }, $values)]);
         };
         $this->adminFilterFormFactory->onCancel = function (array $emptyValues) {
