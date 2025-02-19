@@ -23,6 +23,7 @@ class SubscriptionsPresenter extends FrontendPresenter
         $this->template->subscriptions = $this->subscriptionsRepository
             ->userSubscriptions($this->getUser()->getId())
             ->where('subscriptions.end_time > subscriptions.start_time');
+        $this->template->noSubscriptionsRoute = $this->applicationConfig->get('default_route');
     }
 
     /**

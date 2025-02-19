@@ -37,7 +37,7 @@
     <blockquote n:if="$subscriptions->count('*') == 0">
       <p class="lead">
         {_subscriptions.frontend.my.no_subscription}
-        <a n:href=":Subscriptions:Subscriptions:New">{_subscriptions.frontend.my.buy_new_subscription}</a>
+        <a n:href=":{$noSubscriptionsRoute}">{_subscriptions.frontend.my.buy_new_subscription}</a>
       </p>
     </blockquote>
 
