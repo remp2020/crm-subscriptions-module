@@ -96,7 +96,6 @@ use Crm\SubscriptionsModule\Segment\UserActiveSubscriptionCriteria;
 use Crm\UsersModule\Events\AddressRemovedEvent;
 use Crm\UsersModule\Events\RefreshUserDataTokenHandler;
 use Crm\UsersModule\Models\Auth\UserTokenAuthorization;
-use Nette\Application\Routers\RouteList;
 use Nette\DI\Container;
 use Symfony\Component\Console\Output\OutputInterface;
 use Tomaj\Hermes\Dispatcher;
