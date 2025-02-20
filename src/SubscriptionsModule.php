@@ -431,11 +431,6 @@ class SubscriptionsModule extends CrmModule
         ]);
     }
 
-    public function registerRoutes(RouteList $router)
-    {
-        $router->addRoute('subscriptions/[funnel/<funnel>]', 'Subscriptions:Subscriptions:new');
-    }
-
     public function registerSeeders(SeederManager $seederManager)
     {
         $seederManager->addSeeder($this->getInstance(ConfigSeeder::class));
