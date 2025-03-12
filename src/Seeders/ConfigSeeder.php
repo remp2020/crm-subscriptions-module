@@ -43,7 +43,7 @@ class ConfigSeeder implements ISeeder
             ApplicationConfig::TYPE_STRING,
             'subscriptions.config.vat_default.name',
             'subscriptions.config.vat_default.description',
-            '20',
+            '23',
             120
         );
 
