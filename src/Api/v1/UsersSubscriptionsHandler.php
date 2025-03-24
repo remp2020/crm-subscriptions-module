@@ -4,7 +4,6 @@ namespace Crm\SubscriptionsModule\Api\v1;
 
 use Crm\ApiModule\Models\Api\ApiHandler;
 use Crm\ApiModule\Models\Params\InputParam;
-use Crm\ApiModule\Models\Params\ParamsProcessor;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\Models\Auth\UsersApiAuthorizationInterface;
 use Nette\Http\Response;
@@ -35,9 +34,6 @@ class UsersSubscriptionsHandler extends ApiHandler
         if (!($authorization instanceof UsersApiAuthorizationInterface)) {
             throw new \Exception("Wrong authorization service used. Should be 'UsersApiAuthorizationInterface'");
         }
-
-        $paramsProcessor = new ParamsProcessor($this->params());
-        $params = $paramsProcessor->getValues();
 
         $authorizedUsers = $authorization->getAuthorizedUsers();
 
