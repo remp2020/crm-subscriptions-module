@@ -37,11 +37,8 @@ class UsersSubscriptionsHandler extends ApiHandler
         }
 
         $paramsProcessor = new ParamsProcessor($this->params());
-        if ($paramsProcessor->hasError()) {
-            $response = new JsonApiResponse(Response::S400_BAD_REQUEST, ['status' => 'error', 'code' => 'invalid_request', 'message' => $paramsProcessor->hasError()]);
-            return $response;
-        }
         $params = $paramsProcessor->getValues();
+
         $authorizedUsers = $authorization->getAuthorizedUsers();
 
         $where = ['end_time >= ?' => new DateTime()];
