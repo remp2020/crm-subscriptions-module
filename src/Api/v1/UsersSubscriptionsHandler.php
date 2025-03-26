@@ -3,11 +3,11 @@
 namespace Crm\SubscriptionsModule\Api\v1;
 
 use Crm\ApiModule\Models\Api\ApiHandler;
-use Crm\ApiModule\Models\Params\InputParam;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\Models\Auth\UsersApiAuthorizationInterface;
 use Nette\Http\Response;
 use Nette\Utils\DateTime;
+use Tomaj\NetteApi\Params\GetInputParam;
 use Tomaj\NetteApi\Response\JsonApiResponse;
 use Tomaj\NetteApi\Response\ResponseInterface;
 
@@ -24,7 +24,7 @@ class UsersSubscriptionsHandler extends ApiHandler
     public function params(): array
     {
         return [
-            new InputParam(InputParam::TYPE_GET, 'show_finished', InputParam::OPTIONAL),
+            new GetInputParam('show_finished'),
         ];
     }
 
