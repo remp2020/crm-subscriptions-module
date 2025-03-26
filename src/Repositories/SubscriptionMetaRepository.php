@@ -3,6 +3,8 @@
 namespace Crm\SubscriptionsModule\Repositories;
 
 use Crm\ApplicationModule\Models\Database\Repository;
+use Crm\ApplicationModule\Repositories\AuditLogRepository;
+use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 use Nette\Utils\DateTime;
@@ -11,9 +13,23 @@ class SubscriptionMetaRepository extends Repository
 {
     protected $tableName = 'subscriptions_meta';
 
+    protected $auditLogExcluded = [
+        'created_at',
+        'updated_at',
+        'sorting',
+    ];
+
+    public function __construct(
+        Explorer $database,
+        AuditLogRepository $auditLogRepository,
+    ) {
+        parent::__construct($database);
+        $this->auditLogRepository = $auditLogRepository;
+    }
+
     final public function add(ActiveRow $subscription, string $key, $value, int $sorting = 100)
     {
-        return $this->getTable()->insert([
+        return $this->insert([
             'subscription_id' => $subscription->id,
             'key' => $key,
             'value' => (string) $value,
