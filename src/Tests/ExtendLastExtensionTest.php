@@ -19,6 +19,7 @@ use Crm\UsersModule\Models\Auth\UserManager;
 use Crm\UsersModule\Repositories\UsersRepository;
 use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
+use Random\RandomException;
 
 class ExtendLastExtensionTest extends DatabaseTestCase
 {
@@ -85,7 +86,7 @@ class ExtendLastExtensionTest extends DatabaseTestCase
      * @param ...$contentAccess string only seeded accesses Crm\SubscriptionsModule\Seeders\ContentAccessSeeder
      *
      * @return bool|int|ActiveRow
-     * @throws \Random\RandomException
+     * @throws RandomException
      */
     private function getSubscriptionTypeWithContentAccess(string ...$contentAccess)
     {
