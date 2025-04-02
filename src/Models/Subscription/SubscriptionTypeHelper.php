@@ -2,7 +2,6 @@
 
 namespace Crm\SubscriptionsModule\Models\Subscription;
 
-use Crm\ApplicationModule\Helpers\PriceHelper;
 use Crm\SubscriptionsModule\Repositories\SubscriptionTypeItemsRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Nette\Database\Table\ActiveRow;
@@ -11,28 +10,9 @@ class SubscriptionTypeHelper
 {
 
     public function __construct(
-        private PriceHelper $priceHelper,
         private SubscriptionsRepository $subscriptionsRepository,
         private SubscriptionTypeItemsRepository $subscriptionTypeItemsRepository
     ) {
-    }
-
-    /**
-     * @deprecated Use `SubscriptionTypesSelectItemsBuilder::buildWithDescription` instead
-     */
-    public function getPairs($subscriptionTypes, $allowHtml = false): array
-    {
-        $subscriptionTypePairs = [];
-        foreach ($subscriptionTypes as $st) {
-            $price = $this->priceHelper->getFormattedPrice($st->price);
-            $subscriptionTypePairs[$st->id] = html_entity_decode(sprintf(
-                "%s / %s %s",
-                $st->name,
-                $price,
-                $allowHtml ? "<small>({$st->code})</small>" : "({$st->code})"
-            ));
-        }
-        return $subscriptionTypePairs;
     }
 
     public function getItems($subscriptionTypes): array
