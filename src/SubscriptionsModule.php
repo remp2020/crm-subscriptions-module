@@ -72,6 +72,7 @@ use Crm\SubscriptionsModule\Events\SubscriptionStartsEvent;
 use Crm\SubscriptionsModule\Events\SubscriptionUpdatedEvent;
 use Crm\SubscriptionsModule\Hermes\GenerateSubscriptionHandler;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Scenarios\AfterLastSubscriptionEndedEvent;
 use Crm\SubscriptionsModule\Scenarios\ContentAccessCriteria;
 use Crm\SubscriptionsModule\Scenarios\FirstSubscriptionInPeriodCriteria;
 use Crm\SubscriptionsModule\Scenarios\HasDisabledNotificationsCriteria;
@@ -485,6 +486,12 @@ class SubscriptionsModule extends CrmModule
         $eventsStorage->register('subscription_updated', SubscriptionUpdatedEvent::class);
         $eventsStorage->register('subscription_starts', SubscriptionStartsEvent::class, true);
         $eventsStorage->register('subscription_ends', SubscriptionEndsEvent::class, true);
+
+        $eventsStorage->register(
+            'after_last_subscription_ended',
+            AfterLastSubscriptionEndedEvent::class,
+            true,
+        );
     }
 
     public function cache(OutputInterface $output, array $tags = [])
