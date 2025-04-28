@@ -2,6 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Forms;
 
+use Contributte\Translation\Exceptions\InvalidArgument;
 use Contributte\Translation\Translator;
 use Contributte\Translation\Wrappers\Message;
 use Crm\ApplicationModule\Hermes\HermesMessage;
@@ -14,6 +15,7 @@ use Crm\UsersModule\Models\Email\EmailValidator;
 use DateInterval;
 use Nette\Utils\DateTime;
 use Tomaj\Form\Renderer\BootstrapRenderer;
+use Tomaj\Hermes\Driver\UnknownPriorityException;
 use Tomaj\Hermes\Emitter;
 
 class SubscriptionsGeneratorFormFactory
@@ -122,7 +124,11 @@ class SubscriptionsGeneratorFormFactory
         return $form;
     }
 
-    public function formSucceeded(Form $form, $values)
+    /**
+     * @throws InvalidArgument
+     * @throws UnknownPriorityException
+     */
+    public function formSucceeded(Form $form, $values): void
     {
         $subscriptionType = $this->subscriptionTypesRepository->find($values['subscription_type']);
 
@@ -153,39 +159,76 @@ class SubscriptionsGeneratorFormFactory
             $emails[] = $email;
         }
 
-        $payload = [
-            'register' => [],
-            'subscribe' => [],
-        ];
+        foreach (array_chunk($emails, 100) as $batch) {
+            $payload = [
+                'register' => [],
+                'subscribe' => [],
+            ];
 
-        foreach ($emails as $email) {
-            $user = $this->userManager->loadUserByEmail($email);
+            foreach ($batch as $email) {
+                $user = $this->userManager->loadUserByEmail($email);
 
-            // newly registered
-            if (!$user) {
-                if (!$values->create_users) {
-                    // user doesn't exist and we don't want create new users
+                // newly registered
+                if (!$user) {
+                    if (!$values->create_users) {
+                        // user doesn't exist and we don't want create new users
+                        continue;
+                    }
+
+                    $payload['register'][] = [
+                        'email' => $email,
+                        'send_email' => true,
+                        'source' => 'subscriptiongenerator',
+                        'check_email' => false,
+                    ];
+
+                    ++$stats[self::REGISTRATIONS];
+
+                    if (!in_array(self::NEWLY_REGISTERED, $values->user_groups, true)) {
+                        ++$stats[self::SKIPPED];
+                        // we don't want to create subscription for newly registered, halting here
+                        continue;
+                    }
+
+                    $subscriptionParams = [
+                        'subscription_type_id' => $subscriptionType->id,
+                        'email' => $email,
+                        'type' => $values['type'],
+                        'start_time' => $startTime->format(DATE_RFC3339),
+                        'end_time' => $endTime->format(DATE_RFC3339),
+                        'is_paid' => $values['is_paid'],
+                    ];
+
+                    if (!empty($values['note'])) {
+                        $subscriptionParams['note'] = $values['note'];
+                    }
+
+                    $payload['subscribe'][] = $subscriptionParams;
+                    ++$stats[self::NEWLY_REGISTERED];
+
+                    // newly registered scenario handled completely
                     continue;
                 }
 
-                $payload['register'][] = [
-                    'email' => $email,
-                    'send_email' => true,
-                    'source' => 'subscriptiongenerator',
-                    'check_email' => false,
-                ];
+                // already registered
+                $actualSubscription = $this->subscriptionsRepository->actualUserSubscription($user->id);
 
-                $stats[self::REGISTRATIONS] += 1;
-
-                if (!in_array(self::NEWLY_REGISTERED, $values->user_groups, true)) {
-                    $stats[self::SKIPPED] += 1;
-                    // we don't want to create subscription for newly registered, halting here
+                if ($actualSubscription && !in_array(self::ACTIVE, $values->user_groups, true)) {
+                    // we don't want to create subscription for active subscribers, halting here
+                    ++$stats[self::SKIPPED];
                     continue;
                 }
+                if (!$actualSubscription && !in_array(self::INACTIVE, $values->user_groups, true)) {
+                    // we don't want to create subscription for inactive subscribers, halting here
+                    ++$stats[self::SKIPPED];
+                    continue;
+                }
+
+                $actualSubscription ? ++$stats[self::ACTIVE] : ++$stats[self::INACTIVE];
 
                 $subscriptionParams = [
                     'subscription_type_id' => $subscriptionType->id,
-                    'email' => $email,
+                    'email' => $user->email,
                     'type' => $values['type'],
                     'start_time' => $startTime->format(DATE_RFC3339),
                     'end_time' => $endTime->format(DATE_RFC3339),
@@ -197,47 +240,15 @@ class SubscriptionsGeneratorFormFactory
                 }
 
                 $payload['subscribe'][] = $subscriptionParams;
-                $stats[self::NEWLY_REGISTERED] += 1;
-
-                // newly registered scenario handled completely
-                continue;
             }
 
-            // already registered
-            $actualSubscription = $this->subscriptionsRepository->actualUserSubscription($user->id);
-
-            if ($actualSubscription && !in_array(self::ACTIVE, $values->user_groups, true)) {
-                // we don't want to create subscription for active subscribers, halting here
-                $stats[self::SKIPPED] += 1;
-                continue;
+            if ($values->generate) {
+                $this->emitter->emit(new HermesMessage('generate-subscription', $payload));
             }
-            if (!$actualSubscription && !in_array(self::INACTIVE, $values->user_groups, true)) {
-                // we don't want to create subscription for inactive subscribers, halting here
-                $stats[self::SKIPPED] += 1;
-                continue;
-            }
-
-            $actualSubscription ? $stats[self::ACTIVE] += 1 : $stats[self::INACTIVE] += 1;
-
-            $subscriptionParams = [
-                'subscription_type_id' => $subscriptionType->id,
-                'email' => $user->email,
-                'type' => $values['type'],
-                'start_time' => $startTime->format(DATE_RFC3339),
-                'end_time' => $endTime->format(DATE_RFC3339),
-                'is_paid' => $values['is_paid'],
-            ];
-
-            if (!empty($values['note'])) {
-                $subscriptionParams['note'] = $values['note'];
-            }
-
-            $payload['subscribe'][] = $subscriptionParams;
         }
 
-        $messages = [];
         $type = $values->generate ? 'info' : 'warning';
-        $messages += [
+        $messages = [
             [
                 'text' => $this->translator->translate('subscriptions.admin.subscription_generator.messages.registrations', $stats[self::REGISTRATIONS]),
                 'type' => $type
@@ -259,10 +270,6 @@ class SubscriptionsGeneratorFormFactory
                 'type' => 'warning',
             ],
         ];
-
-        if ($values->generate) {
-            $this->emitter->emit(new HermesMessage('generate-subscription', $payload));
-        }
 
         ($this->onSubmit)($messages);
     }
