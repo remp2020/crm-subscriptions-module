@@ -9,6 +9,8 @@ use Nette\Utils\ArrayHash;
 
 interface SubscriptionTransferDataProviderInterface extends DataProviderInterface
 {
+    public const META_KEY_TRANSFERRED_FROM_USER = 'subscription_transfer_from';
+
     /**
      * @param array{subscription: ActiveRow, form: Form} $params
      */

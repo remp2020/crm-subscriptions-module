@@ -4,6 +4,7 @@ namespace Crm\SubscriptionsModule\DataProviders;
 
 use Crm\ApplicationModule\Models\DataProvider\DataProviderException;
 use Crm\ApplicationModule\Models\NowTrait;
+use Crm\SubscriptionsModule\Repositories\SubscriptionMetaRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\Repositories\AddressesRepository;
 use Nette\Database\Table\ActiveRow;
@@ -17,6 +18,7 @@ class SubscriptionTransferDataProvider implements SubscriptionTransferDataProvid
     public function __construct(
         private readonly SubscriptionsRepository $subscriptionsRepository,
         private readonly AddressesRepository $addressesRepository,
+        private readonly SubscriptionMetaRepository $subscriptionMetaRepository,
     ) {
     }
 
@@ -38,6 +40,8 @@ class SubscriptionTransferDataProvider implements SubscriptionTransferDataProvid
         $this->transferSubscription($subscription, $userToTransferTo);
         $this->linkPreviousSubscription($subscription, $userToTransferTo);
 
+        $subscription = $this->subscriptionsRepository->find($subscription->id);
+
         $this->unlinkUnownedAddress($subscription, $userToTransferTo);
     }
 
@@ -58,6 +62,12 @@ class SubscriptionTransferDataProvider implements SubscriptionTransferDataProvid
 
     private function transferSubscription(ActiveRow $subscription, ActiveRow $userToTransferTo): void
     {
+        $this->subscriptionMetaRepository->add(
+            $subscription,
+            SubscriptionTransferDataProviderInterface::META_KEY_TRANSFERRED_FROM_USER,
+            $subscription->user_id,
+        );
+
         $this->subscriptionsRepository->update(
             $subscription,
             ['user_id' => $userToTransferTo->id],
