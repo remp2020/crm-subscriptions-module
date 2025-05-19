@@ -16,6 +16,7 @@ use Crm\SubscriptionsModule\Events\SubscriptionUpdatedEvent;
 use Crm\SubscriptionsModule\Models\Extension\Extension;
 use Crm\SubscriptionsModule\Models\Extension\ExtensionMethodFactory;
 use Crm\SubscriptionsModule\Models\Length\LengthMethodFactory;
+use DateInterval;
 use DateTime;
 use League\Event\Emitter;
 use Nette\Database\Explorer;
@@ -675,7 +676,7 @@ class SubscriptionsRepository extends Repository
         // We don't use DateTime::diff here, because of inconsistent behavior during leap years.
         // http://sandbox.onlinephpfunctions.com/code/bdcdba7c301d880a3555d36208a030034094df19
         $lengthInSeconds = $subscription->end_time->getTimestamp() - $subscription->start_time->getTimestamp();
-        $newEndTime = (clone $newStartTime)->add(new \DateInterval("PT{$lengthInSeconds}S"));
+        $newEndTime = (clone $newStartTime)->add(new DateInterval("PT{$lengthInSeconds}S"));
 
         $this->update($subscription, [
             'start_time' => $newStartTime,

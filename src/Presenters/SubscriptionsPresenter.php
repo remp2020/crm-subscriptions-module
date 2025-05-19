@@ -15,14 +15,17 @@ class SubscriptionsPresenter extends FrontendPresenter
         $this->subscriptionsRepository = $subscriptionsRepository;
     }
 
-    public function renderMy()
+    public function renderMy(): void
     {
         $this->onlyLoggedIn();
 
-        $this->template->userId = $this->getUser()->getId();
+        $userId = $this->getUser()->getId();
+
+        $this->template->userId = $userId;
         $this->template->subscriptions = $this->subscriptionsRepository
-            ->userSubscriptions($this->getUser()->getId())
-            ->where('subscriptions.end_time > subscriptions.start_time');
+            ->userSubscriptions($userId)
+            ->where('subscriptions.end_time > subscriptions.start_time')
+            ->fetchAll();
         $this->template->noSubscriptionsRoute = $this->applicationConfig->get('default_route');
     }
 

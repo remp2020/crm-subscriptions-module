@@ -5,41 +5,41 @@
 {control 'simpleWidget', 'frontend.subscriptions.top', $userId}
 
 <div class="page-header">
-  <h1>{_subscriptions.frontend.my.history}</h1>
+    <h1>{_subscriptions.frontend.my.history}</h1>
 </div>
 
 <div class="row">
-  <div class="col-md-12">
+    <div class="col-md-12">
 
-    <table class="table table-striped" n:if="$subscriptions->count('*') > 0">
-      <thead>
-        <tr>
-          <th>{_subscriptions.menu.subscriptions}</th>
-          <th>{_system.from}</th>
-          <th>{_system.to}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr n:foreach="$subscriptions as $subscription">
-          <td>
-            {$subscription->subscription_type|typeContent}
-            {$subscription->subscription_type->user_label}
-          </td>
-          <td>
-            {$subscription->start_time|localizedDate:true}
-            <span n:if="$subscription->start_time < new \DateTime() && $subscription->end_time > new \DateTime()" class="label label-success">{_system.actual}</span>
-          </td>
-          <td>{$subscription->end_time|localizedDate:true}</td>
-        </tr>
-      </tbody>
-    </table>
+        <table class="table table-striped" n:if="count($subscriptions) > 0">
+            <thead>
+            <tr>
+                <th>{_subscriptions.menu.subscriptions}</th>
+                <th>{_system.from}</th>
+                <th>{_system.to}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr n:foreach="$subscriptions as $subscription">
+                <td>
+                    {$subscription->subscription_type|typeContent}
+                    {$subscription->subscription_type->user_label}
+                </td>
+                <td>
+                    {$subscription->start_time|localizedDate:true}
+                    <span n:if="$subscription->start_time < new \DateTime() && $subscription->end_time > new \DateTime()" class="label label-success">{_system.actual}</span>
+                </td>
+                <td>{$subscription->end_time|localizedDate:true}</td>
+            </tr>
+            </tbody>
+        </table>
 
-    <blockquote n:if="$subscriptions->count('*') == 0">
-      <p class="lead">
-        {_subscriptions.frontend.my.no_subscription}
-        <a n:href=":{$noSubscriptionsRoute}">{_subscriptions.frontend.my.buy_new_subscription}</a>
-      </p>
-    </blockquote>
+        <blockquote n:if="count($subscriptions) === 0">
+            <p class="lead">
+                {_subscriptions.frontend.my.no_subscription}
+                <a n:href=":{$noSubscriptionsRoute}">{_subscriptions.frontend.my.buy_new_subscription}</a>
+            </p>
+        </blockquote>
 
-  </div>
+    </div>
 </div>
