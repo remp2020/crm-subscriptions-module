@@ -22,7 +22,7 @@ class ExtendLastExtension implements ExtensionInterface
 
 
     public function __construct(
-        private SubscriptionsRepository $subscriptionsRepository
+        private SubscriptionsRepository $subscriptionsRepository,
     ) {
     }
 
@@ -37,7 +37,7 @@ class ExtendLastExtension implements ExtensionInterface
         if ($this->ignoreSubscriptionsWithContentAccess) {
             $q->where(
                 'subscription_type:subscription_type_content_access.content_access.name NOT IN (?)',
-                $this->ignoreSubscriptionsWithContentAccess
+                $this->ignoreSubscriptionsWithContentAccess,
             );
         }
         $lastSubscription = $q->fetch();

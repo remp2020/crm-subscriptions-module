@@ -49,7 +49,7 @@ class SubscriptionTransferConfirmationFormFactory
         /** @var SubscriptionTransferDataProviderInterface[] $providers */
         $providers = $this->dataProviderManager->getProviders(
             'subscriptions.dataprovider.transfer',
-            SubscriptionTransferDataProviderInterface::class
+            SubscriptionTransferDataProviderInterface::class,
         );
         foreach ($providers as $provider) {
             $provider->provide([
@@ -77,7 +77,7 @@ class SubscriptionTransferConfirmationFormFactory
         /** @var SubscriptionTransferDataProviderInterface[] $providers */
         $providers = $this->dataProviderManager->getProviders(
             'subscriptions.dataprovider.transfer',
-            SubscriptionTransferDataProviderInterface::class
+            SubscriptionTransferDataProviderInterface::class,
         );
         if (!$this->isSubscriptionTransferable($providers, $subscription)) {
             $form->addError('subscriptions.admin.subscriptions_transfer.summary.not_transferable_subscription_error');

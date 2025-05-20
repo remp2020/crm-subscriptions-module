@@ -41,7 +41,7 @@ class ActiveSubscriptionCriteriaTest extends DatabaseTestCase
         $criteriaStorage->register(
             'users',
             self::CRITERIA_KEY,
-            $this->inject(UserActiveSubscriptionCriteria::class)
+            $this->inject(UserActiveSubscriptionCriteria::class),
         );
     }
 
@@ -83,7 +83,7 @@ class ActiveSubscriptionCriteriaTest extends DatabaseTestCase
                                 'active_at' => [
                                     'type' => 'interval',
                                     'interval' => $interval,
-                                ]
+                                ],
                             ],
                         ],
                     ],
@@ -188,7 +188,7 @@ class ActiveSubscriptionCriteriaTest extends DatabaseTestCase
             $userRow,
             SubscriptionsRepository::TYPE_REGULAR,
             DateTime::from($startTime),
-            DateTime::from($endTime)
+            DateTime::from($endTime),
         );
 
         return $subscriptionRow;

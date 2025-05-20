@@ -67,7 +67,7 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
             'end_time' => $endTime,
         ]);
         $this->subscriptionShortenedHandler->handle(
-            new SubscriptionShortenedEvent($baseSubscription, new \DateTime('2020-01-01'))
+            new SubscriptionShortenedEvent($baseSubscription, new \DateTime('2020-01-01')),
         );
 
         $subscriptions = [];
@@ -93,7 +93,7 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
             'end_time' => $endTime,
         ]);
         $this->subscriptionShortenedHandler->handle(
-            new SubscriptionShortenedEvent($subscription1, new \DateTime('2020-01-01'))
+            new SubscriptionShortenedEvent($subscription1, new \DateTime('2020-01-01')),
         );
 
         $subscriptions = [];
@@ -125,7 +125,7 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
         ]);
 
         $this->subscriptionShortenedHandler->handle(
-            new SubscriptionShortenedEvent($subscription1, new \DateTime('2020-01-01'))
+            new SubscriptionShortenedEvent($subscription1, new \DateTime('2020-01-01')),
         );
 
         $subscriptions = [];
@@ -156,7 +156,7 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
             'end_time' => $endTime,
         ]);
         $this->subscriptionShortenedHandler->handle(
-            new SubscriptionShortenedEvent($subscription1, new \DateTime('2020-01-01'))
+            new SubscriptionShortenedEvent($subscription1, new \DateTime('2020-01-01')),
         );
 
         $subscriptions = [];
@@ -187,7 +187,7 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
             'end_time' => $endTime,
         ]);
         $this->subscriptionShortenedHandler->handle(
-            new SubscriptionShortenedEvent($subscription1, new \DateTime('2020-01-01'))
+            new SubscriptionShortenedEvent($subscription1, new \DateTime('2020-01-01')),
         );
 
         $subscriptions = [];
@@ -219,7 +219,7 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
             'end_time' => $endTime,
         ]);
         $this->subscriptionShortenedHandler->handle(
-            new SubscriptionShortenedEvent($subscription1, new \DateTime('2020-01-01'))
+            new SubscriptionShortenedEvent($subscription1, new \DateTime('2020-01-01')),
         );
 
         $subscriptions = [];
@@ -252,7 +252,7 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
             'end_time' => $endTime,
         ]);
         $this->subscriptionShortenedHandler->handle(
-            new SubscriptionShortenedEvent($subscription1, $originalEndTime)
+            new SubscriptionShortenedEvent($subscription1, $originalEndTime),
         );
 
         $subscriptions = [];
@@ -278,7 +278,7 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
             'end_time' => $endTime,
         ]);
         $this->subscriptionShortenedHandler->handle(
-            new SubscriptionShortenedEvent($subscription1, $originalEndTime)
+            new SubscriptionShortenedEvent($subscription1, $originalEndTime),
         );
 
         $subscriptions = [];
@@ -308,7 +308,7 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
             'end_time' => $endTime,
         ]);
         $this->subscriptionShortenedHandler->handle(
-            new SubscriptionShortenedEvent($subscription1, $originalEndTime)
+            new SubscriptionShortenedEvent($subscription1, $originalEndTime),
         );
 
         $subscriptions = [];
@@ -341,7 +341,7 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
 
         // emit the event, that the original subscription was shortened
         $this->subscriptionShortenedHandler->handle(
-            new SubscriptionShortenedEvent($subscription1, new \DateTime('2021-02-01'))
+            new SubscriptionShortenedEvent($subscription1, new \DateTime('2021-02-01')),
         );
 
         $subscriptions = [];
@@ -367,7 +367,7 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
         $originalModifiedTime = $subscription1->modified_at;
 
         $this->subscriptionShortenedHandler->handle(
-            new SubscriptionShortenedEvent($subscription1, $originalEndTime)
+            new SubscriptionShortenedEvent($subscription1, $originalEndTime),
         );
 
         $subscriptions = [];
@@ -391,7 +391,7 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
             $user,
             SubscriptionsRepository::TYPE_REGULAR,
             $startTime,
-            $endTime
+            $endTime,
         );
     }
 

@@ -11,7 +11,7 @@ class SubscriptionsClaimUserDataProvider implements ClaimUserDataProviderInterfa
     private $subscriptionsRepository;
 
     public function __construct(
-        SubscriptionsRepository $subscriptionsRepository
+        SubscriptionsRepository $subscriptionsRepository,
     ) {
         $this->subscriptionsRepository = $subscriptionsRepository;
     }

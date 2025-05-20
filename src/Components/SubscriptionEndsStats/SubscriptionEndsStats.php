@@ -56,7 +56,7 @@ class SubscriptionEndsStats extends Control
             $subscriptions->where('subscriptions.id NOT', $subscriptions1->where([
                 ':payments:recurrent_payments.status' => null,
                 ':payments:recurrent_payments.retries > ?' => 0,
-                ':payments:recurrent_payments.state = ?' => 'active'
+                ':payments:recurrent_payments.state = ?' => 'active',
             ])->fetchPairs(null, 'id'));
         }
 

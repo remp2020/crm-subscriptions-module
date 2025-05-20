@@ -38,7 +38,7 @@ class SubscriptionTransferWidget extends BaseLazyWidget
         /** @var SubscriptionTransferDataProviderInterface[] $providers */
         $providers = $this->dataProviderManager->getProviders(
             'subscriptions.dataprovider.transfer',
-            SubscriptionTransferDataProviderInterface::class
+            SubscriptionTransferDataProviderInterface::class,
         );
 
         foreach ($providers as $provider) {

@@ -26,7 +26,7 @@ class SubscriptionsGenerator
                 $params->getType(),
                 $params->getStartTime(),
                 $params->getEndTime(),
-                $params->getNote()
+                $params->getNote(),
             );
             $subscriptions[] = $subscription;
         }

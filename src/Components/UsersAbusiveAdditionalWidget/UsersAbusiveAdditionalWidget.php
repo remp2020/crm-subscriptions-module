@@ -15,7 +15,7 @@ class UsersAbusiveAdditionalWidget extends BaseLazyWidget
 
     public function __construct(
         LazyWidgetManager $lazyWidgetManager,
-        SubscriptionsRepository $subscriptionsRepository
+        SubscriptionsRepository $subscriptionsRepository,
     ) {
         parent::__construct($lazyWidgetManager);
 

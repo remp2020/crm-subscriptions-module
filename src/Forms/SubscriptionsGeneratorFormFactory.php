@@ -67,7 +67,7 @@ class SubscriptionsGeneratorFormFactory
         $subscriptionType = $form->addSelect(
             'subscription_type',
             'subscriptions.admin.subscription_generator.field.subscription_type',
-            $this->subscriptionTypesSelectItemsBuilder->buildWithDescription($subscriptionTypes)
+            $this->subscriptionTypesSelectItemsBuilder->buildWithDescription($subscriptionTypes),
         )
             ->setPrompt("subscriptions.admin.subscription_generator.prompt.subscription_type")
             ->setRequired("subscriptions.admin.subscription_generator.required.subscription_type");
@@ -251,15 +251,15 @@ class SubscriptionsGeneratorFormFactory
         $messages = [
             [
                 'text' => $this->translator->translate('subscriptions.admin.subscription_generator.messages.registrations', $stats[self::REGISTRATIONS]),
-                'type' => $type
+                'type' => $type,
             ],
             [
                 'text' => $this->translator->translate('subscriptions.admin.subscription_generator.messages.newly_registered', $stats[self::NEWLY_REGISTERED]),
-                'type' => $type
+                'type' => $type,
             ],
             [
                 'text' => $this->translator->translate('subscriptions.admin.subscription_generator.messages.inactive', $stats[self::INACTIVE]),
-                'type' => $type
+                'type' => $type,
             ],
             [
                 'text' => $this->translator->translate('subscriptions.admin.subscription_generator.messages.active', $stats[self::ACTIVE]),

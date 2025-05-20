@@ -225,7 +225,7 @@ class SubscriptionTypeBuilder extends Builder
             'name' => $name,
             'amount' => $amount,
             'vat' => $vat,
-            'meta' => $meta
+            'meta' => $meta,
         ];
         return $this;
     }

@@ -28,7 +28,7 @@ class ActualSubscribersRegistrationSourceStatsWidget extends BaseLazyWidget
         LazyWidgetManager $lazyWidgetManager,
         GoogleBarGraphControlFactoryInterface $factory,
         Translator $translator,
-        Explorer $database
+        Explorer $database,
     ) {
         parent::__construct($lazyWidgetManager);
 

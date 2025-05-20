@@ -25,7 +25,7 @@ class ConfigSeeder implements ISeeder
     public function __construct(
         ConfigCategoriesRepository $configCategoriesRepository,
         ConfigsRepository $configsRepository,
-        ConfigBuilder $configBuilder
+        ConfigBuilder $configBuilder,
     ) {
         $this->configCategoriesRepository = $configCategoriesRepository;
         $this->configsRepository = $configsRepository;
@@ -44,7 +44,7 @@ class ConfigSeeder implements ISeeder
             'subscriptions.config.vat_default.name',
             'subscriptions.config.vat_default.description',
             '23',
-            120
+            120,
         );
 
         $category = $this->getCategory($output, 'subscriptions.config.users.category', 'fa fa-user', 300);
@@ -57,7 +57,7 @@ class ConfigSeeder implements ISeeder
             'subscriptions.config.users.prevent_anonymization.name',
             'subscriptions.config.users.prevent_anonymization.description',
             true,
-            120
+            120,
         );
 
         $this->addConfig(
@@ -68,7 +68,7 @@ class ConfigSeeder implements ISeeder
             'subscriptions.config.users.prevent_anonymization_within_days.name',
             'subscriptions.config.users.prevent_anonymization_within_days.description',
             90,
-            120
+            120,
         );
     }
 }

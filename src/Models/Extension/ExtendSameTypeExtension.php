@@ -21,7 +21,7 @@ class ExtendSameTypeExtension implements ExtensionInterface
     public const METHOD_NAME = 'Extend same type';
 
     public function __construct(
-        private SubscriptionsRepository $subscriptionsRepository
+        private SubscriptionsRepository $subscriptionsRepository,
     ) {
     }
 

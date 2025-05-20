@@ -18,7 +18,7 @@ class SubscriptionTypeItemMetaRepository extends Repository
             'key' => $key,
             'value' => $value,
             'created_at' => new DateTime(),
-            'updated_at' => new DateTime()
+            'updated_at' => new DateTime(),
         ]);
     }
 

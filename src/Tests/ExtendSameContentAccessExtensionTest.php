@@ -118,7 +118,7 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
             $this->user,
             SubscriptionsRepository::TYPE_REGULAR,
             $from,
-            $to
+            $to,
         );
     }
 
@@ -171,7 +171,7 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
         $this->addSubscription(
             $differentSubscriptionType,
             $nowDate,
-            $nowDate->modifyClone('+25 days')
+            $nowDate->modifyClone('+25 days'),
         );
 
         $this->extension->setNow($nowDate);
@@ -190,14 +190,14 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
         $this->addSubscription(
             $subscriptionType,
             $nowDate,
-            $nowDate->modifyClone('+5 days')
+            $nowDate->modifyClone('+5 days'),
         );
 
         $differentSubscriptionType = $this->getDifferentSubscriptionType();
         $this->addSubscription(
             $differentSubscriptionType,
             $nowDate->modifyClone('+5 days'),
-            $nowDate->modifyClone('+35 days')
+            $nowDate->modifyClone('+35 days'),
         );
 
         $this->extension->setNow($nowDate);
@@ -214,14 +214,14 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
         $this->addSubscription(
             $differentSubscriptionType,
             $nowDate,
-            $nowDate->modifyClone('+5 days')
+            $nowDate->modifyClone('+5 days'),
         );
 
         $subscriptionType = $this->getSubscriptionType();
         $this->addSubscription(
             $subscriptionType,
             $nowDate->modifyClone('+5 days'),
-            $nowDate->modifyClone('+35 days')
+            $nowDate->modifyClone('+35 days'),
         );
 
         $this->extension->setNow($nowDate);
@@ -238,14 +238,14 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
         $this->addSubscription(
             $subscriptionType,
             $nowDate,
-            $nowDate->modifyClone('+10 days')
+            $nowDate->modifyClone('+10 days'),
         );
 
         $differentSubscriptionType = $this->getDifferentSubscriptionType();
         $this->addSubscription(
             $differentSubscriptionType,
             $nowDate->modifyClone('+5 days'),
-            $nowDate->modifyClone('+35 days')
+            $nowDate->modifyClone('+35 days'),
         );
 
         $this->extension->setNow($nowDate);
@@ -262,14 +262,14 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
         $this->addSubscription(
             $subscriptionType,
             $nowDate,
-            $nowDate->modifyClone('+10 days')
+            $nowDate->modifyClone('+10 days'),
         );
 
         $differentSubscriptionType = $this->getDifferentSubscriptionType();
         $this->addSubscription(
             $differentSubscriptionType,
             $nowDate->modifyClone('+15 days'),
-            $nowDate->modifyClone('+35 days')
+            $nowDate->modifyClone('+35 days'),
         );
 
         $this->extension->setNow($nowDate);
@@ -286,14 +286,14 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
         $this->addSubscription(
             $differentSubscriptionType,
             $nowDate,
-            $nowDate->modifyClone('+10 days')
+            $nowDate->modifyClone('+10 days'),
         );
 
         $subscriptionType = $this->getSubscriptionType();
         $this->addSubscription(
             $subscriptionType,
             $nowDate->modifyClone('+15 days'),
-            $nowDate->modifyClone('+35 days')
+            $nowDate->modifyClone('+35 days'),
         );
 
         $this->extension->setNow($nowDate);

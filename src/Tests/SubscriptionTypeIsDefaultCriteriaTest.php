@@ -50,7 +50,7 @@ class SubscriptionTypeIsDefaultCriteriaTest extends DatabaseTestCase
         $criteria = $this->inject(SubscriptionTypeIsDefaultCriteria::class);
 
         $criteria->addConditions($subscriptionSelection, [
-            SubscriptionTypeIsDefaultCriteria::KEY => (object)['selection' => 1]
+            SubscriptionTypeIsDefaultCriteria::KEY => (object)['selection' => 1],
         ], $subscriptionRow);
 
         $this->assertNotNull($subscriptionSelection->fetch());
@@ -63,7 +63,7 @@ class SubscriptionTypeIsDefaultCriteriaTest extends DatabaseTestCase
         $criteria = $this->inject(SubscriptionTypeIsDefaultCriteria::class);
 
         $criteria->addConditions($subscriptionSelection, [
-            SubscriptionTypeIsDefaultCriteria::KEY => (object)['selection' => 0]
+            SubscriptionTypeIsDefaultCriteria::KEY => (object)['selection' => 0],
         ], $subscriptionRow);
 
         $this->assertNull($subscriptionSelection->fetch());
@@ -76,7 +76,7 @@ class SubscriptionTypeIsDefaultCriteriaTest extends DatabaseTestCase
         $criteria = $this->inject(SubscriptionTypeIsDefaultCriteria::class);
 
         $criteria->addConditions($subscriptionSelection, [
-            SubscriptionTypeIsDefaultCriteria::KEY => (object)['selection' => 1]
+            SubscriptionTypeIsDefaultCriteria::KEY => (object)['selection' => 1],
         ], $subscriptionRow);
 
         $this->assertNull($subscriptionSelection->fetch());
@@ -89,7 +89,7 @@ class SubscriptionTypeIsDefaultCriteriaTest extends DatabaseTestCase
         $criteria = $this->inject(SubscriptionTypeIsDefaultCriteria::class);
 
         $criteria->addConditions($subscriptionSelection, [
-            SubscriptionTypeIsDefaultCriteria::KEY => (object)['selection' => 1]
+            SubscriptionTypeIsDefaultCriteria::KEY => (object)['selection' => 1],
         ], $subscriptionRow);
 
         $this->assertNotNull($subscriptionSelection->fetch());
@@ -120,7 +120,7 @@ class SubscriptionTypeIsDefaultCriteriaTest extends DatabaseTestCase
             $subscriptionTypeRow,
             false,
             false,
-            $userRow
+            $userRow,
         );
 
         $subscriptionSelection = $this->subscriptionsRepository->getTable()

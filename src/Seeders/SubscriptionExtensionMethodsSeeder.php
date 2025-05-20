@@ -29,7 +29,7 @@ class SubscriptionExtensionMethodsSeeder implements ISeeder
                 $method,
                 ExtendActualExtension::METHOD_NAME,
                 'Put new subscription after actual subscription or starts now',
-                100
+                100,
             );
             $output->writeln("  <comment>* subscription extension method <info>{$method}</info> created</comment>");
         } else {
@@ -42,7 +42,7 @@ class SubscriptionExtensionMethodsSeeder implements ISeeder
                 $method,
                 ExtendSameActualExtension::METHOD_NAME,
                 'Put new subscription after actual subscription of the same type or starts now',
-                110
+                110,
             );
             $output->writeln("  <comment>* subscription extension method <info>{$method}</info> created</comment>");
         } else {
@@ -55,7 +55,7 @@ class SubscriptionExtensionMethodsSeeder implements ISeeder
                 $method,
                 StartNowExtension::METHOD_NAME,
                 'Begins immediately regardless actual subscription',
-                200
+                200,
             );
             $output->writeln("  <comment>* subscription extension method <info>{$method}</info> created</comment>");
         } else {
@@ -68,7 +68,7 @@ class SubscriptionExtensionMethodsSeeder implements ISeeder
                 $method,
                 ExtendSameTypeExtension::METHOD_NAME,
                 'Put new subscription after last subscription of the same type or use extend_actual method',
-                120
+                120,
             );
             $output->writeln("  <comment>* subscription extension method <info>{$method}</info> created</comment>");
         } else {
@@ -81,7 +81,7 @@ class SubscriptionExtensionMethodsSeeder implements ISeeder
                 $method,
                 ExtendSameContentAccess::METHOD_NAME,
                 'Put new subscription after last subscription of the same content access type or start immediately',
-                130
+                130,
             );
             $output->writeln("  <comment>* subscription extension method <info>{$method}</info> created</comment>");
         } else {
@@ -94,7 +94,7 @@ class SubscriptionExtensionMethodsSeeder implements ISeeder
                 $method,
                 ExtendLastExtension::METHOD_NAME,
                 'Put new subscription after last subscription of user or start immediately',
-                140
+                140,
             );
             $output->writeln("  <comment>* subscription extension method <info>{$method}</info> created</comment>");
         } else {

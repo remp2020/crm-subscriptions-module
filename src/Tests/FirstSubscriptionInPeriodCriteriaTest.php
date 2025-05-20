@@ -65,7 +65,7 @@ class FirstSubscriptionInPeriodCriteriaTest extends DatabaseTestCase
         mixed $intervalDays,
         array $contentAccesses,
         bool $expectedValue,
-        ?\Exception $expectedException = null
+        ?\Exception $expectedException = null,
     ) {
         /** @var Selection $subscriptionSelection */
         [$subscriptionSelection, $subscriptionRow] = $this->prepareData(

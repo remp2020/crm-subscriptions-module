@@ -24,7 +24,7 @@ class ActualSubscribersStatWidget extends BaseLazyWidget
     public function __construct(
         LazyWidgetManager $lazyWidgetManager,
         SubscriptionsRepository $subscriptionsRepository,
-        SegmentsRepository $segmentsRepository
+        SegmentsRepository $segmentsRepository,
     ) {
         parent::__construct($lazyWidgetManager);
         $this->subscriptionsRepository = $subscriptionsRepository;
@@ -41,7 +41,7 @@ class ActualSubscribersStatWidget extends BaseLazyWidget
         if ($this->segmentsRepository->exists('users_with_active_subscriptions')) {
             $this->template->totalSubscribersLink = $this->presenter->link(
                 ':Segment:StoredSegments:show',
-                $this->segmentsRepository->findByCode('users_with_active_subscriptions')->id
+                $this->segmentsRepository->findByCode('users_with_active_subscriptions')->id,
             );
         }
         $this->template->totalSubscribers = $this->subscriptionsRepository->currentSubscribersCount(true);

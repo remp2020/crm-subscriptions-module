@@ -112,7 +112,7 @@ class HasDisabledNotificationsCriteriaTest extends DatabaseTestCase
             $subscriptionTypeRow,
             false,
             false,
-            $userRow
+            $userRow,
         );
 
         $selection = $this->subscriptionsRepository->getTable()

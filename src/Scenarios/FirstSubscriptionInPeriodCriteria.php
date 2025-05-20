@@ -64,7 +64,7 @@ class FirstSubscriptionInPeriodCriteria implements ScenariosCriteriaInterface
                     "previous_subscriptions.user_id = subscriptions.user_id
                 AND previous_subscriptions.start_time < subscriptions.start_time
                 AND previous_subscriptions.start_time > NOW() - INTERVAL ? DAY",
-                    $intervalDays
+                    $intervalDays,
                 )
                 ->where('previous_subscriptions.id IS NULL');
 
@@ -75,7 +75,7 @@ class FirstSubscriptionInPeriodCriteria implements ScenariosCriteriaInterface
             ->select('subscription_types.id')
             ->where(
                 ':subscription_type_content_access.content_access.name IN (?)',
-                $paramValues[self::CONTENT_ACCESS_KEY]->selection
+                $paramValues[self::CONTENT_ACCESS_KEY]->selection,
             );
 
         // otherwise check if previous subscription with provided content access exists within period

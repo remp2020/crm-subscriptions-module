@@ -55,7 +55,7 @@ final class SubscriptionTypePaymentItem implements PaymentItemInterface
             $subscriptionTypeItem->vat,
             $count,
             $subscriptionTypeItem->related('subscription_type_item_meta')->fetchPairs('key', 'value'),
-            $subscriptionTypeItem->id
+            $subscriptionTypeItem->id,
         );
     }
 
@@ -76,7 +76,7 @@ final class SubscriptionTypePaymentItem implements PaymentItemInterface
             $paymentItem->vat,
             $paymentItem->count,
             self::loadMeta($paymentItem),
-            $paymentItem->subscription_type_item_id
+            $paymentItem->subscription_type_item_id,
         );
     }
 

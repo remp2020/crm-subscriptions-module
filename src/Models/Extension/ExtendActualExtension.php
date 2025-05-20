@@ -19,7 +19,7 @@ class ExtendActualExtension implements ExtensionInterface
     public const METHOD_NAME = 'Extend actual';
 
     public function __construct(
-        private SubscriptionsRepository $subscriptionsRepository
+        private SubscriptionsRepository $subscriptionsRepository,
     ) {
     }
 

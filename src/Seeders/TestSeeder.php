@@ -14,7 +14,7 @@ class TestSeeder implements ISeeder
 
     public function __construct(
         private SubscriptionTypesRepository $subscriptionTypesRepository,
-        private SubscriptionTypeBuilder $subscriptionTypeBuilder
+        private SubscriptionTypeBuilder $subscriptionTypeBuilder,
     ) {
     }
 

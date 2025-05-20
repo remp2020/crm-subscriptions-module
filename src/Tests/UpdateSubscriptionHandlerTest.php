@@ -44,7 +44,7 @@ class UpdateSubscriptionHandlerTest extends DatabaseTestCase
         return [
             SubscriptionTypeNamesSeeder::class,
             SubscriptionExtensionMethodsSeeder::class,
-            SubscriptionLengthMethodSeeder::class
+            SubscriptionLengthMethodSeeder::class,
         ];
     }
 
@@ -106,7 +106,7 @@ class UpdateSubscriptionHandlerTest extends DatabaseTestCase
         /** @var JsonApiResponse $response */
         $response = $this->updateSubscriptionHandler->handle([
             'id' => $subscription->id,
-            'end_time' => $newSubscriptionEndTime->format(DateTime::RFC3339)
+            'end_time' => $newSubscriptionEndTime->format(DateTime::RFC3339),
         ]);
 
         $this->assertEquals(IResponse::S200_OK, $response->getCode());
@@ -141,7 +141,7 @@ class UpdateSubscriptionHandlerTest extends DatabaseTestCase
             false,
             true,
             $user,
-            SubscriptionsRepository::TYPE_REGULAR
+            SubscriptionsRepository::TYPE_REGULAR,
         );
 
         return [$subscriptionType, $subscription];

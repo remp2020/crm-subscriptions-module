@@ -21,7 +21,7 @@ class MonthSubscriptionsStatWidget extends BaseLazyWidget
 
     public function __construct(
         LazyWidgetManager $lazyWidgetManager,
-        SubscriptionsRepository $subscriptionsRepository
+        SubscriptionsRepository $subscriptionsRepository,
     ) {
         parent::__construct($lazyWidgetManager);
         $this->subscriptionsRepository = $subscriptionsRepository;
@@ -36,11 +36,11 @@ class MonthSubscriptionsStatWidget extends BaseLazyWidget
     {
         $this->template->thisMonthSubscriptions = $this->subscriptionsRepository->subscriptionsCreatedBetween(
             DateTime::from(date('Y-m')),
-            new DateTime()
+            new DateTime(),
         )->count('*');
         $this->template->lastMonthSubscriptions = $this->subscriptionsRepository->subscriptionsCreatedBetween(
             DateTime::from('first day of -1 month 00:00'),
-            DateTime::from(date('Y-m'))
+            DateTime::from(date('Y-m')),
         )->count('*');
         $this->template->setFile(__DIR__ . DIRECTORY_SEPARATOR . $this->templateName);
         $this->template->render();

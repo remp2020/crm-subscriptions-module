@@ -22,7 +22,7 @@ class ExtendSameContentAccess implements ExtensionInterface
 
     public function __construct(
         private ContentAccessRepository $contentAccessRepository,
-        private SubscriptionsRepository $subscriptionsRepository
+        private SubscriptionsRepository $subscriptionsRepository,
     ) {
     }
 
@@ -50,7 +50,7 @@ class ExtendSameContentAccess implements ExtensionInterface
         $userSubscriptions = $this->subscriptionsRepository->userSubscriptions($user->id)
             ->where(
                 'subscription_type:subscription_type_content_access.content_access_id',
-                array_keys($requiredContentAccesses)
+                array_keys($requiredContentAccesses),
             )
             ->where('end_time > ?', $this->getNow())
             ->where('end_time <', $lifetimeThreshold)
@@ -64,8 +64,8 @@ class ExtendSameContentAccess implements ExtensionInterface
             $matchedCount = count(
                 array_intersect(
                     array_keys($requiredContentAccesses),
-                    array_keys($subscriptionContentAccesses)
-                )
+                    array_keys($subscriptionContentAccesses),
+                ),
             );
             if ($matchedCount === count($requiredContentAccesses)
                 && $matchedCount === count($subscriptionContentAccesses)

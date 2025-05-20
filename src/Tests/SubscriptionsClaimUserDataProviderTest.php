@@ -46,7 +46,7 @@ class SubscriptionsClaimUserDataProviderTest extends DatabaseTestCase
             SubscriptionTypesRepository::class,
             SubscriptionTypeItemsRepository::class,
             UsersRepository::class,
-            UserMetaRepository::class
+            UserMetaRepository::class,
         ];
     }
 

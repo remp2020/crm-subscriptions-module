@@ -72,7 +72,7 @@ class SubscriptionShortenedHandler extends AbstractListener
     {
         $subscription = $this->subscriptionsRepository->moveSubscription(
             $subscription,
-            $startTime
+            $startTime,
         );
 
         return $subscription->end_time;

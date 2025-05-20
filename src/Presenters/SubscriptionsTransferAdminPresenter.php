@@ -36,7 +36,7 @@ class SubscriptionsTransferAdminPresenter extends AdminPresenter
         if (!$subscription) {
             throw new BadRequestException(sprintf(
                 'Subscription with id %d not found',
-                $id
+                $id,
             ), httpCode: IResponse::S404_NotFound);
         }
 
@@ -52,7 +52,7 @@ class SubscriptionsTransferAdminPresenter extends AdminPresenter
         if (!$subscription) {
             throw new BadRequestException(sprintf(
                 'Subscription with id %d not found',
-                $id
+                $id,
             ), httpCode: IResponse::S404_NotFound);
         }
 
@@ -60,7 +60,7 @@ class SubscriptionsTransferAdminPresenter extends AdminPresenter
         if (!$userToTransferTo) {
             throw new BadRequestException(sprintf(
                 'User with id %d not found',
-                $userIdToTransferTo
+                $userIdToTransferTo,
             ), httpCode: IResponse::S404_NotFound);
         }
 
@@ -89,7 +89,7 @@ class SubscriptionsTransferAdminPresenter extends AdminPresenter
         if (!$subscription) {
             throw new BadRequestException(sprintf(
                 'Subscription with id %d not found',
-                $id
+                $id,
             ), httpCode: IResponse::S404_NotFound);
         }
 

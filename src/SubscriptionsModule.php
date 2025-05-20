@@ -117,21 +117,21 @@ class SubscriptionsModule extends CrmModule
             $this->translator->translate('subscriptions.menu.subscriptions'),
             '#subscriptions',
             'fa fa-shopping-cart',
-            500
+            500,
         );
 
         $menuItem1 = new MenuItem(
             $this->translator->translate('subscriptions.menu.subscription_types'),
             ':Subscriptions:SubscriptionTypesAdmin:default',
             'fa fa-magic',
-            600
+            600,
         );
 
         $menuItem2 = new MenuItem(
             $this->translator->translate('subscriptions.menu.subscriptions_generator'),
             ':Subscriptions:SubscriptionsGenerator:default',
             'fa fa-copy',
-            700
+            700,
         );
 
         $mainMenu->addChild($menuItem1);
@@ -145,7 +145,7 @@ class SubscriptionsModule extends CrmModule
             $this->translator->translate('subscriptions.menu.stats'),
             ':Subscriptions:Dashboard:default',
             'fa fa-shopping-cart',
-            400
+            400,
         );
         $menuContainer->attachMenuItemToForeignModule('#dashboard', $mainMenu, $menuItem);
 
@@ -153,7 +153,7 @@ class SubscriptionsModule extends CrmModule
             $this->translator->translate('subscriptions.menu.endings'),
             ':Subscriptions:Dashboard:endings',
             'fa fa-frown fa-fw',
-            500
+            500,
         );
         $menuContainer->attachMenuItemToForeignModule('#dashboard', $mainMenu, $menuItem);
     }
@@ -169,86 +169,86 @@ class SubscriptionsModule extends CrmModule
         $widgetManager->registerWidget(
             'admin.user.detail.bottom',
             UserSubscriptionsListing::class,
-            100
+            100,
         );
         $widgetManager->registerWidget(
             'admin.payments.listing.action.menu',
             SubscriptionButton::class,
-            6000
+            6000,
         );
         $widgetManager->registerWidget(
             'admin.user.detail.box',
             ActualUserSubscriptions::class,
-            300
+            300,
         );
         $widgetManager->registerWidget(
             'dashboard.singlestat.totals',
             TotalSubscriptionsStatWidget::class,
-            600
+            600,
         );
         $widgetManager->registerWidget(
             'dashboard.singlestat.actuals.subscribers',
             ActualSubscribersStatWidget::class,
-            700
+            700,
         );
         $widgetManager->registerWidget(
             'dashboard.stats.actuals.subscribers.source',
             ActualSubscribersRegistrationSourceStatsWidget::class,
-            700
+            700,
         );
         $widgetManager->registerWidget(
             'dashboard.singlestat.today',
             TodaySubscriptionsStatWidget::class,
-            500
+            500,
         );
         $widgetManager->registerWidget(
             'dashboard.singlestat.month',
             MonthSubscriptionsStatWidget::class,
-            600
+            600,
         );
         $widgetManager->registerWidget(
             'dashboard.singlestat.mtd',
             MonthToDateSubscriptionsStatWidget::class,
-            600
+            600,
         );
         $widgetManager->registerWidget(
             'dashboard.bottom',
             EndingSubscriptionsWidget::class,
-            100
+            100,
         );
         $widgetManager->registerWidget(
             'subscriptions.endinglist',
             SubscriptionsEndingWithinPeriodWidget::class,
-            500
+            500,
         );
         $widgetManager->registerWidget(
             'subscriptions.endinglist',
             RenewedSubscriptionsEndingWithinPeriodWidget::class,
-            600
+            600,
         );
         $widgetManager->registerWidget(
             'admin.users.header',
             MonthSubscriptionsSmallBarGraphWidget::class,
-            600
+            600,
         );
         $widgetManager->registerWidget(
             'admin.user.list.emailcolumn',
             UserSubscriptionInfoWidget::class,
-            600
+            600,
         );
         $widgetManager->registerWidget(
             'admin.payments.top',
             PrintSubscribersWithoutPrintAddressWidget::class,
-            2000
+            2000,
         );
         $widgetManager->registerWidget(
             'admin.user.abusive.additional',
-            UsersAbusiveAdditionalWidget::class
+            UsersAbusiveAdditionalWidget::class,
         );
         $widgetManager->registerWidget(
             'subscriptions.admin.user_subscriptions_listing.action.menu',
             StopSubscriptionWidget::class,
-            10 // set priority to ensure widget renders first in action menu, adds menu items header
+            10, // set priority to ensure widget renders first in action menu, adds menu items header
         );
 
         $widgetManager->registerWidget(
@@ -267,55 +267,55 @@ class SubscriptionsModule extends CrmModule
         $widgetManager->registerWidget(
             'admin.subscriptions.dashboard.content',
             SubscriptionsFlowGraphWidget::class,
-            priority: 100
+            priority: 100,
         );
 
         $widgetManager->registerWidget(
             'admin.subscriptions.dashboard.content',
             SubscriptionsGraphWidget::class,
-            priority: 200
+            priority: 200,
         );
 
         $widgetManager->registerWidget(
             'admin.subscriptions.dashboard.content',
             SubscriptionsStatsGraphWidget::class,
-            priority: 300
+            priority: 300,
         );
 
         $widgetManager->registerWidget(
             'admin.subscriptions.dashboard.content',
             SubscriptionsRecurrencyStatsGraphWidget::class,
-            priority: 400
+            priority: 400,
         );
 
         $widgetManager->registerWidget(
             'admin.subscriptions.dashboard.content',
             SubscriptionsLengthStatsGraphWidget::class,
-            priority: 500
+            priority: 500,
         );
 
         $widgetManager->registerWidget(
             'admin.subscriptions.dashboard.content',
             NewSubscriptionsStatsGraphWidget::class,
-            priority: 600
+            priority: 600,
         );
 
         $widgetManager->registerWidget(
             'admin.subscriptions.dashboard.content',
             AccessStatsGraphWidget::class,
-            priority: 700
+            priority: 700,
         );
 
         $widgetManager->registerWidget(
             'admin.subscriptions.dashboard.endings.content',
             SubscriptionsEndGraphWidget::class,
-            priority: 100
+            priority: 100,
         );
 
         $widgetManager->registerWidget(
             'admin.subscriptions.dashboard.endings.content',
             SubscriptionEndsStatsWidget::class,
-            priority: 200
+            priority: 200,
         );
     }
 
@@ -343,7 +343,7 @@ class SubscriptionsModule extends CrmModule
     {
         $dispatcher->registerHandler(
             'generate-subscription',
-            $this->getInstance(GenerateSubscriptionHandler::class)
+            $this->getInstance(GenerateSubscriptionHandler::class),
         );
     }
 
@@ -358,32 +358,32 @@ class SubscriptionsModule extends CrmModule
             new ApiRoute(
                 new ApiIdentifier('1', 'users', 'subscriptions'),
                 UsersSubscriptionsHandler::class,
-                UserTokenAuthorization::class
-            )
+                UserTokenAuthorization::class,
+            ),
         );
 
         $apiRoutersContainer->attachRouter(
             new ApiRoute(
                 new ApiIdentifier('1', 'subscriptions', 'create'),
                 CreateSubscriptionHandler::class,
-                BearerTokenAuthorization::class
-            )
+                BearerTokenAuthorization::class,
+            ),
         );
 
         $apiRoutersContainer->attachRouter(
             new ApiRoute(
                 new ApiIdentifier('1', 'content-access', 'list'),
                 ListContentAccessHandler::class,
-                BearerTokenAuthorization::class
-            )
+                BearerTokenAuthorization::class,
+            ),
         );
 
         $apiRoutersContainer->attachRouter(
             new ApiRoute(
                 new ApiIdentifier('1', 'subscriptions', 'update'),
                 UpdateSubscriptionHandler::class,
-                BearerTokenAuthorization::class
-            )
+                BearerTokenAuthorization::class,
+            ),
         );
     }
 
@@ -408,7 +408,7 @@ class SubscriptionsModule extends CrmModule
 
         $scenariosCriteriaStorage->registerConditionModel(
             'subscription',
-            $this->getInstance(SubscriptionScenarioConditionModel::class)
+            $this->getInstance(SubscriptionScenarioConditionModel::class),
         );
     }
 
@@ -450,27 +450,27 @@ class SubscriptionsModule extends CrmModule
     {
         $dataProviderManager->registerDataProvider(
             'users.dataprovider.users_filter_form',
-            $this->getInstance(FilterUsersFormDataProvider::class)
+            $this->getInstance(FilterUsersFormDataProvider::class),
         );
         $dataProviderManager->registerDataProvider(
             'users.dataprovider.filter_user_actions_log_selection',
-            $this->getInstance(FilterUserActionLogsSelectionDataProvider::class)
+            $this->getInstance(FilterUserActionLogsSelectionDataProvider::class),
         );
         $dataProviderManager->registerDataProvider(
             'users.dataprovider.filter_user_actions_log_form',
-            $this->getInstance(FilterUserActionLogsFormDataProvider::class)
+            $this->getInstance(FilterUserActionLogsFormDataProvider::class),
         );
         $dataProviderManager->registerDataProvider(
             'users.dataprovider.address.can_delete',
-            $this->getInstance(CanDeleteAddressDataProvider::class)
+            $this->getInstance(CanDeleteAddressDataProvider::class),
         );
         $dataProviderManager->registerDataProvider(
             'users.dataprovider.filter_abusive_user_form',
-            $this->getInstance(FilterAbusiveUserFormDataProvider::class)
+            $this->getInstance(FilterAbusiveUserFormDataProvider::class),
         );
         $dataProviderManager->registerDataProvider(
             'users.dataprovider.claim_unclaimed_user',
-            $this->getInstance(SubscriptionsClaimUserDataProvider::class)
+            $this->getInstance(SubscriptionsClaimUserDataProvider::class),
         );
         $dataProviderManager->registerDataProvider(
             'subscriptions.dataprovider.transfer',

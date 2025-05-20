@@ -12,7 +12,7 @@ class SubscriptionAccessProvider implements ProviderInterface
 
     public function __construct(
         private SubscriptionsRepository $subscriptionsRepository,
-        private ContentAccessRepository $contentAccessRepository
+        private ContentAccessRepository $contentAccessRepository,
     ) {
     }
 

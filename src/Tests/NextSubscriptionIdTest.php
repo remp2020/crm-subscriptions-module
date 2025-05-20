@@ -45,7 +45,7 @@ class NextSubscriptionIdTest extends DatabaseTestCase
         return [
             SubscriptionTypeNamesSeeder::class,
             SubscriptionExtensionMethodsSeeder::class,
-            SubscriptionLengthMethodSeeder::class
+            SubscriptionLengthMethodSeeder::class,
         ];
     }
 
@@ -74,7 +74,7 @@ class NextSubscriptionIdTest extends DatabaseTestCase
             $this->user,
             SubscriptionsRepository::TYPE_REGULAR,
             $from,
-            $to
+            $to,
         );
     }
 
@@ -142,7 +142,7 @@ class NextSubscriptionIdTest extends DatabaseTestCase
             [
                 'start_time' => $secondSubscription->start_time->modifyClone('+2 hours'),
                 'end_time' => $secondSubscription->end_time->modifyClone('+2 hours'),
-            ]
+            ],
         );
 
         // check if firstSubscription.next_subscription_id was removed
@@ -175,7 +175,7 @@ class NextSubscriptionIdTest extends DatabaseTestCase
             [
                 'start_time' => $firstSubscription->start_time->modifyClone('-2 hours'),
                 'end_time' => $firstSubscription->end_time->modifyClone('-2 hours'),
-            ]
+            ],
         );
 
         // check if firstSubscription.next_subscription_id was removed
@@ -206,7 +206,7 @@ class NextSubscriptionIdTest extends DatabaseTestCase
             [
                 'start_time' => $firstSubscription->end_time,
                 'end_time' => $secondSubscription->end_time->modifyClone('-2 hours'),
-            ]
+            ],
         );
 
         // check if firstSubscription.next_subscription_id was set
@@ -237,7 +237,7 @@ class NextSubscriptionIdTest extends DatabaseTestCase
             [
                 'start_time' => $firstSubscription->start_time->modifyClone('-2 hours'),
                 'end_time' => $secondSubscription->start_time,
-            ]
+            ],
         );
 
         // check if firstSubscription.next_subscription_id was set

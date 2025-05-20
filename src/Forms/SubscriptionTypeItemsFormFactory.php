@@ -21,7 +21,7 @@ class SubscriptionTypeItemsFormFactory
     public function __construct(
         SubscriptionTypesRepository $subscriptionTypesRepository,
         SubscriptionTypeItemsRepository $subscriptionTypeItemsRepository,
-        Translator $translator
+        Translator $translator,
     ) {
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
         $this->subscriptionTypeItemsRepository = $subscriptionTypeItemsRepository;
@@ -78,7 +78,7 @@ class SubscriptionTypeItemsFormFactory
                     'name' => $values['name'],
                     'amount' => $values['amount'],
                     'vat' => $values['vat'],
-                ]
+                ],
             );
         } else {
             $subscriptionType = $this->subscriptionTypesRepository->find($values['subscription_type_id']);
@@ -86,7 +86,7 @@ class SubscriptionTypeItemsFormFactory
                 $subscriptionType,
                 $values['name'],
                 $values['amount'],
-                $values['vat']
+                $values['vat'],
             );
         }
 

@@ -132,7 +132,7 @@ class IsConsecutiveSubscriptionCriteriaTest extends DatabaseTestCase
         $values = (object)['selection' => !$negation];
 
         $this->assertTrue(
-            $criteria->addConditions($subscriptionSelection, [IsConsecutiveSubscriptionCriteria::KEY => $values], $subscriptionRow)
+            $criteria->addConditions($subscriptionSelection, [IsConsecutiveSubscriptionCriteria::KEY => $values], $subscriptionRow),
         );
         $this->assertEquals((int) $result, $subscriptionSelection->count());
     }
@@ -168,7 +168,7 @@ class IsConsecutiveSubscriptionCriteriaTest extends DatabaseTestCase
             $this->userRow,
             SubscriptionsRepository::TYPE_REGULAR,
             $startTime === 'now' ? $this->getNow() : DateTime::from($startTime),
-            $endTime === 'now' ? $this->getNow() : DateTime::from($endTime)
+            $endTime === 'now' ? $this->getNow() : DateTime::from($endTime),
         );
 
         $subscriptionSelection = $this->subscriptionRepository->getTable()

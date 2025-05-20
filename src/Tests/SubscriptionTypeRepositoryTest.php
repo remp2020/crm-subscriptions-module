@@ -44,7 +44,7 @@ class SubscriptionTypeRepositoryTest extends DatabaseTestCase
         return [
             SubscriptionExtensionMethodsSeeder::class,
             SubscriptionLengthMethodSeeder::class,
-            ContentAccessSeeder::class
+            ContentAccessSeeder::class,
         ];
     }
 

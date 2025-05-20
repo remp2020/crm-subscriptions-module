@@ -25,7 +25,7 @@ class SubscriptionLengthMethodSeeder implements ISeeder
                 $method,
                 'Fixed days',
                 'Calculate subscription length based on fixed days values in subscription type',
-                100
+                100,
             );
             $output->writeln("  <comment>* subscription extension method <info>{$method}</info> created</comment>");
         } else {
@@ -38,7 +38,7 @@ class SubscriptionLengthMethodSeeder implements ISeeder
                 $method,
                 'Calendar days',
                 'Calculate subscription length based on calendar days (days in subscription month)',
-                200
+                200,
             );
             $output->writeln("  <comment>* subscription extension method <info>{$method}</info> created</comment>");
         } else {

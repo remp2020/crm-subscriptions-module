@@ -15,7 +15,7 @@ class CanDeleteAddressDataProvider implements CanDeleteAddressDataProviderInterf
 
     public function __construct(
         Translator $translator,
-        LinkGenerator $linkGenerator
+        LinkGenerator $linkGenerator,
     ) {
         $this->translator = $translator;
         $this->linkGenerator = $linkGenerator;
@@ -32,7 +32,7 @@ class CanDeleteAddressDataProvider implements CanDeleteAddressDataProviderInterf
             $listSubscriptions = array_map(function ($subscription) {
                 $link = $this->linkGenerator->link('Subscriptions:SubscriptionsAdmin:edit', [
                     'id' => $subscription->id,
-                    'userId' => $subscription->user_id
+                    'userId' => $subscription->user_id,
                 ]);
 
                 return "<a target='_blank' href='{$link}'><i class='fa fa-edit'></i>{$subscription->id}</a>";
@@ -43,13 +43,13 @@ class CanDeleteAddressDataProvider implements CanDeleteAddressDataProviderInterf
                 'message' => $this->translator->translate(
                     'subscriptions.admin.address.cant_delete',
                     count($subscriptions),
-                    [ 'subscriptions' => implode(', ', $listSubscriptions) ]
-                )
+                    [ 'subscriptions' => implode(', ', $listSubscriptions) ],
+                ),
             ];
         }
 
         return [
-            'canDelete' => true
+            'canDelete' => true,
         ];
     }
 }

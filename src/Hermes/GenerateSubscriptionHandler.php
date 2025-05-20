@@ -21,7 +21,7 @@ class GenerateSubscriptionHandler implements HandlerInterface
     public function __construct(
         UserManager $userManager,
         SubscriptionsGenerator $subscriptionsGenerator,
-        SubscriptionTypesRepository $subscriptionTypesRepository
+        SubscriptionTypesRepository $subscriptionTypesRepository,
     ) {
         $this->userManager = $userManager;
         $this->subscriptionsGenerator = $subscriptionsGenerator;
@@ -52,9 +52,9 @@ class GenerateSubscriptionHandler implements HandlerInterface
                     DateTime::from($record['start_time']),
                     DateTime::from($record['end_time']),
                     $record['is_paid'],
-                    $record['note'] ?? null
+                    $record['note'] ?? null,
                 ),
-                1
+                1,
             );
         }
 

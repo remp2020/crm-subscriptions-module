@@ -35,7 +35,7 @@ class SubscriptionFormFactory
         private readonly Translator $translator,
         private readonly Emitter $emitter,
         private readonly SubscriptionTypesSelectItemsBuilder $subscriptionTypesSelectItemsBuilder,
-        private readonly AddressesSelectItemsBuilder $addressesSelectItemsBuilder
+        private readonly AddressesSelectItemsBuilder $addressesSelectItemsBuilder,
     ) {
     }
 
@@ -66,7 +66,7 @@ class SubscriptionFormFactory
         $subscriptionTypeId = $form->addSelect(
             'subscription_type_id',
             'subscriptions.data.subscriptions.fields.subscription_type',
-            $this->subscriptionTypesSelectItemsBuilder->buildWithDescription($subscriptionTypes)
+            $this->subscriptionTypesSelectItemsBuilder->buildWithDescription($subscriptionTypes),
         )->setRequired();
         $subscriptionTypeId->getControlPrototype()->addAttributes(['class' => 'select2']);
 
@@ -110,7 +110,7 @@ class SubscriptionFormFactory
         $form->addSelect(
             'address_id',
             'subscriptions.data.subscriptions.fields.address_id',
-            $this->addressesSelectItemsBuilder->buildSimpleWithTypes($user)
+            $this->addressesSelectItemsBuilder->buildSimpleWithTypes($user),
         )
             ->setPrompt('--');
 
@@ -122,7 +122,7 @@ class SubscriptionFormFactory
         /** @var SubscriptionFormDataProviderInterface[] $providers */
         $providers = $this->dataProviderManager->getProviders(
             SubscriptionFormDataProviderInterface::PATH,
-            SubscriptionFormDataProviderInterface::class
+            SubscriptionFormDataProviderInterface::class,
         );
         foreach ($providers as $sorting => $provider) {
             $form = $provider->provide(['form' => $form]);
@@ -202,7 +202,7 @@ class SubscriptionFormFactory
                 $startTime,
                 $endTime,
                 $values['note'],
-                $address
+                $address,
             );
             $this->onSave->__invoke($subscription);
         }

@@ -22,7 +22,7 @@ class StopSubscriptionHandler
     public function __construct(
         SubscriptionsRepository $subscriptionsRepository,
         SubscriptionMetaRepository $subscriptionMetaRepository,
-        Emitter $emitter
+        Emitter $emitter,
     ) {
         $this->subscriptionsRepository = $subscriptionsRepository;
         $this->subscriptionMetaRepository = $subscriptionMetaRepository;

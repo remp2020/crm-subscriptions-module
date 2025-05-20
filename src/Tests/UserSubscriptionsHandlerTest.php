@@ -42,7 +42,7 @@ class UserSubscriptionsHandlerTest extends DatabaseTestCase
             SubscriptionsRepository::class,
             UsersRepository::class,
             AccessTokensRepository::class,
-            SubscriptionTypesRepository::class
+            SubscriptionTypesRepository::class,
         ];
     }
 
@@ -152,7 +152,7 @@ class UserSubscriptionsHandlerTest extends DatabaseTestCase
         $user,
         $subscriptionType,
         int $startInterval = 15,
-        int $endInterval = 15
+        int $endInterval = 15,
     ): ActiveRow {
         $subscriptionRow = $this->subscriptionsRepository->add(
             $subscriptionType,

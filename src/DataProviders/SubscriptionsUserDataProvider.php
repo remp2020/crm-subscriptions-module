@@ -25,7 +25,7 @@ class SubscriptionsUserDataProvider implements UserDataProviderInterface
         SubscriptionsRepository $subscriptionsRepository,
         Translator $translator,
         ConfigsRepository $configRepository,
-        StopSubscriptionHandler $stopSubscriptionHandler
+        StopSubscriptionHandler $stopSubscriptionHandler,
     ) {
         $this->subscriptionsRepository = $subscriptionsRepository;
         $this->translator = $translator;
@@ -72,7 +72,7 @@ class SubscriptionsUserDataProvider implements UserDataProviderInterface
                 'start_time' => $subscription->start_time->format(\DateTime::RFC3339),
                 'end_time' => $subscription->end_time->format(\DateTime::RFC3339),
                 'subscription_type' => $subscription->subscription_type->user_label,
-                'type' => $subscription->type
+                'type' => $subscription->type,
             ];
         }
 

@@ -21,7 +21,7 @@ class ActualUserSubscription
 
     public function __construct(
         User $user,
-        SubscriptionsRepository $subscriptionsRepository
+        SubscriptionsRepository $subscriptionsRepository,
     ) {
         $this->user = $user;
         $this->subscriptionsRepository = $subscriptionsRepository;

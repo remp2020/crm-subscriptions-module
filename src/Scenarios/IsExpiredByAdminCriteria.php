@@ -34,13 +34,13 @@ class IsExpiredByAdminCriteria implements ScenariosCriteriaInterface
         if ($values->selection) {
             $selection->where([
                 ':subscriptions_meta.key' => StopSubscriptionHandler::META_KEY_EXPIRED_BY_ADMIN,
-                ':subscriptions_meta.value' => 1
+                ':subscriptions_meta.value' => 1,
             ]);
         } else {
             $selection->joinWhere(
                 ':subscriptions_meta',
                 ":subscriptions_meta.key = ?",
-                StopSubscriptionHandler::META_KEY_EXPIRED_BY_ADMIN
+                StopSubscriptionHandler::META_KEY_EXPIRED_BY_ADMIN,
             )
                 ->where(':subscriptions_meta.id IS NULL OR :subscriptions_meta.value = 0');
         }

@@ -24,7 +24,7 @@ class UserSubscriptionsListing extends BaseLazyWidget
     public function __construct(
         LazyWidgetManager $lazyWidgetManager,
         SubscriptionsRepository $subscriptionsRepository,
-        Translator $translator
+        Translator $translator,
     ) {
         parent::__construct($lazyWidgetManager);
         $this->subscriptionsRepository = $subscriptionsRepository;

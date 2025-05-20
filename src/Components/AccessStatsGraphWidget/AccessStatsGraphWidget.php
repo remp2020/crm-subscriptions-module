@@ -50,7 +50,7 @@ class AccessStatsGraphWidget extends BaseLazyWidget
 INNER JOIN subscription_types ON subscription_types.id = subscriptions.subscription_type_id
 INNER JOIN subscription_type_content_access ON subscription_types.id = subscription_type_content_access.subscription_type_id
   AND subscription_type_content_access.content_access_id = {$contentAccess->id}
-SQL
+SQL,
                 )
                 ->setValueField('count(distinct subscriptions.user_id)')
                 ->setStart($this->getPresenter()->params['dateFrom'])

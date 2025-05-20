@@ -18,7 +18,7 @@ class SubscriptionEndsSuppressionManager
     {
         return (bool) $subscription->related('subscriptions_meta')->where([
             'key' => self::SUPPRESS_SUBSCRIPTION_ENDS_NOTIFICATION,
-            'value' => true
+            'value' => true,
         ])->count();
     }
 

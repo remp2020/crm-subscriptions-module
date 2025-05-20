@@ -12,7 +12,7 @@ class UserSubscriptionAddressWidget extends BaseLazyWidget
     private $templateName = 'user_subscription_address_widget.latte';
 
     public function __construct(
-        LazyWidgetManager $widgetManager
+        LazyWidgetManager $widgetManager,
     ) {
         parent::__construct($widgetManager);
     }

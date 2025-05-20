@@ -45,7 +45,7 @@ class FilterUsersFormDataProvider implements FilterUsersFormDataProviderInterfac
         $subscriptionType = $form->addSelect(
             'subscription_type',
             $this->translator->translate('subscriptions.admin.filter_users.subscription_type'),
-            $this->subscriptionTypesSelectItemsBuilder->buildWithDescription($subscriptionTypes)
+            $this->subscriptionTypesSelectItemsBuilder->buildWithDescription($subscriptionTypes),
         )->setPrompt('--');
         $subscriptionType->getControlPrototype()->addAttributes(['class' => 'select2']);
 
@@ -53,7 +53,7 @@ class FilterUsersFormDataProvider implements FilterUsersFormDataProviderInterfac
 
         $form->setDefaults([
             'subscription_type' => $this->getSubscriptionType($formData),
-            'actual_subscription' => $this->getActualSubscription($formData)
+            'actual_subscription' => $this->getActualSubscription($formData),
         ]);
 
         return $form;

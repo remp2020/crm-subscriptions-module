@@ -15,7 +15,7 @@ class SubscriptionTypeIsDefaultCriteria implements ScenariosCriteriaInterface
     private $translator;
 
     public function __construct(
-        Translator $translator
+        Translator $translator,
     ) {
         $this->translator = $translator;
     }

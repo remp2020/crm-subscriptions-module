@@ -13,7 +13,7 @@ class SubscriptionTypeCriteria implements ScenariosCriteriaInterface
     private $subscriptionTypesRepository;
 
     public function __construct(
-        SubscriptionTypesRepository $subscriptionTypesRepository
+        SubscriptionTypesRepository $subscriptionTypesRepository,
     ) {
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
     }

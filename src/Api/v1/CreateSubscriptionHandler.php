@@ -22,7 +22,7 @@ class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerI
         private SubscriptionTypesRepository $subscriptionTypesRepository,
         private SubscriptionsRepository $subscriptionsRepository,
         private SubscriptionMetaRepository $subscriptionMetaRepository,
-        private UserManager $userManager
+        private UserManager $userManager,
     ) {
         parent::__construct();
     }
@@ -93,7 +93,7 @@ class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerI
             $type,
             $startTime,
             $endTime,
-            $note
+            $note,
         );
 
         if ($this->idempotentKey()) {
@@ -139,12 +139,12 @@ class CreateSubscriptionHandler extends ApiHandler implements IdempotentHandlerI
             'code' => 'invalid_input',
             'errors' => [
                 'subscription_type_id' => [
-                    'Field is required if subscription_type_code is not present'
+                    'Field is required if subscription_type_code is not present',
                 ],
                 'subscription_type_code' => [
-                    'Field is required if subscription_type_id is not present'
-                ]
-            ]
+                    'Field is required if subscription_type_id is not present',
+                ],
+            ],
         ]);
     }
 }

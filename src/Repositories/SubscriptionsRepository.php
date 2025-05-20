@@ -53,7 +53,7 @@ class SubscriptionsRepository extends Repository
         self::TYPE_REGULAR => self::TYPE_REGULAR,
         self::TYPE_FREE => self::TYPE_FREE,
         self::TYPE_DONATION => self::TYPE_DONATION,
-        self::TYPE_PREPAID => self::TYPE_PREPAID
+        self::TYPE_PREPAID => self::TYPE_PREPAID,
     ];
 
     public function __construct(
@@ -63,7 +63,7 @@ class SubscriptionsRepository extends Repository
         AuditLogRepository $auditLogRepository,
         CacheRepository $cacheRepository,
         Emitter $emitter,
-        \Tomaj\Hermes\Emitter $hermesEmitter
+        \Tomaj\Hermes\Emitter $hermesEmitter,
     ) {
         parent::__construct($database);
         $this->auditLogRepository = $auditLogRepository;
@@ -89,7 +89,7 @@ class SubscriptionsRepository extends Repository
                 'subscriptions_count',
                 $callable,
                 \Nette\Utils\DateTime::from(CacheRepository::REFRESH_TIME_5_MINUTES),
-                $forceCacheUpdate
+                $forceCacheUpdate,
             );
         }
         return $callable();
@@ -106,7 +106,7 @@ class SubscriptionsRepository extends Repository
         $note = null,
         ActiveRow $address = null,
         bool $sendEmail = true,
-        Closure $callbackBeforeNewSubscriptionEvent = null
+        Closure $callbackBeforeNewSubscriptionEvent = null,
     ) {
         $isExtending = false;
         // provided $startTime overrides both subscription_types.fixed_start and Extension::getDate()
@@ -160,7 +160,7 @@ class SubscriptionsRepository extends Repository
         if ($newSubscription->start_time > new DateTime()) {
             $this->getTable()->where([
                 'user_id' => $user->id,
-                'end_time' => $newSubscription->start_time
+                'end_time' => $newSubscription->start_time,
             ])->update(['next_subscription_id' => $newSubscription->id]);
         }
 
@@ -171,7 +171,7 @@ class SubscriptionsRepository extends Repository
         $this->emitter->emit(new NewSubscriptionEvent($newSubscription, $sendEmail));
         $this->hermesEmitter->emit(new HermesMessage('new-subscription', [
             'subscription_id' => $newSubscription->id,
-            'send_email' => $sendEmail
+            'send_email' => $sendEmail,
         ]));
 
         $this->emitStatusNotifications($newSubscription);
@@ -221,7 +221,7 @@ class SubscriptionsRepository extends Repository
                     ->where([
                         'user_id' => $row->user_id,
                         'next_subscription_id' => $row->id,
-                        'end_time != ?' => $row->start_time
+                        'end_time != ?' => $row->start_time,
                     ])
                     ->update(['next_subscription_id' => null]);
 
@@ -337,7 +337,7 @@ class SubscriptionsRepository extends Repository
     {
         $where = [
             'user_id' => $userId,
-            'subscription_type.code' => $subscriptionTypeCode
+            'subscription_type.code' => $subscriptionTypeCode,
         ];
 
         if ($startTime) {
@@ -465,7 +465,7 @@ class SubscriptionsRepository extends Repository
             $toTime,
             $fromTime,
             $toTime,
-            true
+            true,
         );
     }
 
@@ -509,7 +509,7 @@ class SubscriptionsRepository extends Repository
     {
         return $this->getTable()->where([
             'subscriptions.start_time >=' => $from,
-            'subscriptions.start_time <=' => $to
+            'subscriptions.start_time <=' => $to,
         ]);
     }
 
@@ -527,8 +527,8 @@ class SubscriptionsRepository extends Repository
             'end_time <= ?' => $dateTime,
             'internal_status' => [
                 self::INTERNAL_STATUS_ACTIVE,
-                self::INTERNAL_STATUS_UNKNOWN
-            ]
+                self::INTERNAL_STATUS_UNKNOWN,
+            ],
         ]);
     }
 
@@ -542,8 +542,8 @@ class SubscriptionsRepository extends Repository
             'end_time > ?' => $dateTime,
             'internal_status' => [
                 self::INTERNAL_STATUS_BEFORE_START,
-                self::INTERNAL_STATUS_UNKNOWN
-            ]
+                self::INTERNAL_STATUS_UNKNOWN,
+            ],
         ]);
     }
 
@@ -578,7 +578,7 @@ class SubscriptionsRepository extends Repository
                 'current_subscribers_count',
                 $callable,
                 \Nette\Utils\DateTime::from('-1 hour'),
-                $forceCacheUpdate
+                $forceCacheUpdate,
             );
         }
 

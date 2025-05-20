@@ -16,7 +16,7 @@ class FilterUserActionLogsFormDataProvider implements FilterUserActionLogsFormDa
 
     public function __construct(
         SubscriptionTypesRepository $subscriptionTypesRepository,
-        UserActionsLogRepository $userActionsLogRepository
+        UserActionsLogRepository $userActionsLogRepository,
     ) {
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
         $this->userActionsLogRepository = $userActionsLogRepository;

@@ -58,12 +58,12 @@ class SubscriptionsEndsPresenter extends AdminPresenter
         $subscriptions = $this->subscriptionsRepository->subscriptionsEndBetween(
             $this->startDateTime(),
             $this->endDateTime(),
-            $this->withoutNext ? false : null
+            $this->withoutNext ? false : null,
         );
         $subscriptions1 = $this->subscriptionsRepository->subscriptionsEndBetween(
             $this->startDateTime(),
             $this->endDateTime(),
-            false
+            false,
         );
 
         if (!$this->freeSubscriptions) {
@@ -75,7 +75,7 @@ class SubscriptionsEndsPresenter extends AdminPresenter
             $subscriptions->where('subscriptions.id NOT', $subscriptions1->where([
                 ':payments:recurrent_payments.status' => null,
                 ':payments:recurrent_payments.retries > ?' => 0,
-                ':payments:recurrent_payments.state = ?' => 'active'
+                ':payments:recurrent_payments.state = ?' => 'active',
             ])->fetchPairs(null, 'id'));
         }
 

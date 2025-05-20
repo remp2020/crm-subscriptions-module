@@ -26,7 +26,7 @@ class RenewedSubscriptionsEndingWithinPeriodWidget extends BaseLazyWidget implem
     public function __construct(
         LazyWidgetManager $lazyWidgetManager,
         SubscriptionsRepository $subscriptionsRepository,
-        Translator $translator
+        Translator $translator,
     ) {
         parent::__construct($lazyWidgetManager);
         $this->subscriptionsRepository = $subscriptionsRepository;

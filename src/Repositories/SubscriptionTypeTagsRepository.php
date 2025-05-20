@@ -14,7 +14,7 @@ class SubscriptionTypeTagsRepository extends Repository
     {
         $this->insert([
             'subscription_type_id' => $subscriptionType->id,
-            'tag' => $tagName
+            'tag' => $tagName,
         ]);
     }
 
@@ -48,7 +48,7 @@ class SubscriptionTypeTagsRepository extends Repository
             foreach ($tags as $tag) {
                 $this->insert([
                     'subscription_type_id' => $subscriptionType->id,
-                    'tag' => $tag
+                    'tag' => $tag,
                 ]);
             }
         });

@@ -29,7 +29,7 @@ class SubscriptionsParams
         DateTime $startTime,
         ?DateTime $endTime,
         bool $isPaid,
-        ?string $note = null
+        ?string $note = null,
     ) {
         $this->subscriptionType = $subscriptionType;
         $this->user = $user;

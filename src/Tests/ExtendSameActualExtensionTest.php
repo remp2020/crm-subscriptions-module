@@ -95,7 +95,7 @@ class ExtendSameActualExtensionTest extends DatabaseTestCase
             $this->user,
             SubscriptionsRepository::TYPE_REGULAR,
             $from,
-            $to
+            $to,
         );
     }
 

@@ -36,7 +36,7 @@ class SubscriptionTypesFormFactory
         private readonly SubscriptionTypeTagsRepository $subscriptionTypeTagsRepository,
         private readonly Translator $translator,
         private readonly DataProviderManager $dataProviderManager,
-        private readonly SubscriptionTypesSelectItemsBuilder $subscriptionTypesSelectItemsBuilder
+        private readonly SubscriptionTypesSelectItemsBuilder $subscriptionTypesSelectItemsBuilder,
     ) {
     }
 
@@ -108,7 +108,7 @@ class SubscriptionTypesFormFactory
         $subscriptionTypeSelect = $form->addSelect(
             'next_subscription_type_id',
             'subscriptions.data.subscription_types.fields.next_subscription_type_id',
-            $this->subscriptionTypesSelectItemsBuilder->buildWithDescription($subscriptionTypes)
+            $this->subscriptionTypesSelectItemsBuilder->buildWithDescription($subscriptionTypes),
         )->setPrompt("--");
         $subscriptionTypeSelect->getControlPrototype()->addAttributes(['class' => 'select2']);
 
@@ -315,7 +315,7 @@ class SubscriptionTypesFormFactory
             /** @var SubscriptionTypeFormProviderInterface[] $providers */
             $providers = $this->dataProviderManager->getProviders(
                 'subscriptions.dataprovider.subscription_type_form',
-                SubscriptionTypeFormProviderInterface::class
+                SubscriptionTypeFormProviderInterface::class,
             );
             foreach ($providers as $sorting => $provider) {
                 [$form, $values] = $provider->formSucceeded($form, $values);
@@ -374,7 +374,7 @@ class SubscriptionTypesFormFactory
             /** @var SubscriptionTypeFormProviderInterface[] $providers */
             $providers = $this->dataProviderManager->getProviders(
                 'subscriptions.dataprovider.subscription_type_form',
-                SubscriptionTypeFormProviderInterface::class
+                SubscriptionTypeFormProviderInterface::class,
             );
             foreach ($providers as $sorting => $provider) {
                 [$form, $values] = $provider->formSucceeded($form, $values);

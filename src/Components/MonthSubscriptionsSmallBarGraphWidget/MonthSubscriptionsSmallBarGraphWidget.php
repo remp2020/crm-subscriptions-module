@@ -30,7 +30,7 @@ class MonthSubscriptionsSmallBarGraphWidget extends BaseLazyWidget
         LazyWidgetManager $lazyWidgetManager,
         SmallBarGraphControlFactoryInterface $factory,
         GraphData $graphData,
-        Translator $translator
+        Translator $translator,
     ) {
         parent::__construct($lazyWidgetManager);
         $this->factory = $factory;
@@ -56,7 +56,7 @@ class MonthSubscriptionsSmallBarGraphWidget extends BaseLazyWidget
             ->setCriteria(
                 (new Criteria())
                     ->setStart('-31 days')
-                    ->setTableName('subscriptions')
+                    ->setTableName('subscriptions'),
             );
 
         $this->graphData->addGraphDataItem($graphDataItem);

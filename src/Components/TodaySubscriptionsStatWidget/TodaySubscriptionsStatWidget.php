@@ -21,7 +21,7 @@ class TodaySubscriptionsStatWidget extends BaseLazyWidget
 
     public function __construct(
         LazyWidgetManager $lazyWidgetManager,
-        SubscriptionsRepository $subscriptionsRepository
+        SubscriptionsRepository $subscriptionsRepository,
     ) {
         parent::__construct($lazyWidgetManager);
         $this->subscriptionsRepository = $subscriptionsRepository;
@@ -36,11 +36,11 @@ class TodaySubscriptionsStatWidget extends BaseLazyWidget
     {
         $this->template->todaySubscriptions = $this->subscriptionsRepository->subscriptionsCreatedBetween(
             DateTime::from('today 00:00'),
-            new DateTime()
+            new DateTime(),
         )->count('*');
         $this->template->yesterdaySubscriptions = $this->subscriptionsRepository->subscriptionsCreatedBetween(
             DateTime::from('yesterday 00:00'),
-            DateTime::from('today 00:00')
+            DateTime::from('today 00:00'),
         )->count('*');
         $this->template->setFile(__DIR__ . DIRECTORY_SEPARATOR . $this->templateName);
         $this->template->render();

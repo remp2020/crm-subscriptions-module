@@ -16,7 +16,7 @@ class ContentAccessRepository extends Repository
     public function __construct(
         private SubscriptionTypeContentAccessRepository $subscriptionTypeContentAccessRepository,
         Explorer $database,
-        Storage $cacheStorage = null
+        Storage $cacheStorage = null,
     ) {
         parent::__construct($database, $cacheStorage);
     }
@@ -48,7 +48,7 @@ class ContentAccessRepository extends Repository
         return $this->getDatabase()->table('subscription_type_content_access')
             ->where([
                 'subscription_type_id' => $subscriptionType->id,
-                'content_access.name' => $name
+                'content_access.name' => $name,
             ])
             ->count('*') > 0;
     }
@@ -58,7 +58,7 @@ class ContentAccessRepository extends Repository
         return $this->getDatabase()->table('subscription_type_content_access')
                 ->where([
                     'subscription_type_id' => $subscriptionType->id,
-                    'content_access.name IN (?)' => $names
+                    'content_access.name IN (?)' => $names,
                 ])
                 ->count('*') > 0;
     }

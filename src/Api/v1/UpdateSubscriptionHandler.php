@@ -15,7 +15,7 @@ class UpdateSubscriptionHandler extends ApiHandler
 {
     public function __construct(
         private SubscriptionTypesRepository $subscriptionTypesRepository,
-        private SubscriptionsRepository $subscriptionsRepository
+        private SubscriptionsRepository $subscriptionsRepository,
     ) {
         parent::__construct();
     }
@@ -89,7 +89,7 @@ class UpdateSubscriptionHandler extends ApiHandler
                 return new JsonApiResponse(IResponse::S400_BadRequest, [
                     'status' => 'error',
                     'code' => 'wrong_type',
-                    'Wrong type: ' . $params['type']
+                    'Wrong type: ' . $params['type'],
                 ]);
             }
             $data['type'] = $params['type'];

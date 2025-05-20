@@ -24,7 +24,7 @@ class StopSubscriptionWidget extends BaseLazyWidget
         LazyWidgetManager $lazyWidgetManager,
         SubscriptionsRepository $subscriptionsRepository,
         StopSubscriptionHandler $stopSubscriptionHandler,
-        Translator $translator
+        Translator $translator,
     ) {
         parent::__construct($lazyWidgetManager);
         $this->subscriptionsRepository = $subscriptionsRepository;

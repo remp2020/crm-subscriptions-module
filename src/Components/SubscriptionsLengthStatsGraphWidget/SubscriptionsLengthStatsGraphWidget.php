@@ -36,7 +36,7 @@ class SubscriptionsLengthStatsGraphWidget extends BaseLazyWidget
             ["from_days" => 28, "to_days" => 55],
             ["from_days" => 56, "to_days" => 99],
             ["from_days" => 100, "to_days" => 364],
-            ["from_days" => 365, "to_days" => 545]
+            ["from_days" => 365, "to_days" => 545],
         ];
 
         $items = [];
@@ -55,7 +55,7 @@ class SubscriptionsLengthStatsGraphWidget extends BaseLazyWidget
                 "%s - %s %s",
                 $range["from_days"],
                 $range["to_days"],
-                $this->translator->translate('subscriptions.components.subscriptions_length_stats_graph_widget.days')
+                $this->translator->translate('subscriptions.components.subscriptions_length_stats_graph_widget.days'),
             ));
             $items[] = $graphDataItem;
         }
@@ -74,7 +74,7 @@ class SubscriptionsLengthStatsGraphWidget extends BaseLazyWidget
         $graphDataItem->setName(sprintf(
             "%s %s",
             $dayRanges[array_key_last($dayRanges)]["to_days"] + 1,
-            $this->translator->translate('subscriptions.components.subscriptions_length_stats_graph_widget.and_more_days')
+            $this->translator->translate('subscriptions.components.subscriptions_length_stats_graph_widget.and_more_days'),
         ));
         $items[] = $graphDataItem;
 

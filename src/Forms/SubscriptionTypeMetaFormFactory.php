@@ -29,7 +29,7 @@ class SubscriptionTypeMetaFormFactory
     public function __construct(
         SubscriptionTypesRepository $subscriptionTypesRepository,
         SubscriptionTypesMetaRepository $subscriptionTypesMetaRepository,
-        Translator $translator
+        Translator $translator,
     ) {
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;
         $this->subscriptionTypesMetaRepository = $subscriptionTypesMetaRepository;
@@ -66,7 +66,7 @@ class SubscriptionTypeMetaFormFactory
                     $this->subscriptionTypesMetaRepository->update($meta, [
                         'key' => $values['key'],
                         'value' => $values['value'],
-                        'updated_at' => new DateTime()
+                        'updated_at' => new DateTime(),
                     ]);
                 } catch (UniqueConstraintViolationException $e) {
                     $form->addError('subscriptions.admin.subscription_types_meta.error.duplicate');
@@ -85,7 +85,7 @@ class SubscriptionTypeMetaFormFactory
                     $meta = $this->subscriptionTypesMetaRepository->add(
                         $subscriptionType,
                         $values['key'],
-                        $values['value']
+                        $values['value'],
                     );
                 } catch (UniqueConstraintViolationException $e) {
                     $form->addError('subscriptions.admin.subscription_types_meta.error.duplicate');

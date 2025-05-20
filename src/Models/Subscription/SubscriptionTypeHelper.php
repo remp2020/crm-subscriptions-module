@@ -11,7 +11,7 @@ class SubscriptionTypeHelper
 
     public function __construct(
         private SubscriptionsRepository $subscriptionsRepository,
-        private SubscriptionTypeItemsRepository $subscriptionTypeItemsRepository
+        private SubscriptionTypeItemsRepository $subscriptionTypeItemsRepository,
     ) {
     }
 
@@ -30,7 +30,7 @@ class SubscriptionTypeHelper
                     'name' => $item->name,
                     'amount' => $item->amount,
                     'vat' => $item->vat,
-                    'meta' => $item->related('subscription_type_item_meta')->fetchPairs('key', 'value')
+                    'meta' => $item->related('subscription_type_item_meta')->fetchPairs('key', 'value'),
                 ];
             }
         }
@@ -46,8 +46,8 @@ class SubscriptionTypeHelper
         $userSubscriptionsTypesCount = $this->subscriptionsRepository->userSubscriptionTypesCounts(
             $user->id,
             [
-                $subscriptionType->id
-            ]
+                $subscriptionType->id,
+            ],
         );
 
         if (!isset($userSubscriptionsTypesCount[$subscriptionType->id])) {

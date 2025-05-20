@@ -11,7 +11,7 @@ class SubscriptionPreUpdateEvent extends AbstractEvent implements SubscriptionEv
     public function __construct(
         private ActiveRow $subscription,
         private Form &$form,
-        private $values
+        private $values,
     ) {
     }
 

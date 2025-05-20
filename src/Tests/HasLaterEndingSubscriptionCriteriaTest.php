@@ -154,7 +154,7 @@ class HasLaterEndingSubscriptionCriteriaTest extends DatabaseTestCase
         $values = (object)['selection' => !$negation];
 
         $this->assertTrue(
-            $criteria->addConditions($subscriptionSelection, [HasLaterEndingSubscriptionCriteria::KEY => $values], $subscriptionRow)
+            $criteria->addConditions($subscriptionSelection, [HasLaterEndingSubscriptionCriteria::KEY => $values], $subscriptionRow),
         );
         $this->assertEquals((int) $result, $subscriptionSelection->count());
     }
@@ -189,7 +189,7 @@ class HasLaterEndingSubscriptionCriteriaTest extends DatabaseTestCase
             $this->userRow,
             SubscriptionsRepository::TYPE_REGULAR,
             DateTime::from($startTime),
-            DateTime::from($endTime)
+            DateTime::from($endTime),
         );
 
         $subscriptionSelection = $this->subscriptionRepository->getTable()

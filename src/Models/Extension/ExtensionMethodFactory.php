@@ -10,7 +10,7 @@ class ExtensionMethodFactory
     private array $extensions = [];
 
     public function __construct(
-        private Container $container
+        private Container $container,
     ) {
     }
 

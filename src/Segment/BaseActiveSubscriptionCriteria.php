@@ -26,7 +26,7 @@ abstract class BaseActiveSubscriptionCriteria implements CriteriaInterface
     public function __construct(
         ContentAccessRepository $contentAccessRepository,
         SubscriptionsRepository $subscriptionsRepository,
-        SubscriptionTypesRepository $subscriptionTypesRepository
+        SubscriptionTypesRepository $subscriptionTypesRepository,
     ) {
         $this->contentAccessRepository = $contentAccessRepository;
         $this->subscriptionTypesRepository = $subscriptionTypesRepository;

@@ -542,12 +542,12 @@ class SubscriptionsRepositoryAddStartTimeEndTimeTest extends DatabaseTestCase
         $this->assertEquals(
             $expectedDates['start_time']?->format(DateTime::RFC3339),
             $subscription->start_time->format(DateTime::RFC3339),
-            'Subscription has incorrect start time.'
+            'Subscription has incorrect start time.',
         );
         $this->assertEquals(
             $expectedDates['end_time']?->format(DateTime::RFC3339),
             $subscription->end_time->format(DateTime::RFC3339),
-            'Subscription has incorrect end time.'
+            'Subscription has incorrect end time.',
         );
     }
 
