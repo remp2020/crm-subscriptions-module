@@ -601,8 +601,8 @@ class SubscriptionsRepository extends Repository
     final public function hasAccess($userId, $access, ?DateTime $date = null)
     {
         return $this->getTable()->where([
-            'start_time <= ?' => $date ?? new DateTime(),
-            'end_time > ?' => $date ?? new DateTime(),
+            'start_time <= ?' => $date ?? $this->getNow(),
+            'end_time > ?' => $date ?? $this->getNow(),
             'user_id' => $userId,
             'subscription_type:subscription_type_content_access.content_access.name' => $access,
         ])->count('*') > 0;
