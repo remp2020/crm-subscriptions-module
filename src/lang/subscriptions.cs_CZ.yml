@@ -463,8 +463,15 @@ data_provider:
     payment_item_types_filter:
         key:
             subscription_type: Předplatné
+    payment_audit_log_history:
+        note_change: "Poznámka k předplatnému byla změněna: <strong>\"%note%\"</strong>"
+        subscription_type_change: "Typ předplatného byl změněn na <strong>\"%to%\"</strong>"
+        start_time_change: "Začátek předplatného byl změněn z <strong>\"%from%\"</strong> na <strong>\"%to%\"</strong>"
+        end_time_change: "Konec předplatného byl změněn z <strong>\"%from%\"</strong> na <strong>\"%to%\"</strong>"
+        length_change: "Délka předplatného byla změněna z <strong>\"%from%\"</strong> na <strong>\"%to%\"</strong> dní"
+        columns_changed: "Změněná pole: <strong>%columns%</strong>"
+        subscription_transfer: "Předplatné bylo přesunuto od uživatele: <a href='%link%' target='_blank'>%user_id%</a>"
 
-config:
     category: Předplatné
     vat_default:
         name: Běžná DPH

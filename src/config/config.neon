@@ -107,6 +107,7 @@ services:
 	- Crm\SubscriptionsModule\DataProviders\FilterAbusiveUserFormDataProvider
 	- Crm\SubscriptionsModule\DataProviders\SubscriptionsClaimUserDataProvider
 	- Crm\SubscriptionsModule\DataProviders\SubscriptionTransferDataProvider
+	- Crm\SubscriptionsModule\DataProviders\SubscriptionAuditLogHistoryDataProvider
 	- Crm\SubscriptionsModule\Models\Subscription\SubscriptionTypeHelper
 	- Crm\SubscriptionsModule\Models\Subscription\StopSubscriptionHandler
 	- Crm\SubscriptionsModule\Models\Subscription\SubscriptionEndsSuppressionManager

@@ -464,6 +464,14 @@ data_provider:
     payment_item_types_filter:
         key:
             subscription_type: Predplatné
+    payment_audit_log_history:
+        note_change: "Poznámka k predplatnému bola zmenená: <strong>\"%note%\"</strong>"
+        subscription_type_change: "Typ predplatného bol zmenený na <strong>\"%to%\"</strong>"
+        start_time_change: "Začiatok predplatného bol zmenený zo <strong>\"%from%\"</strong> na <strong>\"%to%\"</strong>"
+        end_time_change: "Koniec predplatného bol zmenený zo <strong>\"%from%\"</strong> na <strong>\"%to%\"</strong>"
+        length_change: "Dĺžka predplatného bola zmenený zo <strong>\"%from%\"</strong> na <strong>\"%to%\"</strong> dni"
+        columns_changed: "Upravené polia: <strong>%columns%</strong>"
+        subscription_transfer: "Predplatné bolo presunuté od používateľa: <a href='%link%' target='_blank'>%user_id%</strong>"
 
 config:
     category: Predplatné

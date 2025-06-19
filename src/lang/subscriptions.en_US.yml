@@ -464,6 +464,14 @@ data_provider:
     payment_item_types_filter:
         key:
             subscription_type: Subscription
+    payment_audit_log_history:
+        note_change: "Subscription note was changed: <strong>\"%note%\"</strong>"
+        subscription_type_change: "Subscription type was changed to <strong>\"%to%\"</strong>"
+        start_time_change: "Subscription start time was changed from <strong>\"%from%\"</strong> to <strong>\"%to%\"</strong>"
+        end_time_change: "Subscription end time was changed from <strong>\"%from%\"</strong> to <strong>\"%to%\"</strong>"
+        length_change: "Subscription length was changed from <strong>\"%from%\"</strong> to <strong>\"%to%\"</strong> days"
+        columns_changed: "Modified fields: <strong>%columns%</strong>"
+        subscription_transfer: "Subscription was transferred from user: <a href='%link%' target='_blank'>%user_id%</a>"
 
 config:
     category: Subscriptions

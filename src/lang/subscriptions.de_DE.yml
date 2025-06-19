@@ -10,3 +10,13 @@ components:
     access_stats_graph_widget:
         title: Abonnementaufschlüsselung nach Zugriffsebene
         tooltip: Zeigt die Anzahl der aktiven Nutzer:innen mit einem Abonnement mit einer bestimmten Leseberechtigung an
+
+data_provider:
+    payment_audit_log_history:
+        note_change: "Abonnement-Notiz wurde geändert: <strong>\"%note%\"</strong>"
+        subscription_type_change: "Abonnementtyp wurde auf <strong>\"%to%\"</strong> geändert"
+        start_time_change: "Startzeit des Abonnements wurde von <strong>\"%from%\"</strong> auf <strong>\"%to%\"</strong> geändert"
+        end_time_change: "Endzeit des Abonnements wurde von <strong>\"%from%\"</strong> auf <strong>\"%to%\"</strong> geändert"
+        length_change: "Laufzeit des Abonnements wurde von <strong>\"%from%\"</strong> auf <strong>\"%to%\"</strong> Tage geändert"
+        columns_changed: "Geänderte Felder: <strong>%columns%</strong>"
+        subscription_transfer: "Abonnement wurde von Benutzer: <a href='%link%' target='_blank'>%user_id%</a> übertragen"

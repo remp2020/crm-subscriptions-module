@@ -278,6 +278,15 @@ data_provider:
     payment_item_types_filter:
         key:
             subscription_type: Előfizetés
+    payment_audit_log_history:
+        note_change: "Az előfizetés megjegyzése módosítva: <strong>\"%note%\"</strong>"
+        subscription_type_change: "Az előfizetés típusa módosítva erre: <strong>\"%to%\"</strong>"
+        start_time_change: "Az előfizetés kezdete módosítva erről: <strong>\"%from%\"</strong> erre: <strong>\"%to%\"</strong>"
+        end_time_change: "Az előfizetés vége módosítva erről: <strong>\"%from%\"</strong> erre: <strong>\"%to%\"</strong>"
+        length_change: "Az előfizetés időtartama módosítva erről: <strong>\"%from%\"</strong> erre: <strong>\"%to%\"</strong> napra"
+        columns_changed: "Módosított mezők: <strong>%columns%</strong>"
+        subscription_transfer: "Az előfizetés át lett helyezve erről a felhasználóról: <a href='%link%' target='_blank'>%user_id%</a>"
+
 config:
     category: Előfizetések
     vat_default:

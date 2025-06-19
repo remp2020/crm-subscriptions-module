@@ -9,6 +9,7 @@ use Crm\ApiModule\Models\Router\ApiIdentifier;
 use Crm\ApiModule\Models\Router\ApiRoute;
 use Crm\ApplicationModule\Application\CommandsContainerInterface;
 use Crm\ApplicationModule\Application\Managers\SeederManager;
+use Crm\ApplicationModule\Components\AuditLogHistoryWidget\AuditLogHistoryWidget;
 use Crm\ApplicationModule\CrmModule;
 use Crm\ApplicationModule\Models\Access\AccessManager;
 use Crm\ApplicationModule\Models\Criteria\CriteriaStorage;
@@ -59,6 +60,7 @@ use Crm\SubscriptionsModule\DataProviders\FilterAbusiveUserFormDataProvider;
 use Crm\SubscriptionsModule\DataProviders\FilterUserActionLogsFormDataProvider;
 use Crm\SubscriptionsModule\DataProviders\FilterUserActionLogsSelectionDataProvider;
 use Crm\SubscriptionsModule\DataProviders\FilterUsersFormDataProvider;
+use Crm\SubscriptionsModule\DataProviders\SubscriptionAuditLogHistoryDataProvider;
 use Crm\SubscriptionsModule\DataProviders\SubscriptionTransferDataProvider;
 use Crm\SubscriptionsModule\DataProviders\SubscriptionsClaimUserDataProvider;
 use Crm\SubscriptionsModule\DataProviders\SubscriptionsUserDataProvider;
@@ -317,6 +319,11 @@ class SubscriptionsModule extends CrmModule
             SubscriptionEndsStatsWidget::class,
             priority: 200,
         );
+
+        $widgetManager->registerWidget(
+            'admin.subscriptions.show.left',
+            AuditLogHistoryWidget::class,
+        );
     }
 
     public function registerLazyEventHandlers(LazyEventEmitter $emitter)
@@ -476,6 +483,10 @@ class SubscriptionsModule extends CrmModule
             'subscriptions.dataprovider.transfer',
             $this->getInstance(SubscriptionTransferDataProvider::class),
             priority: 1000, // priority is set due to manipulation with address and unlinking it from subscription
+        );
+        $dataProviderManager->registerDataProvider(
+            'admin.dataprovider.audit_log_history_widget',
+            $this->getInstance(SubscriptionAuditLogHistoryDataProvider::class),
         );
     }
 
