@@ -2,6 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Components\UserSubscriptionInfoWidget;
 
+use Crm\ApplicationModule\Models\NowTrait;
 use Crm\ApplicationModule\Models\Widget\BaseLazyWidget;
 
 /**
@@ -12,6 +13,8 @@ use Crm\ApplicationModule\Models\Widget\BaseLazyWidget;
  */
 class UserSubscriptionInfoWidget extends BaseLazyWidget
 {
+    use NowTrait;
+
     private $templateName = 'user_subscription_info_widget.latte';
 
     public function identifier()
@@ -21,9 +24,20 @@ class UserSubscriptionInfoWidget extends BaseLazyWidget
 
     public function render($user)
     {
-        $subscriptions = $user->related('subscriptions')->select('subscriptions.*, TRUE AS actual')->where('start_time < NOW()')->where('end_time > NOW()')->fetchAll();
+        $now = $this->getNow();
+        $subscriptions = $user->related('subscriptions')
+            ->select('subscriptions.*, TRUE AS actual')
+            ->where('start_time < ?', $now)
+            ->where('end_time > ?', $now)
+            ->fetchAll();
+
         if (empty($subscriptions)) {
-            $subscriptions = $user->related('subscriptions')->select('subscriptions.*, FALSE AS actual')->where('end_time < NOW()')->order('end_time DESC')->limit(1)->fetchAll();
+            $subscriptions = $user->related('subscriptions')
+                ->select('subscriptions.*, FALSE AS actual')
+                ->where('end_time < ?', $now)
+                ->order('end_time DESC')
+                ->limit(1)
+                ->fetchAll();
         }
 
         $this->template->subscriptions = $subscriptions;
