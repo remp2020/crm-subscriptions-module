@@ -27,7 +27,7 @@ class ActualUserSubscriptions extends BaseLazyWidget
         $this->subscriptionsRepository = $subscriptionsRepository;
     }
 
-    public function header($id = '')
+    public function header()
     {
         return 'Actual subscription';
     }

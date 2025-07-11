@@ -3,6 +3,7 @@
 namespace Crm\SubscriptionsModule\Components\UserSubscriptionsListing;
 
 use Crm\ApplicationModule\Models\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Models\Widget\DetailWidgetInterface;
 use Crm\ApplicationModule\Models\Widget\LazyWidgetManager;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Nette\Localization\Translator;
@@ -13,7 +14,7 @@ use Nette\Localization\Translator;
  *
  * @package Crm\SubscriptionsModule\Components
  */
-class UserSubscriptionsListing extends BaseLazyWidget
+class UserSubscriptionsListing extends BaseLazyWidget implements DetailWidgetInterface
 {
     private $templateName = 'user_subscriptions_listing.latte';
 
@@ -31,7 +32,7 @@ class UserSubscriptionsListing extends BaseLazyWidget
         $this->translator = $translator;
     }
 
-    public function header($id = '')
+    public function header($id = ''): string
     {
         $header = $this->translator->translate('subscriptions.admin.user_subscriptions.header');
         if ($id) {

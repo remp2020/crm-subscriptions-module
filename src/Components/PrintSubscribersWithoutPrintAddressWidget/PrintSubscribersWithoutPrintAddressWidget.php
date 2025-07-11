@@ -31,7 +31,7 @@ class PrintSubscribersWithoutPrintAddressWidget extends BaseLazyWidget
         parent::__construct($lazyWidgetManager);
     }
 
-    public function header($id = '')
+    public function header()
     {
         return 'Missing address';
     }

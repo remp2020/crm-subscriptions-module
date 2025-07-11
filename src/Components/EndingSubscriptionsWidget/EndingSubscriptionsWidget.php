@@ -14,7 +14,7 @@ class EndingSubscriptionsWidget extends BaseLazyWidget
 {
     private $templateName = 'ending_subscriptions_widget.latte';
 
-    public function header($id = '')
+    public function header()
     {
         return 'Ending subscriptions';
     }
