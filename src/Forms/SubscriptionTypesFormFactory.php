@@ -202,6 +202,8 @@ class SubscriptionTypesFormFactory
                 'tags' => 'true',
             ]);
 
+        $form->setDefaults($defaults);
+
         /** @var SubscriptionTypeFormProviderInterface[] $providers */
         $providers = $this->dataProviderManager->getProviders('subscriptions.dataprovider.subscription_type_form', SubscriptionTypeFormProviderInterface::class);
         foreach ($providers as $sorting => $provider) {
@@ -216,8 +218,6 @@ class SubscriptionTypesFormFactory
         if ($subscriptionTypeId) {
             $form->addHidden('subscription_type_id', $subscriptionTypeId);
         }
-
-        $form->setDefaults($defaults);
 
         $form->onValidate[] = [$this, 'validateForm'];
 
@@ -300,38 +300,42 @@ class SubscriptionTypesFormFactory
 
         if (isset($values['subscription_type_id'])) {
             $subscriptionType = $this->subscriptionTypesRepository->find($values['subscription_type_id']);
-            $this->subscriptionTypeBuilder->processContentTypes($subscriptionType, (array) $values);
 
-            // TODO: remove this once deprecated columns from subscription_type are removed (web, mobile...)
-            foreach ($contentAccesses as $contentAccess) {
-                if (isset($values[$contentAccess->name])) {
-                    unset($values[$contentAccess->name]);
+            $this->subscriptionTypesRepository->getTransaction()->wrap(function () use ($form, $values, $subscriptionType, $contentAccesses, $tags) {
+                $this->subscriptionTypeBuilder->processContentTypes($subscriptionType, (array) $values);
+
+                // TODO: remove this once deprecated columns from subscription_type are removed (web, mobile...)
+                foreach ($contentAccesses as $contentAccess) {
+                    if (isset($values[$contentAccess->name])) {
+                        unset($values[$contentAccess->name]);
+                    }
                 }
-            }
 
-            $items = $values['items'];
-            unset($values['items']);
+                foreach ($this->subscriptionTypeItemsRepository->subscriptionTypeItems($subscriptionType) as $subscriptionTypeItem) {
+                    $this->subscriptionTypeItemsRepository->softDelete($subscriptionTypeItem);
+                }
 
-            /** @var SubscriptionTypeFormProviderInterface[] $providers */
-            $providers = $this->dataProviderManager->getProviders(
-                'subscriptions.dataprovider.subscription_type_form',
-                SubscriptionTypeFormProviderInterface::class,
-            );
-            foreach ($providers as $sorting => $provider) {
-                [$form, $values] = $provider->formSucceeded($form, $values);
-            }
-            unset($values['subscription_type_id']); // unset after data provider since it might be used there
+                /** @var SubscriptionTypeFormProviderInterface[] $providers */
+                $providers = $this->dataProviderManager->getProviders(
+                    'subscriptions.dataprovider.subscription_type_form',
+                    SubscriptionTypeFormProviderInterface::class,
+                );
+                foreach ($providers as $sorting => $provider) {
+                    [$form, $values] = $provider->formSucceeded($form, $values);
+                }
+                unset($values['subscription_type_id']); // unset after data provider since it might be used there
 
-            $this->subscriptionTypesRepository->update($subscriptionType, $values);
+                $items = $values['items'];
+                unset($values['items']);
 
-            foreach ($this->subscriptionTypeItemsRepository->subscriptionTypeItems($subscriptionType) as $subscriptionTypeItem) {
-                $this->subscriptionTypeItemsRepository->softDelete($subscriptionTypeItem);
-            }
-            foreach ($items as $item) {
-                $this->subscriptionTypeItemsRepository->add($subscriptionType, $item['name'], $item['amount'], $item['vat']);
-            }
+                $this->subscriptionTypesRepository->update($subscriptionType, $values);
 
-            $this->subscriptionTypeTagsRepository->setTagsForSubscriptionType($subscriptionType, $tags);
+                foreach ($items as $item) {
+                    $this->subscriptionTypeItemsRepository->add($subscriptionType, $item['name'], $item['amount'], $item['vat']);
+                }
+
+                $this->subscriptionTypeTagsRepository->setTagsForSubscriptionType($subscriptionType, $tags);
+            });
 
             $this->onUpdate->__invoke($subscriptionType);
         } else {
