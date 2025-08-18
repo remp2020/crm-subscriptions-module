@@ -62,7 +62,7 @@ class SubscriptionTransferDataProvider implements SubscriptionTransferDataProvid
 
     private function transferSubscription(ActiveRow $subscription, ActiveRow $userToTransferTo): void
     {
-        $this->subscriptionMetaRepository->add(
+        $this->subscriptionMetaRepository->setMeta(
             $subscription,
             SubscriptionTransferDataProviderInterface::META_KEY_TRANSFERRED_FROM_USER,
             $subscription->user_id,
