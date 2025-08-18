@@ -26,13 +26,14 @@ class ContentAccessRepository extends Repository
         return $this->getTable()->order('sorting');
     }
 
-    final public function add($name, $description, $class = '', $sorting = 100)
+    final public function add($name, $description, $class = '', $sorting = 100, bool $isVisible = true)
     {
         return $this->getTable()->insert([
             'name' => $name,
             'description' => $description,
             'class' => $class,
             'sorting' => $sorting,
+            'is_visible' => $isVisible,
             'created_at' => new DateTime(),
             'updated_at' => new DateTime(),
         ]);

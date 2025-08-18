@@ -42,7 +42,7 @@
           <tr class="active">
             <td>{$subscription->subscription_type->user_label}</td>
             <td>{$subscription->type|typeLabel}</td>
-            <td>{$subscription->subscription_type|typeContent}</td>
+            <td>{$subscription->subscription_type|typeContent:true}</td>
             <td>{$subscription->start_time|localizedDate:true}</td>
             <td>{$subscription->end_time|localizedDate:true}</td>
           </tr>

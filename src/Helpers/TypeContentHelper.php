@@ -8,12 +8,16 @@ use Nette\Utils\Html;
 
 class TypeContentHelper
 {
-    public function process(FilterInfo $filterInfo, $type)
+    public function process(FilterInfo $filterInfo, $type, $showHidden = false)
     {
         $filterInfo->contentType = ContentType::Html;
         $result = '';
 
         foreach ($type->related('subscription_type_content_access')->order('content_access.sorting') as $subscriptionTypeContentAccess) {
+            if (!$showHidden && !$subscriptionTypeContentAccess->content_access->is_visible) {
+                continue;
+            }
+
             $contentType = $subscriptionTypeContentAccess->content_access;
             $result .= Html::el('span', ['class' => $contentType->class])->setText($contentType->description) . ' ';
         }
