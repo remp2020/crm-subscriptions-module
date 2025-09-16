@@ -93,4 +93,11 @@ class SubscriptionTypesRepository extends Repository
 
         return $selection->fetch();
     }
+
+    final public function hasTag(ActiveRow $subscriptionType, string $tag): bool
+    {
+        return $subscriptionType->related('subscription_type_tags')
+            ->where('tag = ?', $tag)
+            ->count('*') > 0;
+    }
 }
