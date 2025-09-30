@@ -22,6 +22,7 @@ use League\Event\Emitter;
 use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
+use Tomaj\Hermes\Dispatcher;
 
 class SubscriptionsRepository extends Repository
 {
@@ -261,7 +262,7 @@ class SubscriptionsRepository extends Repository
                 $this->emitter->emit(new SubscriptionUpdatedEvent($row));
                 $this->hermesEmitter->emit(new HermesMessage('update-subscription', [
                     'subscription_id' => $row->id,
-                ]));
+                ]), Dispatcher::DEFAULT_PRIORITY - 50);
             }
         }
 
