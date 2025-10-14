@@ -259,7 +259,7 @@ class SubscriptionTypesFormFactory
             $tagLen = mb_strlen($tag, 'utf8');
             if ($tagLen > 255) {
                 $form->addError('subscriptions.admin.subscription_type_items.tag_len_error');
-            };
+            }
         }
     }
 
@@ -358,7 +358,8 @@ class SubscriptionTypesFormFactory
                 ->setAskAddress($values['ask_address'])
                 ->setDisabledNotifications($values['disable_notifications'])
                 ->setRecurrentChargeBefore($values['recurrent_charge_before'])
-                ->setNextSubscriptionTypeId($values['next_subscription_type_id']);
+                ->setNextSubscriptionTypeId($values['next_subscription_type_id'])
+                ->setTrialPeriods($values['trial_periods']);
 
             $contentAccesses = $this->contentAccessRepository->all();
             $contentAccessValues = [];
