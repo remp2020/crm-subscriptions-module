@@ -69,10 +69,15 @@ data:
             length: "Időtartam (napokban) kötelező"
             price: Ár kötelező
             user_label: Publikus leírás kötelező
+            trial_periods: A próbaidőszakok száma akkor kötelező, ha a következő előfizetés típus ki van választva
         validation:
             integer: Szám kötelező
             minimum:
                 limit_per_user: "Minimum érték: 1"
+        min:
+            trial_periods: Ha a következő előfizetés típus ki van választva, a próba időszakok minimális száma 1
+        blank:
+            trial_periods: A próbaidőszakok száma csak akkor adható meg, ha a következő előfizetés típus ki van választva
         placeholder:
             name: "pl. Éves előfizetés (42€, 2019/02-tól)"
             code: pl. year123

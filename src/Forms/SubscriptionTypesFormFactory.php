@@ -101,7 +101,7 @@ class SubscriptionTypesFormFactory
 
         $form->addText('price', 'subscriptions.data.subscription_types.fields.price')
             ->setRequired('subscriptions.data.subscription_types.required.price')
-            ->addRule(Form::FLOAT, 'subscriptions.admin.subscription_types.form.number')
+            ->addRule(Form::Float, 'subscriptions.admin.subscription_types.form.number')
             ->setHtmlAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.price');
 
         $subscriptionTypes = $this->subscriptionTypesRepository->all()->fetchAll();
@@ -112,10 +112,16 @@ class SubscriptionTypesFormFactory
         )->setPrompt("--");
         $subscriptionTypeSelect->getControlPrototype()->addAttributes(['class' => 'select2']);
 
-        $form->addText('trial_periods', 'subscriptions.data.subscription_types.fields.trial_periods')
-            ->setRequired('subscriptions.data.subscription_types.required.trial_periods')
-            ->addRule(Form::INTEGER, 'subscriptions.admin.subscription_types.form.number')
+        $trialPeriods = $form->addText('trial_periods', 'subscriptions.data.subscription_types.fields.trial_periods')
+            ->setNullable()
+            ->addRule(Form::Integer, 'subscriptions.admin.subscription_types.form.number')
             ->setOption('description', 'subscriptions.data.subscription_types.description.trial_periods');
+
+        $trialPeriods->addConditionOn($subscriptionTypeSelect, Form::Filled)
+            ->addRule(Form::Min, 'subscriptions.data.subscription_types.min.trial_periods', 1)
+            ->setRequired('subscriptions.data.subscription_types.required.trial_periods');
+        $trialPeriods->addConditionOn($subscriptionTypeSelect, Form::Blank)
+            ->addRule(Form::Blank, 'subscriptions.data.subscription_types.blank.trial_periods');
 
         $form->addGroup('subscriptions.admin.subscription_types.form.groups.items');
 
@@ -126,12 +132,12 @@ class SubscriptionTypesFormFactory
 
             $container->addText('amount', 'subscriptions.admin.subscription_types.form.amount')
                 ->setRequired('subscriptions.admin.subscription_types.form.required')
-                ->addRule(Form::FLOAT, 'subscriptions.admin.subscription_types.form.number')
+                ->addRule(Form::Float, 'subscriptions.admin.subscription_types.form.number')
                 ->setHtmlAttribute('placeholder', 'subscriptions.data.subscription_type_items.placeholder.amount');
 
             $container->addText('vat', 'subscriptions.admin.subscription_types.form.vat')
                 ->setRequired('subscriptions.admin.subscription_types.form.required')
-                ->addRule(Form::FLOAT, 'subscriptions.admin.subscription_types.form.number')
+                ->addRule(Form::Float, 'subscriptions.admin.subscription_types.form.number')
                 ->setHtmlAttribute('placeholder', 'subscriptions.data.subscription_type_items.placeholder.vat');
         }, 1, 20);
 
@@ -152,8 +158,8 @@ class SubscriptionTypesFormFactory
 
         $form->addText('extending_length', 'subscriptions.data.subscription_types.fields.extending_length')
             ->setHtmlAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.extending_length')
-            ->addCondition(Form::FILLED)
-            ->addRule(Form::INTEGER, 'subscriptions.data.subscription_types.validation.integer');
+            ->addCondition(Form::Filled)
+            ->addRule(Form::Integer, 'subscriptions.data.subscription_types.validation.integer');
 
         $form->addText('fixed_start', 'subscriptions.data.subscription_types.fields.fixed_start')
             ->setHtmlAttribute('placeholder', 'subscriptions.data.subscription_types.placeholder.fixed_start');
@@ -174,9 +180,9 @@ class SubscriptionTypesFormFactory
             ->setHtmlType('number');
 
         $form->addText('limit_per_user', 'subscriptions.data.subscription_types.fields.limit_per_user')
-            ->addCondition(Form::FILLED)
-            ->addRule(Form::INTEGER, 'subscriptions.data.subscription_types.validation.integer')
-            ->addRule(Form::MIN, 'subscriptions.data.subscription_types.validation.minimum.limit_per_user', 1);
+            ->addCondition(Form::Filled)
+            ->addRule(Form::Integer, 'subscriptions.data.subscription_types.validation.integer')
+            ->addRule(Form::Min, 'subscriptions.data.subscription_types.validation.minimum.limit_per_user', 1);
 
         $form->addCheckbox('ask_address', 'subscriptions.data.subscription_types.fields.ask_address');
 

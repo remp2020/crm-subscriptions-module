@@ -72,10 +72,15 @@ data:
             length: "Length (in days) is required"
             price: Price is required
             user_label: User label is required
+            trial_periods: Number of trial periods is required when next subscription type is selected
         validation:
             integer: Must be number
             minimum:
                 limit_per_user: Minum value 1
+        min:
+            trial_periods: If next subscription type is selected, minimum number of trial periods is 1
+        blank:
+            trial_periods: Number of trial periods can only be specified when next subscription type is selected
         placeholder:
             name: "for example Yearly subscription (42€, od 2019/02)"
             code: for example year123

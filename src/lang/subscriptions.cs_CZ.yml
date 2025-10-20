@@ -72,10 +72,15 @@ data:
             length: "Délka (ve dnech) je povinná"
             price: Cena je povinná
             user_label: Veřejný popis je povinný
+            trial_periods: Počet zkušebních období je při nastaveném následujícím typu předplatného povinný
         validation:
             integer: Musí být číslo
             minimum:
                 limit_per_user: Minimální hodnota 1
+        min:
+            trial_periods: Pokud je vybrán následující typ předplatného, minimální počet trial období je 1
+        blank:
+            trial_periods: Počet zkušebních období může být zadán pouze když je vybrán následující typ předplatného
         placeholder:
             name: "například Roční předplatné (42CZK, od 2019/02)"
             code: například year123
