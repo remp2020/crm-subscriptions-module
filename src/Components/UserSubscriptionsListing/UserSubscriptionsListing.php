@@ -2,6 +2,8 @@
 
 namespace Crm\SubscriptionsModule\Components\UserSubscriptionsListing;
 
+use Crm\ApplicationModule\Components\AjaxDataPaginator\PaginatedComponent;
+use Crm\ApplicationModule\Components\AjaxDataPaginator\PaginatesDataTrait;
 use Crm\ApplicationModule\Models\Widget\BaseLazyWidget;
 use Crm\ApplicationModule\Models\Widget\DetailWidgetInterface;
 use Crm\ApplicationModule\Models\Widget\LazyWidgetManager;
@@ -9,30 +11,29 @@ use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Nette\Localization\Translator;
 
 /**
- * This component fetches specific users subscriptions and render
+ * This component fetches specific user's subscriptions and renders
  * data table. Used in user detail.
  *
  * @package Crm\SubscriptionsModule\Components
  */
-class UserSubscriptionsListing extends BaseLazyWidget implements DetailWidgetInterface
+class UserSubscriptionsListing extends BaseLazyWidget implements DetailWidgetInterface, PaginatedComponent
 {
-    private $templateName = 'user_subscriptions_listing.latte';
+    use PaginatesDataTrait;
 
-    private $subscriptionsRepository;
+    private string $templateName = 'user_subscriptions_listing.latte';
 
-    private $translator;
+    /** @var ?int Total subscription count for current user */
+    private ?int $totalCount = null;
 
     public function __construct(
         LazyWidgetManager $lazyWidgetManager,
-        SubscriptionsRepository $subscriptionsRepository,
-        Translator $translator,
+        private readonly SubscriptionsRepository $subscriptionsRepository,
+        private readonly Translator $translator,
     ) {
         parent::__construct($lazyWidgetManager);
-        $this->subscriptionsRepository = $subscriptionsRepository;
-        $this->translator = $translator;
     }
 
-    public function header($id = ''): string
+    public function header(string $id = ''): string
     {
         $header = $this->translator->translate('subscriptions.admin.user_subscriptions.header');
         if ($id) {
@@ -41,29 +42,39 @@ class UserSubscriptionsListing extends BaseLazyWidget implements DetailWidgetInt
         return $header;
     }
 
-    public function identifier()
+    public function identifier(): string
     {
         return 'usersubscriptions';
     }
 
-    public function render($id)
+    public function render(int $id): void
     {
-        $subscriptions = $this->subscriptionsRepository->userSubscriptions($id);
+        $this->entityId = $id;
 
-        $this->template->totalSubscriptions = $this->totalCount($id);
+        $totalSubscriptions = $this->totalCount($this->entityId);
+
+        $paginator = $this->getAjaxPaginator(
+            snippetName: 'subscriptionsTable',
+            itemCount: $totalSubscriptions,
+        );
+
+        $subscriptions = $this->subscriptionsRepository
+            ->userSubscriptions($this->entityId)
+            ->limit($paginator->getLimit(), $paginator->getOffset());
+
+        $this->template->totalSubscriptions = $totalSubscriptions;
         $this->template->subscriptions = $subscriptions;
-        $this->template->id = $id;
+        $this->template->entityId = $this->entityId;
+        $this->template->paginator = $paginator;
+
         $this->template->setFile(__DIR__ . '/' . $this->templateName);
         $this->template->render();
     }
 
-    private $totalCount = null;
-
-    private function totalCount($id)
+    private function totalCount(int $userId): int
     {
-        if ($this->totalCount == null) {
-            $this->totalCount = $this->subscriptionsRepository->userSubscriptions($id)->count('*');
-        }
-        return $this->totalCount;
+        return $this->totalCount ??= $this->subscriptionsRepository
+            ->userSubscriptions($userId)
+            ->count();
     }
 }

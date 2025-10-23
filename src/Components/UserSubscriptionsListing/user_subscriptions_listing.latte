@@ -1,93 +1,102 @@
-{if $totalSubscriptions == 0}
-  <div class="bs-callout bs-callout-info">
-    <h4>{_subscriptions.admin.user_subscriptions.no_subscription_header}</h4>
-    <p class="lead">{_subscriptions.admin.user_subscriptions.no_subscription}</p>
-  </div>
-{else}
-  <table class="table table-striped table-hover">
-    <thead>
-      <th>{_subscriptions.menu.subscriptions}</th>
-      <th>{_subscriptions.data.subscription_types.fields.content}</th>
-      <th>{_subscriptions.data.subscriptions.fields.start_time}</th>
-      <th>{_subscriptions.data.subscriptions.fields.end_time}</th>
-      <th>{_subscriptions.data.subscriptions.fields.type}</th>
-      <th>{_system.fields.created}</th>
-      <th>{_subscriptions.data.subscriptions.fields.payment}</th>
-      <th>{_system.actions}</th>
-    </thead>
-    <tbody>
-      <tr n:foreach="$subscriptions as $subscription">
-        <td>
-          <small class="text-muted">#{$subscription->id}</small>
-          <i n:if="$subscription->note" class="fa fa-info-circle text-danger fa-wh" data-toggle="tooltip" data-placement="top" title="{$subscription->note|breaklines}"></i>
-          <a href="{plink :Subscriptions:SubscriptionTypesAdmin:Show $subscription->subscription_type->id}">
-            {$subscription->subscription_type->name}
-          </a>
-          <span n:if="$subscription->start_time < new \DateTime() && $subscription->end_time > new \DateTime()" class="label label-success">Aktuálne</span>
-          <small n:if="$subscription->next_subscription_id"><i class="fa fa-level-up-alt"></i> #{$subscription->next_subscription_id}</small>
+{snippet subscriptionsTable}
+    <div class="user-subscriptions-listing-component" data-user-id="{$entityId}">
+        {if $totalSubscriptions == 0}
+            <div class="bs-callout bs-callout-info">
+                <h4>{_subscriptions.admin.user_subscriptions.no_subscription_header}</h4>
+                <p class="lead">{_subscriptions.admin.user_subscriptions.no_subscription}</p>
+            </div>
+        {else}
+            <table class="table table-striped table-hover">
+                <thead>
+                <th>{_subscriptions.menu.subscriptions}</th>
+                <th>{_subscriptions.data.subscription_types.fields.content}</th>
+                <th>{_subscriptions.data.subscriptions.fields.start_time}</th>
+                <th>{_subscriptions.data.subscriptions.fields.end_time}</th>
+                <th>{_subscriptions.data.subscriptions.fields.type}</th>
+                <th>{_system.fields.created}</th>
+                <th>{_subscriptions.data.subscriptions.fields.payment}</th>
+                <th>{_system.actions}</th>
+                </thead>
+                <tbody>
+                <tr n:foreach="$subscriptions as $subscription">
+                    <td>
+                        <small class="text-muted">#{$subscription->id}</small>
+                        <i n:if="$subscription->note" class="fa fa-info-circle text-danger fa-wh" data-toggle="tooltip"
+                                                      data-placement="top" title="{$subscription->note|breaklines}"></i>
+                        <a href="{plink :Subscriptions:SubscriptionTypesAdmin:Show $subscription->subscription_type->id}">
+                            {$subscription->subscription_type->name}
+                        </a>
+                        <span n:if="$subscription->start_time < new \DateTime() && $subscription->end_time > new \DateTime()" class="label label-success">Aktuálne</span>
+                        <small n:if="$subscription->next_subscription_id"><i class="fa fa-level-up-alt"></i>
+                            #{$subscription->next_subscription_id}</small>
 
-          {control simpleWidget 'subscriptions.admin.user_subscriptions_listing.subscription', $subscription}
+                        {control simpleWidget 'subscriptions.admin.user_subscriptions_listing.subscription', $subscription}
+                    </td>
+                    <td>{$subscription->subscription_type|typeContent:true}</td>
+                    <td>
+                        {$subscription->start_time|userDate}
+                    </td>
+                    <td>{$subscription->end_time|userDate}</td>
+                    <td>
+                        {$subscription->type|typeLabel}
+                    </td>
+                    <td class="text-muted">
+                        {$subscription->created_at|userDate}
+                        <small n:if="$subscription->created_at != $subscription->modified_at">
+                            ({_subscriptions.admin.user_subscriptions.changed} {$subscription->modified_at|userDate})
+                        </small>
+                    </td>
+                    <td>
+                        {var $payment = $subscription->related('payments')->limit(1)->fetch()}
+                        <small class="text-muted">
+                            {if $payment}
+                                <a href="{plink :Payments:PaymentsAdmin:show $payment->id}">#{$payment->id}</a>
+                            {else}
+                                n/a
+                            {/if}
+                        </small>
+                    </td>
+                    <td>
+                        <a href="{plink :Subscriptions:SubscriptionsAdmin:show $subscription->id}"
+                           class="btn btn-sm btn-info"
+                           title="{_system.show}" data-toggle="tooltip" data-placement="top">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                        <a href="{plink :Subscriptions:SubscriptionsAdmin:edit $subscription->id, userId => $subscription->user_id}"
+                           class="btn btn-sm btn-primary"
+                           title="{_system.edit}" data-toggle="tooltip" data-placement="top">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        {capture $moreActions}
+                            {control simpleWidget 'subscriptions.admin.user_subscriptions_listing.action.menu', $subscription}
+                        {/capture}
+                        <div n:if="($moreActions|trim)" class="btn-group" style="margin-bottom: 2px">
+                            <button type="button" class="btn btn-default btn-sm dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                    title="{_system.more_actions}" data-toggle-second="tooltip"
+                                    data-placement="top">
+                                <i class="fa fa-ellipsis-h"></i>
+                            </button>
 
-        </td>
-        <td>{$subscription->subscription_type|typeContent:true}</td>
-        <td>
-          {$subscription->start_time|userDate}
-        </td>
-        <td>{$subscription->end_time|userDate}</td>
-        <td>
-          {$subscription->type|typeLabel}
-        </td>
-        <td class="text-muted">
-          {$subscription->created_at|userDate}
-          <small n:if="$subscription->created_at != $subscription->modified_at">({_subscriptions.admin.user_subscriptions.changed} {$subscription->modified_at|userDate})</small>
-        </td>
-        <td>
-          {var $payment = $subscription->related('payments')->limit(1)->fetch()}
-          <small class="text-muted">
-            {if $payment}
-              <a href="{plink :Payments:PaymentsAdmin:show $payment->id}">#{$payment->id}</a>
-            {else}
-              n/a
-            {/if}
-          </small>
-        </td>
-        <td>
-          <a href="{plink :Subscriptions:SubscriptionsAdmin:show $subscription->id}" class="btn btn-sm btn-info"
-             title="{_system.show}" data-toggle="tooltip" data-placement="top">
-            <i class="fa fa-eye"></i>
-          </a>
-          <a href="{plink :Subscriptions:SubscriptionsAdmin:edit $subscription->id, userId => $subscription->user_id}"
-             class="btn btn-sm btn-primary"
-             title="{_system.edit}" data-toggle="tooltip" data-placement="top">
-            <i class="fa fa-edit"></i>
-          </a>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu" data-dropdown-merge-sections>
+                                {$moreActions}
+                            </ul>
+                        </div>
+                        {control simpleWidget 'subscriptions.admin.user_subscriptions_listing.action', $subscription}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        {/if}
+    </div>
+    {$paginator->render()}
+{/snippet}
 
-          {capture $moreActions}
-            {control simpleWidget 'subscriptions.admin.user_subscriptions_listing.action.menu', $subscription}
-          {/capture}
-          <div n:if="($moreActions|trim)" class="btn-group" style="margin-bottom: 2px">
-            <button type="button" class="btn btn-default btn-sm dropdown-toggle"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                    title="{_system.more_actions}" data-toggle-second="tooltip" data-placement="top">
-              <i class="fa fa-ellipsis-h"></i>
-            </button>
-
-            <ul class="dropdown-menu dropdown-menu-right" role="menu" data-dropdown-merge-sections>
-              {$moreActions}
-            </ul>
-          </div>
-
-          {control simpleWidget 'subscriptions.admin.user_subscriptions_listing.action', $subscription}
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-{/if}
-
-<a href="{plink :Subscriptions:SubscriptionsAdmin:New $id}" class="btn btn-default"><i class="fa fa-magic"></i> {_subscriptions.admin.user_subscriptions.new_subscription}</a>
+<a href="{plink :Subscriptions:SubscriptionsAdmin:New $entityId}" class="btn btn-default">
+    <i class="fa fa-magic"></i> {_subscriptions.admin.user_subscriptions.new_subscription}
+</a>
 
 <script>
-  // hacking tooltip for dropdown menu; otherwise dropdown menu has slow native title tooltip with delay
-  $('[data-toggle-second="tooltip"]').tooltip();
+    // hacking tooltip for dropdown menu; otherwise dropdown menu has slow native title tooltip with delay
+    $('[data-toggle-second="tooltip"]').tooltip();
 </script>
