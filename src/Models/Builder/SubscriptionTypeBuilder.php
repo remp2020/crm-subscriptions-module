@@ -16,6 +16,9 @@ use Nette\Utils\DateTime;
 
 class SubscriptionTypeBuilder extends Builder
 {
+    /** @internal */
+    public const STATIC_CONTENT_ACCCESSES = ['web', 'print', 'club', 'mobile', 'print_friday', 'ad_free'];
+
     protected $tableName = 'subscription_types';
 
     protected $metaTableName = 'subscription_types_meta';
@@ -266,7 +269,7 @@ class SubscriptionTypeBuilder extends Builder
 
         // content access legacy
         foreach ($contentAccess as $key => $_) {
-            if (in_array($key, ['web', 'print', 'club', 'mobile', 'print_friday', 'ad_free'], true)) {
+            if (in_array($key, self::STATIC_CONTENT_ACCCESSES, true)) {
                 $this->set($key, 1);
             }
         }

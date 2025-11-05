@@ -302,17 +302,16 @@ class SubscriptionTypesFormFactory
         // or this function attempts to insert the tags array into the database
         unset($values['tags']);
 
-        $contentAccesses = $this->contentAccessRepository->all();
-
         if (isset($values['subscription_type_id'])) {
             $subscriptionType = $this->subscriptionTypesRepository->find($values['subscription_type_id']);
 
-            $this->subscriptionTypesRepository->getTransaction()->wrap(function () use ($form, $values, $subscriptionType, $contentAccesses, $tags) {
+            $this->subscriptionTypesRepository->getTransaction()->wrap(function () use ($form, $values, $subscriptionType, $tags) {
                 $this->subscriptionTypeBuilder->processContentTypes($subscriptionType, (array) $values);
 
                 // TODO: remove this once deprecated columns from subscription_type are removed (web, mobile...)
+                $contentAccesses = $this->contentAccessRepository->all();
                 foreach ($contentAccesses as $contentAccess) {
-                    if (isset($values[$contentAccess->name])) {
+                    if (!in_array($contentAccess->name, SubscriptionTypeBuilder::STATIC_CONTENT_ACCCESSES, true)) {
                         unset($values[$contentAccess->name]);
                     }
                 }
