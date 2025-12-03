@@ -38,8 +38,8 @@ data:
         fields:
             name: Názov
             code: Identifikátor
-            subscription_type_after_trial: Predplatné po %trial_periods%. obnove
-            next_subscription_type_id: Nasledujúce predplatné
+            subscription_type_after_trial: Typ predplatného pri %trial_periods%. obnove
+            next_subscription_type_id: Nasledujúci typ predplatného
             trial_periods: Počet trial období
             price: Cena
             length: "Dĺžka (dni)"
@@ -95,7 +95,7 @@ data:
         description:
             name: Interný názov viditeľný v administrácii.
             user_label: "Názov predplatného, ktorý vidí užívateľ vo svojom profile."
-            trial_periods: Počet obnov (období), po ktorých sa aplikuje nasledujúce predplatné.
+            trial_periods: Počet období s trial predplatným. Zvoľte "1", ak chcete na nasledujuce predplatné prejsť pri prvej automatickej obnove.
         values:
             active: Aktívne
             inactive: Neaktívne

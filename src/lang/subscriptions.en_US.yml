@@ -37,7 +37,7 @@ data:
         fields:
             name: Name
             code: Identifier
-            subscription_type_after_trial: Subscription after %trial_periods% periods
+            subscription_type_after_trial: Subscription type after %trial_periods% periods
             next_subscription_type_id: Next subscription
             trial_periods: Trial periods
             price: Price
@@ -94,7 +94,7 @@ data:
         description:
             name: Internal name visible in administration.
             user_label: "Subscription name visibile by users in their profile."
-            trial_periods: Number of renewals (periods) after which the next subscription is applied.
+            trial_periods: Number of periods with trial subscription. Choose "1" if you want to change the subscription type at the first automatic renewal.
         values:
             active: Active
             inactive: Inactive

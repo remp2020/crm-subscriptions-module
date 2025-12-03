@@ -37,7 +37,9 @@ data:
         fields:
             name: Név
             code: Azonosító
+            subscription_type_after_trial: Előfizetés a %trial_periods%. időszakban
             next_subscription_type_id: Következő előfizetés
+            trial_periods: Próbaidőszakok száma
             price: Ár
             length: "Időtartam (napokban)"
             extending_length: "Időtartam (napokban) meghosszabbítás esetén"
@@ -91,6 +93,7 @@ data:
         description:
             name: Adminisztrátorok számára látható név
             user_label: "A felhasználó számára látható előfizetés neve"
+            trial_periods: Próba előfizetéssel rendelkező időszakok száma. Válassza az "1"-et, ha az első automatikus megújításnál szeretne átváltani a következő előfizetésre.
         values:
             active: Aktív
             inactive: Inaktív
