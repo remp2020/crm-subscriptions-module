@@ -160,7 +160,7 @@ services:
 				Crm\SubscriptionsModule\Models\Length\FixDaysLengthMethod()
 			)
 
-	filterLoader:
+	nette.latteFactory:
 		setup:
-			- register('typeContent', [Crm\SubscriptionsModule\Helpers\TypeContentHelper(), process])
-			- register('typeLabel', [Crm\SubscriptionsModule\Helpers\TypeLabel(), process])
+			- addFilter('typeContent', [Crm\SubscriptionsModule\Helpers\TypeContentHelper(), process])
+			- addFilter('typeLabel', [Crm\SubscriptionsModule\Helpers\TypeLabel(), process])
