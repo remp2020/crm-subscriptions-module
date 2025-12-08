@@ -4,6 +4,7 @@ namespace Crm\SubscriptionsModule\Repositories;
 
 use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Models\Database\Repository;
+use Crm\ApplicationModule\Repositories\AuditLogRepository;
 use Crm\SubscriptionsModule\DataProviders\CanUpdateSubscriptionTypeItemDataProviderInterface;
 use Crm\SubscriptionsModule\Events\SubscriptionTypeItemUpdatedEvent;
 use Exception;
@@ -23,8 +24,10 @@ class SubscriptionTypeItemsRepository extends Repository
         private DataProviderManager $dataProviderManager,
         private Emitter $emitter,
         Storage $cacheStorage = null,
+        AuditLogRepository $auditLogRepository,
     ) {
         parent::__construct($database, $cacheStorage);
+        $this->auditLogRepository = $auditLogRepository;
     }
 
     final public function add(ActiveRow $subscriptionType, string $name, float $amount, float $vat, int $sorting = null)
