@@ -477,6 +477,7 @@ data_provider:
         columns_changed: "Změněná pole: <strong>%columns%</strong>"
         subscription_transfer: "Předplatné bylo přesunuto od uživatele: <a href='%link%' target='_blank'>%user_id%</a>"
 
+config:
     category: Předplatné
     vat_default:
         name: Běžná DPH
