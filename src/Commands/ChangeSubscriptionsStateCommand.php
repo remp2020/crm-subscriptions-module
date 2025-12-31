@@ -32,7 +32,7 @@ class ChangeSubscriptionsStateCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('');
         $output->writeln('<info>***** CHANGE SUBSCRIPTIONS STATUS *****</info>');
