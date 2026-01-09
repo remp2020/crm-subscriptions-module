@@ -73,6 +73,21 @@ class ContentAccessRepository extends Repository
             ->order('sorting');
     }
 
+    final public function pairsForSubscriptionType(ActiveRow $subscriptionType, string $key, string $value): array
+    {
+        $stcas = $subscriptionType
+            ->related('subscription_type_content_access')
+            ->order('content_access.sorting');
+
+        $result = [];
+        foreach ($stcas as $subscriptionTypeContentAccess) {
+            $contentAccess = $subscriptionTypeContentAccess->content_access;
+            $result[$contentAccess[$key]] = $contentAccess[$value];
+        }
+
+        return $result;
+    }
+
     final public function addAccess(ActiveRow $subscriptionType, $name)
     {
         $contentAccess = $this->getByName($name);
