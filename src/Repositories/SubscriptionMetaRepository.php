@@ -66,6 +66,22 @@ class SubscriptionMetaRepository extends Repository
         }
     }
 
+    final public function copyMeta(ActiveRow $fromSubscription, ActiveRow $toSubscription, string $key): void
+    {
+        $fromSubscriptionMeta = $this->getMeta(
+            $fromSubscription,
+            $key,
+        )->fetch();
+
+        if ($fromSubscriptionMeta) {
+            $this->setMeta(
+                $toSubscription,
+                $key,
+                $fromSubscriptionMeta->value,
+            );
+        }
+    }
+
     final public function getMetaValue(ActiveRow $subscription, string $key): ?string
     {
         return $this->getTable()->where(['subscription_id' => $subscription->id, 'key' => $key])->fetchField('value');
