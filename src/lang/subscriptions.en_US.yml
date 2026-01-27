@@ -121,8 +121,8 @@ frontend:
     my:
         history: Subscriptions history
         actual: Actual subscription
-        no_subscription: "You don't have any subscription"
-        buy_new_subscription: You can buy new subscription.
+        no_subscription: You don't have a subscription now.
+        buy_new_subscription: Click here for subscription plans.
     new:
         title: Subscribe to %site_name%
     actual_subscription_widget:
