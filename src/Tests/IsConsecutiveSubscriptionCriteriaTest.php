@@ -167,8 +167,8 @@ class IsConsecutiveSubscriptionCriteriaTest extends DatabaseTestCase
             false,
             $this->userRow,
             SubscriptionsRepository::TYPE_REGULAR,
-            $startTime === 'now' ? $this->getNow() : DateTime::from($startTime),
-            $endTime === 'now' ? $this->getNow() : DateTime::from($endTime),
+            $startTime === 'now' ? $this->getNow() : $this->getNow()->modify($startTime),
+            $endTime === 'now' ? $this->getNow() : $this->getNow()->modify($endTime),
         );
 
         $subscriptionSelection = $this->subscriptionRepository->getTable()
