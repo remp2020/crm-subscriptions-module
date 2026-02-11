@@ -84,6 +84,7 @@ use Crm\SubscriptionsModule\Scenarios\IsExpiredByAdminCriteria;
 use Crm\SubscriptionsModule\Scenarios\IsRecurrentCriteria;
 use Crm\SubscriptionsModule\Scenarios\SubscriptionScenarioConditionModel;
 use Crm\SubscriptionsModule\Scenarios\SubscriptionTypeCriteria;
+use Crm\SubscriptionsModule\Scenarios\SubscriptionTypeHasTagCriteria;
 use Crm\SubscriptionsModule\Scenarios\SubscriptionTypeIsDefaultCriteria;
 use Crm\SubscriptionsModule\Scenarios\SubscriptionTypeLengthCriteria;
 use Crm\SubscriptionsModule\Scenarios\TypeCriteria;
@@ -412,6 +413,7 @@ class SubscriptionsModule extends CrmModule
         $scenariosCriteriaStorage->register('subscription', IsExpiredByAdminCriteria::KEY, $this->getInstance(IsExpiredByAdminCriteria::class));
         $scenariosCriteriaStorage->register('subscription', FirstSubscriptionInPeriodCriteria::KEY, $this->getInstance(FirstSubscriptionInPeriodCriteria::class));
         $scenariosCriteriaStorage->register('subscription', IsConsecutiveSubscriptionCriteria::KEY, $this->getInstance(IsConsecutiveSubscriptionCriteria::class));
+        $scenariosCriteriaStorage->register('subscription', SubscriptionTypeHasTagCriteria::KEY, $this->getInstance(SubscriptionTypeHasTagCriteria::class));
 
         $scenariosCriteriaStorage->registerConditionModel(
             'subscription',

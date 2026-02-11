@@ -305,6 +305,8 @@ admin:
         cant_delete: '{1}This address is used in subscription: %subscriptions%|[2,Inf]This address is used in subscriptions: %subscriptions%'
 
     scenarios:
+        subscription_type_has_tag:
+            label: 'Subscription type has tag'
         subscription_type_is_default:
             label: 'The subscription type has a flag "default"'
         has_later_ending_subscription:

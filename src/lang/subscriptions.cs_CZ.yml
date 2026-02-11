@@ -305,6 +305,8 @@ admin:
         cant_delete: '{1}Tato adresa se používá při předplatném: %subscriptions%|[2,Inf]Tato adresa se používá při předplatných: %subscriptions%'
 
     scenarios:
+        subscription_type_has_tag:
+            label: 'Typ předplatného má tag'
         subscription_type_is_default:
             label: 'Typ předplatného ma příznak "default"'
         has_later_ending_subscription:
