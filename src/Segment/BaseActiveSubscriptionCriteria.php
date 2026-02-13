@@ -10,6 +10,7 @@ use Crm\SegmentModule\Models\Params\NumberArrayParam;
 use Crm\SegmentModule\Models\Params\ParamsBag;
 use Crm\SegmentModule\Models\Params\StringArrayParam;
 use Crm\SubscriptionsModule\Repositories\ContentAccessRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionTypeTagsRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 
@@ -17,20 +18,12 @@ abstract class BaseActiveSubscriptionCriteria implements CriteriaInterface
 {
     protected $tableField;
 
-    private $contentAccessRepository;
-
-    private $subscriptionTypesRepository;
-
-    private $subscriptionsRepository;
-
     public function __construct(
-        ContentAccessRepository $contentAccessRepository,
-        SubscriptionsRepository $subscriptionsRepository,
-        SubscriptionTypesRepository $subscriptionTypesRepository,
+        private readonly ContentAccessRepository $contentAccessRepository,
+        private readonly SubscriptionsRepository $subscriptionsRepository,
+        private readonly SubscriptionTypesRepository $subscriptionTypesRepository,
+        private readonly SubscriptionTypeTagsRepository $subscriptionTypeTagsRepository,
     ) {
-        $this->contentAccessRepository = $contentAccessRepository;
-        $this->subscriptionTypesRepository = $subscriptionTypesRepository;
-        $this->subscriptionsRepository = $subscriptionsRepository;
     }
 
     public function label(): string
@@ -50,6 +43,7 @@ abstract class BaseActiveSubscriptionCriteria implements CriteriaInterface
             new StringArrayParam('contains', "Content types", "Users who have access to selected content types", false, null, null, $this->contentAccessRepository->all()->fetchPairs(null, 'name')),
             new StringArrayParam('type', "Types of subscription", "Users who have access to selected types of subscription", false, null, null, array_keys($this->subscriptionsRepository->availableTypes())),
             new NumberArrayParam('subscription_type', "Subscription types", "Users who have access to selected subscription types", false, null, null, $this->subscriptionTypesRepository->all()->fetchPairs('id', 'name')),
+            new StringArrayParam('subscription_type_tags', "Subscription type tags", "Users who have access to subscription types with selected tags", false, null, null, $this->subscriptionTypeTagsRepository->tagsSortedByOccurrences()),
             new BooleanParam('is_recurrent', "Recurrent subscriptions", "Users who had at least one recurrent subscription"),
         ];
     }
@@ -57,6 +51,7 @@ abstract class BaseActiveSubscriptionCriteria implements CriteriaInterface
     public function join(ParamsBag $params): string
     {
         $where = [];
+        $additionalJoins = '';
 
         if ($params->has('active_at')) {
             $where = array_merge($where, $params->datetime('active_at')->escapedConditions('subscriptions.start_time', 'subscriptions.end_time'));
@@ -77,6 +72,12 @@ abstract class BaseActiveSubscriptionCriteria implements CriteriaInterface
             $where[] = " subscription_types.id IN ({$values}) ";
         }
 
+        if ($params->has('subscription_type_tags')) {
+            $values = $params->stringArray('subscription_type_tags')->escapedString();
+            $additionalJoins = " INNER JOIN subscription_type_tags ON subscription_type_tags.subscription_type_id = subscription_types.id ";
+            $where[] = " subscription_type_tags.tag IN ({$values}) ";
+        }
+
         if ($params->has('is_recurrent')) {
             $where[] = " subscriptions.is_recurrent = {$params->boolean('is_recurrent')->number()} ";
         }
@@ -86,13 +87,14 @@ abstract class BaseActiveSubscriptionCriteria implements CriteriaInterface
           INNER JOIN subscription_types ON subscription_types.id = subscriptions.subscription_type_id
           INNER JOIN subscription_type_content_access ON subscription_type_content_access.subscription_type_id = subscription_types.id
           INNER JOIN content_access ON content_access.id = subscription_type_content_access.content_access_id
+          {$additionalJoins}
           WHERE " . implode(" AND ", $where);
     }
 
     public function title(ParamsBag $params): string
     {
         $title = '';
-        if ($params->has('active_at') || $params->has('contains') || $params->has('type') || $params->has('subscription_type') || $params->has('is_recurrent')) {
+        if ($params->has('active_at') || $params->has('contains') || $params->has('type') || $params->has('subscription_type') || $params->has('subscription_type_tags') || $params->has('is_recurrent')) {
             if ($params->has('active_at')) {
                 $title .= ' active subscription' . $params->datetime('active_at')->title('subscriptions.start_time', 'subscriptions.end_time');
             } else {
@@ -109,6 +111,10 @@ abstract class BaseActiveSubscriptionCriteria implements CriteriaInterface
 
             if ($params->has('subscription_type')) {
                 $title .= ' ' . $params->stringArray('subscription_type')->escapedString();
+            }
+
+            if ($params->has('subscription_type_tags')) {
+                $title .= ' with tags ' . $params->stringArray('subscription_type_tags')->escapedString();
             }
 
             if ($params->has('is_recurrent')) {
