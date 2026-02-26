@@ -18,6 +18,7 @@ use Crm\SubscriptionsModule\Models\Extension\ExtensionMethodFactory;
 use Crm\SubscriptionsModule\Models\Length\LengthMethodFactory;
 use DateInterval;
 use DateTime;
+use DateTimeInterface;
 use League\Event\Emitter;
 use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
@@ -436,6 +437,20 @@ class SubscriptionsRepository extends Repository
             'start_time <= ?' => $date,
             'end_time > ?' => $date,
         ]);
+    }
+
+    /**
+     * Returns subscriptions that are active at any point in the given time range.
+     *
+     * @param DateTimeInterface $fromTime
+     * @param DateTimeInterface $toTime
+     * @return Selection
+     */
+    final public function activeBetween(DateTimeInterface $fromTime, DateTimeInterface $toTime): Selection
+    {
+        return $this->getTable()
+            ->where('start_time < ?', $toTime)
+            ->where('end_time >= ?', $fromTime);
     }
 
     final public function actualSubscriptionsByContentAccess(DateTime $date, string ...$contentAccess): Selection
