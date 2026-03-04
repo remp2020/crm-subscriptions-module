@@ -18,6 +18,14 @@ class SubscriptionTypeTagsRepository extends Repository
         ]);
     }
 
+    final public function exists(ActiveRow $subscriptionType, string $tagName): bool
+    {
+        return $this->getTable()->where([
+            'subscription_type_id' => $subscriptionType->id,
+            'tag' => $tagName,
+        ])->count('*') > 0;
+    }
+
     /**
      * @return string[]
      */
