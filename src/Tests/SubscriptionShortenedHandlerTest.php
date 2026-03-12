@@ -381,7 +381,7 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
         $this->assertNull($subscriptions[0]->note);
     }
 
-    private function createSubscription(ActiveRow $user, string $code, \DateTime $startTime, \DateTime $endTime = null)
+    private function createSubscription(ActiveRow $user, string $code, \DateTime $startTime, ?\DateTime $endTime = null)
     {
         $st = $this->subscriptionTypesRepository->findByCode($code);
         return $this->subscriptionsRepository->add(

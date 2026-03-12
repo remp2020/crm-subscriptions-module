@@ -42,7 +42,7 @@ class SubscriptionFormFactory
     /**
      * @return Form
      */
-    public function create(ActiveRow $user, int $subscriptionId = null)
+    public function create(ActiveRow $user, ?int $subscriptionId = null)
     {
         $defaults = [];
         $subscription = false;

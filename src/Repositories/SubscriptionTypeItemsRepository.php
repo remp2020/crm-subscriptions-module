@@ -23,14 +23,14 @@ class SubscriptionTypeItemsRepository extends Repository
         Explorer $database,
         private DataProviderManager $dataProviderManager,
         private Emitter $emitter,
-        Storage $cacheStorage = null,
         AuditLogRepository $auditLogRepository,
+        ?Storage $cacheStorage = null,
     ) {
         parent::__construct($database, $cacheStorage);
         $this->auditLogRepository = $auditLogRepository;
     }
 
-    final public function add(ActiveRow $subscriptionType, string $name, float $amount, float $vat, int $sorting = null)
+    final public function add(ActiveRow $subscriptionType, string $name, float $amount, float $vat, ?int $sorting = null)
     {
         return $this->getTable()->insert([
             'subscription_type_id' => $subscriptionType->id,

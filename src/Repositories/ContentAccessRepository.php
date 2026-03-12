@@ -16,7 +16,7 @@ class ContentAccessRepository extends Repository
     public function __construct(
         private SubscriptionTypeContentAccessRepository $subscriptionTypeContentAccessRepository,
         Explorer $database,
-        Storage $cacheStorage = null,
+        ?Storage $cacheStorage = null,
     ) {
         parent::__construct($database, $cacheStorage);
     }

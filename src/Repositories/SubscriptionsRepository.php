@@ -103,12 +103,12 @@ class SubscriptionsRepository extends Repository
         bool $isPaid,
         ActiveRow $user,
         $type = self::TYPE_REGULAR,
-        DateTime $startTime = null,
-        DateTime $endTime = null,
+        ?DateTime $startTime = null,
+        ?DateTime $endTime = null,
         $note = null,
-        ActiveRow $address = null,
+        ?ActiveRow $address = null,
         bool $sendEmail = true,
-        Closure $callbackBeforeNewSubscriptionEvent = null,
+        ?Closure $callbackBeforeNewSubscriptionEvent = null,
     ) {
         $isExtending = false;
         // provided $startTime overrides both subscription_types.fixed_start and Extension::getDate()
@@ -335,7 +335,7 @@ class SubscriptionsRepository extends Repository
         return $this->database->table('subscription_type_names')->where(['is_active' => true])->order('sorting');
     }
 
-    final public function hasUserSubscriptionType($userId, $subscriptionTypeCode, DateTime $startTime = null, DateTime $endTime = null): bool
+    final public function hasUserSubscriptionType($userId, $subscriptionTypeCode, ?DateTime $startTime = null, ?DateTime $endTime = null): bool
     {
         $where = [
             'user_id' => $userId,
@@ -427,7 +427,7 @@ class SubscriptionsRepository extends Repository
      * @param $date
      * @return Selection
      */
-    final public function actualSubscriptions(DateTime $date = null)
+    final public function actualSubscriptions(?DateTime $date = null)
     {
         if ($date == null) {
             $date = new DateTime();
@@ -534,7 +534,7 @@ class SubscriptionsRepository extends Repository
         return $this->getTable()->group('subscriptions.user_id')->order('subscriptions.start_time ASC');
     }
 
-    final public function getExpiredSubscriptions(DateTime $dateTime = null)
+    final public function getExpiredSubscriptions(?DateTime $dateTime = null)
     {
         if (!$dateTime) {
             $dateTime = new DateTime();
@@ -548,7 +548,7 @@ class SubscriptionsRepository extends Repository
         ]);
     }
 
-    final public function getStartedSubscriptions(DateTime $dateTime = null)
+    final public function getStartedSubscriptions(?DateTime $dateTime = null)
     {
         if (!$dateTime) {
             $dateTime = new DateTime();

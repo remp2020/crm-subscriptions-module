@@ -65,7 +65,7 @@ class NextSubscriptionIdTest extends DatabaseTestCase
         return $subscriptionTypeRow;
     }
 
-    private function addSubscription(ActiveRow $subscriptionType, DateTime $from = null, DateTime $to = null): ActiveRow
+    private function addSubscription(ActiveRow $subscriptionType, ?DateTime $from = null, ?DateTime $to = null): ActiveRow
     {
         return $this->subscriptionsRepository->add(
             $subscriptionType,
