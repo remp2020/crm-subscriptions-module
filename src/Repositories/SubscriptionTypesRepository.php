@@ -43,7 +43,7 @@ class SubscriptionTypesRepository extends Repository
 
     final public function update(ActiveRow &$row, $data)
     {
-        $data['modified_at'] = new \DateTime();
+        $data['updated_at'] = new \DateTime();
         $result = parent::update($row, $data);
         $this->emitter->emit(new SubscriptionTypeUpdatedEvent($row));
         return $result;

@@ -364,7 +364,7 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
 
         $subscription1 = $this->createSubscription($user, TestSeeder::SUBSCRIPTION_TYPE_WEB_YEAR, new \DateTime('2021-01-01'), new \DateTime('2021-01-01'));
         $originalEndTime = $subscription1->end_time;
-        $originalModifiedTime = $subscription1->modified_at;
+        $originalModifiedTime = $subscription1->updated_at;
 
         $this->subscriptionShortenedHandler->handle(
             new SubscriptionShortenedEvent($subscription1, $originalEndTime),
@@ -377,7 +377,7 @@ class SubscriptionShortenedHandlerTest extends DatabaseTestCase
         $this->assertCount(1, $subscriptions);
         $this->assertEquals(new \DateTime('2021-01-01'), $subscriptions[0]->start_time);
         $this->assertEquals(new \DateTime('2021-01-01'), $subscriptions[0]->end_time);
-        $this->assertEquals($originalModifiedTime, $subscriptions[0]->modified_at);
+        $this->assertEquals($originalModifiedTime, $subscriptions[0]->updated_at);
         $this->assertNull($subscriptions[0]->note);
     }
 

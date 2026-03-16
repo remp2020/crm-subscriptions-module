@@ -71,7 +71,7 @@ class SubscriptionTypeBuilder extends Builder
     {
         parent::setDefaults();
         $this->set('created_at', new \DateTime());
-        $this->set('modified_at', new \DateTime());
+        $this->set('updated_at', new \DateTime());
         $this->set('disable_notifications', false);
         $this->set('length_method_id', FixDaysLengthMethod::METHOD_CODE);
     }

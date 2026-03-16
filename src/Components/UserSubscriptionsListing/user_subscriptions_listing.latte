@@ -42,8 +42,8 @@
                     </td>
                     <td class="text-muted">
                         {$subscription->created_at|userDate}
-                        <small n:if="$subscription->created_at != $subscription->modified_at">
-                            ({_subscriptions.admin.user_subscriptions.changed} {$subscription->modified_at|userDate})
+                        <small n:if="$subscription->created_at != $subscription->updated_at">
+                            ({_subscriptions.admin.user_subscriptions.changed} {$subscription->updated_at|userDate})
                         </small>
                     </td>
                     <td>

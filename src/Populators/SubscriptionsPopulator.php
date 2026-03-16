@@ -24,7 +24,7 @@ class SubscriptionsPopulator extends AbstractPopulator
                 'end_time' => $endTime,
                 'type' => $this->getRecord('subscription_type_names')->type,
                 'created_at' => $this->faker->dateTimeBetween('-1 years'),
-                'modified_at' => $this->faker->dateTimeBetween('-1 years'),
+                'updated_at' => $this->faker->dateTimeBetween('-1 years'),
                 'length' => $this->faker->randomDigit(),
             ]);
 

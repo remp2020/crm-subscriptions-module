@@ -151,7 +151,7 @@ class SubscriptionsRepository extends Repository
             'start_time' => $startTime,
             'end_time' => $endTime,
             'created_at' => new DateTime(),
-            'modified_at' => new DateTime(),
+            'updated_at' => new DateTime(),
             'internal_status' => $internalStatus,
             'type' => $type,
             'length' => $subscriptionLength,
@@ -183,7 +183,7 @@ class SubscriptionsRepository extends Repository
 
     final public function update(ActiveRow &$row, $data)
     {
-        $data['modified_at'] = new DateTime();
+        $data['updated_at'] = new DateTime();
 
         // Check if internal status has changed
         $startTime = $row->start_time;
@@ -475,7 +475,7 @@ class SubscriptionsRepository extends Repository
         return $this->getTable()->where(
             '(
                 (subscriptions.created_at >= ? AND subscriptions.created_at <= ?) OR
-                (subscriptions.modified_at >= ? AND subscriptions.modified_at <= ?)
+                (subscriptions.updated_at >= ? AND subscriptions.updated_at <= ?)
             ) AND subscription_type.print = ?',
             $fromTime,
             $toTime,
