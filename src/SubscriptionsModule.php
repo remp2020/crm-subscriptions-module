@@ -94,9 +94,9 @@ use Crm\SubscriptionsModule\Seeders\MeasurementsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
-use Crm\SubscriptionsModule\Segment\ActiveSubscriptionCriteria;
 use Crm\SubscriptionsModule\Segment\InactiveSubscriptionCriteria;
-use Crm\SubscriptionsModule\Segment\UserActiveSubscriptionCriteria;
+use Crm\SubscriptionsModule\Segment\UserWithSubscriptionCriteria;
+use Crm\SubscriptionsModule\Segment\WithSubscriptionCriteria;
 use Crm\UsersModule\Events\AddressRemovedEvent;
 use Crm\UsersModule\Events\RefreshUserDataTokenHandler;
 use Crm\UsersModule\Models\Auth\UserTokenAuthorization;
@@ -423,8 +423,8 @@ class SubscriptionsModule extends CrmModule
 
     public function registerSegmentCriteria(CriteriaStorage $criteriaStorage)
     {
-        $criteriaStorage->register('users', 'users_active_subscription', $this->getInstance(UserActiveSubscriptionCriteria::class));
-        $criteriaStorage->register('subscriptions', 'subscriptions_active_subscription', $this->getInstance(ActiveSubscriptionCriteria::class));
+        $criteriaStorage->register('users', 'users_with_subscription', $this->getInstance(UserWithSubscriptionCriteria::class));
+        $criteriaStorage->register('subscriptions', 'subscriptions_with_subscription', $this->getInstance(WithSubscriptionCriteria::class));
 
         $criteriaStorage->register('users', 'users_inactive_subscription', $this->getInstance(InactiveSubscriptionCriteria::class));
 

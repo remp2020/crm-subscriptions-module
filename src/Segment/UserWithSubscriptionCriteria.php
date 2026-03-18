@@ -2,7 +2,7 @@
 
 namespace Crm\SubscriptionsModule\Segment;
 
-class UserActiveSubscriptionCriteria extends BaseActiveSubscriptionCriteria
+class UserWithSubscriptionCriteria extends BaseWithSubscriptionCriteria
 {
     protected $tableField = 'subscriptions.user_id';
 }

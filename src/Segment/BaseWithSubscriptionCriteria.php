@@ -14,7 +14,7 @@ use Crm\SubscriptionsModule\Repositories\SubscriptionTypeTagsRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionTypesRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 
-abstract class BaseActiveSubscriptionCriteria implements CriteriaInterface
+abstract class BaseWithSubscriptionCriteria implements CriteriaInterface
 {
     protected $tableField;
 
@@ -28,7 +28,7 @@ abstract class BaseActiveSubscriptionCriteria implements CriteriaInterface
 
     public function label(): string
     {
-        return "Active subscription";
+        return "With subscription";
     }
 
     public function category(): string

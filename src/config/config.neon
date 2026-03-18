@@ -77,8 +77,8 @@ services:
 	- Crm\SubscriptionsModule\Api\v1\ListContentAccessHandler
 	- Crm\SubscriptionsModule\Api\v1\UpdateSubscriptionHandler
 	- Crm\SubscriptionsModule\DataProviders\SubscriptionsUserDataProvider
-	- Crm\SubscriptionsModule\Segment\ActiveSubscriptionCriteria
-	- Crm\SubscriptionsModule\Segment\UserActiveSubscriptionCriteria
+	- Crm\SubscriptionsModule\Segment\WithSubscriptionCriteria
+	- Crm\SubscriptionsModule\Segment\UserWithSubscriptionCriteria
 	- Crm\SubscriptionsModule\Segment\InactiveSubscriptionCriteria
 	- Crm\SubscriptionsModule\Scenarios\TypeCriteria
 	- Crm\SubscriptionsModule\Scenarios\SubscriptionTypeCriteria

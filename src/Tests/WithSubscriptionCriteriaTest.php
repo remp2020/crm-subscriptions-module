@@ -14,14 +14,14 @@ use Crm\SubscriptionsModule\Seeders\ContentAccessSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionExtensionMethodsSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionLengthMethodSeeder;
 use Crm\SubscriptionsModule\Seeders\SubscriptionTypeNamesSeeder;
-use Crm\SubscriptionsModule\Segment\UserActiveSubscriptionCriteria;
+use Crm\SubscriptionsModule\Segment\UserWithSubscriptionCriteria;
 use Crm\UsersModule\Models\Auth\UserManager;
 use Crm\UsersModule\Repositories\UsersRepository;
 use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-class ActiveSubscriptionCriteriaTest extends DatabaseTestCase
+class WithSubscriptionCriteriaTest extends DatabaseTestCase
 {
     private const CRITERIA_KEY = 'tested_criteria';
 
@@ -42,7 +42,7 @@ class ActiveSubscriptionCriteriaTest extends DatabaseTestCase
         $criteriaStorage->register(
             'users',
             self::CRITERIA_KEY,
-            $this->inject(UserActiveSubscriptionCriteria::class),
+            $this->inject(UserWithSubscriptionCriteria::class),
         );
     }
 
