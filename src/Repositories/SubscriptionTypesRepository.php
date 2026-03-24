@@ -49,14 +49,6 @@ class SubscriptionTypesRepository extends Repository
         return $result;
     }
 
-    /**
-     * @deprecated Use Crm\SubscriptionsModule\Repository\ContentAccessRepository::hasAccess() instead.
-     */
-    final public function getPrintSubscriptionTypes()
-    {
-        return $this->getTable()->where(['print' => 1])->fetchAll();
-    }
-
     final public function exists($code)
     {
         return $this->getTable()->where('code', $code)->count('*') > 0;
