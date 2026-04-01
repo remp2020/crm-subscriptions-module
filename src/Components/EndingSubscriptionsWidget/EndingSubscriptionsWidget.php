@@ -28,7 +28,7 @@ class EndingSubscriptionsWidget extends BaseLazyWidget
     {
         $widgets = $this->widgetManager->getWidgets('subscriptions.endinglist');
         foreach ($widgets as $sorting => $widget) {
-            if (!$this->getComponent($widget->identifier())) {
+            if (!$this->getComponent(name: $widget->identifier(), throw: false)) {
                 $this->addComponent($widget, $widget->identifier());
             }
         }
