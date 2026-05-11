@@ -15,6 +15,7 @@ services:
 	contentAccessRepository: Crm\SubscriptionsModule\Repositories\ContentAccessRepository
 	subscriptionTypeItemMetaRepository: Crm\SubscriptionsModule\Repositories\SubscriptionTypeItemMetaRepository
 	subscriptionTypeTagsRepository: Crm\SubscriptionsModule\Repositories\SubscriptionTypeTagsRepository
+	subscriptionGapsRepository: Crm\SubscriptionsModule\Repositories\SubscriptionGapsRepository
 
 	measurementManager:
 		setup:
@@ -67,6 +68,7 @@ services:
 	- Crm\SubscriptionsModule\Components\SubscriptionsEndGraphWidget\SubscriptionsEndGraphWidget
 	- Crm\SubscriptionsModule\Components\SubscriptionEndsStatsWidget\SubscriptionEndsStatsWidget
 	- Crm\SubscriptionsModule\Commands\ChangeSubscriptionsStateCommand
+	- Crm\SubscriptionsModule\Commands\CalculateSubscriptionGapsCommand
 	- Crm\SubscriptionsModule\Api\v1\UsersSubscriptionsHandler
 	- Crm\SubscriptionsModule\Models\Subscription\ActualUserSubscription
 	- Crm\SubscriptionsModule\Models\SubscriptionTransfer\UserSearch

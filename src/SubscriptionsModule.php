@@ -26,6 +26,7 @@ use Crm\SubscriptionsModule\Api\v1\CreateSubscriptionHandler;
 use Crm\SubscriptionsModule\Api\v1\ListContentAccessHandler;
 use Crm\SubscriptionsModule\Api\v1\UpdateSubscriptionHandler;
 use Crm\SubscriptionsModule\Api\v1\UsersSubscriptionsHandler;
+use Crm\SubscriptionsModule\Commands\CalculateSubscriptionGapsCommand;
 use Crm\SubscriptionsModule\Commands\ChangeSubscriptionsStateCommand;
 use Crm\SubscriptionsModule\Components\AccessStatsGraphWidget\AccessStatsGraphWidget;
 use Crm\SubscriptionsModule\Components\ActualSubscribersRegistrationSourceStatsWidget\ActualSubscribersRegistrationSourceStatsWidget;
@@ -358,6 +359,7 @@ class SubscriptionsModule extends CrmModule
     public function registerCommands(CommandsContainerInterface $commandsContainer)
     {
         $commandsContainer->registerCommand($this->getInstance(ChangeSubscriptionsStateCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(CalculateSubscriptionGapsCommand::class));
     }
 
     public function registerApiCalls(ApiRoutersContainerInterface $apiRoutersContainer)
