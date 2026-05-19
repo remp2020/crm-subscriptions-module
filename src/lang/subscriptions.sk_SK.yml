@@ -65,6 +65,7 @@ data:
             extension_method_id: Spôsob predĺženia predplatného
             length_method_id: Spôsob výpočtu dĺžky predplatného
             recurrent_charge_before: "Realizácia nasledujúcej platby (počet hodín pred vypršaním)"
+            hours: '{0}hodín|{1}hodina|[2,4]hodiny|[5,Inf]hodín'
             subscription_type_items: Položky predplatného
             items: Položky
             tag: Tagy

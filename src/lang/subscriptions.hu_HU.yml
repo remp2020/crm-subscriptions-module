@@ -64,6 +64,7 @@ data:
             extension_method_id: Előfizetés hosszabbításának módja
             length_method_id: Előfizetéshossz kiszámításának módja
             recurrent_charge_before: "Ismétlődő bekérés lejárat előtt (a lejárat előtti órák száma)"
+            hours: óra
             subscription_type_items: Előfizetési tételek
             items: Tételek
         required:

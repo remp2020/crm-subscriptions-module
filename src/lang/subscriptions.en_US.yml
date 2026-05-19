@@ -64,6 +64,7 @@ data:
             extension_method_id: Extension method
             length_method_id: Subscription length calculation method
             recurrent_charge_before: "Recurrent charge before (hours)"
+            hours: '{0}hours|{1}hour|[2,Inf]hours'
             subscription_type_items: Subscripton items
             items: Items
             tag: Tags

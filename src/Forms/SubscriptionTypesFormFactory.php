@@ -177,7 +177,9 @@ class SubscriptionTypesFormFactory
         $form->addGroup('subscriptions.admin.subscription_types.form.groups.other');
 
         $form->addText('recurrent_charge_before', 'subscriptions.data.subscription_types.fields.recurrent_charge_before')
-            ->setHtmlType('number');
+            ->setNullable()
+            ->setHtmlType('number')
+            ->addRule(Form::Integer, 'subscriptions.admin.subscription_types.form.number');
 
         $form->addText('limit_per_user', 'subscriptions.data.subscription_types.fields.limit_per_user')
             ->addCondition(Form::Filled)
