@@ -4,11 +4,21 @@ namespace Crm\SubscriptionsModule\Repositories;
 
 use Crm\ApplicationModule\Models\Database\Repository;
 use Crm\ApplicationModule\Models\Database\Selection;
+use Crm\SubscriptionsModule\Events\SubscriptionTypeTagAddedEvent;
+use League\Event\Emitter;
+use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
 
 class SubscriptionTypeTagsRepository extends Repository
 {
     protected $tableName = 'subscription_type_tags';
+
+    public function __construct(
+        Explorer $database,
+        private Emitter $emitter,
+    ) {
+        parent::__construct($database);
+    }
 
     final public function add(ActiveRow $subscriptionType, string $tagName): void
     {
@@ -16,6 +26,7 @@ class SubscriptionTypeTagsRepository extends Repository
             'subscription_type_id' => $subscriptionType->id,
             'tag' => $tagName,
         ]);
+        $this->emitter->emit(new SubscriptionTypeTagAddedEvent($subscriptionType, $tagName));
     }
 
     final public function exists(ActiveRow $subscriptionType, string $tagName): bool
@@ -50,6 +61,10 @@ class SubscriptionTypeTagsRepository extends Repository
 
     final public function setTagsForSubscriptionType(ActiveRow $subscriptionType, array $tags): void
     {
+        $existingTags = $this->getTable()
+            ->where('subscription_type_id', $subscriptionType->id)
+            ->fetchPairs('tag', 'tag');
+
         $this->getTransaction()->wrap(function () use ($tags, $subscriptionType) {
             $this->removeTagsForSubscriptionType($subscriptionType);
             foreach ($tags as $tag) {
@@ -59,5 +74,11 @@ class SubscriptionTypeTagsRepository extends Repository
                 ]);
             }
         });
+
+        foreach ($tags as $tag) {
+            if (!isset($existingTags[$tag])) {
+                $this->emitter->emit(new SubscriptionTypeTagAddedEvent($subscriptionType, $tag));
+            }
+        }
     }
 }
