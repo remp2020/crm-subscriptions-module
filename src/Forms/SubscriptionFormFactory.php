@@ -16,6 +16,7 @@ use Crm\UsersModule\Repositories\AddressesRepository;
 use Crm\UsersModule\Repositories\UsersRepository;
 use League\Event\Emitter;
 use Nette\Database\Table\ActiveRow;
+use Nette\Forms\Controls\BaseControl;
 use Nette\Utils\DateTime;
 use Tomaj\Form\Renderer\BootstrapRenderer;
 
@@ -71,7 +72,7 @@ class SubscriptionFormFactory
         $subscriptionTypeId->getControlPrototype()->addAttributes(['class' => 'select2']);
 
         if (!$subscription) {
-            $subscriptionTypeId->addRule(function ($field, ActiveRow $user) {
+            $subscriptionTypeId->addRule(function (BaseControl $field, ActiveRow $user) {
                 $subscriptionType = $this->subscriptionTypesRepository->find($field->value);
                 if (!empty($subscriptionType->limit_per_user) &&
                     $this->subscriptionsRepository->getCount($subscriptionType->id, $user->id) >= $subscriptionType->limit_per_user) {
