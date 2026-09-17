@@ -330,7 +330,7 @@ class SubscriptionTypesFormFactory
                 foreach ($providers as $sorting => $provider) {
                     [$form, $values] = $provider->formSucceeded($form, $values);
                 }
-                unset($values['subscription_type_id']); // unset after data provider since it might be used there
+                unset($values['subscription_type_id']); // used by data providers above; update() below would fail on an unknown column
 
                 $items = $values['items'];
                 unset($values['items']);
@@ -383,6 +383,13 @@ class SubscriptionTypesFormFactory
 
             $subscriptionType = $subscriptionType->save();
 
+            if (!$subscriptionType) {
+                $form['name']->addError(implode("\n", $this->subscriptionTypeBuilder->getErrors()));
+                return;
+            }
+
+            $values['subscription_type_id'] = $subscriptionType->id;
+
             /** @var SubscriptionTypeFormProviderInterface[] $providers */
             $providers = $this->dataProviderManager->getProviders(
                 'subscriptions.dataprovider.subscription_type_form',
@@ -392,13 +399,9 @@ class SubscriptionTypesFormFactory
                 [$form, $values] = $provider->formSucceeded($form, $values);
             }
 
-            if (!$subscriptionType) {
-                $form['name']->addError(implode("\n", $this->subscriptionTypeBuilder->getErrors()));
-            } else {
-                $this->subscriptionTypeBuilder->processContentTypes($subscriptionType, (array) $values);
-                $this->subscriptionTypeTagsRepository->setTagsForSubscriptionType($subscriptionType, $tags);
-                $this->onSave->__invoke($subscriptionType);
-            }
+            $this->subscriptionTypeBuilder->processContentTypes($subscriptionType, (array) $values);
+            $this->subscriptionTypeTagsRepository->setTagsForSubscriptionType($subscriptionType, $tags);
+            $this->onSave->__invoke($subscriptionType);
         }
     }
 }
