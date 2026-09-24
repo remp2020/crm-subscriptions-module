@@ -24,7 +24,7 @@ class DashboardPresenter extends AdminPresenter
     {
         parent::startup();
 
-        if ($this->action == 'endings') {
+        if ($this->getAction() == 'endings') {
             $this->dateFrom = $this->dateFrom ?? DateTime::from('now')->format('Y-m-d');
             $this->dateTo = $this->dateTo ?? DateTime::from('+6 months')->format('Y-m-d');
         } else {
@@ -56,7 +56,7 @@ class DashboardPresenter extends AdminPresenter
         $form->onSuccess[] = function ($form, $values) {
             $this->dateFrom = $values['date_from'];
             $this->dateTo = $values['date_to'];
-            $this->redirect($this->action);
+            $this->redirect($this->getAction());
         };
         return $form;
     }

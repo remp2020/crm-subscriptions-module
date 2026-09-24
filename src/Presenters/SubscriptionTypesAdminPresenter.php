@@ -85,7 +85,7 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
         };
 
         $this->adminFilterFormFactory->onFilter = function (array $values) {
-            $this->redirect($this->action, ['formData' => array_map(function ($item) {
+            $this->redirect($this->getAction(), ['formData' => array_map(function ($item) {
                 if ($item === '' || $item === []) {
                     return null;
                 }
@@ -93,7 +93,7 @@ class SubscriptionTypesAdminPresenter extends AdminPresenter
             }, $values)]);
         };
         $this->adminFilterFormFactory->onCancel = function (array $emptyValues) {
-            $this->redirect($this->action, ['formData' => $emptyValues]);
+            $this->redirect($this->getAction(), ['formData' => $emptyValues]);
         };
 
         return $form;
