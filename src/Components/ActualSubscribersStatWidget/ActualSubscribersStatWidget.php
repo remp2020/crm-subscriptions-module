@@ -39,7 +39,7 @@ class ActualSubscribersStatWidget extends BaseLazyWidget
     public function render()
     {
         if ($this->segmentsRepository->exists('users_with_active_subscriptions')) {
-            $this->template->totalSubscribersLink = $this->presenter->link(
+            $this->template->totalSubscribersLink = $this->getPresenter()->link(
                 ':Segment:StoredSegments:show',
                 $this->segmentsRepository->findByCode('users_with_active_subscriptions')->id,
             );
