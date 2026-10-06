@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Crm\SubscriptionsModule\Tests\Repositories;
 
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
+use Crm\SubscriptionsModule\Models\Subscription\SubscriptionGapsFilterInterface;
 use Crm\SubscriptionsModule\Repositories\ContentAccessRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionExtensionMethodsRepository;
 use Crm\SubscriptionsModule\Repositories\SubscriptionGapsRepository;
@@ -22,6 +23,7 @@ use Crm\SubscriptionsModule\Seeders\TestSeeder;
 use Crm\UsersModule\Models\Auth\UserManager;
 use Crm\UsersModule\Repositories\UsersRepository;
 use Nette\Database\Table\ActiveRow;
+use Nette\Database\Table\Selection;
 use Nette\Utils\DateTime;
 
 class SubscriptionGapsRepositoryTest extends DatabaseTestCase
@@ -70,6 +72,13 @@ class SubscriptionGapsRepositoryTest extends DatabaseTestCase
         $this->user = $userManager->addNewUser('test@example.com');
     }
 
+    protected function tearDown(): void
+    {
+        // the repository is a shared service - don't leak a filter set by a test into the next one
+        $this->subscriptionGapsRepository->setSubscriptionsFilter(null);
+        parent::tearDown();
+    }
+
     // recalculateForUsers — also covers mergeIntervals and findGaps indirectly. Returns users-with-gaps count.
 
     public function testRecalculateForUsersNoSubscriptionsReturnsZero(): void
@@ -95,6 +104,47 @@ class SubscriptionGapsRepositoryTest extends DatabaseTestCase
 
         $count = $this->subscriptionGapsRepository->recalculateForUsers([(int) $this->user->id]);
         $this->assertSame(0, $count);
+    }
+
+    public function testRecalculateForUsersGapSlightlyLongerThanMinGapDaysStoresGap(): void
+    {
+        // gap = 28 days and 12 hours; compared precisely, so stored (with the length rounded down)
+        $this->addSubscription('2020-04-01', '2020-04-01 12:00:00');
+        $this->addSubscription('2020-04-30', '2020-05-31');
+
+        $count = $this->subscriptionGapsRepository->recalculateForUsers([(int) $this->user->id]);
+        $this->assertSame(1, $count);
+
+        $gap = $this->subscriptionGapsRepository->getForUser((int) $this->user->id);
+        $this->assertNotNull($gap);
+        $this->assertSame(28, $gap->gap_length_days);
+    }
+
+    public function testRecalculateForUsersFilteredOutSubscriptionDoesNotCloseGap(): void
+    {
+        $this->addSubscription('2020-01-01', '2020-02-01');
+        $bridging = $this->addSubscription('2020-02-01', '2020-04-01');
+        $this->addSubscription('2020-04-01', '2020-05-01');
+
+        // without a filter the bridging subscription covers the user
+        $this->assertSame(0, $this->subscriptionGapsRepository->recalculateForUsers([(int) $this->user->id]));
+
+        $this->subscriptionGapsRepository->setSubscriptionsFilter(new class ($bridging->id) implements SubscriptionGapsFilterInterface {
+            public function __construct(private readonly int $excludedSubscriptionId)
+            {
+            }
+
+            public function filter(Selection $subscriptions): Selection
+            {
+                return $subscriptions->where('subscriptions.id != ?', $this->excludedSubscriptionId);
+            }
+        });
+
+        $this->assertSame(1, $this->subscriptionGapsRepository->recalculateForUsers([(int) $this->user->id]));
+        $gap = $this->subscriptionGapsRepository->getForUser((int) $this->user->id);
+        $this->assertNotNull($gap);
+        $this->assertEquals(new DateTime('2020-02-01'), $gap->gap_start);
+        $this->assertEquals(new DateTime('2020-04-01'), $gap->gap_end);
     }
 
     public function testRecalculateForUsersTwoSubscriptionsLongGapStoresOneGap(): void

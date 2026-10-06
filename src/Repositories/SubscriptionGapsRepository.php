@@ -3,6 +3,7 @@
 namespace Crm\SubscriptionsModule\Repositories;
 
 use Crm\ApplicationModule\Models\Database\Repository;
+use Crm\SubscriptionsModule\Models\Subscription\SubscriptionGapsFilterInterface;
 use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
@@ -13,9 +14,22 @@ class SubscriptionGapsRepository extends Repository
 
     private const int MIN_GAP_DAYS = 28;
 
+    private const int SECONDS_PER_DAY = 86400;
+
+    private ?SubscriptionGapsFilterInterface $subscriptionsFilter = null;
+
     public function __construct(Explorer $database, private readonly SubscriptionsRepository $subscriptionsRepository)
     {
         parent::__construct($database);
+    }
+
+    /**
+     * Only subscriptions passing the filter cover the user when gaps are calculated; without a filter,
+     * every subscription does.
+     */
+    public function setSubscriptionsFilter(?SubscriptionGapsFilterInterface $subscriptionsFilter): void
+    {
+        $this->subscriptionsFilter = $subscriptionsFilter;
     }
 
     final public function add(int $userId, DateTime $gapStart, DateTime $gapEnd, int $gapLengthDays): ActiveRow
@@ -47,7 +61,8 @@ class SubscriptionGapsRepository extends Repository
         $windowStart = DateTime::from($subscriptionStart)->modify("-{$maxGapDays} days");
         return (bool) $this->getTable()
             ->where('user_id', $userId)
-            ->where('gap_length_days > ?', $minGapDays)
+            // gap_length_days is rounded down, so the length is compared precisely from the gap bounds
+            ->where('TIMESTAMPDIFF(SECOND, gap_start, gap_end) > ?', $minGapDays * self::SECONDS_PER_DAY)
             ->where('gap_end >= ?', $windowStart)
             ->where('gap_end <= ?', $subscriptionStart)
             ->fetch();
@@ -72,11 +87,17 @@ class SubscriptionGapsRepository extends Repository
             return 0;
         }
 
-        $sortedSubscriptions = $this->subscriptionsRepository->all()
-            ->where('user_id', $userIds)
-            ->where('start_time <= ?', new DateTime())
-            ->select('user_id, start_time, end_time')
-            ->order('user_id ASC, start_time ASC')
+        // Columns are qualified, the filter may join other tables.
+        $subscriptions = $this->subscriptionsRepository->all()
+            ->where('subscriptions.user_id', $userIds)
+            ->where('subscriptions.start_time <= ?', new DateTime());
+        if ($this->subscriptionsFilter !== null) {
+            $subscriptions = $this->subscriptionsFilter->filter($subscriptions);
+        }
+
+        $sortedSubscriptions = $subscriptions
+            ->select('subscriptions.user_id, subscriptions.start_time, subscriptions.end_time')
+            ->order('subscriptions.user_id ASC, subscriptions.start_time ASC')
             ->fetchAll();
 
         $intervalsByUser = [];
@@ -146,17 +167,19 @@ class SubscriptionGapsRepository extends Repository
     }
 
     /**
-     * Returns gaps between consecutive merged intervals exceeding MIN_GAP_DAYS.
+     * Returns gaps between consecutive merged intervals longer than MIN_GAP_DAYS (compared precisely,
+     * so a gap of 28.5 days is included).
      * Each gap is a [gap_start, gap_end, gap_length_days] tuple where gap_start is the end of
-     * the preceding interval and gap_end is the start of the following interval.
+     * the preceding interval, gap_end is the start of the following interval and gap_length_days
+     * is the length rounded down to whole days.
      */
     private function findGaps(array $intervals): array
     {
         $gaps = [];
         for ($i = 1; $i < count($intervals); $i++) {
-            $gapDays = (int)(($intervals[$i][0]->getTimestamp() - $intervals[$i - 1][1]->getTimestamp()) / 86400);
-            if ($gapDays > self::MIN_GAP_DAYS) {
-                $gaps[] = [$intervals[$i - 1][1], $intervals[$i][0], $gapDays];
+            $gapSeconds = $intervals[$i][0]->getTimestamp() - $intervals[$i - 1][1]->getTimestamp();
+            if ($gapSeconds > self::MIN_GAP_DAYS * self::SECONDS_PER_DAY) {
+                $gaps[] = [$intervals[$i - 1][1], $intervals[$i][0], intdiv($gapSeconds, self::SECONDS_PER_DAY)];
             }
         }
         return $gaps;
