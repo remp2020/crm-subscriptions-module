@@ -30,7 +30,7 @@
                         <small n:if="$subscription->next_subscription_id"><i class="fa fa-level-up-alt"></i>
                             #{$subscription->next_subscription_id}</small>
 
-                        {control simpleWidget 'subscriptions.admin.user_subscriptions_listing.subscription', $subscription}
+                        {control simpleWidget, 'subscriptions.admin.user_subscriptions_listing.subscription', $subscription}
                     </td>
                     <td>{$subscription->subscription_type|typeContent:true}</td>
                     <td>
@@ -68,7 +68,7 @@
                             <i class="fa fa-edit"></i>
                         </a>
                         {capture $moreActions}
-                            {control simpleWidget 'subscriptions.admin.user_subscriptions_listing.action.menu', $subscription}
+                            {control simpleWidget, 'subscriptions.admin.user_subscriptions_listing.action.menu', $subscription}
                         {/capture}
                         <div n:if="($moreActions|trim)" class="btn-group" style="margin-bottom: 2px">
                             <button type="button" class="btn btn-default btn-sm dropdown-toggle"
@@ -82,7 +82,7 @@
                                 {$moreActions}
                             </ul>
                         </div>
-                        {control simpleWidget 'subscriptions.admin.user_subscriptions_listing.action', $subscription}
+                        {control simpleWidget, 'subscriptions.admin.user_subscriptions_listing.action', $subscription}
                     </td>
                 </tr>
                 </tbody>
