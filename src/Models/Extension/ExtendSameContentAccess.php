@@ -44,15 +44,11 @@ class ExtendSameContentAccess implements ExtensionInterface
     public function getStartTimeForSameContentAccess(ActiveRow $user, ActiveRow $subscriptionType): ?\DateTime
     {
         $requiredContentAccesses = $this->contentAccessRepository->allForSubscriptionType($subscriptionType)
-            ->fetchAssoc('id');
+            ->fetchPairs('id', 'name');
 
         $lifetimeThreshold = new DateTime('+ 30 years');
-        $userSubscriptions = $this->subscriptionsRepository->userSubscriptions($user->id)
-            ->where(
-                'subscription_type:subscription_type_content_access.content_access_id',
-                array_keys($requiredContentAccesses),
-            )
-            ->where('end_time > ?', $this->getNow())
+        $userSubscriptions = $this->subscriptionsRepository
+            ->futureEndingUserSubscriptionsWithContentAccess($user->id, array_values($requiredContentAccesses))
             ->where('end_time <', $lifetimeThreshold)
             ->fetchAll();
 

@@ -28,9 +28,8 @@ class ExtendSameTypeExtension implements ExtensionInterface
     public function getStartTime(ActiveRow $user, ActiveRow $subscriptionType, ?ActiveRow $address = null): Extension
     {
         $lifetimeThreshold = new DateTime('+ 30 years');
-        $lastSubscriptionTypeSubscription = $this->subscriptionsRepository->userSubscriptions($user->id)
+        $lastSubscriptionTypeSubscription = $this->subscriptionsRepository->futureEndingUserSubscriptions($user->id)
             ->where('subscription_type_id', $subscriptionType->id)
-            ->where('end_time > ?', $this->getNow())
             ->where('end_time <', $lifetimeThreshold)
             ->fetch();
         if ($lastSubscriptionTypeSubscription) {

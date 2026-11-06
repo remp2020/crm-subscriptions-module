@@ -142,6 +142,7 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
         $this->addSubscription($subscriptionType, $nowDate, $nowDate->modifyClone('+25 days'));
 
         $this->extension->setNow($nowDate);
+        $this->subscriptionsRepository->setNow($nowDate);
         $result = $this->extension->getStartTime($this->user, $subscriptionType);
 
         $this->assertEquals($nowDate->modifyClone('+25 days'), $result->getDate());
@@ -155,6 +156,7 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
         $this->addSubscription($subscriptionType, $nowDate->modifyClone('-35 days'), $nowDate->modifyClone('-5 days'));
 
         $this->extension->setNow($nowDate);
+        $this->subscriptionsRepository->setNow($nowDate);
         $result = $this->extension->getStartTime($this->user, $subscriptionType);
 
         $this->assertEquals($nowDate, $result->getDate());
@@ -175,6 +177,7 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
         );
 
         $this->extension->setNow($nowDate);
+        $this->subscriptionsRepository->setNow($nowDate);
         $result = $this->extension->getStartTime($this->user, $subscriptionType);
 
         // active subscription has different content access; start immediatelly
@@ -201,6 +204,7 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
         );
 
         $this->extension->setNow($nowDate);
+        $this->subscriptionsRepository->setNow($nowDate);
         $result = $this->extension->getStartTime($this->user, $subscriptionType);
         $this->assertEquals($nowDate->modifyClone('+5 days'), $result->getDate());
         $this->assertTrue($result->isExtending());
@@ -225,6 +229,7 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
         );
 
         $this->extension->setNow($nowDate);
+        $this->subscriptionsRepository->setNow($nowDate);
         $result = $this->extension->getStartTime($this->user, $subscriptionType);
         $this->assertEquals($nowDate->modifyClone('+35 days'), $result->getDate());
         $this->assertTrue($result->isExtending());
@@ -249,6 +254,7 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
         );
 
         $this->extension->setNow($nowDate);
+        $this->subscriptionsRepository->setNow($nowDate);
         $result = $this->extension->getStartTime($this->user, $subscriptionType);
         $this->assertEquals($nowDate->modifyClone('+10 days'), $result->getDate());
         $this->assertTrue($result->isExtending());
@@ -273,6 +279,7 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
         );
 
         $this->extension->setNow($nowDate);
+        $this->subscriptionsRepository->setNow($nowDate);
         $result = $this->extension->getStartTime($this->user, $subscriptionType);
         $this->assertEquals($nowDate->modifyClone('+10 days'), $result->getDate());
         $this->assertTrue($result->isExtending());
@@ -297,8 +304,39 @@ class ExtendSameContentAccessExtensionTest extends DatabaseTestCase
         );
 
         $this->extension->setNow($nowDate);
+        $this->subscriptionsRepository->setNow($nowDate);
         $result = $this->extension->getStartTime($this->user, $subscriptionType);
         $this->assertEquals($nowDate->modifyClone('+35 days'), $result->getDate());
         $this->assertTrue($result->isExtending());
+    }
+
+    public function testStoppedFutureSubscriptionIgnored(): void
+    {
+        $nowDate = DateTime::from('2021-02-01');
+        $subscriptionType = $this->getSubscriptionType();
+        $this->addSubscription($subscriptionType, $nowDate, $nowDate->modifyClone('+25 days'));
+        // stopped before it started; end_time equals start_time
+        $this->addSubscription($subscriptionType, $nowDate->modifyClone('+50 days'), $nowDate->modifyClone('+50 days'));
+
+        $this->extension->setNow($nowDate);
+        $this->subscriptionsRepository->setNow($nowDate);
+        $result = $this->extension->getStartTime($this->user, $subscriptionType);
+
+        $this->assertEquals($nowDate->modifyClone('+25 days'), $result->getDate());
+        $this->assertTrue($result->isExtending());
+    }
+
+    public function testOnlyStoppedFutureSubscription(): void
+    {
+        $nowDate = DateTime::from('2021-02-01');
+        $subscriptionType = $this->getSubscriptionType();
+        $this->addSubscription($subscriptionType, $nowDate->modifyClone('+50 days'), $nowDate->modifyClone('+50 days'));
+
+        $this->extension->setNow($nowDate);
+        $this->subscriptionsRepository->setNow($nowDate);
+        $result = $this->extension->getStartTime($this->user, $subscriptionType);
+
+        $this->assertEquals($nowDate, $result->getDate());
+        $this->assertFalse($result->isExtending());
     }
 }

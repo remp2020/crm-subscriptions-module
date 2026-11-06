@@ -667,6 +667,19 @@ class SubscriptionsRepository extends Repository
             ->limit(1);
     }
 
+    public function futureEndingUserSubscriptions(int $userId): Selection
+    {
+        return $this->userSubscriptions($userId)
+            ->where('end_time > ?', $this->getNow())
+            ->where('end_time != start_time'); // ignore cancelled subscriptions
+    }
+
+    public function futureEndingUserSubscriptionsWithContentAccess(int $userId, array $contentAccessNames): Selection
+    {
+        return $this->futureEndingUserSubscriptions($userId)
+            ->where('subscription_type:subscription_type_content_access.content_access.name IN (?)', $contentAccessNames);
+    }
+
     public function moveSubscription(ActiveRow $subscription, DateTime $newStartTime)
     {
         /** @var DateTime $originalStartTime */
